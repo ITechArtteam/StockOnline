@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.itechart.")
+@ComponentScan(basePackages = "com.itechart.")
 public class WebConfig extends WebMvcConfigurerAdapter{
 
     @Bean
