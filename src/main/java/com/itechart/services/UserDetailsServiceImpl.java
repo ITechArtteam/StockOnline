@@ -21,6 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws
             UsernameNotFoundException {
-        return new User("dima", passwordEncoder.encode("password"), asList(() -> "ROLE_ADMIN"));
+        //лезем в базу и ищем пользователя, если нашли возвращаем его, иначе
+        return new User("dima", passwordEncoder.encode("password1"), asList(() -> "ROLE_ADMIN"));
     }
 }
