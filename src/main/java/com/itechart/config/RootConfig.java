@@ -17,6 +17,7 @@ public class RootConfig {
     }
 
     @Bean
+    @Scope("singleton")
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
