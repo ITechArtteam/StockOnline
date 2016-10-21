@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -14,6 +15,8 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableJpaRepositories(basePackages = "com.itechart.dao",
+        entityManagerFactoryRef = "entityManager")
 public class RepositoryConfig {
 
     @Value("${jdbc.driverClassName}")
@@ -57,7 +60,7 @@ public class RepositoryConfig {
         return hibernateTemplate;
     }
 
-    @Bean
+    @Bean(name = "entityManager")
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean asfb = new LocalSessionFactoryBean();
         asfb.setDataSource(getDataSource());
