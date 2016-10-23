@@ -5,10 +5,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Import({RepositoryConfig.class})
 @Configuration
 @ComponentScan("com.itechart")
-@PropertySource("classpath:application.properties")
 public class RootConfig {
 
     @Bean

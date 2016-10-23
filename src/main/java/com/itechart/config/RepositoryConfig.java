@@ -1,22 +1,24 @@
 package com.itechart.config;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.itechart.dao",
-        entityManagerFactoryRef = "entityManager")
+@EnableJpaRepositories(basePackages = "com.itechart.dao")
+@EnableTransactionManagement
+@PropertySource("classpath:application.properties")
 public class RepositoryConfig {
 
     @Value("${jdbc.driverClassName}")
@@ -27,17 +29,22 @@ public class RepositoryConfig {
     private String username;
     @Value("${jdbc.password}")
     private String password;
+    @Value("${openjpa.Log}")
+    private String openjpaLog;
+    @Value("${openjpa.DynamicEnhancementAgent}")
+    private boolean openjpaDynamicEnhancementAgent;
+    @Value("${database}")
+    private String database;
+    @Value("${showSql}")
+    private boolean showSql;
+    @Value("${generateDdl}")
+    private boolean generateDdl;
+    @Value("${databasePlatform}")
+    private String databasePlatform;
 
-    @Value("${hibernate.dialect}")
-    private String hibernateDialect;
-    @Value("${hibernate.show_sql}")
-    private String hibernateShowSql;
-    @Value("${hibernate.hbm2ddl.auto}")
-    private String hibernateHbm2ddlAuto;
-
-    @Bean()
-    public DataSource getDataSource() {
-        DriverManagerDataSource ds = new DriverManagerDataSource();
+    @Bean(name = "dataSource", destroyMethod = "close")
+    public BasicDataSource getDataSource() {
+        BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName(driverClassName);
         ds.setUrl(url);
         ds.setUsername(username);
@@ -46,37 +53,38 @@ public class RepositoryConfig {
     }
 
     @Bean
-    @Autowired
-    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-        HibernateTransactionManager htm = new HibernateTransactionManager();
-        htm.setSessionFactory(sessionFactory);
-        return htm;
-    }
-
-    @Bean
-    @Autowired
-    public HibernateTemplate getHibernateTemplate(SessionFactory sessionFactory) {
-        HibernateTemplate hibernateTemplate = new HibernateTemplate(sessionFactory);
-        return hibernateTemplate;
-    }
-
-    @Bean(name = "entityManager")
-    public LocalSessionFactoryBean getSessionFactory() {
-        LocalSessionFactoryBean asfb = new LocalSessionFactoryBean();
-        asfb.setDataSource(getDataSource());
-        asfb.setHibernateProperties(getHibernateProperties());
-        asfb.setPackagesToScan(new String[]{"com.itechart.domain"});
-        return asfb;
-    }
-
-    @Bean
-    public Properties getHibernateProperties() {
+    public Properties getJpaProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", hibernateDialect);
-        properties.put("hibernate.show_sql", hibernateShowSql);
-        properties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
-
+        properties.put("openjpa.Log", openjpaLog);
+        properties.put("openjpa.DynamicEnhancementAgent", openjpaDynamicEnhancementAgent);
         return properties;
     }
 
+    @Bean
+    public OpenJpaVendorAdapter getOpenJpaVendorAdapter(){
+        OpenJpaVendorAdapter vendor = new OpenJpaVendorAdapter();
+        vendor.setDatabase(Database.valueOf(database));
+        vendor.setShowSql(showSql);
+        vendor.setGenerateDdl(generateDdl);
+        vendor.setDatabasePlatform(databasePlatform);
+        return vendor;
+    }
+
+    @Bean(name = "entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean getManagerFactoryBean(){
+        LocalContainerEntityManagerFactoryBean managerFactoryBean
+                = new LocalContainerEntityManagerFactoryBean();
+        managerFactoryBean.setDataSource(getDataSource());
+        managerFactoryBean.setJpaProperties(getJpaProperties());
+        managerFactoryBean.setPackagesToScan("com.itechart.domain");
+        managerFactoryBean.setJpaVendorAdapter(getOpenJpaVendorAdapter());
+        return managerFactoryBean;
+    }
+
+    @Bean(name = "transactionManager")
+    public JpaTransactionManager getTransactionManager(){
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(getManagerFactoryBean().getNativeEntityManagerFactory());
+        return transactionManager;
+    }
 }
