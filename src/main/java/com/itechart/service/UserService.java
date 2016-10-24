@@ -1,6 +1,7 @@
-package com.itechart.services;
+package com.itechart.service;
 
-import com.itechart.domain.User;
+
+import com.itechart.model.User;
 
 public interface UserService {
 

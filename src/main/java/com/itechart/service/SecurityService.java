@@ -1,4 +1,4 @@
-package com.itechart.services;
+package com.itechart.service;
 
 public interface SecurityService {
 

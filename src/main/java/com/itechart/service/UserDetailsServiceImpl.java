@@ -1,22 +1,19 @@
-package com.itechart.services;
+package com.itechart.service;
 
 import com.itechart.dao.UserDao;
-import com.itechart.domain.User;
+import com.itechart.model.Role;
+import com.itechart.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-@Service
-@Configurable
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
@@ -25,13 +22,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByFirstName(username);
-        Set<GrantedAuthority> grantedAuthorities =
-                user.getRoles().stream()
-                        .map(role -> new SimpleGrantedAuthority(role.getName()))
-                        .collect(Collectors.toSet());
+        User user = userDao.findByUsername(username);
 
-        return new org.springframework.security.core.userdetails.User(user.getFirstName(), user.getPassword(), grantedAuthorities);
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+
+        for (Role role : user.getRoles()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
-
 }
