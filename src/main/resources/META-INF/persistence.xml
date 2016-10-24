@@ -6,6 +6,7 @@
     <persistence-unit name="pagPU" transaction-type="RESOURCE_LOCAL" >
         <description>generated-persistence-unit</description>
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+
         <class>com.itechart.model.User</class>
         <class>com.itechart.model.Role</class>
     </persistence-unit>

@@ -4,6 +4,8 @@ import com.itechart.model.User;
 import com.itechart.service.SecurityService;
 import com.itechart.service.UserService;
 import com.itechart.validator.UserValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -33,6 +37,7 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -48,6 +53,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
+        logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!msg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         if (error != null) {
             model.addAttribute("error", "Username or password is incorrect.");
         }

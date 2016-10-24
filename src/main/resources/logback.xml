@@ -2,21 +2,22 @@
 <!DOCTYPE logback>
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{15}#%line %msg\n</pattern>
-        </encoder>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{15} - %line %msg%n</pattern>
+        </layout>
     </appender>
 
     <logger name="net.proselyte.springsecurityapp">
         <level value="debug"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 
     <logger name="org.springframework">
         <level value="info"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root>
-        <level value="error"/>
+    <root level="info">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
