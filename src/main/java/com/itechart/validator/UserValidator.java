@@ -2,7 +2,10 @@ package com.itechart.validator;
 
 
 import com.itechart.model.User;
+import com.itechart.service.SecurityServiceImpl;
 import com.itechart.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,6 +14,8 @@ import org.springframework.validation.Validator;
 
 @Component
 public class UserValidator implements Validator {
+
+    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Autowired
     private UserService userService;
