@@ -27,6 +27,7 @@
         <tomcat7.maven.plugin>2.2</tomcat7.maven.plugin>
         <tomcat7.port>8085</tomcat7.port>
         <tomcat7.path>/</tomcat7.path>
+        <liquibase.version>3.5.3</liquibase.version>
     </properties>
 
     <dependencies>
@@ -159,6 +160,36 @@
                         <version>${openjpa.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${basedir}/src/main/resources/database.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <changeLogFile>${basedir}/src/main/resources/liquibase/master.xml</changeLogFile>
+                    <driver>${driverClassName}</driver>
+                    <url>${jdbc.url}</url>
+                    <username>${jdbc.username}</username>
+                    <password>${jdbc.password}</password>
+                </configuration>
             </plugin>
         </plugins>
     </build>
