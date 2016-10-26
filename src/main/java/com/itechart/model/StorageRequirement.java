@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "strorage_requirement")
+@Table(name = "storage_requirement")
 public class StorageRequirement {
 
     @Id
