@@ -1,7 +1,7 @@
 package com.itechart.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.Size;
 
 import java.util.Set;
 
@@ -14,11 +14,11 @@ public class Transport {
     private Long id;
 
     @Column(name = "number")
-    @Size(max=50, message="Number of letters in number < 50")
+//    @Size(max=50, message="Number of letters in number < 50")
     private String number;
 
     @Column(name = "type")
-    @Size(max=50, message="Number of letters in type < 50")
+//    @Size(max=50, message="Number of letters in type < 50")
     private String type;
 
     @ManyToOne

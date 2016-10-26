@@ -1,7 +1,7 @@
 package com.itechart.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.Size;
 
 import java.util.Date;
 import java.util.Set;
@@ -15,11 +15,11 @@ public class Driver {
     private Long id;
 
     @Column(name = "passport_number")
-    @Size(max=30, message="Number of letters in passport number < 30")
+//    @Size(max=30, message="Number of letters in passport number < 30")
     private String passportNumber;
 
     @Column(name = "passport_issued_by")
-    @Size(max=30, message="Number of letters in passport issued by < 30")
+//    @Size(max=30, message="Number of letters in passport issued by < 30")
     private String passportIssuedBy;
 
     @Column(name = "passport_issued_date")
@@ -27,15 +27,15 @@ public class Driver {
     private Date passportIssuedDate;
 
     @Column(name = "first_name")
-    @Size(max=30, message="Number of letters in first name < 30")
+//    @Size(max=30, message="Number of letters in first name < 30")
     private String firstName;
 
     @Column(name = "last_name")
-    @Size(max=30, message="Number of letters in last name < 30")
+//    @Size(max=30, message="Number of letters in last name < 30")
     private String lastName;
 
     @Column(name = "patronymic")
-    @Size(max=30, message="Number of letters in patronymic < 30")
+//    @Size(max=30, message="Number of letters in patronymic < 30")
     private String patronymic;
 
     @Column(name = "birth_date")

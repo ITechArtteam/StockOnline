@@ -3,7 +3,7 @@ package com.itechart.model;
 import com.itechart.model.enums.ProductStatus;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.Size;
 
 import java.util.Set;
 
@@ -16,11 +16,11 @@ public class Product {
     private Long id;
 
     @Column(name = "name")
-    @Size(max=50, message="Number of letters in name < 50")
+//    @Size(max=50, message="Number of letters in name < 50")
     private String name;
 
     @Column(name = "unit")
-    @Size(max=10, message="Number of letters in name < 10")
+//    @Size(max=10, message="Number of letters in name < 10")
     private String unit;
 
     @Column(name = "cost")

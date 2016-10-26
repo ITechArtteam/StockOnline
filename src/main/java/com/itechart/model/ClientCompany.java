@@ -1,7 +1,7 @@
 package com.itechart.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.Size;
 
 import java.util.Set;
 
@@ -14,7 +14,7 @@ public class ClientCompany {
     private Long id;
 
     @Column(name = "name")
-    @Size(max=50, message="Number of letters in name < 50")
+//    @Size(max=50, message="Number of letters in name < 50")
     private String name;
 
     @ManyToOne
