@@ -74,4 +74,9 @@ public class UserController {
     public String admin(Model model) {
         return "admin";
     }
+
+    @RequestMapping(value="/react/login")
+    public String reactLogin(Model model) {
+        return "react-login";
+    }
 }
