@@ -1,5 +1,5 @@
-run>edit configuration... > mavem > Command line: clean package liquibase:update tomcat7:run -DskipTests
-что бы включить тесты при старте сервера удалите -DskipTests после run
+run>edit configuration... > mavem > Command line: clean package liquibase:update tomcat7:run
+что бы отключить тесты при старте сервера добавить -DskipTests после run
 
 --------------------------------maven--------------------------------------------------------
 maven обновляем до версии 3.3.9.
