@@ -9,6 +9,22 @@
 
         <class>com.itechart.model.User</class>
         <class>com.itechart.model.Role</class>
+        <class>com.itechart.model.Act</class>
+        <class>com.itechart.model.Address</class>
+        <class>com.itechart.model.ClientCompany</class>
+        <class>com.itechart.model.Driver</class>
+        <class>com.itechart.model.Product</class>
+        <class>com.itechart.model.ProductInWaybill</class>
+        <class>com.itechart.model.ProductOnShelf</class>
+        <class>com.itechart.model.Room</class>
+        <class>com.itechart.model.Shelf</class>
+        <class>com.itechart.model.Stock</class>
+        <class>com.itechart.model.StockOwnerCompany</class>
+        <class>com.itechart.model.StorageRequirement</class>
+        <class>com.itechart.model.TransferCompany</class>
+        <class>com.itechart.model.Transport</class>
+        <class>com.itechart.model.Waybill</class>
+
     </persistence-unit>
 
 </persistence>
