@@ -32,6 +32,7 @@
         <frontend-plugin.version>1.1</frontend-plugin.version>
         <node.version>v6.4.0</node.version>
         <npm.version>3.10.3</npm.version>
+        <properties.maven.plugin>1.0.0</properties.maven.plugin>
     </properties>
 
     <dependencies>
@@ -168,7 +169,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>${properties.maven.plugin}</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
