@@ -1,8 +1,8 @@
 package com.itechart.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+//import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -14,17 +14,17 @@ public class Address {
 
     @Column(name = "country")
 //  @NotNull(message="Country must be specified.")
-    @Size(max=50, message="Number of letters in country < 50")
+//    @Size(max=50, message="Number of letters in country < 50")
     private String country;
 
 
     @Column(name = "city")
-    @Size(max=50, message="Number of letters in city < 50")
+//    @Size(max=50, message="Number of letters in city < 50")
     private String city;
 
 
     @Column(name = "street")
-    @Size(max=50, message="Number of letters in street < 50")
+//    @Size(max=50, message="Number of letters in street < 50")
     private String street;
 
 
