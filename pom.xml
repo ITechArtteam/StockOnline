@@ -28,6 +28,7 @@
         <tomcat7.port>8085</tomcat7.port>
         <tomcat7.path>/</tomcat7.path>
         <liquibase.version>3.5.3</liquibase.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <frontend-plugin.version>1.1</frontend-plugin.version>
         <node.version>v6.4.0</node.version>
         <npm.version>3.10.3</npm.version>
