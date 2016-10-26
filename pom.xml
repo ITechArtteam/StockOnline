@@ -28,6 +28,7 @@
         <tomcat7.port>8085</tomcat7.port>
         <tomcat7.path>/</tomcat7.path>
         <liquibase.version>3.5.3</liquibase.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -116,6 +117,14 @@
     <build>
         <finalName>SpringSecurityApp</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <outputEncoding>${project.build.sourceEncoding}</outputEncoding>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
