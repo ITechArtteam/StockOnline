@@ -3,3 +3,4 @@
 !/src
 !pom.xml
 !README.txt
+/src/main/frontend/*
