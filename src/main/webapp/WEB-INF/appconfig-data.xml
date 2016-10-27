@@ -33,7 +33,7 @@
             </props>
         </property>
 
-        <property name="packagesToScan" value="com.itechart.model"/>
+        <property name="packagesToScan" value="com.itechart.stockOnline.model"/>
         <property name="jpaVendorAdapter" ref="openJpaVendorAdapter"/>
     </bean>
 
@@ -43,6 +43,6 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
-    <jpa:repositories base-package="com.itechart.dao"/>
+    <jpa:repositories base-package="com.itechart.stockOnline..dao"/>
 
 </beans>
