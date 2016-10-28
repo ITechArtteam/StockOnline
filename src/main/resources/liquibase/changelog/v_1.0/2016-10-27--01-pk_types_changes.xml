@@ -1,0 +1,1200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <!--DROP FOKEIGN KEY CONSTRAINTS-->
+    <changeSet id="pk_type_changes-01" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="user_roles"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="user_roles"
+                                     baseColumnNames="user_id"
+                                     constraintName="fk_user_roles_user"
+                                     referencedTableName="users"
+                                     referencedColumnNames="id"/>
+            <addForeignKeyConstraint baseTableName="user_roles"
+                                     baseColumnNames="role_id"
+                                     constraintName="fk_user_roles_role"
+                                     referencedTableName="roles"
+                                     referencedColumnNames="id"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-02" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="stock"/>
+        <rollback>
+        <addForeignKeyConstraint baseColumnNames="company_id"
+                                 baseTableName="stock"
+                                 constraintName="fk_stock_stock_owner_company"
+                                 referencedColumnNames="id"
+                                 referencedTableName="stock_owner_company"/>
+        <addForeignKeyConstraint baseColumnNames="address_id"
+                                 baseTableName="stock"
+                                 constraintName="fk_stock_address"
+                                 referencedColumnNames="id"
+                                 referencedTableName="address"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-03" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="room"/>
+        <rollback>
+        <addForeignKeyConstraint baseColumnNames="stock_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room_stock"
+                                 referencedColumnNames="id"
+                                 referencedTableName="stock"/>
+        <addForeignKeyConstraint baseColumnNames="storage_requirement_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room_storage_requirement"
+                                 referencedColumnNames="id"
+                                 referencedTableName="storage_requirement"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-04" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="shelf"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="room_id"
+                                     baseTableName="shelf"
+                                     constraintName="fk_shelf_room"
+                                     referencedColumnNames="id"
+                                     referencedTableName="room"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-05" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="product"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="storage_requirement_id"
+                                     baseTableName="product"
+                                     constraintName="fk_product_storage_requirement"
+                                     referencedColumnNames="id"
+                                     referencedTableName="storage_requirement"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-07" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="act"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="product_id"
+                                     baseTableName="act"
+                                     constraintName="fk_act_product"
+                                     referencedColumnNames="id"
+                                     referencedTableName="product"/>
+            <addForeignKeyConstraint baseColumnNames="responsible_person_id"
+                                     baseTableName="act"
+                                     constraintName="fk_act_responsible_person"
+                                     referencedColumnNames="id"
+                                     referencedTableName="users"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-08" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="product_on_shelf"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="product_id"
+                                     baseTableName="product_on_shelf"
+                                     constraintName="fk_product_on_shelf_product"
+                                     referencedColumnNames="id"
+                                     referencedTableName="product"/>
+            <addForeignKeyConstraint baseColumnNames="shelf_id"
+                                     baseTableName="product_on_shelf"
+                                     constraintName="fk_product_on_shelf_shelf"
+                                     referencedColumnNames="id"
+                                     referencedTableName="shelf"/>
+            <addForeignKeyConstraint baseColumnNames="placed_by"
+                                     baseTableName="product_on_shelf"
+                                     constraintName="fk_product_on_shelf_placed_by"
+                                     referencedColumnNames="id"
+                                     referencedTableName="users"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-09" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="driver"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="driver" baseColumnNames="transfer_company_id"
+                                     constraintName="fk_driver_transfer_company"
+                                     referencedTableName="transfer_company"
+                                     referencedColumnNames="id"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-10" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="transport"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="driver_id"
+                                     baseTableName="transport"
+                                     constraintName="fk_transport_driver"
+                                     referencedColumnNames="id"
+                                     referencedTableName="driver"/>
+            <addForeignKeyConstraint baseColumnNames="storage_requirement_id"
+                                     baseTableName="transport"
+                                     constraintName="fk_transport_storage_requirement"
+                                     referencedColumnNames="id"
+                                     referencedTableName="storage_requirement"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-11" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="client_company"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="address_id"
+                                     baseTableName="client_company"
+                                     constraintName="fk_client_company_address"
+                                     referencedColumnNames="id"
+                                     referencedTableName="address"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-12" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="waybill"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="transport_id"
+                                     baseTableName="waybill"
+                                     constraintName="fk_waybill_transport"
+                                     referencedColumnNames="id"
+                                     referencedTableName="transport"/>
+            <addForeignKeyConstraint baseColumnNames="responsible_person_id"
+                                     baseTableName="waybill"
+                                     constraintName="fk_waybill_responsible_person"
+                                     referencedColumnNames="id"
+                                     referencedTableName="users"/>
+            <addForeignKeyConstraint baseColumnNames="registered_by"
+                                     baseTableName="waybill"
+                                     constraintName="fk_waybill_register_person"
+                                     referencedColumnNames="id"
+                                     referencedTableName="users"/>
+            <addForeignKeyConstraint baseColumnNames="checked_by"
+                                     baseTableName="waybill"
+                                     constraintName="fk_waybill_controller_person"
+                                     referencedColumnNames="id"
+                                     referencedTableName="users"/>
+            <addForeignKeyConstraint baseColumnNames="sender_id"
+                                     baseTableName="waybill"
+                                     constraintName="fk_waybill_sender"
+                                     referencedColumnNames="id"
+                                     referencedTableName="client_company"/>
+            <addForeignKeyConstraint baseColumnNames="receiver_id"
+                                     baseTableName="waybill"
+                                     constraintName="fk_waybill_receiver"
+                                     referencedColumnNames="id"
+                                     referencedTableName="client_company"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-13" author="MaximMaltsev94">
+        <dropAllForeignKeyConstraints baseTableName="product_in_waybill"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="waybill_id"
+                                     baseTableName="product_in_waybill"
+                                     constraintName="fk_product_in_waybill_waybill"
+                                     referencedColumnNames="id"
+                                     referencedTableName="waybill"/>
+            <addForeignKeyConstraint baseColumnNames="waybill_id"
+                                     baseTableName="product_in_waybill"
+                                     constraintName="fk_product_in_waybill_product"
+                                     referencedColumnNames="id"
+                                     referencedTableName="product"/>
+        </rollback>
+    </changeSet>
+
+    <!--END DROP FOKEIGN KEY CONSTRAINTS-->
+
+    <!--ALTER PRIMARY KEY TYPES-->
+
+    <changeSet id="pk_type_changes-14" author="MaximMaltsev94">
+        <dropColumn columnName="id"
+                    tableName="roles"/>
+        <rollback>
+            <addColumn tableName="roles">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-15" author="MaximMaltsev94">
+        <addColumn tableName="roles">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id"
+                        tableName="roles"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-16" author="MaximMaltsev94">
+    <dropColumn columnName="id" tableName="storage_requirement"/>
+    <rollback>
+        <addColumn tableName="storage_requirement">
+            <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+    </rollback>
+</changeSet>
+    <changeSet id="pk_type_changes-17" author="MaximMaltsev94">
+        <addColumn tableName="storage_requirement">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="storage_requirement"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-18" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="transfer_company"/>
+        <rollback>
+            <addColumn tableName="transfer_company">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-19" author="MaximMaltsev94">
+        <addColumn tableName="transfer_company">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="transfer_company"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-20" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="client_company"/>
+        <rollback>
+            <addColumn tableName="client_company">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-21" author="MaximMaltsev94">
+        <addColumn tableName="client_company">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="client_company"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-22" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="shelf"/>
+        <rollback>
+            <addColumn tableName="shelf">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-23" author="MaximMaltsev94">
+        <addColumn tableName="shelf">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="shelf"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-24" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="room"/>
+        <rollback>
+            <addColumn tableName="room">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-25" author="MaximMaltsev94">
+        <addColumn tableName="room">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="room"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-26" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="product_in_waybill"/>
+        <rollback>
+            <addColumn tableName="product_in_waybill">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-27" author="MaximMaltsev94">
+        <addColumn tableName="product_in_waybill">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="product_in_waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-28" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="stock_owner_company"/>
+        <rollback>
+            <addColumn tableName="stock_owner_company">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-29" author="MaximMaltsev94">
+        <addColumn tableName="stock_owner_company">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="stock_owner_company"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-30" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="transport"/>
+        <rollback>
+            <addColumn tableName="transport">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-31" author="MaximMaltsev94">
+        <addColumn tableName="transport">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="transport"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-32" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="address"/>
+        <rollback>
+            <addColumn tableName="address">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-33" author="MaximMaltsev94">
+        <addColumn tableName="address">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="address"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-34" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="users"/>
+        <rollback>
+            <addColumn tableName="users">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-35" author="MaximMaltsev94">
+        <addColumn tableName="users">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="users"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-36" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="act"/>
+        <rollback>
+            <addColumn tableName="act">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-37" author="MaximMaltsev94">
+        <addColumn tableName="act">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="act"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-38" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="product"/>
+        <rollback>
+            <addColumn tableName="product">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-39" author="MaximMaltsev94">
+        <addColumn tableName="product">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="product"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-40" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="waybill"/>
+        <rollback>
+            <addColumn tableName="waybill">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-41" author="MaximMaltsev94">
+        <addColumn tableName="waybill">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-42" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="stock"/>
+        <rollback>
+            <addColumn tableName="stock">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-43" author="MaximMaltsev94">
+        <addColumn tableName="stock">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="stock"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-44" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="product_on_shelf"/>
+        <rollback>
+            <addColumn tableName="product_on_shelf">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-45" author="MaximMaltsev94">
+        <addColumn tableName="product_on_shelf">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="product_on_shelf"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-46" author="MaximMaltsev94">
+        <dropColumn columnName="id" tableName="driver"/>
+        <rollback>
+            <addColumn tableName="driver">
+                <column name="id" type="BIGINT UNSIGNED" autoIncrement="${autoIncrement}">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="pk_type_changes-47" author="MaximMaltsev94">
+        <addColumn tableName="driver">
+            <column name="id" type="INT(11) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="id" tableName="driver"/>
+        </rollback>
+    </changeSet>
+
+    <!--END ALTER PRIMARY KEY TYPES-->
+
+    <!--ALTER FK FIELD TYPES-->
+
+    <changeSet id="pk_type_changes-48" author="MaximMaltsev94">
+        <modifyDataType columnName="user_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="user_roles"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="user_id"
+                              tableName="user_roles"/>
+        <rollback>
+            <modifyDataType columnName="user_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="user_roles"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="user_id"
+                                  tableName="user_roles"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-49" author="MaximMaltsev94">
+        <modifyDataType columnName="role_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="user_roles"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="role_id"
+                              tableName="user_roles"/>
+        <rollback>
+            <modifyDataType columnName="role_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="user_roles"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="role_id"
+                                  tableName="user_roles"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-50" author="MaximMaltsev94">
+        <modifyDataType columnName="address_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="client_company"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="address_id"
+                              tableName="client_company"/>
+        <rollback>
+            <modifyDataType columnName="address_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="client_company"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="address_id"
+                                  tableName="client_company"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-51" author="MaximMaltsev94">
+        <modifyDataType columnName="room_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="shelf"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="room_id"
+                              tableName="shelf"/>
+        <rollback>
+            <modifyDataType columnName="room_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="shelf"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="room_id"
+                                  tableName="shelf"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-52" author="MaximMaltsev94">
+        <modifyDataType columnName="stock_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="room"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="stock_id"
+                              tableName="room"/>
+        <rollback>
+            <modifyDataType columnName="stock_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="room"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="stock_id"
+                                  tableName="room"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-53" author="MaximMaltsev94">
+        <modifyDataType columnName="storage_requirement_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="room"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="storage_requirement_id"
+                              tableName="room"/>
+        <rollback>
+            <modifyDataType columnName="storage_requirement_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="room"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="storage_requirement_id"
+                                  tableName="room"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-54" author="MaximMaltsev94">
+        <modifyDataType columnName="waybill_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="product_in_waybill"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="waybill_id"
+                              tableName="product_in_waybill"/>
+        <rollback>
+            <modifyDataType columnName="waybill_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="product_in_waybill"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="waybill_id"
+                                  tableName="product_in_waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-55" author="MaximMaltsev94">
+        <modifyDataType columnName="product_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="product_in_waybill"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="product_id"
+                              tableName="product_in_waybill"/>
+        <rollback>
+            <modifyDataType columnName="product_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="product_in_waybill"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="product_id"
+                                  tableName="product_in_waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-56" author="MaximMaltsev94">
+        <modifyDataType columnName="driver_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="transport"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="driver_id"
+                              tableName="transport"/>
+        <rollback>
+            <modifyDataType columnName="driver_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="transport"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="driver_id"
+                                  tableName="transport"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-57" author="MaximMaltsev94">
+        <modifyDataType columnName="storage_requirement_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="transport"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="storage_requirement_id"
+                              tableName="transport"/>
+        <rollback>
+            <modifyDataType columnName="storage_requirement_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="transport"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="storage_requirement_id"
+                                  tableName="transport"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-58" author="MaximMaltsev94">
+        <modifyDataType columnName="product_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="act"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="product_id"
+                              tableName="act"/>
+        <rollback>
+            <modifyDataType columnName="product_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="act"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="product_id"
+                                  tableName="act"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-59" author="MaximMaltsev94">
+        <modifyDataType columnName="responsible_person_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="act"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="responsible_person_id"
+                              tableName="act"/>
+        <rollback>
+            <modifyDataType columnName="responsible_person_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="act"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="responsible_person_id"
+                                  tableName="act"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-60" author="MaximMaltsev94">
+        <modifyDataType columnName="storage_requirement_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="product"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="storage_requirement_id"
+                              tableName="product"/>
+        <rollback>
+            <modifyDataType columnName="storage_requirement_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="product"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="storage_requirement_id"
+                                  tableName="product"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-61" author="MaximMaltsev94">
+        <modifyDataType columnName="transport_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="waybill"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="transport_id"
+                              tableName="waybill"/>
+        <rollback>
+            <modifyDataType columnName="transport_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="waybill"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="transport_id"
+                                  tableName="waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-62" author="MaximMaltsev94">
+        <modifyDataType columnName="responsible_person_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="waybill"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="responsible_person_id"
+                              tableName="waybill"/>
+        <rollback>
+            <modifyDataType columnName="responsible_person_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="waybill"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="responsible_person_id"
+                                  tableName="waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-63" author="MaximMaltsev94">
+        <modifyDataType columnName="sender_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="waybill"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="sender_id"
+                              tableName="waybill"/>
+        <rollback>
+            <modifyDataType columnName="sender_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="waybill"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="sender_id"
+                                  tableName="waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-64" author="MaximMaltsev94">
+        <modifyDataType columnName="receiver_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="waybill"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="receiver_id"
+                              tableName="waybill"/>
+        <rollback>
+            <modifyDataType columnName="receiver_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="waybill"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="receiver_id"
+                                  tableName="waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-65" author="MaximMaltsev94">
+        <modifyDataType columnName="checked_by"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="waybill"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="checked_by"
+                              tableName="waybill"/>
+        <rollback>
+            <modifyDataType columnName="checked_by"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-66" author="MaximMaltsev94">
+        <modifyDataType columnName="registered_by"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="waybill"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="registered_by"
+                              tableName="waybill"/>
+        <rollback>
+            <modifyDataType columnName="registered_by"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="waybill"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="registered_by"
+                                  tableName="waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-67" author="MaximMaltsev94">
+        <modifyDataType columnName="company_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="stock"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="company_id"
+                              tableName="stock"/>
+        <rollback>
+            <modifyDataType columnName="company_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="stock"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="company_id"
+                                  tableName="stock"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-68" author="MaximMaltsev94">
+        <modifyDataType columnName="address_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="stock"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="address_id"
+                              tableName="stock"/>
+        <rollback>
+            <modifyDataType columnName="address_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="stock"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="address_id"
+                                  tableName="stock"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-69" author="MaximMaltsev94">
+        <modifyDataType columnName="product_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="product_on_shelf"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="product_id"
+                              tableName="product_on_shelf"/>
+        <rollback>
+            <modifyDataType columnName="product_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="product_on_shelf"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="product_id"
+                                  tableName="product_on_shelf"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-70" author="MaximMaltsev94">
+        <modifyDataType columnName="shelf_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="product_on_shelf"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="shelf_id"
+                              tableName="product_on_shelf"/>
+        <rollback>
+            <modifyDataType columnName="shelf_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="product_on_shelf"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="shelf_id"
+                                  tableName="product_on_shelf"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-71" author="MaximMaltsev94">
+        <modifyDataType columnName="placed_by"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="product_on_shelf"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="placed_by"
+                              tableName="product_on_shelf"/>
+        <rollback>
+            <modifyDataType columnName="placed_by"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="product_on_shelf"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="placed_by"
+                                  tableName="product_on_shelf"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-72" author="MaximMaltsev94">
+        <modifyDataType columnName="transfer_company_id"
+                        newDataType="INT(11) UNSIGNED"
+                        tableName="driver"/>
+        <addNotNullConstraint columnDataType="INT(11) UNSIGNED"
+                              columnName="transfer_company_id"
+                              tableName="driver"/>
+        <rollback>
+            <modifyDataType columnName="transfer_company_id"
+                            newDataType="BIGINT UNSIGNED"
+                            tableName="driver"/>
+            <addNotNullConstraint columnDataType="BIGINT UNSIGNED"
+                                  columnName="transfer_company_id"
+                                  tableName="driver"/>
+        </rollback>
+    </changeSet>
+
+    <!--ALTER FK FIELD TYPES-->
+
+    <!--ADD FOREIGN KEY CONSTRAINTS-->
+    <changeSet id="pk_type_changes-73" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_roles_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_user_roles_role"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="id"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="user_roles"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-74" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="company_id"
+                                 baseTableName="stock"
+                                 constraintName="fk_stock_stock_owner_company"
+                                 referencedColumnNames="id"
+                                 referencedTableName="stock_owner_company"/>
+        <addForeignKeyConstraint baseColumnNames="address_id"
+                                 baseTableName="stock"
+                                 constraintName="fk_stock_address"
+                                 referencedColumnNames="id"
+                                 referencedTableName="address"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="stock"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-75" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="stock_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room_stock"
+                                 referencedColumnNames="id"
+                                 referencedTableName="stock"/>
+        <addForeignKeyConstraint baseColumnNames="storage_requirement_id"
+                                 baseTableName="room"
+                                 constraintName="fk_room_storage_requirement"
+                                 referencedColumnNames="id"
+                                 referencedTableName="storage_requirement"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="room"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-76" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="room_id"
+                                 baseTableName="shelf"
+                                 constraintName="fk_shelf_room"
+                                 referencedColumnNames="id"
+                                 referencedTableName="room"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="shelf"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-77" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="storage_requirement_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product_storage_requirement"
+                                 referencedColumnNames="id"
+                                 referencedTableName="storage_requirement"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="product"/>
+        </rollback>
+    </changeSet>
+
+
+    <changeSet id="pk_type_changes-79" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="act"
+                                 constraintName="fk_act_product"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+        <addForeignKeyConstraint baseColumnNames="responsible_person_id"
+                                 baseTableName="act"
+                                 constraintName="fk_act_responsible_person"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="act"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-80" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="product_on_shelf"
+                                 constraintName="fk_product_on_shelf_product"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+        <addForeignKeyConstraint baseColumnNames="shelf_id"
+                                 baseTableName="product_on_shelf"
+                                 constraintName="fk_product_on_shelf_shelf"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shelf"/>
+        <addForeignKeyConstraint baseColumnNames="placed_by"
+                                 baseTableName="product_on_shelf"
+                                 constraintName="fk_product_on_shelf_placed_by"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="product_on_shelf"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-81" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseTableName="driver" baseColumnNames="transfer_company_id"
+                                 constraintName="fk_driver_transfer_company"
+                                 referencedTableName="transfer_company"
+                                 referencedColumnNames="id"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="driver"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-82" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="driver_id"
+                                 baseTableName="transport"
+                                 constraintName="fk_transport_driver"
+                                 referencedColumnNames="id"
+                                 referencedTableName="driver"/>
+        <addForeignKeyConstraint baseColumnNames="storage_requirement_id"
+                                 baseTableName="transport"
+                                 constraintName="fk_transport_storage_requirement"
+                                 referencedColumnNames="id"
+                                 referencedTableName="storage_requirement"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="transport"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-83" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="address_id"
+                                 baseTableName="client_company"
+                                 constraintName="fk_client_company_address"
+                                 referencedColumnNames="id"
+                                 referencedTableName="address"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="client_company"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-84" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="transport_id"
+                                 baseTableName="waybill"
+                                 constraintName="fk_waybill_transport"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transport"/>
+        <addForeignKeyConstraint baseColumnNames="responsible_person_id"
+                                 baseTableName="waybill"
+                                 constraintName="fk_waybill_responsible_person"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="registered_by"
+                                 baseTableName="waybill"
+                                 constraintName="fk_waybill_register_person"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="checked_by"
+                                 baseTableName="waybill"
+                                 constraintName="fk_waybill_controller_person"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="sender_id"
+                                 baseTableName="waybill"
+                                 constraintName="fk_waybill_sender"
+                                 referencedColumnNames="id"
+                                 referencedTableName="client_company"/>
+        <addForeignKeyConstraint baseColumnNames="receiver_id"
+                                 baseTableName="waybill"
+                                 constraintName="fk_waybill_receiver"
+                                 referencedColumnNames="id"
+                                 referencedTableName="client_company"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="waybill"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="pk_type_changes-85" author="MaximMaltsev94">
+        <addForeignKeyConstraint baseColumnNames="waybill_id"
+                                 baseTableName="product_in_waybill"
+                                 constraintName="fk_product_in_waybill_waybill"
+                                 referencedColumnNames="id"
+                                 referencedTableName="waybill"/>
+        <addForeignKeyConstraint baseColumnNames="waybill_id"
+                                 baseTableName="product_in_waybill"
+                                 constraintName="fk_product_in_waybill_product"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+        <rollback>
+            <dropAllForeignKeyConstraints baseTableName="product_in_waybill"/>
+        </rollback>
+    </changeSet>
+    <!--END FOREIGN KEY CONSTRAINTS-->
+
+</databaseChangeLog>
