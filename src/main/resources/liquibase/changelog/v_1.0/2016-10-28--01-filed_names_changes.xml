@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <!--DROP FOKEIGN KEY CONSTRAINTS-->
+    <changeSet id="field_names_changes-01" author="MaximMaltsev94">
+        <addColumn tableName="product">
+            <column name="count" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="count"
+                        tableName="product"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="field_names_changes-02" author="MaximMaltsev94">
+        <modifyDataType columnName="type"
+                        newDataType="ENUM('Автомобиль', 'Поезд')"
+                        tableName="transport"/>
+        <addNotNullConstraint columnDataType="ENUM('Автомобиль', 'Поезд')"
+                              columnName="type"
+                              tableName="transport"/>
+        <rollback>
+            <modifyDataType columnName="type"
+                                  newDataType="varchar(50)"
+                                  tableName="transport"/>
+            <addNotNullConstraint columnDataType="varchar(50)"
+                                  columnName="type"
+                                  tableName="transport"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="field_names_changes-03" author="MaximMaltsev94">
+        <addNotNullConstraint columnDataType="ENUM('грамм','килограмм','тонна', 'литр', 'милилитр', 'см. куб')"
+                              columnName="unit"
+                              tableName="product"/>
+    </changeSet>
+
+    <changeSet id="field_names_changes-04" author="MaximMaltsev94">
+        <addNotNullConstraint columnDataType="date"
+                              columnName="crate_date"
+                              tableName="product"/>
+    </changeSet>
+
+    <changeSet id="field_names_changes-05" author="MaximMaltsev94">
+        <addNotNullConstraint columnDataType="varchar(30)"
+                              columnName="passport_issued_by"
+                              tableName="driver"/>
+    </changeSet>
+
+    <changeSet id="field_names_changes-06" author="MaximMaltsev94">
+        <addNotNullConstraint columnDataType="varchar(50)"
+                              columnName="country_name"
+                              tableName="address"/>
+        <addNotNullConstraint columnDataType="varchar(50)"
+                              columnName="city_name"
+                              tableName="address"/>
+    </changeSet>
+
+</databaseChangeLog>
