@@ -4,3 +4,5 @@
 !pom.xml
 !README.txt
 /src/main/frontend/*
+/src/main/webapp/resources/js/bundle.js
+/src/main/webapp/resources/js/bundle.js.map
