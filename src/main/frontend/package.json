@@ -22,5 +22,4 @@
     "dev-build": "webpack -optimize-minimize"
   },
   "author": "Dmitriy"
-
 }

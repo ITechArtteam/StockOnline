@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>StockOnline</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/global.css">
     </head>
     <body>
         <div id="app"></div>

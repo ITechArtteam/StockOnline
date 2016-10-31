@@ -4,10 +4,31 @@ import {Provider} from 'react-redux'
 import {Router, Route, browserHistory} from 'react-router'
 import configureStore from './store/configureStore'
 
-import App from './components/App'
-import Test from "./containers/Test";
+import App from './containers/App'
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
+import Clients from "./containers/Clients";
+import EditClient from "./containers/EditClient";
+import Reports from "./containers/Reports";
+import ReportIncome from "./containers/ReportIncome";
+import ReportStandard from "./containers/ReportStandard";
+import Stocks from "./containers/Stocks";
+import EditStock from "./containers/EditStock";
+import Workers from "./containers/Workers";
+import EditWorker from "./containers/EditWorker";
+import Carriers from "./containers/Carriers";
+import EditCarrier from "./containers/EditCarrier";
+import Drivers from "./containers/Drivers";
+import EditDriver from "./containers/EditDriver";
+import Waybills from "./containers/Waybills";
+import EditWaybill from "./containers/EditWaybill";
+import Goods from "./containers/Goods";
+import ReceiptGoods from "./containers/ReceiptGoods";
+import DistributionGoods from "./containers/DistributionGoods";
+import DepartureGoods from "./containers/DepartureGoods";
+import CheckGoods from "./containers/CheckGoods";
+import Acts from "./containers/Acts";
+import EditAct from "./containers/EditAct";
 
 const store = configureStore();
 
@@ -16,8 +37,29 @@ ReactDOM.render(
         <Router path="/" history={browserHistory}>
             <Route path="/" component={App}>
                 <Route path="/login" component={Login}/>
-                <Route path="/test" component={Test}/>
-                <Route path="*" component={ NotFound}/>
+                <Route path="/clients" component={Clients}/>
+                <Route path="/client/:id" component={EditClient}/>
+                <Route path="/reports" component={Reports}/>
+                <Route path="/report/income" component={ReportIncome}/>
+                <Route path="/report/standard" component={ReportStandard}/>
+                <Route path="/stocks" component={Stocks}/>
+                <Route path="/stock/:id" component={EditStock}/>
+                <Route path="/workers" component={Workers}/>
+                <Route path="/worker/:id" component={EditWorker}/>
+                <Route path="/carriers" component={Carriers}/>
+                <Route path="/carrier/:id" component={EditCarrier}/>
+                <Route path="/drivers" component={Drivers}/>
+                <Route path="/driver/:id" component={EditDriver}/>
+                <Route path="/waybills" component={Waybills}/>
+                <Route path="/waybill/:id" component={EditWaybill}/>
+                <Route path="/goods" component={Goods}/>
+                <Route path="/goods/receipt" component={ReceiptGoods}/>
+                <Route path="/goods/distribution" component={DistributionGoods}/>
+                <Route path="/goods/departure" component={DepartureGoods}/>
+                <Route path="/goods/check" component={CheckGoods}/>
+                <Route path="/acts" component={Acts}/>
+                <Route path="/act/:id" component={EditAct}/>
+                <Route path="*" component={NotFound}/>
             </Route>
         </Router>
     </Provider>,
