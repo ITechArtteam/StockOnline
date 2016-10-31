@@ -1,10 +1,10 @@
 {
   "name": "stock-online-frontend",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Stock Online Frontend",
-  "main": "index.js",
+  "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.7.14",
+    "babel-core": "^6.18.0",
     "babel-loader": "^6.2.7",
     "babel-preset-es2015": "^6.13.0",
     "babel-preset-react": "^6.16.0",

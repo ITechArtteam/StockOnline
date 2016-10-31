@@ -114,7 +114,7 @@
             <artifactId>logback-core</artifactId>
             <version>${logback.version}</version>
         </dependency>
-        
+
     </dependencies>
     <build>
         <finalName>SpringSecurityApp</finalName>
@@ -230,7 +230,7 @@
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>run-script</arguments>
+                            <arguments>run-script dev-build</arguments>
                         </configuration>
                     </execution>
                 </executions>
