@@ -10,17 +10,17 @@ import java.util.Set;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "country_name")
 //  @NotNull(message="Country must be specified.")
 //    @Size(max=50, message="Number of letters in country < 50")
-    private String country;
+    private String countryName;
 
 
     @Column(name = "city_name")
 //    @Size(max=50, message="Number of letters in city < 50")
-    private String city;
+    private String cityName;
 
 
     @Column(name = "street")
@@ -43,14 +43,14 @@ public class Address {
 
     public Address() {    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public String getCountry() { return country; }
-    public void setCountry(String country) { this.country = country; }
+    public String getCountryName() { return countryName; }
+    public void setCountryName(String countryName) { this.countryName = countryName; }
 
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
+    public String getCityName() { return cityName; }
+    public void setCityName(String cityName) { this.cityName = cityName; }
 
     public String getStreet() { return street; }
     public void setStreet(String street) { this.street = street; }
@@ -71,8 +71,8 @@ public class Address {
     public String toString() {
         return "AddressDao{" +
                 "id=" + id +
-                ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
+                ", country name='" + countryName + '\'' +
+                ", city name='" + cityName + '\'' +
                 ", street='" + street + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +

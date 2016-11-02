@@ -1,6 +1,7 @@
 package com.itechart.stockOnline.model;
 
 import com.itechart.stockOnline.model.enums.ProductStatus;
+import com.itechart.stockOnline.model.enums.ProductUnit;
 
 import javax.persistence.*;
 //import javax.validation.constraints.Size;
@@ -13,18 +14,17 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
 //    @Size(max=50, message="Number of letters in name < 50")
     private String name;
 
-    @Column(name = "unit")
-//    @Size(max=10, message="Number of letters in name < 10")
-    private String unit;
-
     @Column(name = "cost")
     private Double cost;
+
+    @Column(name = "count")
+    private Integer count;
 
     @Column(name = "expiry_date")
     private Short expiryDate;
@@ -32,6 +32,10 @@ public class Product {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
+
+    @Column(name = "unit")
+    @Enumerated(EnumType.STRING)
+    private ProductUnit unit;
 
     @ManyToOne
     @JoinColumn(name = "storage_requirement_id")
@@ -48,14 +52,11 @@ public class Product {
 
     public Product() {    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-
-    public String getUnit() { return unit; }
-    public void setUnit(String unit) { this.unit = unit; }
 
     public Double getCost() { return cost; }
     public void setCost(Double cost) { this.cost = cost; }
@@ -78,16 +79,23 @@ public class Product {
     public Set<ProductInWaybill> getProductInWaybills() { return productInWaybills; }
     public void setProductInWaybills(Set<ProductInWaybill> productInWaybills) { this.productInWaybills = productInWaybills; }
 
+    public Integer getCount() { return count; }
+    public void setCount(Integer count) { this.count = count; }
+
+    public ProductUnit getUnit() { return unit; }
+    public void setUnit(ProductUnit unit) { this.unit = unit; }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", unit='" + unit + '\'' +
                 ", cost=" + cost +
+                ", count=" + count +
                 ", expiryDate=" + expiryDate +
                 ", status=" + status +
-                ", storageRequirement=" + storage +
+                ", unit=" + unit +
+                ", storage=" + storage +
                 ", productOnShelfs=" + productOnShelfs +
                 ", acts=" + acts +
                 ", productInWaybills=" + productInWaybills +

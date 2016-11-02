@@ -11,7 +11,7 @@ public class Act {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "report_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -38,8 +38,8 @@ public class Act {
     public Act() {
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public Date getReportDate() { return reportDate; }
     public void setReportDate(Date reportDate) { this.reportDate = reportDate; }

@@ -1,5 +1,7 @@
 package com.itechart.stockOnline.model;
 
+import com.itechart.stockOnline.model.enums.TransportType;
+
 import javax.persistence.*;
 //import javax.validation.constraints.Size;
 
@@ -11,15 +13,15 @@ public class Transport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "number")
 //    @Size(max=50, message="Number of letters in number < 50")
     private String number;
 
     @Column(name = "type")
-//    @Size(max=50, message="Number of letters in type < 50")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TransportType type;
 
     @ManyToOne
     @JoinColumn(name = "driver_id")
@@ -35,14 +37,11 @@ public class Transport {
     public Transport() {
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getNumber() { return number; }
     public void setNumber(String number) { this.number = number; }
-
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
 
     public Driver getDriver() { return driver; }
     public void setDriver(Driver driver) { this.driver = driver; }
@@ -53,14 +52,17 @@ public class Transport {
     public Set<Waybill> getWaybills() { return waybills; }
     public void setWaybills(Set<Waybill> waybills) { this.waybills = waybills; }
 
+    public TransportType getType() { return type; }
+    public void setType(TransportType type) { this.type = type; }
+
     @Override
     public String toString() {
         return "Transport{" +
                 "id=" + id +
                 ", number='" + number + '\'' +
-                ", type='" + type + '\'' +
+                ", type=" + type +
                 ", driver=" + driver +
-                ", storageRequirement=" + storage +
+                ", storage=" + storage +
                 ", waybills=" + waybills +
                 '}';
     }

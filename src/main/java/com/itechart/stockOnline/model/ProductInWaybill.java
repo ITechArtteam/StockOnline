@@ -8,7 +8,7 @@ public class ProductInWaybill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "count")
     private Integer count;
@@ -24,8 +24,8 @@ public class ProductInWaybill {
     public ProductInWaybill() {
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public Integer getCount() { return count; }
     public void setCount(Integer count) { this.count = count; }
