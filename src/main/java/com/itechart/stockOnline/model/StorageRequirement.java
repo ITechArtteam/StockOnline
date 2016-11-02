@@ -11,7 +11,7 @@ public class StorageRequirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "type")
 //    @Size(max=50, message="Number of letters in type < 50")
@@ -30,8 +30,8 @@ public class StorageRequirement {
     }
 
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }

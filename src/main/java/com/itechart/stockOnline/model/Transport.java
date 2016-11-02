@@ -13,7 +13,7 @@ public class Transport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "number")
 //    @Size(max=50, message="Number of letters in number < 50")
@@ -37,8 +37,8 @@ public class Transport {
     public Transport() {
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getNumber() { return number; }
     public void setNumber(String number) { this.number = number; }
