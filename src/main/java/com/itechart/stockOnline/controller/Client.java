@@ -46,8 +46,8 @@ public class Client {
         admin.setPassword(client.getAdminPassword());
         admin = userDao.save(admin);
         Address address = new Address();
-        address.setCountry(client.getCountry());
-        address.setCity(client.getCity());
+        address.setCountryName(client.getCountry());
+        address.setCityName(client.getCity());
         address.setStreet(client.getStreet());
         address = addressDao.save(address);
         company.setName(client.getname());
