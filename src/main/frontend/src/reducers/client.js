@@ -1,9 +1,9 @@
 import * as event from "../constants/client";
 
 const initUserState = {
-    client: {
+    data: {
         name: "",
-        admin: "",
+        adminLogin: "",
         adminPassword: "",
         bossLogin: "",
         bossPassword: "",
@@ -31,7 +31,6 @@ function client(state = initUserState, action) {
             return {
                 ...state,
                 frontend: {isFetch: false, isFail: false, error: ""},
-                client: action.json
             };
         case event.ADD_CLIENT_FAIL:
             return {
@@ -43,6 +42,17 @@ function client(state = initUserState, action) {
                 ...state, client: {
                     ...state.client, [action.data.nameField]: action.data.value
                 }
+            };
+        case event.GET_CLIENT_REQUEST:
+            return {
+                ...state,
+                frontend: {isFetch: true, isFail: false, error: ""}
+            };
+        case event.GET_CLIENT_SUCCESS:
+            return {
+                ...state,
+                frontend: {isFetch: false, isFail: false, error: ""},
+                data: action.data
             };
         default:
             return state;

@@ -8,7 +8,7 @@ class Navigation extends React.Component {
                 <ul className="nav nav-pills nav-stacked ">
                     <li><Link to="/">Войти</Link></li>
                     <li><Link to="/clients" role="button">Клиенты</Link></li>
-                    <li><Link to="/client/">Редактировать клиента</Link></li>
+                    <li><Link to="/client/new">Редактировать клиента</Link></li>
                     <li><Link to="/reports">Отчеты</Link></li>
                     <li><Link to="/report/income">Отчет о прибыли</Link></li>
                     <li><Link to="/report/standard">Стандартные отчеты прибыли</Link></li>

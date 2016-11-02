@@ -1,76 +1,69 @@
 import * as event from "../constants/client";
 import * as axios from "axios";
 
-function getClientDataRequest(clientName) {
+function getClientDataRequest() {
     return {
-        type: event.GET_CLIENT_REQUEST,
-        clientName
+        type: event.GET_CLIENT_REQUEST
     }
 }
 
-function getClientDataSuccess(clientName, json) {
+function getClientDataSuccess(json) {
     return {
         type: event.GET_CLIENT_SUCCESS,
-        clientName,
         data: json
     }
 }
 
-function getClientDataFail(clientName, error) {
+function getClientDataFail(error) {
     return {
         type: event.GET_CLIENT_FAIL,
-        clientName,
         error
     }
 }
 
 function getClient(clientName) {
     return function (dispatch) {
-        dispatch(getClientDataRequest(clientName));
+        dispatch(getClientDataRequest());
 
         return axios
             .get(`/customer/${clientName}`)
             .then(json =>
-                dispatch(getClientDataSuccess(clientName, json.data))
+                dispatch(getClientDataSuccess(json.data))
             ).catch(error => {
-                dispatch(getClientDataFail(clientName, error))
+                dispatch(getClientDataFail(error))
             });
     }
 }
 
-function addClientRequest(client) {
+function addClientRequest() {
     return {
-        type: event.ADD_CLIENT_REQUEST,
-        client
+        type: event.ADD_CLIENT_REQUEST
     }
 }
 
-function addClientSuccess(client, json) {
+function addClientSuccess() {
     return {
-        type: event.ADD_CLIENT_SUCCESS,
-        client,
-        data: json
+        type: event.ADD_CLIENT_SUCCESS
     }
 }
 
-function addClientFail(client, error) {
+function addClientFail(error) {
     return {
         type: event.ADD_CLIENT_FAIL,
-        client,
         error
     }
 }
 
 function addClient(client) {
     return function (dispatch) {
-        dispatch(addClientRequest(client));
+        dispatch(addClientRequest());
 
         return axios
             .post(`/customer/`, client)
             .then(json =>
-                dispatch(addClientSuccess(client, json))
+                dispatch(addClientSuccess())
             ).catch(error => {
-                dispatch(addClientFail(client, error))
+                dispatch(addClientFail(error))
             });
     }
 }

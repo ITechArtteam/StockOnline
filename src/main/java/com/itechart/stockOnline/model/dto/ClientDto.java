@@ -1,10 +1,14 @@
-package com.itechart.stockOnline.validator;
+package com.itechart.stockOnline.model.dto;
 
-public class ClientValidator {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public class ClientDto {
     private String name;
     private String adminLogin;
+    @JsonIgnore
     private String adminPassword;
     private String bossLogin;
+    @JsonIgnore
     private String bossPassword;
     private String country;
     private String city;

@@ -3,11 +3,15 @@ package com.itechart.stockOnline.controller;
 import com.itechart.stockOnline.dao.AddressDao;
 import com.itechart.stockOnline.dao.ClientDao;
 import com.itechart.stockOnline.dao.UserDao;
+import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Address;
 import com.itechart.stockOnline.model.ClientCompany;
 import com.itechart.stockOnline.model.User;
-import com.itechart.stockOnline.validator.ClientValidator;
+import com.itechart.stockOnline.model.dto.ClientDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,17 +29,21 @@ public class Client {
     private AddressDao addressDao;
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public User getClientData(@PathVariable String name){
-        System.out.println(name);
-        User user = new User();
-        user.setUsername(name);
-        user.setPassword("1243");
-        return user;
+    public ClientDto getClientData(@PathVariable String name){
+        ClientCompany clientCompany = clientDao.findByName(name).orElseThrow(DataNotFoundError::new);
+        ClientDto client = new ClientDto();
+        client.setCountry(clientCompany.getAddress().getCountryName());
+        client.setCity(clientCompany.getAddress().getCityName());
+        client.setStreet(clientCompany.getAddress().getStreet());
+        client.setBossLogin(clientCompany.getBoss().getUsername());
+        client.setAdminLogin(clientCompany.getAdmin().getUsername());
+        client.setname(clientCompany.getName());
+        return client;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @Transactional
-    public String addClient(@RequestBody ClientValidator client){
+    public String addClient(@RequestBody ClientDto client){
         ClientCompany company = new ClientCompany();
         User boss = new User();
         boss.setUsername(client.getBossLogin());
@@ -56,6 +64,12 @@ public class Client {
         company.setAddress(address);
         clientDao.save(company);
         return "Ok";
+    }
+
+    @ExceptionHandler(value = DataNotFoundError.class)
+    public ResponseEntity<Object> dataNotFound(){
+        return new ResponseEntity<>(
+                "Данных нет", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
 }
