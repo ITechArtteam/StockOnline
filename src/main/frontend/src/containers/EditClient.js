@@ -9,20 +9,31 @@ class EditClient extends React.Component {
         return (
             <div className="container">
                 <form className="form-horizontal" id="client_form">
-                    <SimpleInput id="company_name" label="Название компании"/>
-                    <SimpleInput id="admin_login" label="Логин администратора"/>
-                    <SimpleInput id="admin_password" label="Пароль администратора"/>
-                    <SimpleInput id="boss_login" label="Логин администратора"/>
-                    <SimpleInput id="country" label="Страна"/>
-                    <SimpleInput id="city" label="Город"/>
-                    <SimpleInput id="street" label="Улица"/>
-                    <SimpleInput id="home" label="Дом"/>
-                    <SimpleInput id="room" label="Квартира"/>
+                    <SimpleInput id="companyName" label="Название компании"
+                                 onChange={this.props.setClientData} value={this.props.client.companyName}/>
+                    <SimpleInput id="adminLogin" label="Логин администратора"
+                                 onChange={this.props.setClientData} value={this.props.client.adminLogin}/>
+                    <SimpleInput id="adminPassword" label="Пароль администратора"
+                                 onChange={this.props.setClientData} value={this.props.client.adminPassword}/>
+                    <SimpleInput id="bossLogin" label="Логин управляющего"
+                                 onChange={this.props.setClientData} value={this.props.client.bossLogin}/>
+                    <SimpleInput id="bossPassword" label="Пароль управляющего"
+                                 onChange={this.props.setClientData} value={this.props.client.bossPassword}/>
+                    <SimpleInput id="country" label="Страна"
+                                 onChange={this.props.setClientData} value={this.props.client.country}/>
+                    <SimpleInput id="city" label="Город"
+                                 onChange={this.props.setClientData} value={this.props.client.city}/>
+                    <SimpleInput id="street" label="Улица"
+                                 onChange={this.props.setClientData} value={this.props.client.street}/>
+                    <SimpleInput id="home" label="Дом"
+                                 onChange={this.props.setClientData} value={this.props.client.home}/>
+                    <SimpleInput id="room" label="Квартира"
+                                 onChange={this.props.setClientData} value={this.props.client.room}/>
                     <div className="form-group">
                         <div className="col-sm-offset-2 col-sm-10">
                             <div className="btn-group" role="group">
-                                <button type="submit" className="btn btn-primary">Сохранить</button>
-                                <button type="button" className="btn btn-default" onClick={()=>this.props.fetchClientData("dima")}>Отменить</button>
+                                <button type="button" className="btn btn-primary" onClick={()=>this.props.addClient(this.props.name)}>Сохранить</button>
+                                <button type="button" className="btn btn-default">Отменить</button>
                             </div>
                         </div>
                     </div>
@@ -34,14 +45,17 @@ class EditClient extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        text: state.client.text
+        client: state.client
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchClientData: (name) => {
-            dispatch(client.fetchClientData(name))
+        addClient: (name) => {
+            dispatch(client.addClient(name))
+        },
+        setClientData: (e) => {
+            dispatch(client.setData(e.target.id, e.target.value))
         }
     }
 };

@@ -1,11 +1,10 @@
-export const SAVE = 'SAVE';
-export const BACK = 'BACK';
-
 export const ADD_CLIENT_REQUEST = 'ADD_CLIENT_REQUEST';
 export const ADD_CLIENT_FAIL = 'ADD_CLIENT_FAIL';
 export const ADD_CLIENT_SUCCESS = 'ADD_CLIENT_SUCCESS';
+
 export const GET_CLIENT_REQUEST = 'GET_CLIENT_REQUEST';
 export const GET_CLIENT_FAIL = 'GET_CLIENT_FAIL';
 export const GET_CLIENT_SUCCESS = 'GET_CLIENT_SUCCESS';
 
-export const SET_TEXT = 'SET_TEXT';
+export const SET_FIELD = 'SET_FIELD';
+
