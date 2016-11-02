@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <changeSet id="client_table_changes-01" author="OrelDmitriy">
+        <addColumn tableName="client_company">
+            <column name="boss" type="INT(11) UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="boss_password" type="nvarchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="client_company"
+                                 baseColumnNames="boss"
+                                 constraintName="fk_boss_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="client_table_changes-02" author="OrelDmitriy">
+        <addColumn tableName="client_company">
+            <column name="admin" type="INT(11) UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="admin_password" type="nvarchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="client_company"
+                                 baseColumnNames="admin"
+                                 constraintName="fk_admin_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

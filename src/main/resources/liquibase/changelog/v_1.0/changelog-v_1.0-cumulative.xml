@@ -8,4 +8,5 @@
     <include file="2016-10-26--01-db_changes.xml" relativeToChangelogFile="true"/>
     <include file="2016-10-27--01-pk_types_changes.xml" relativeToChangelogFile="true"/>
     <include file="2016-10-28--01-filed_names_changes.xml" relativeToChangelogFile="true"/>
+    <include file="2016-11-02--01-client_table_changes.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

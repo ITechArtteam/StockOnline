@@ -35,6 +35,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.4</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
@@ -193,6 +198,15 @@
                     <username>${jdbc.username}</username>
                     <password>${jdbc.password}</password>
                 </configuration>
+                <!-- может и понадобится, удалить 5.11.2016
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clearCheckSums</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                -->
             </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>

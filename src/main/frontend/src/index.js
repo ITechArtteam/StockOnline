@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import {Router, Route, browserHistory} from 'react-router'
+import {Router, IndexRedirect, Route, browserHistory} from 'react-router'
 import configureStore from './store/configureStore'
 
 import App from './containers/App'
@@ -30,15 +30,18 @@ import CheckGoods from "./containers/CheckGoods";
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
 
+import {client} from "./actions"
+
 const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
         <Router path="/" history={browserHistory}>
             <Route path="/" component={App}>
+                <IndexRedirect to="login" />
                 <Route path="/login" component={Login}/>
                 <Route path="/clients" component={Clients}/>
-                <Route path="/client/:id" component={EditClient}/>
+                <Route path="/client/" component={EditClient}/>
                 <Route path="/reports" component={Reports}/>
                 <Route path="/report/income" component={ReportIncome}/>
                 <Route path="/report/standard" component={ReportStandard}/>

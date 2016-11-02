@@ -17,8 +17,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Transient
-    private String confirmPassword;
+    @OneToMany(mappedBy = "boss")
+    private Set<ClientCompany> bosses;
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
@@ -49,14 +49,6 @@ public class User {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -64,4 +56,8 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Set<ClientCompany> getBosses() { return bosses; }
+
+    public void setBosses(Set<ClientCompany> bosses) { this.bosses = bosses; }
 }

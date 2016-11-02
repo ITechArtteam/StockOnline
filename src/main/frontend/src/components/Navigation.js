@@ -6,9 +6,9 @@ class Navigation extends React.Component {
         return (
             <nav role="navigation">
                 <ul className="nav nav-pills nav-stacked ">
-                    <li><Link to="/login">Войти</Link></li>
+                    <li><Link to="/">Войти</Link></li>
                     <li><Link to="/clients" role="button">Клиенты</Link></li>
-                    <li><Link to="/client/:id">Редактировать клиента</Link></li>
+                    <li><Link to="/client/">Редактировать клиента</Link></li>
                     <li><Link to="/reports">Отчеты</Link></li>
                     <li><Link to="/report/income">Отчет о прибыли</Link></li>
                     <li><Link to="/report/standard">Стандартные отчеты прибыли</Link></li>

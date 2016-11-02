@@ -18,6 +18,10 @@ public class ClientCompany {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "id")
+    private User boss;
+
+    @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -44,6 +48,9 @@ public class ClientCompany {
 
     public Set<Waybill> getReceiverCompanies() { return receiverCompanies; }
     public void setReceiverCompanies(Set<Waybill> receiverCompanies) { this.receiverCompanies = receiverCompanies; }
+
+    public User getBoss() { return boss; }
+    public void setBoss(User boss) { this.boss = boss; }
 
     @Override
     public String toString() {

@@ -1,5 +1,5 @@
 module.exports = {
-    devtool: "eval",
+    devtool: "eval-source-map",
     entry: "./src/index.js",
     output: {
         path: "../webapp/resources/js",
