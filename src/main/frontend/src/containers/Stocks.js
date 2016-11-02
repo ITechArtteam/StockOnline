@@ -4,6 +4,7 @@ class Stocks extends React.Component {
     render(){
         return (
             <div>Stocks</div>
+
         )
     }
 }
