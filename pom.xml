@@ -9,6 +9,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
+        <jackson-databind.version>2.8.4</jackson-databind.version>
         <spring.version>4.2.0.RELEASE</spring.version>
         <spring-security.version>4.0.2.RELEASE</spring-security.version>
         <spring-data-jpa.version>1.8.2.RELEASE</spring-data-jpa.version>
@@ -37,7 +38,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.8.4</version>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -198,7 +199,7 @@
                     <username>${jdbc.username}</username>
                     <password>${jdbc.password}</password>
                 </configuration>
-                <!-- может и понадобится, удалить 5.11.2016
+                <!-- может и понадобится, удалить 5.11.20
                 <executions>
                     <execution>
                         <goals>

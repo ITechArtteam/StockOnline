@@ -15,9 +15,6 @@
             <column name="boss" type="INT(11) UNSIGNED">
                 <constraints nullable="false"/>
             </column>
-            <column name="boss_password" type="nvarchar(255)">
-                <constraints nullable="false"/>
-            </column>
         </addColumn>
         <addForeignKeyConstraint baseTableName="client_company"
                                  baseColumnNames="boss"
@@ -28,9 +25,6 @@
     <changeSet id="client_table_changes-02" author="OrelDmitriy">
         <addColumn tableName="client_company">
             <column name="admin" type="INT(11) UNSIGNED">
-                <constraints nullable="false"/>
-            </column>
-            <column name="admin_password" type="nvarchar(255)">
                 <constraints nullable="false"/>
             </column>
         </addColumn>

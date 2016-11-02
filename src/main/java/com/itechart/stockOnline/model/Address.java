@@ -12,13 +12,13 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "country")
+    @Column(name = "country_name")
 //  @NotNull(message="Country must be specified.")
 //    @Size(max=50, message="Number of letters in country < 50")
     private String country;
 
 
-    @Column(name = "city")
+    @Column(name = "city_name")
 //    @Size(max=50, message="Number of letters in city < 50")
     private String city;
 

@@ -1,9 +1,9 @@
 package com.itechart.stockOnline.model;
 
 import javax.persistence.*;
-//import javax.validation.constraints.Size;
-
 import java.util.Set;
+
+
 
 @Entity
 @Table(name = "client_company")
@@ -18,8 +18,12 @@ public class ClientCompany {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "boss")
     private User boss;
+
+    @ManyToOne
+    @JoinColumn(name = "admin")
+    private User admin;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
@@ -52,11 +56,21 @@ public class ClientCompany {
     public User getBoss() { return boss; }
     public void setBoss(User boss) { this.boss = boss; }
 
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
+    }
+
     @Override
     public String toString() {
         return "ClientCompany{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", boss=" + boss +
+                ", admin=" + admin +
                 ", address=" + address +
                 ", senderCompanies=" + senderCompanies +
                 ", receiverCompanies=" + receiverCompanies +

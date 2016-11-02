@@ -2,8 +2,8 @@ import * as event from "../constants/client";
 
 const initUserState = {
     client: {
-        companyName: "",
-        adminLogin: "",
+        name: "",
+        admin: "",
         adminPassword: "",
         bossLogin: "",
         bossPassword: "",

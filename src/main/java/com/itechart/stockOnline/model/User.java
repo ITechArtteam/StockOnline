@@ -20,6 +20,9 @@ public class User {
     @OneToMany(mappedBy = "boss")
     private Set<ClientCompany> bosses;
 
+    @OneToMany(mappedBy = "admin")
+    private Set<ClientCompany> admins;
+
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -60,4 +63,24 @@ public class User {
     public Set<ClientCompany> getBosses() { return bosses; }
 
     public void setBosses(Set<ClientCompany> bosses) { this.bosses = bosses; }
+
+    public Set<ClientCompany> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(Set<ClientCompany> admins) {
+        this.admins = admins;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", bosses=" + bosses +
+                ", admins=" + admins +
+                ", roles=" + roles +
+                '}';
+    }
 }

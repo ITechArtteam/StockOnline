@@ -9,8 +9,8 @@ class EditClient extends React.Component {
         return (
             <div className="container">
                 <form className="form-horizontal" id="client_form">
-                    <SimpleInput id="companyName" label="Название компании"
-                                 onChange={this.props.setClientData} value={this.props.client.companyName}/>
+                    <SimpleInput id="name" label="Название компании"
+                                 onChange={this.props.setClientData} value={this.props.client.name}/>
                     <SimpleInput id="adminLogin" label="Логин администратора"
                                  onChange={this.props.setClientData} value={this.props.client.adminLogin}/>
                     <SimpleInput id="adminPassword" label="Пароль администратора"
@@ -32,7 +32,7 @@ class EditClient extends React.Component {
                     <div className="form-group">
                         <div className="col-sm-offset-2 col-sm-10">
                             <div className="btn-group" role="group">
-                                <button type="button" className="btn btn-primary" onClick={()=>this.props.addClient(this.props.name)}>Сохранить</button>
+                                <button type="button" className="btn btn-primary" onClick={()=>this.props.addClient(this.props.client)}>Сохранить</button>
                                 <button type="button" className="btn btn-default">Отменить</button>
                             </div>
                         </div>
@@ -51,11 +51,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addClient: (name) => {
-            dispatch(client.addClient(name))
+        getClient: (clientName) => {
+            dispatch(client.getClient(clientName))
         },
         setClientData: (e) => {
             dispatch(client.setData(e.target.id, e.target.value))
+        },
+        addClient: (clientData) => {
+            dispatch(client.addClient(clientData.client))
         }
     }
 };

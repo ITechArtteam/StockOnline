@@ -8,6 +8,7 @@
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
+        <csrf disabled="true"/>
         <form-login login-page="/" username-parameter="username" password-parameter="password"/>
     </http>
 
