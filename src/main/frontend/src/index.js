@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {Router, IndexRedirect, Route, browserHistory} from 'react-router'
 import configureStore from './store/configureStore'
-
 import App from './containers/App'
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";

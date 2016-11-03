@@ -3,7 +3,7 @@ import React from 'react'
 class EditWorker extends React.Component {
     render(){
         return (
-            <div className="container">
+            <div className="row">
                 <form className="form-horizontal" id="worker_form">
                     <div className="form-group">
                         <label htmlFor="worker_name" className="col-sm-2 control-label">Имя</label>

@@ -10,7 +10,7 @@ class EditClient extends React.Component {
     render(){
         console.log(this.props.client.data);
         return (
-            <div className="container">
+            <div className="row">
                 <form className="form-horizontal" id="client_form">
                     <SimpleInput id="name" label="Название компании"
                                  onChange={this.props.setClientData} text={this.props.client.data.name}/>
