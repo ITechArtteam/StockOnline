@@ -3,7 +3,7 @@ import React from "react";
 class EditStock extends React.Component {
     render() {
         return (
-            <div className="container">
+            <div className="row">
                 <form className="form-horizontal" id="stock_form">
                     <div className="form-group">
                         <label htmlFor="stock_owner" className="col-sm-2 control-label">Владелец</label>

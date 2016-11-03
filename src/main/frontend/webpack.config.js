@@ -10,7 +10,10 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: "babel",
-                exclude: [/node_modules/, /public/]
+                exclude: [/node_modules/, /public/],
+                query: {
+                    presets: ['es2015', 'stage-0', 'react']
+                }
             },
             {
                 test: /\.css$/,
@@ -36,7 +39,10 @@ module.exports = {
             {
                 test: /\.jsx$/,
                 loader: "react-hot!babel",
-                exclude: [/node_modules/, /public/]
+                exclude: [/node_modules/, /public/],
+                query: {
+                    presets: ['es2015', 'stage-0', 'react']
+                }
             },
             {
                 test: /\.json$/,
