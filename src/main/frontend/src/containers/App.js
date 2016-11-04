@@ -6,7 +6,6 @@ class App extends React.Component {
     render() {
         return (
             <div className="container">
-
                 <div className="row">
                     <div className="col-lg-4 col-md-4">
                         <Navigation />

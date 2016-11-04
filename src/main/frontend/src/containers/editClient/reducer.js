@@ -1,4 +1,4 @@
-import * as event from "../constants/client";
+import * as event from "./constants";
 
 const initUserState = {
     data: {
@@ -20,7 +20,7 @@ const initUserState = {
     }
 };
 
-function client(state = initUserState, action) {
+export default function (state = initUserState, action) {
     switch (action.type) {
         case event.ADD_CLIENT_REQUEST:
             return {
@@ -39,8 +39,8 @@ function client(state = initUserState, action) {
             };
         case event.SET_FIELD:
             return {
-                ...state, client: {
-                    ...state.client, [action.data.nameField]: action.data.value
+                ...state, data: {
+                    ...state.data, [action.data.nameField]: action.data.value
                 }
             };
         case event.GET_CLIENT_REQUEST:
@@ -60,4 +60,3 @@ function client(state = initUserState, action) {
 }
 
 
-export default client;

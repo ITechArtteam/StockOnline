@@ -8,6 +8,8 @@ import com.itechart.stockOnline.model.Address;
 import com.itechart.stockOnline.model.ClientCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.ClientDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/customer")
 public class Client {
+
+    private static final Logger logger = LoggerFactory.getLogger(Client.class);
+
 
     @Autowired
     private ClientDao clientDao;
@@ -44,6 +49,7 @@ public class Client {
     @RequestMapping(method = RequestMethod.POST)
     @Transactional
     public String addClient(@RequestBody ClientDto client){
+        logger.debug("REST request. Path:/customer/  method: POST Request body {}", client);
         ClientCompany company = new ClientCompany();
         User boss = new User();
         boss.setUsername(client.getBossLogin());

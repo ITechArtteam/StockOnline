@@ -6,4 +6,4 @@ export function signInUser(credentials) {
     }
 }
 
-export {client} from "./client";
+export {client} from "../containers/editClient";

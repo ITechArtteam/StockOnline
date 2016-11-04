@@ -8,7 +8,7 @@ class SimpleInput extends React.Component {
                 <label htmlFor={this.props.id} className="col-sm-2 control-label">{this.props.label}</label>
                 <div className="col-sm-10">
                     <input type={this.props.type} onChange={this.props.onChange} ref="input"
-                           className="form-control" id={this.props.id} autoComplete="false" value={this.props.text}/>
+                           className="form-control" id={this.props.id} autoComplete="false" value={this.props.value}/>
                 </div>
             </div>
         )

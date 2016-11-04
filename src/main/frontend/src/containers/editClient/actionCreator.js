@@ -1,4 +1,4 @@
-import * as event from "../constants/client";
+import * as event from "./constants";
 import * as axios from "axios";
 
 function getClientDataRequest() {
@@ -80,7 +80,7 @@ function setData(nameField, value) {
 }
 
 
-export const client = {
+export default {
     getClient,
     setData,
     addClient

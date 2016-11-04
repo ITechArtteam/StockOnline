@@ -1,14 +1,10 @@
 package com.itechart.stockOnline.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class ClientDto {
     private String name;
     private String adminLogin;
-    @JsonIgnore
     private String adminPassword;
     private String bossLogin;
-    @JsonIgnore
     private String bossPassword;
     private String country;
     private String city;
@@ -99,5 +95,21 @@ public class ClientDto {
 
     public void setRoom(int room) {
         this.room = room;
+    }
+
+    @Override
+    public String toString() {
+        return "\n\rClientDto{" +
+                "name='" + name + '\'' +
+                ", adminLogin='" + adminLogin + '\'' +
+                ", adminPassword='" + adminPassword + '\'' +
+                ", bossLogin='" + bossLogin + '\'' +
+                ", bossPassword='" + bossPassword + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", home=" + home +
+                ", room=" + room +
+                '}';
     }
 }
