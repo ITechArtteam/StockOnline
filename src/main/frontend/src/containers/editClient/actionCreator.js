@@ -24,7 +24,6 @@ function getClientDataFail(error) {
 function getClient(clientName) {
     return function (dispatch) {
         dispatch(getClientDataRequest());
-
         return axios
             .get(`/customer/${clientName}`)
             .then(json =>
@@ -68,6 +67,16 @@ function addClient(client) {
     }
 }
 
+function setInputErrorMessage(nameField, message) {
+    return {
+        type: event.SET_INPUT_ERROR_MESSAGE,
+        data: {
+            nameField,
+            message
+        }
+    }
+}
+
 
 function setData(nameField, value) {
     return {
@@ -83,5 +92,6 @@ function setData(nameField, value) {
 export default {
     getClient,
     setData,
-    addClient
+    addClient,
+    setInputErrorMessage
 };
