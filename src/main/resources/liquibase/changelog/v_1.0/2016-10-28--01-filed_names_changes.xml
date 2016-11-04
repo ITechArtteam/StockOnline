@@ -10,7 +10,6 @@
 
     <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
 
-    <!--DROP FOKEIGN KEY CONSTRAINTS-->
     <changeSet id="field_names_changes-01" author="MaximMaltsev94">
         <addColumn tableName="product">
             <column name="count" type="INT">
