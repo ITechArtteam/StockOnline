@@ -40,7 +40,7 @@ ReactDOM.render(
                 <IndexRedirect to="login" />
                 <Route path="/login" component={Login}/>
                 <Route path="/clients" component={Clients}/>
-                <Route path="/client/:name" component={EditClient}/>
+                <Route path="/client(/:name)" component={EditClient}/>
                 <Route path="/reports" component={Reports}/>
                 <Route path="/report/income" component={ReportIncome}/>
                 <Route path="/report/standard" component={ReportStandard}/>

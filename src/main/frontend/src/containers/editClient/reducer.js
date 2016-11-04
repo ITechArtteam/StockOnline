@@ -13,6 +13,18 @@ const initUserState = {
         home: "",
         room: ""
     },
+    inputErrors: {
+        name: "",
+        adminLogin: "",
+        adminPassword: "",
+        bossLogin: "",
+        bossPassword: "",
+        country: "",
+        city: "",
+        street: "",
+        home: "",
+        room: ""
+    },
     frontend: {
         isFetch: false,
         isFail: false,
@@ -41,6 +53,12 @@ export default function (state = initUserState, action) {
             return {
                 ...state, data: {
                     ...state.data, [action.data.nameField]: action.data.value
+                }
+            };
+        case event.SET_INPUT_ERROR_MESSAGE:
+            return {
+                ...state, inputErrors: {
+                    ...state.inputErrors, [action.data.nameField]: action.data.message
                 }
             };
         case event.GET_CLIENT_REQUEST:
