@@ -9,3 +9,15 @@
     font-style: italic;
     font-size: 10pt;
 }
+
+.iconShow{
+    float: right;
+}
+
+span {
+    margin-top: 10px;
+    margin-left: -40px;
+    cursor: pointer;
+    color: #555;
+
+}

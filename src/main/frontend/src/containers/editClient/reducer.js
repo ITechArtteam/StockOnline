@@ -5,8 +5,10 @@ const initUserState = {
         name: "",
         adminLogin: "",
         adminPassword: "",
+        adminPasswordVisibility: true,
         bossLogin: "",
         bossPassword: "",
+        bossPasswordVisibility: true,
         country: "",
         city: "",
         street: "",
@@ -71,6 +73,12 @@ export default function (state = initUserState, action) {
                 ...state,
                 frontend: {isFetch: false, isFail: false, error: ""},
                 data: action.data
+            };
+        case event.SET_VISIBILITY_PASSWORD:
+            return {
+                ...state, data: {
+                    ...state.data, [action.data.nameField]: !state.data[action.data.nameField]
+                }
             };
         default:
             return state;

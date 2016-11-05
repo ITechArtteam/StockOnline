@@ -77,6 +77,15 @@ function setInputErrorMessage(nameField, message) {
     }
 }
 
+function setVisibilityPassword(nameField) {
+    return {
+        type: event.SET_VISIBILITY_PASSWORD,
+        data: {
+            nameField
+        }
+    }
+}
+
 
 function setData(nameField, value) {
     return {
@@ -93,5 +102,6 @@ export default {
     getClient,
     setData,
     addClient,
-    setInputErrorMessage
+    setInputErrorMessage,
+    setVisibilityPassword
 };
