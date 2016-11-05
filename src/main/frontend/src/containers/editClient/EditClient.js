@@ -14,9 +14,9 @@ class EditClient extends React.Component {
     validate(e, patternType) {
         this.props.setInputError(e, "");
         switch (patternType) {
-            case "SimpleName": {
+            case "Login": {
                 if (!new RegExp("^[a-z_а-я]*$", "iu").test(e.target.value)) {
-                    this.props.setInputError(e, "Только буквы и подчеркивание.");
+                    this.props.setInputError(e, "Только буквы и символ подчеркивание \"_\".");
                 }
                 break;
             }
@@ -44,15 +44,15 @@ class EditClient extends React.Component {
     render() {
         return (
             <div className="row">
-                <h3> Редактирование клиентов.</h3>
-
-                <form className="form-horizontal" id="client_form" autoComplete="off">
+                <form id="client_form"
+                    className="form-horizontal col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                    <h4> Данные о клиенте:</h4>
                     <SimpleInput id="name" label="Название компании" onChange={this.validate}
                                  value={this.props.client.data.name}
-                                 errorValue={this.props.client.inputErrors.name} patternType="SimpleName"/>
+                                 errorValue={this.props.client.inputErrors.name}/>
                     <SimpleInput id="adminLogin" label="Логин администратора"
                                  onChange={this.validate} value={this.props.client.data.adminLogin}
-                                 errorValue={this.props.client.inputErrors.adminLogin} patternType="SimpleName"/>
+                                 errorValue={this.props.client.inputErrors.adminLogin} patternType="Login"/>
                     <SimpleInput id="adminPassword" label="Пароль администратора"
                                  onChange={this.validate} value={this.props.client.data.adminPassword}
                                  isPassword={true}
@@ -60,12 +60,13 @@ class EditClient extends React.Component {
                                  swapStatePassword={this.swapStatePassword}/>
                     <SimpleInput id="bossLogin" label="Логин управляющего"
                                  onChange={this.validate} value={this.props.client.data.bossLogin}
-                                 errorValue={this.props.client.inputErrors.bossLogin} patternType="SimpleName"/>
+                                 errorValue={this.props.client.inputErrors.bossLogin} patternType="Login"/>
                     <SimpleInput id="bossPassword" label="Пароль управляющего"
                                  onChange={this.validate} value={this.props.client.data.bossPassword}
                                  isPassword={true}
                                  isVisiblePassword={this.props.client.data.bossPasswordVisibility}
                                  swapStatePassword={this.swapStatePassword}/>
+                    <h4>Адрес компании:</h4>
                     <SimpleInput id="country" label="Страна"
                                  onChange={this.validate} value={this.props.client.data.country}
                                  errorValue={this.props.client.inputErrors.country} patternType="SimpleName"/>
@@ -81,7 +82,7 @@ class EditClient extends React.Component {
                     <SimpleInput id="room" label="Квартира"
                                  onChange={this.validate} value={this.props.client.data.room}
                                  errorValue={this.props.client.inputErrors.room} patternType="Integer"/>
-                    <div className="btn-group col-sm-offset-3 col-md-offset-3 col-lg-offset-3" role="group">
+                    <div className="btn-group" role="group">
                         <button type="button" className="btn btn-primary"
                                 onClick={()=>this.props.addClient(this.props.client)}>Сохранить
                         </button>

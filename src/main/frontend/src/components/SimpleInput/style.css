@@ -15,9 +15,8 @@
 }
 
 span {
-    margin-top: 10px;
-    margin-left: -40px;
     cursor: pointer;
     color: #555;
-
+    float: right;
+    margin: -25px 10px 0;
 }
