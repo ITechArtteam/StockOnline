@@ -4,24 +4,18 @@ public class ClientDto {
     private String name;
     private String adminLogin;
     private String adminPassword;
-    private String bossLogin;
-    private String bossPassword;
+    private String email;
     private String country;
     private String city;
     private String street;
     private int home;
     private int room;
 
-    public boolean check(){
-        return true;
-    }
-
-
-    public String getname() {
+    public String getName() {
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -41,20 +35,12 @@ public class ClientDto {
         this.adminPassword = adminPassword;
     }
 
-    public String getBossLogin() {
-        return bossLogin;
+    public String getEmail() {
+        return email;
     }
 
-    public void setBossLogin(String bossLogin) {
-        this.bossLogin = bossLogin;
-    }
-
-    public String getBossPassword() {
-        return bossPassword;
-    }
-
-    public void setBossPassword(String bossPassword) {
-        this.bossPassword = bossPassword;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCountry() {
@@ -99,12 +85,11 @@ public class ClientDto {
 
     @Override
     public String toString() {
-        return "\n\rClientDto{" +
+        return "ClientDto{" +
                 "name='" + name + '\'' +
                 ", adminLogin='" + adminLogin + '\'' +
                 ", adminPassword='" + adminPassword + '\'' +
-                ", bossLogin='" + bossLogin + '\'' +
-                ", bossPassword='" + bossPassword + '\'' +
+                ", email='" + email + '\'' +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +

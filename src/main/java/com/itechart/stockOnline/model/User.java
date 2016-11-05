@@ -2,6 +2,7 @@ package com.itechart.stockOnline.model;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.sql.Date;
 
 @Entity
 @Table(name = "users")
@@ -11,17 +12,32 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(length = 20)
+    private String name;
 
-    @Column(name = "password")
+    @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "boss")
-    private Set<ClientCompany> bosses;
+    @Column(length = 20)
+    private String surname;
+
+    @Column(length = 20)
+    private String patronymic;
+
+    private Date birthday;
+
+    @Column(length = 50, nullable = false)
+    private String email;
+
+    @Column(length = 20, nullable = false)
+    private String login;
 
     @OneToMany(mappedBy = "admin")
     private Set<ClientCompany> admins;
+
+    @ManyToOne
+    @JoinColumn(name = "address", nullable = false)
+    private Address address;
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
@@ -34,14 +50,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -60,10 +68,6 @@ public class User {
         this.roles = roles;
     }
 
-    public Set<ClientCompany> getBosses() { return bosses; }
-
-    public void setBosses(Set<ClientCompany> bosses) { this.bosses = bosses; }
-
     public Set<ClientCompany> getAdmins() {
         return admins;
     }
@@ -72,14 +76,75 @@ public class User {
         this.admins = admins;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
-                ", bosses=" + bosses +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
                 ", admins=" + admins +
+                ", address=" + address +
                 ", roles=" + roles +
                 '}';
     }

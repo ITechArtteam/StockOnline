@@ -46,27 +46,10 @@ class EditClient extends React.Component {
             <div className="row">
                 <form id="client_form"
                     className="form-horizontal col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-                    <h4> Данные о клиенте:</h4>
+                    <h4>Данные о компании:</h4>
                     <SimpleInput id="name" label="Название компании" onChange={this.validate}
                                  value={this.props.client.data.name}
                                  errorValue={this.props.client.inputErrors.name}/>
-                    <SimpleInput id="adminLogin" label="Логин администратора"
-                                 onChange={this.validate} value={this.props.client.data.adminLogin}
-                                 errorValue={this.props.client.inputErrors.adminLogin} patternType="Login"/>
-                    <SimpleInput id="adminPassword" label="Пароль администратора"
-                                 onChange={this.validate} value={this.props.client.data.adminPassword}
-                                 isPassword={true}
-                                 isVisiblePassword={this.props.client.data.adminPasswordVisibility}
-                                 swapStatePassword={this.swapStatePassword}/>
-                    <SimpleInput id="bossLogin" label="Логин управляющего"
-                                 onChange={this.validate} value={this.props.client.data.bossLogin}
-                                 errorValue={this.props.client.inputErrors.bossLogin} patternType="Login"/>
-                    <SimpleInput id="bossPassword" label="Пароль управляющего"
-                                 onChange={this.validate} value={this.props.client.data.bossPassword}
-                                 isPassword={true}
-                                 isVisiblePassword={this.props.client.data.bossPasswordVisibility}
-                                 swapStatePassword={this.swapStatePassword}/>
-                    <h4>Адрес компании:</h4>
                     <SimpleInput id="country" label="Страна"
                                  onChange={this.validate} value={this.props.client.data.country}
                                  errorValue={this.props.client.inputErrors.country} patternType="SimpleName"/>
@@ -76,12 +59,24 @@ class EditClient extends React.Component {
                     <SimpleInput id="street" label="Улица"
                                  onChange={this.validate} value={this.props.client.data.street}
                                  errorValue={this.props.client.inputErrors.street} patternType="SimpleName"/>
-                    <SimpleInput id="home" label="Дом"
+                    <SimpleInput id="home" label="Дом" length={7}
                                  onChange={this.validate} value={this.props.client.data.home}
                                  errorValue={this.props.client.inputErrors.home} patternType="Integer"/>
-                    <SimpleInput id="room" label="Квартира"
+                    <SimpleInput id="room" label="Квартира" length={7}
                                  onChange={this.validate} value={this.props.client.data.room}
                                  errorValue={this.props.client.inputErrors.room} patternType="Integer"/>
+                    <h4>Данные учетной записи:</h4>
+                    <SimpleInput id="adminEmail" label="Email администратора"
+                                 onChange={this.validate} value={this.props.client.data.adminEmail}
+                                 errorValue={this.props.client.inputErrors.adminEmail} patternType="Email"/>
+                    <SimpleInput id="adminLogin" label="Логин администратора"
+                                 onChange={this.validate} value={this.props.client.data.adminLogin}
+                                 errorValue={this.props.client.inputErrors.adminLogin} patternType="Login"/>
+                    <SimpleInput id="adminPassword" label="Пароль администратора"
+                                 onChange={this.validate} value={this.props.client.data.adminPassword}
+                                 isPassword={true}
+                                 isVisiblePassword={this.props.client.data.adminPasswordVisibility}
+                                 swapStatePassword={this.swapStatePassword}/>
                     <div className="btn-group" role="group">
                         <button type="button" className="btn btn-primary"
                                 onClick={()=>this.props.addClient(this.props.client)}>Сохранить

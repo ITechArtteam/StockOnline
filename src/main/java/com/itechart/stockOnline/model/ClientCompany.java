@@ -18,10 +18,6 @@ public class ClientCompany {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "boss")
-    private User boss;
-
-    @ManyToOne
     @JoinColumn(name = "admin")
     private User admin;
 
@@ -53,9 +49,6 @@ public class ClientCompany {
     public Set<Waybill> getReceiverCompanies() { return receiverCompanies; }
     public void setReceiverCompanies(Set<Waybill> receiverCompanies) { this.receiverCompanies = receiverCompanies; }
 
-    public User getBoss() { return boss; }
-    public void setBoss(User boss) { this.boss = boss; }
-
     public User getAdmin() {
         return admin;
     }
@@ -69,7 +62,6 @@ public class ClientCompany {
         return "ClientCompany{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", boss=" + boss +
                 ", admin=" + admin +
                 ", address=" + address +
                 ", senderCompanies=" + senderCompanies +

@@ -41,6 +41,9 @@ public class Address {
     @OneToMany(mappedBy = "address")
     private Set<ClientCompany> clientCompanies;
 
+    @OneToMany(mappedBy = "address")
+    private Set<User> user;
+
     public Address() {    }
 
     public Integer getId() { return id; }
@@ -67,17 +70,26 @@ public class Address {
     public Set<ClientCompany> getClientCompanies() { return clientCompanies;  }
     public void setClientCompanies(Set<ClientCompany> clientCompanies) { this.clientCompanies = clientCompanies; }
 
+    public Set<User> getUser() {
+        return user;
+    }
+
+    public void setUser(Set<User> user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "AddressDao{" +
+        return "Address{" +
                 "id=" + id +
-                ", country name='" + countryName + '\'' +
-                ", city name='" + cityName + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", cityName='" + cityName + '\'' +
                 ", street='" + street + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", stocks=" + stocks +
                 ", clientCompanies=" + clientCompanies +
+                ", user=" + user +
                 '}';
     }
 }

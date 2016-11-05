@@ -9,7 +9,7 @@ class SimpleInput extends React.Component {
 
                 <input type={this.props.isPassword && !this.props.isVisiblePassword ? "password" : "text"}
                        value={this.props.value} autoComplete="off" placeholder={this.props.label}
-                       className="form-control" id={this.props.id} maxLength="20"
+                       className="form-control" id={this.props.id} maxLength={this.props.length}
                        onChange={(e) => {
                            this.props.onChange(e, this.props.patternType)
                        }}
@@ -30,6 +30,7 @@ SimpleInput.propTypes = {
     label: React.PropTypes.string.isRequired,
     isPassword: React.PropTypes.bool,
     value: React.PropTypes.string,
+    length: React.PropTypes.number,
     id: React.PropTypes.string.isRequired,
     patternType: React.PropTypes.string,
     errorValue: React.PropTypes.string,
@@ -39,6 +40,7 @@ SimpleInput.propTypes = {
 SimpleInput.defaultProps = {
     isPassword: false,
     errorValue: "",
-    isVisiblePassword: false
+    isVisiblePassword: false,
+    length: 20
 };
 export default SimpleInput;

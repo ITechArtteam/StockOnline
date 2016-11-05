@@ -2,7 +2,6 @@ package com.itechart.stockOnline.controller;
 
 import com.itechart.stockOnline.service.SecurityService;
 import com.itechart.stockOnline.service.UserService;
-import com.itechart.stockOnline.validator.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,6 @@ public class UserController {
 
     @Autowired
     private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
 
     @RequestMapping(value="/")
     public String reactLogin() {

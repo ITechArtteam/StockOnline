@@ -3,12 +3,10 @@ import * as event from "./constants";
 const initUserState = {
     data: {
         name: "",
+        adminEmail: "",
         adminLogin: "",
         adminPassword: "",
         adminPasswordVisibility: true,
-        bossLogin: "",
-        bossPassword: "",
-        bossPasswordVisibility: true,
         country: "",
         city: "",
         street: "",
@@ -17,10 +15,9 @@ const initUserState = {
     },
     inputErrors: {
         name: "",
+        adminEmail: "",
         adminLogin: "",
         adminPassword: "",
-        bossLogin: "",
-        bossPassword: "",
         country: "",
         city: "",
         street: "",

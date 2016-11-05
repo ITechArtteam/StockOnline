@@ -2,7 +2,7 @@ package com.itechart.stockOnline.service;
 
 public interface SecurityService {
 
-    String findLoggedInUsername();
+    String findLoggedInName();
 
-    void autoLogin(String username, String password);
+    void autoLogin(String name, String password);
 }
