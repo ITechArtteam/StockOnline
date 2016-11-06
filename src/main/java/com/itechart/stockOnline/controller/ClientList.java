@@ -1,7 +1,7 @@
 package com.itechart.stockOnline.controller;
 
-import com.itechart.stockOnline.dao.ClientDao;
-import com.itechart.stockOnline.model.ClientCompany;
+import com.itechart.stockOnline.dao.StockOwnerCompanyDao;
+import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.dto.ClientDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +22,11 @@ public class ClientList {
     private final static Logger Logger = LoggerFactory.getLogger(ClientList.class);
 
     @Autowired
-    private ClientDao clientDao;
+    private StockOwnerCompanyDao stockOwnerCompanyDao;
 
     @RequestMapping(value = "/{pageNumber}/{recordCount}", method = RequestMethod.GET)
     public List<ClientDto> getClientList(@PathVariable Integer pageNumber, @PathVariable Integer recordCount) {
-        Page<ClientCompany> clientCompanyPage = clientDao.findAll(new PageRequest(pageNumber, recordCount));
+        Page<StockOwnerCompany> clientCompanyPage = stockOwnerCompanyDao.findAll(new PageRequest(pageNumber, recordCount));
         List<ClientDto> clientDtos = new ArrayList<>();
         clientCompanyPage.forEach((clientCompany) -> {
             ClientDto client = new ClientDto();
