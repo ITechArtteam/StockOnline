@@ -6,7 +6,6 @@ const initUserState = {
         adminEmail: "",
         adminLogin: "",
         adminPassword: "",
-        adminPasswordVisibility: true,
         country: "",
         city: "",
         street: "",
@@ -25,6 +24,7 @@ const initUserState = {
         room: ""
     },
     frontend: {
+        adminPasswordVisibility: true,
         showAlertPopup: false,
         typeAlertPopup: "danger",
         messageAlertPop: "ошибка",
@@ -38,18 +38,21 @@ export default function (state = initUserState, action) {
     switch (action.type) {
         case event.ADD_CLIENT_REQUEST:
             return {
-                ...state,
-                frontend: {isFetch: true, isFail: false, error: ""}
+                ...state
             };
         case event.ADD_CLIENT_SUCCESS:
             return {
-                ...state,
-                frontend: {isFetch: false, isFail: false, error: ""},
+                ...state, frontend: {
+                    ...state.frontend,
+                    showAlertPopup: true, type: "success", messageAlertPop: "Клиен сохранен."
+                }
             };
         case event.ADD_CLIENT_FAIL:
             return {
-                ...state,
-                frontend: {isFetch: false, isFail: true, error: action.error}
+                ...state, frontend: {
+                    ...state.frontend,
+                    showAlertPopup: true, type: "danger", messageAlertPop: "Произошла ошибка."
+                }
             };
         case event.SET_FIELD:
             return {
@@ -65,19 +68,24 @@ export default function (state = initUserState, action) {
             };
         case event.GET_CLIENT_REQUEST:
             return {
-                ...state,
-                frontend: {isFetch: true, isFail: false, error: ""}
+                ...state
             };
         case event.GET_CLIENT_SUCCESS:
             return {
                 ...state,
-                frontend: {isFetch: false, isFail: false, error: ""},
                 data: action.data
+            };
+        case event.GET_CLIENT_FAIL:
+            return {
+                ...state, frontend: {
+                    ...state.frontend,
+                    showAlertPopup: true, type: "danger", messageAlertPop: "Клиент не найден."
+                }
             };
         case event.SET_VISIBILITY_PASSWORD:
             return {
-                ...state, data: {
-                    ...state.data, [action.data.nameField]: !state.data[action.data.nameField]
+                ...state, frontend: {
+                    ...state.frontend, [action.data.nameField]: !state.frontend[action.data.nameField]
                 }
             };
         case event.SHOW_ALERT_POPUP:

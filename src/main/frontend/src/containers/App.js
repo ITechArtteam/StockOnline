@@ -7,10 +7,10 @@ class App extends React.Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-4 col-md-4">
+                    <div className="col-sm-4 col-md-4 col-lg-4">
                         <Navigation />
                     </div>
-                    <div className="col-lg-8 col-md-8">
+                    <div className="col-sm-8 col-md-8 col-lg-8">
                         {this.props.children}
                     </div>
                 </div>

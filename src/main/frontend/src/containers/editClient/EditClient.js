@@ -98,9 +98,7 @@ class EditClient extends React.Component {
             this.props.setInputError("adminEmail", "Введите email.");
             return;
         }
-        console.log(this.refs);
-        //TODO
-        //this.props.addClient(this.props.client.data);
+        this.props.addClient(this.props.client.data);
     }
 
     render() {
@@ -179,7 +177,7 @@ class EditClient extends React.Component {
                                  value={this.props.client.data.adminPassword}
                                  errorValue={this.props.client.inputErrors.adminPassword}
                                  isPassword={true}
-                                 isVisiblePassword={this.props.client.data.adminPasswordVisibility}
+                                 isVisiblePassword={this.props.client.frontend.adminPasswordVisibility}
                                  swapStatePassword={this.swapStatePassword}/>
 
                     <div className="btn-group" role="group">

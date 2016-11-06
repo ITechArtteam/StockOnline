@@ -1,5 +1,6 @@
 package com.itechart.stockOnline.model;
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.Set;
 import java.sql.Date;
@@ -32,8 +33,12 @@ public class User {
     @Column(length = 20, nullable = false)
     private String login;
 
+    @ManyToOne
+    @JoinColumn(name = "company", nullable = true)
+    private StockOwnerCompany stockOwnerCompany;
+
     @OneToMany(mappedBy = "admin")
-    private Set<ClientCompany> admins;
+    private Set<StockOwnerCompany> admins;
 
     @ManyToOne
     @JoinColumn(name = "address", nullable = false)
@@ -43,6 +48,10 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    public User(){
+        address = new Address();
+    }
 
     public Integer getId() {
         return id;
@@ -66,14 +75,6 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public Set<ClientCompany> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(Set<ClientCompany> admins) {
-        this.admins = admins;
     }
 
     public String getName() {
@@ -132,6 +133,22 @@ public class User {
         this.address = address;
     }
 
+    public StockOwnerCompany getStockOwnerCompany() {
+        return stockOwnerCompany;
+    }
+
+    public void setStockOwnerCompany(StockOwnerCompany stockOwnerCompany) {
+        this.stockOwnerCompany = stockOwnerCompany;
+    }
+
+    public Set<StockOwnerCompany> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(Set<StockOwnerCompany> admins) {
+        this.admins = admins;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -143,6 +160,7 @@ public class User {
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
+                ", stockOwnerCompany=" + stockOwnerCompany +
                 ", admins=" + admins +
                 ", address=" + address +
                 ", roles=" + roles +

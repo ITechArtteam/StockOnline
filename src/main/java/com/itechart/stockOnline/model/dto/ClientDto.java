@@ -4,7 +4,7 @@ public class ClientDto {
     private String name;
     private String adminLogin;
     private String adminPassword;
-    private String email;
+    private String adminEmail;
     private String country;
     private String city;
     private String street;
@@ -33,14 +33,6 @@ public class ClientDto {
 
     public void setAdminPassword(String adminPassword) {
         this.adminPassword = adminPassword;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getCountry() {
@@ -83,13 +75,21 @@ public class ClientDto {
         this.room = room;
     }
 
+    public String getAdminEmail() {
+        return adminEmail;
+    }
+
+    public void setAdminEmail(String adminEmail) {
+        this.adminEmail = adminEmail;
+    }
+
     @Override
-    public String toString() {
+public String toString() {
         return "ClientDto{" +
                 "name='" + name + '\'' +
                 ", adminLogin='" + adminLogin + '\'' +
                 ", adminPassword='" + adminPassword + '\'' +
-                ", email='" + email + '\'' +
+                ", adminEmail='" + adminEmail + '\'' +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
