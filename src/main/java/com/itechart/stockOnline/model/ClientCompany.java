@@ -1,5 +1,7 @@
 package com.itechart.stockOnline.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,13 +15,10 @@ public class ClientCompany {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonProperty("name")
     @Column(name = "name")
 //    @Size(max=50, message="Number of letters in name < 50")
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "admin")
-    private User admin;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
@@ -49,20 +48,11 @@ public class ClientCompany {
     public Set<Waybill> getReceiverCompanies() { return receiverCompanies; }
     public void setReceiverCompanies(Set<Waybill> receiverCompanies) { this.receiverCompanies = receiverCompanies; }
 
-    public User getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(User admin) {
-        this.admin = admin;
-    }
-
     @Override
     public String toString() {
         return "ClientCompany{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", admin=" + admin +
                 ", address=" + address +
                 ", senderCompanies=" + senderCompanies +
                 ", receiverCompanies=" + receiverCompanies +

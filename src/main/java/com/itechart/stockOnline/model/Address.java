@@ -22,11 +22,12 @@ public class Address {
 //    @Size(max=50, message="Number of letters in city < 50")
     private String cityName;
 
-
-    @Column(name = "street")
 //    @Size(max=50, message="Number of letters in street < 50")
     private String street;
 
+    private int home;
+
+    private int room;
 
     @Column(name = "latitude")
     private Float latitude;
@@ -40,6 +41,9 @@ public class Address {
 
     @OneToMany(mappedBy = "address")
     private Set<ClientCompany> clientCompanies;
+
+    @OneToMany(mappedBy = "address")
+    private Set<StockOwnerCompany> stockOwnerCompanies;
 
     @OneToMany(mappedBy = "address")
     private Set<User> user;
@@ -78,6 +82,14 @@ public class Address {
         this.user = user;
     }
 
+    public int getHome() {
+        return home;
+    }
+
+    public void setHome(int home) {
+        this.home = home;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
@@ -85,11 +97,29 @@ public class Address {
                 ", countryName='" + countryName + '\'' +
                 ", cityName='" + cityName + '\'' +
                 ", street='" + street + '\'' +
+                ", home=" + home +
+                ", room=" + room +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", stocks=" + stocks +
                 ", clientCompanies=" + clientCompanies +
                 ", user=" + user +
                 '}';
+    }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
+    public Set<StockOwnerCompany> getStockOwnerCompanies() {
+        return stockOwnerCompanies;
+    }
+
+    public void setStockOwnerCompanies(Set<StockOwnerCompany> stockOwnerCompanies) {
+        this.stockOwnerCompanies = stockOwnerCompanies;
     }
 }

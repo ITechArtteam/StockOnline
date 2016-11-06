@@ -51,6 +51,6 @@ SimpleInput.defaultProps = {
     errorValue: "",
     isVisiblePassword: false,
     length: 20,
-
+    onBlur: ()=>{}
 };
 export default SimpleInput;
