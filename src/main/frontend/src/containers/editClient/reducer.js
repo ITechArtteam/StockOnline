@@ -25,6 +25,9 @@ const initUserState = {
         room: ""
     },
     frontend: {
+        showAlertPopup: false,
+        typeAlertPopup: "danger",
+        messageAlertPop: "ошибка",
         isFetch: false,
         isFail: false,
         error: ""
@@ -75,6 +78,19 @@ export default function (state = initUserState, action) {
             return {
                 ...state, data: {
                     ...state.data, [action.data.nameField]: !state.data[action.data.nameField]
+                }
+            };
+        case event.SHOW_ALERT_POPUP:
+            return {
+                ...state, frontend: {
+                    ...state.frontend,
+                    showAlertPopup: true, type: action.data.type, messageAlertPop: action.data.message
+                }
+            };
+        case event.CLOSE_ALERT_POPUP:
+            return {
+                ...state, frontend: {
+                    ...state.frontend, showAlertPopup: false
                 }
             };
         default:

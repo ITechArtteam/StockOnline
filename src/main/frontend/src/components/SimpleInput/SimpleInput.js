@@ -7,12 +7,20 @@ class SimpleInput extends React.Component {
         return (
             <div className="form-group">
 
-                <input type={this.props.isPassword && !this.props.isVisiblePassword ? "password" : "text"}
-                       value={this.props.value} autoComplete="off" placeholder={this.props.label}
-                       className="form-control" id={this.props.id} maxLength={this.props.length}
-                       onChange={(e) => {
-                           this.props.onChange(e, this.props.patternType)
-                       }}
+                <input
+                    type={this.props.isPassword && !this.props.isVisiblePassword ? "password" : "text"}
+                    value={this.props.value}
+                    autoComplete="off"
+                    placeholder={this.props.label}
+                    className="form-control"
+                    id={this.props.id}
+                    maxLength={this.props.length}
+                    onChange={(e) => {
+                        this.props.onChange(e, this.props.patternType)
+                    }}
+                    onBlur={(e) => {
+                        this.props.onBlur(e, this.props.patternType)
+                    }}
                 />
                 <label className={this.props.errorValue == "" ? "none" : "error"}>{this.props.errorValue}</label>
                 <span id={this.props.id + "Visibility"} onClick={this.props.swapStatePassword}
@@ -26,6 +34,7 @@ class SimpleInput extends React.Component {
 
 SimpleInput.propTypes = {
     onChange: React.PropTypes.func.isRequired,
+    onBlur: React.PropTypes.func,
     swapStatePassword: React.PropTypes.func,
     label: React.PropTypes.string.isRequired,
     isPassword: React.PropTypes.bool,
@@ -41,6 +50,7 @@ SimpleInput.defaultProps = {
     isPassword: false,
     errorValue: "",
     isVisiblePassword: false,
-    length: 20
+    length: 20,
+
 };
 export default SimpleInput;

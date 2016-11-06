@@ -97,11 +97,29 @@ function setData(nameField, value) {
     }
 }
 
+function showAlertPopup(type, message) {
+    return {
+        type: event.SHOW_ALERT_POPUP,
+        data: {
+            type,
+            message
+        }
+    }
+}
+
+function closeAlertPopup() {
+    return {
+        type: event.CLOSE_ALERT_POPUP
+    }
+}
+
 
 export default {
     getClient,
     setData,
     addClient,
     setInputErrorMessage,
-    setVisibilityPassword
+    setVisibilityPassword,
+    showAlertPopup,
+    closeAlertPopup
 };

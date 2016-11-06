@@ -1,0 +1,20 @@
+.none {
+    display: none;
+}
+
+.alert {
+    position: fixed;
+    top: 150px;
+    width: 300px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.close {
+    margin: 0;
+}
+
+.message {
+    margin-top: 20px;
+    word-wrap: break-word;
+}
