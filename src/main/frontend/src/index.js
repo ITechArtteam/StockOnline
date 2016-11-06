@@ -6,7 +6,7 @@ import configureStore from './store/configureStore'
 import App from './containers/App'
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
-import Clients from "./containers/Clients";
+import Clients from "./containers/systemClients/Clients";
 import EditClient from "./containers/editClient/EditClient";
 import Reports from "./containers/Reports";
 import ReportIncome from "./containers/ReportIncome";
