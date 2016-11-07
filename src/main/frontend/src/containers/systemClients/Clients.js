@@ -1,6 +1,7 @@
 import React from 'react';
 import {clientListActionCreator} from "./index";
 import {connect} from 'react-redux';
+import ClientTable from '../../components/ClientsTable/ClientsTable'
 
 class Clients extends React.Component {
     componentWillMount() {
@@ -8,13 +9,9 @@ class Clients extends React.Component {
     }
 
     render() {
-        // console.log(this.props.clientList);
-        var clientListElements = this.props.clientList.map((item, index)=> {
-            return <p key={index}>{item.name}</p>;
-        });
         return (
-            <div>Client
-                {clientListElements}
+            <div className="row">
+                <ClientTable clientList={this.props.clientList}/>
             </div>
         )
     }

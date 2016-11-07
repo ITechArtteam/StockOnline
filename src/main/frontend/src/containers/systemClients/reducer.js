@@ -1,7 +1,7 @@
 import * as event from './constants'
 
 var initClientListState = {
-    clientList: [{name: 'Горгаз'}, {name: 'Газпром'}, {name: 'Макдональдс'}],
+    clientList: [],
     frontend: {
         pageNumber: 1,
         recordsCount: 10

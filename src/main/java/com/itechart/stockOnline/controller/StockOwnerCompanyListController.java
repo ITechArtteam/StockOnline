@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/stockOwners")
 public class StockOwnerCompanyListController {
-    private final static Logger Logger = LoggerFactory.getLogger(StockOwnerCompanyListController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(StockOwnerCompanyListController.class);
 
     @Autowired
     private StockOwnerCompanyDao stockOwnerCompanyDao;
@@ -30,19 +30,10 @@ public class StockOwnerCompanyListController {
 
     @RequestMapping(value = "/page/{pageNumber}/limit/{recordCount}", method = RequestMethod.GET)
     public List<StockOwnerCompanyBriefDto> getClientList(@PathVariable Integer pageNumber, @PathVariable Integer recordCount) {
-        Page<StockOwnerCompany> clientCompanyPage = stockOwnerCompanyDao.findAll(new PageRequest(pageNumber, recordCount));
+        LOGGER.info("REST request. Path:/stockOwners/page{}/limit{}  method: GET", pageNumber, recordCount);
+        Page<StockOwnerCompany> clientCompanyPage = stockOwnerCompanyDao.findAll(new PageRequest(pageNumber - 1, recordCount));
         List<StockOwnerCompanyBriefDto> clientDtoList = new ArrayList<>();
         clientCompanyPage.forEach((stockOwnerCompany) -> clientDtoList.add(clientDtoConverter.toStockOwnerCompanyBriefDto(stockOwnerCompany)));
-
-        StockOwnerCompanyBriefDto d = new StockOwnerCompanyBriefDto();
-        d.setName("111");
-        clientDtoList.add(d);
-        d = new StockOwnerCompanyBriefDto();
-        d.setName("222");
-        clientDtoList.add(d);
-        d = new StockOwnerCompanyBriefDto();
-        d.setName("333");
-        clientDtoList.add(d);
         return clientDtoList;
     }
 }
