@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 module.exports = {
     devtool: "eval-source-map",
     entry: "./src/index.js",
@@ -5,6 +6,13 @@ module.exports = {
         path: "../webapp/resources/js",
         filename: "bundle.js"
     },
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery/dist/jquery.min.js",
+            jQuery: "jquery/dist/jquery.min.js",
+            "window.jQuery": "jquery/dist/jquery.min.js"
+        })
+    ],
     module: {
         loaders: [
             {
@@ -16,9 +24,16 @@ module.exports = {
                 }
             },
             {
+                test: /\.jsx$/,
+                loader: "react-hot!babel",
+                exclude: [/node_modules/, /public/],
+                query: {
+                    presets: ['es2015', 'stage-0', 'react']
+                }
+            },
+            {
                 test: /\.css$/,
-                loader: "style-loader!css-loader!autoprefixer-loader",
-                exclude: [/node_modules/, /public/]
+                loader: "style-loader!css-loader"
             },
             {
                 test: /\.gif$/,
@@ -36,17 +51,14 @@ module.exports = {
                 test: /\.svg/,
                 loader: "url-loader?limit=26000&mimetype=image/svg+xml"
             },
-            {
-                test: /\.jsx$/,
-                loader: "react-hot!babel",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react']
-                }
-            },
+
             {
                 test: /\.json$/,
                 loader: "json-loader"
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf)$/,
+                loader: 'url-loader?limit=100000'
             }
         ]
     }

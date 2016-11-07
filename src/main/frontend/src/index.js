@@ -28,6 +28,13 @@ import DepartureGoods from "./containers/DepartureGoods";
 import CheckGoods from "./containers/CheckGoods";
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
+import "jquery/dist/jquery.min"
+import "bootstrap/dist/js/bootstrap.min";
+import "bootstrap/dist/css/bootstrap-theme.min.css"
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap-select/dist/js/bootstrap-select.min";
+import "bootstrap-select/dist/css/bootstrap-select.min.css"
+
 
 import {client} from "./actions"
 
