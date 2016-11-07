@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import ClientTable from '../../components/ClientsTable/ClientsTable'
 import Pagination from '../../components/Pagination/Pagination'
 
-// TODO 07.11.2016 add choosing record count limit
 class Clients extends React.Component {
     componentWillMount() {
         this.props.getClientList(1, 10);
@@ -20,6 +19,13 @@ class Clients extends React.Component {
                     limit={this.props.frontend.limit}
                     gotoPage={this.props.getClientList}
                 />
+                Записей на странице:
+                <select className="form-control"
+                        ref={'pageLimitSelect'}
+                        onChange={() => this.props.setPageLimit(parseInt(this.refs.pageLimitSelect.value))}>
+                    <option>10</option>
+                    <option>20</option>
+                </select>
             </div>
         )
     }
@@ -38,6 +44,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getClientList: (pageNumber, recordsCount) => {
             dispatch(clientListActionCreator.getClientList(pageNumber, recordsCount))
+        },
+        setPageLimit: limit => {
+            dispatch(clientListActionCreator.setPageLimit(limit))
         }
     }
 };

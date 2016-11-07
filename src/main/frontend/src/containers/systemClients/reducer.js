@@ -18,6 +18,8 @@ export default (state = initClientListState, action) => {
             return state;
         case event.GET_CLIENT_LIST_SUCCESS:
             return {...state, clientList: action.payload};
+        case event.SET_PAGE_LIMIT_ACTION:
+            return {...state, frontend: {...state.frontend, limit: action.payload}};
         default:
             return state;
     }

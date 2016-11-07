@@ -17,7 +17,7 @@ var getClientListSuccess = json => {
 
 var getClientListFail = error => {
     return {
-        type: event.GET_CLIENT_LIST_ERROR,
+        type: event.GET_CLIENT_LIST_FAIL,
         payload: error
     }
 };
@@ -32,6 +32,14 @@ var getClientList = (pageNumber, recordsCount) => {
     }
 };
 
+var setPageLimit = limit => {
+    return {
+        type: event.SET_PAGE_LIMIT_ACTION,
+        payload: limit
+    }
+};
+
 export default {
-    getClientList
+    getClientList,
+    setPageLimit,
 }
