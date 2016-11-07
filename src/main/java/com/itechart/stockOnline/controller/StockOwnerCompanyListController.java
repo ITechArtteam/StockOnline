@@ -30,6 +30,8 @@ public class StockOwnerCompanyListController {
 
     @RequestMapping(value = "/page/{pageNumber}/limit/{recordCount}", method = RequestMethod.GET)
     public List<StockOwnerCompanyBriefDto> getClientList(@PathVariable Integer pageNumber, @PathVariable Integer recordCount) {
+// TODO: 07.11.2016 add pageNumber and recordCount validation
+// TODO: 07.11.2016  return totalPageCount
         LOGGER.info("REST request. Path:/stockOwners/page{}/limit{}  method: GET", pageNumber, recordCount);
         Page<StockOwnerCompany> clientCompanyPage = stockOwnerCompanyDao.findAll(new PageRequest(pageNumber - 1, recordCount));
         List<StockOwnerCompanyBriefDto> clientDtoList = new ArrayList<>();

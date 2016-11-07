@@ -1,17 +1,19 @@
 import * as event from './constants'
 
+// TODO 07.11.2016 get pageCount from server
 var initClientListState = {
     clientList: [],
     frontend: {
-        pageNumber: 1,
-        recordsCount: 10
+        currentPage: 1,
+        pageCount: 10,
+        limit: 10
     }
 };
 
 export default (state = initClientListState, action) => {
     switch (action.type) {
         case event.GET_CLIENT_LIST_REQUEST:
-            return state;
+            return {...state, frontend: {...state.frontend, currentPage: action.payload}};
         case event.GET_CLIENT_LIST_FAIL:
             return state;
         case event.GET_CLIENT_LIST_SUCCESS:

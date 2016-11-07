@@ -1,9 +1,10 @@
 import * as event from './constants'
 import * as axios from "axios";
 
-var getClientListRequest = () => {
+var getClientListRequest = (pageNumber) => {
     return {
-        type: event.GET_CLIENT_LIST_REQUEST
+        type: event.GET_CLIENT_LIST_REQUEST,
+        payload: pageNumber
     }
 };
 
@@ -23,7 +24,7 @@ var getClientListFail = error => {
 
 var getClientList = (pageNumber, recordsCount) => {
     return dispatch => {
-        dispatch(getClientListRequest());
+        dispatch(getClientListRequest(pageNumber));
         return axios
             .get('/stockOwners/page/' + pageNumber + '/limit/' + recordsCount)
             .then(response => dispatch(getClientListSuccess(response.data)))
