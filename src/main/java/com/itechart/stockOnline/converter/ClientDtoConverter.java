@@ -4,6 +4,7 @@ import com.itechart.stockOnline.model.Address;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.ClientDto;
+import com.itechart.stockOnline.model.dto.StockOwnerCompanyBriefDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,6 +41,19 @@ public class ClientDtoConverter {
         dto.setAdminLogin(admin.getLogin());
         dto.setAdminEmail(admin.getEmail());
         dto.setAdminPassword(null);
+        return dto;
+    }
+
+    public StockOwnerCompanyBriefDto toStockOwnerCompanyBriefDto(StockOwnerCompany company) {
+        StockOwnerCompanyBriefDto dto = new StockOwnerCompanyBriefDto();
+        dto.setName(company.getName());
+        Address address = company.getAddress();
+        dto.setCountry(address.getCountryName());
+        dto.setCity(address.getCityName());
+        dto.setStreet(address.getStreet());
+        dto.setHome(address.getHome());
+        dto.setRoom(address.getRoom());
+        dto.setActive(company.getActive());
         return dto;
     }
 

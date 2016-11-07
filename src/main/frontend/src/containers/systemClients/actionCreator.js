@@ -25,7 +25,7 @@ var getClientList = (pageNumber, recordsCount) => {
     return dispatch => {
         dispatch(getClientListRequest());
         return axios
-            .get('/clientList/' + pageNumber + '/' + recordsCount)
+            .get('/stockOwners/page/' + pageNumber + '/limit/' + recordsCount)
             .then(response => dispatch(getClientListSuccess(response.data)))
             .catch(error => dispatch(getClientListFail(error.response)))
     }
