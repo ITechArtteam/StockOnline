@@ -5,7 +5,12 @@ import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.ClientDto;
 import com.itechart.stockOnline.model.dto.StockOwnerCompanyBriefDto;
+import com.itechart.stockOnline.model.dto.StockOwnerPage;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ClientDtoConverter {
@@ -55,6 +60,19 @@ public class ClientDtoConverter {
         dto.setRoom(address.getRoom());
         dto.setActive(company.getActive());
         return dto;
+    }
+
+    public StockOwnerPage toStockOwnerPage(Page<StockOwnerCompany> page) {
+        StockOwnerPage result = new StockOwnerPage();
+        result.setActivePage(page.getNumber() + 1);
+        result.setItemsCountPerPage(page.getSize());
+        result.setTotalItemsCount(page.getTotalElements());
+
+        List<StockOwnerCompanyBriefDto> clientDtoList = new ArrayList<>();
+        page.forEach((stockOwnerCompany) -> clientDtoList.add(toStockOwnerCompanyBriefDto(stockOwnerCompany)));
+
+        result.setClientList(clientDtoList);
+        return result;
     }
 
 }

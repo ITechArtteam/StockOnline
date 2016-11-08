@@ -4,6 +4,7 @@ import com.itechart.stockOnline.converter.ClientDtoConverter;
 import com.itechart.stockOnline.dao.StockOwnerCompanyDao;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.dto.StockOwnerCompanyBriefDto;
+import com.itechart.stockOnline.model.dto.StockOwnerPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/stockOwners")
@@ -29,13 +27,10 @@ public class StockOwnerCompanyListController {
     private ClientDtoConverter clientDtoConverter;
 
     @RequestMapping(value = "/page/{pageNumber}/limit/{recordCount}", method = RequestMethod.GET)
-    public List<StockOwnerCompanyBriefDto> getClientList(@PathVariable Integer pageNumber, @PathVariable Integer recordCount) {
+    public StockOwnerPage getClientList(@PathVariable Integer pageNumber, @PathVariable Integer recordCount) {
 // TODO: 07.11.2016 add pageNumber and recordCount validation
-// TODO: 07.11.2016  return totalPageCount
         LOGGER.info("REST request. Path:/stockOwners/page{}/limit{}  method: GET", pageNumber, recordCount);
         Page<StockOwnerCompany> clientCompanyPage = stockOwnerCompanyDao.findAll(new PageRequest(pageNumber - 1, recordCount));
-        List<StockOwnerCompanyBriefDto> clientDtoList = new ArrayList<>();
-        clientCompanyPage.forEach((stockOwnerCompany) -> clientDtoList.add(clientDtoConverter.toStockOwnerCompanyBriefDto(stockOwnerCompany)));
-        return clientDtoList;
+        return clientDtoConverter.toStockOwnerPage(clientCompanyPage);
     }
 }

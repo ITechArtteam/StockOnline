@@ -1,10 +1,9 @@
 import * as event from './constants'
 import * as axios from "axios";
 
-var getClientListRequest = (pageNumber) => {
+var getClientListRequest = () => {
     return {
-        type: event.GET_CLIENT_LIST_REQUEST,
-        payload: pageNumber
+        type: event.GET_CLIENT_LIST_REQUEST
     }
 };
 
@@ -22,24 +21,16 @@ var getClientListFail = error => {
     }
 };
 
-var getClientList = (pageNumber, recordsCount) => {
+var getClientList = (pageNumber, itemsCountPerPage) => {
     return dispatch => {
-        dispatch(getClientListRequest(pageNumber));
+        dispatch(getClientListRequest());
         return axios
-            .get('/stockOwners/page/' + pageNumber + '/limit/' + recordsCount)
+            .get('/stockOwners/page/' + pageNumber + '/limit/' + itemsCountPerPage)
             .then(response => dispatch(getClientListSuccess(response.data)))
             .catch(error => dispatch(getClientListFail(error.response)))
     }
 };
 
-var setPageLimit = limit => {
-    return {
-        type: event.SET_PAGE_LIMIT_ACTION,
-        payload: limit
-    }
-};
-
 export default {
     getClientList,
-    setPageLimit,
 }
