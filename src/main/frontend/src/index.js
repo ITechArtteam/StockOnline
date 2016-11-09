@@ -11,7 +11,7 @@ import EditClient from "./containers/editClient/EditClient";
 import Reports from "./containers/Reports";
 import ReportIncome from "./containers/ReportIncome";
 import ReportStandard from "./containers/ReportStandard";
-import Stocks from "./containers/Stocks";
+import Stocks from "./containers/stocks/Stocks";
 import EditStock from "./containers/EditStock";
 import Workers from "./containers/Workers";
 import EditWorker from "./containers/EditWorker";
