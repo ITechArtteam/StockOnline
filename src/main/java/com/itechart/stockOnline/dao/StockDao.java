@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface StockDao extends JpaRepository<Stock, Long> {
-    Optional<Stock> findByName(String name);
+    Optional<Stock> findById(Integer id);
     Page<Stock> findAll(Pageable pageable);
 }

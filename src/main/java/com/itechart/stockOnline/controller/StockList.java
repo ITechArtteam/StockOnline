@@ -22,20 +22,20 @@ public class StockList {
     private final static Logger Logger = LoggerFactory.getLogger(StockList.class);
 
     @Autowired
-    private StockDao stocktDao;
+    private StockDao stockDao;
 
     @RequestMapping(value = "/{pageNumber}/{recordCount}", method = RequestMethod.GET)
     public List<StockDto> getStockList(@PathVariable Integer pageNumber, @PathVariable Integer recordCount) {
         Page<Stock> stockPage = stockDao.findAll(new PageRequest(pageNumber, recordCount));
         List<StockDto> stockDtos = new ArrayList<>();
-        stockPage.forEach((stockCompany) -> {
-            StockDto stock = new StockDto();
-            stock.setId(Stock.getId);
-            stock.setCountry(Stock.getAddress().getCountryName());
-            stock.setCity(Stock.getAddress().getCityName());
-            stock.setStreet(Stock.getAddress().getStreet());
-            stock.setNameCompany(Stock.getCompany().getName());
-            stockDtos.add(stock);
+        stockPage.forEach((stock) -> {
+            StockDto stockDto = new StockDto();
+            stockDto.setId(stock.getId());
+            stockDto.setCountry(stock.getAddress().getCountryName());
+            stockDto.setCity(stock.getAddress().getCityName());
+            stockDto.setStreet(stock.getAddress().getStreet());
+            stockDto.setNameCompany(stock.getCompany().getName());
+            stockDtos.add(stockDto);
         });
 
         StockDto d = new StockDto();
