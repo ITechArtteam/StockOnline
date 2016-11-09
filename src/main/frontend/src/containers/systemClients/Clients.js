@@ -3,7 +3,7 @@ import {clientListActionCreator} from "./index";
 import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import {Link} from 'react-router'
+import {Link, browserHistory} from 'react-router';
 
 class Clients extends React.Component {
     constructor(props) {
@@ -22,6 +22,10 @@ class Clients extends React.Component {
 
     onPageLimitSelectChange() {
         this.props.getClientList(1, parseInt(this.refs.pageLimitSelect.value));
+    }
+
+    onBtnSaveClick() {
+        browserHistory.push('/client');
     }
 
     onTableRowSelect(row, isSelected) {
@@ -53,7 +57,7 @@ class Clients extends React.Component {
     render() {
         var clientList = this.props.page.clientList.map((item, index) => {
             return {
-                rowNumber: index,
+                rowNumber: ((this.props.page.activePage - 1) * this.props.page.itemsCountPerPage) + index + 1,
                 name: item.name,
                 address: item.country + ' г. ' + item.city + ' ул. ' + item.street + ' д. ' + item.home + ' кв. ' + item.room,
                 status: item.active
@@ -67,7 +71,7 @@ class Clients extends React.Component {
                         <div className="list-group">
                             <div className="list-group-item">
                                 <div className="btn-group-vertical">
-                                    <button className="btn btn-default">Создать</button>
+                                    <button className="btn btn-default" onClick={this.onBtnSaveClick}>Создать</button>
                                     <button className="btn btn-default">Удалить</button>
                                     <button className="btn btn-default">Поиск</button>
                                     <button className="btn btn-default">Очистить фильтр</button>
