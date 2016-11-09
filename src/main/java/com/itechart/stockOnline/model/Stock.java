@@ -1,5 +1,6 @@
 package com.itechart.stockOnline.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Integer id;
 
     @ManyToOne
