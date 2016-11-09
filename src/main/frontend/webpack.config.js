@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 module.exports = {
     devtool: "eval-source-map",
-    entry: "./src/index.js",
+    entry: "./src/index.jsx",
     output: {
         path: "../webapp/resources/js",
         filename: "bundle.js"
@@ -10,7 +10,8 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: "jquery/dist/jquery.min.js",
             jQuery: "jquery/dist/jquery.min.js",
-            "window.jQuery": "jquery/dist/jquery.min.js"
+            "window.jQuery": "jquery/dist/jquery.min.js",
+            "React": "react"
         })
     ],
     module: {
@@ -22,18 +23,17 @@ module.exports = {
                 query: {
                     presets: ['es2015', 'stage-0', 'react']
                 }
-            },
-            {
-                test: /\.jsx$/,
-                loader: "react-hot!babel",
-                exclude: [/node_modules/, /public/],
-                query: {
-                    presets: ['es2015', 'stage-0', 'react']
-                }
+
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader"
+                loader: "style-loader!css-loader!autoprefixer-loader",
+                exclude: [/node_modules/, /public/]
+            },
+            {
+                test: /\.less$/,
+                loader: "style-loader!css-loader!autoprefixer-loader!less",
+                exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.gif$/,
@@ -51,14 +51,17 @@ module.exports = {
                 test: /\.svg/,
                 loader: "url-loader?limit=26000&mimetype=image/svg+xml"
             },
-
+            {
+                test: /\.jsx$/,
+                loaders: ['react-hot', 'babel?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-runtime'],
+                exclude: [/node_modules/, /public/],
+                query: {
+                    presets: ['es2015', 'stage-0', 'react']
+                }
+            },
             {
                 test: /\.json$/,
                 loader: "json-loader"
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf)$/,
-                loader: 'url-loader?limit=100000'
             }
         ]
     }

@@ -2,38 +2,37 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {Router, IndexRedirect, Route, browserHistory} from 'react-router'
+
+import App from './containers/App.jsx'
+import NotFound from "./containers/NotFound.jsx";
+import Login from "./containers/Login.jsx";
+import Clients from "./containers/Clients.jsx";
+import EditClient from "./containers/editClient/EditClient.jsx";
+import Reports from "./containers/Reports.jsx";
+import ReportIncome from "./containers/ReportIncome.jsx";
+import ReportStandard from "./containers/ReportStandard.jsx";
+import Stocks from "./containers/Stocks.jsx";
+import EditStock from "./containers/EditStock.jsx";
+import Workers from "./containers/Workers.jsx";
+import Carriers from "./containers/Carriers.jsx";
+import EditCarrier from "./containers/EditCarrier.jsx";
+import Drivers from "./containers/Drivers.jsx";
+import EditDriver from "./containers/EditDriver.jsx";
+import Waybills from "./containers/Waybills.jsx";
+import EditWaybill from "./containers/EditWaybill.jsx";
+import Goods from "./containers/Goods.jsx";
+import ReceiptGoods from "./containers/ReceiptGoods.jsx";
+import DistributionGoods from "./containers/DistributionGoods.jsx";
+import DepartureGoods from "./containers/DepartureGoods.jsx";
+import CheckGoods from "./containers/CheckGoods.jsx";
+import Acts from "./containers/Acts.jsx";
+import EditAct from "./containers/EditAct.jsx";
+import EditWorker from "./containers/EditWorker.jsx";
 import configureStore from './store/configureStore'
-import App from './containers/App'
-import NotFound from "./containers/NotFound";
-import Login from "./containers/Login";
-import Clients from "./containers/Clients";
-import EditClient from "./containers/editClient/EditClient";
-import Reports from "./containers/Reports";
-import ReportIncome from "./containers/ReportIncome";
-import ReportStandard from "./containers/ReportStandard";
-import Stocks from "./containers/Stocks";
-import EditStock from "./containers/EditStock";
-import Workers from "./containers/Workers";
-import EditWorker from "./containers/EditWorker";
-import Carriers from "./containers/Carriers";
-import EditCarrier from "./containers/EditCarrier";
-import Drivers from "./containers/Drivers";
-import EditDriver from "./containers/EditDriver";
-import Waybills from "./containers/Waybills";
-import EditWaybill from "./containers/EditWaybill";
-import Goods from "./containers/Goods";
-import ReceiptGoods from "./containers/ReceiptGoods";
-import DistributionGoods from "./containers/DistributionGoods";
-import DepartureGoods from "./containers/DepartureGoods";
-import CheckGoods from "./containers/CheckGoods";
-import Acts from "./containers/Acts";
-import EditAct from "./containers/EditAct";
 import "jquery/dist/jquery.min"
 import "bootstrap/dist/js/bootstrap.min";
-import "bootstrap/dist/css/bootstrap-theme.min.css"
 import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap-select/dist/js/bootstrap-select.min";
-import "bootstrap-select/dist/css/bootstrap-select.min.css"
+import "bootstrap/dist/css/bootstrap-theme.min.css"
 
 
 import {client} from "./actions"

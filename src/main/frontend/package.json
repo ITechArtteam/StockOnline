@@ -2,6 +2,10 @@
   "name": "stock-online-frontend",
   "version": "0.0.1",
   "description": "Stock Online Frontend",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.18.0",
@@ -28,8 +32,10 @@
     "axios":"0.15.2 ",
     "autoprefixer-loader":"3.2.0",
     "bootstrap":"3.3.7",
-    "jquery":"2.2.0",
-    "bootstrap-select":"1.11.2"
+    "jquery":"^2.2.0",
+    "react-bootstrap":"^0.30.6",
+    "react-bootstrap-select":"^0.14.0",
+    "react-bootstrap-datetimepicker":"0.0.22"
   },
   "scripts": {
     "dev-build": "webpack -optimize-minimize"

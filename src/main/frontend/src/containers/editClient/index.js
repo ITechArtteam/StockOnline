@@ -1,3 +1,3 @@
-export EditClient from './EditClient.js'
-export client from './reducer.js'
+export EditClient from './EditClient.jsx'
+export client from './reducer.jsx'
 export clientActionCreator from './actionCreator'

@@ -22,7 +22,7 @@ GRANT ALL PRIVILEGES ON `stock_online`.* TO 'orel.dmitriy' WITH GRANT OPTION;
 Терминал должен "зависнуть" после "+ 429 hidden modules", не выключаем терминал, разрабатываем на реакт.
 
 все JS файлы ложим в src/main/frontend/src иначе они не попаду в сборку
-точка входа index.js
+точка входа index.jsx
 css файлы пока ложим в webapp/resources/css и подключаем в WEB-INF/index.jsp
 
 --------------------------------lombok---------------------------------------------------------
