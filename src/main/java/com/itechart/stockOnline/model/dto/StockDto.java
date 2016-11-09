@@ -1,7 +1,7 @@
 package com.itechart.stockOnline.model.dto;
 
 public class StockDto {
-    private String id;
+    private Integer id;
     private String nameCompany;
     private String country;
     private String city;
