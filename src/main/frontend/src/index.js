@@ -28,6 +28,7 @@ import DepartureGoods from "./containers/DepartureGoods";
 import CheckGoods from "./containers/CheckGoods";
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
+import RequireRole from "./containers/RequireRole"
 import "jquery/dist/jquery.min"
 import "bootstrap/dist/js/bootstrap.min";
 import "bootstrap/dist/css/bootstrap-theme.min.css"
@@ -46,7 +47,7 @@ ReactDOM.render(
             <Route path="/" component={App}>
                 <IndexRedirect to="login" />
                 <Route path="/login" component={Login}/>
-                <Route path="/clients" component={Clients}/>
+                <Route path="/clients" requiredRole="ROLE_USER" component={RequireRole(Clients)}/>
                 <Route path="/client(/:name)" component={EditClient}/>
                 <Route path="/reports" component={Reports}/>
                 <Route path="/report/income" component={ReportIncome}/>

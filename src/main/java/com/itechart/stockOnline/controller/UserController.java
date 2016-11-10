@@ -1,6 +1,5 @@
 package com.itechart.stockOnline.controller;
 
-import com.itechart.stockOnline.service.SecurityService;
 import com.itechart.stockOnline.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +14,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private SecurityService securityService;
 
     @RequestMapping(value="/")
     public String reactLogin() {
