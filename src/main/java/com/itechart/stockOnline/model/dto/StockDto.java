@@ -10,15 +10,11 @@ public class StockDto {
     private int room;
 
     public Integer getId() { return id;  }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public void setId(Integer id) { this.id = id; }
 
     public String getNameCompany() {
         return nameCompany;
     }
-
     public void setNameCompany(String nameCompany) {
         this.nameCompany = nameCompany;
     }
@@ -26,7 +22,6 @@ public class StockDto {
     public String getCountry() {
         return country;
     }
-
     public void setCountry(String country) {
         this.country = country;
     }
@@ -34,7 +29,6 @@ public class StockDto {
     public String getCity() {
         return city;
     }
-
     public void setCity(String city) {
         this.city = city;
     }
@@ -42,7 +36,6 @@ public class StockDto {
     public String getStreet() {
         return street;
     }
-
     public void setStreet(String street) {
         this.street = street;
     }
@@ -50,7 +43,6 @@ public class StockDto {
     public int getHome() {
         return home;
     }
-
     public void setHome(int home) {
         this.home = home;
     }
@@ -58,7 +50,6 @@ public class StockDto {
     public int getRoom() {
         return room;
     }
-
     public void setRoom(int room) {
         this.room = room;
     }

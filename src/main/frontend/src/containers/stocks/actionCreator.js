@@ -21,13 +21,13 @@ var getStockListFail = error => {
     }
 };
 
-var getStockList = (pageNumber, recordsCount) => {
+var getStockList = (pageNumber, itemsCountPerPage) => {
     return dispatch => {
         dispatch(getStockListRequest());
         return axios
-                .get('/stockList/' + pageNumber + '/' + recordsCount)
-                .then(response => dispatch(getStockListSuccess(response.data)))
-    .catch(error => dispatch(getStockListFail(error.response)))
+            .get('/stockList/page/' + pageNumber + '/limit/' + itemsCountPerPage)
+            .then(response => dispatch(getStockListSuccess(response.data)))
+            .catch(error => dispatch(getStockListFail(error.response)))
     }
 };
 

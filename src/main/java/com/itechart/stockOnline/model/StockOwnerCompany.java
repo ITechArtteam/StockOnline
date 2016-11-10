@@ -39,7 +39,12 @@ public class StockOwnerCompany {
         address = new Address();
         admin = new User();
     }
-
+    public StockOwnerCompany(String name) {
+        isActive = false;
+        address = new Address();
+        admin = new User();
+        this.name = name;
+    }
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

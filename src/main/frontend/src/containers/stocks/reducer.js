@@ -1,21 +1,22 @@
 import * as event from './constants'
 
-    var initClientListState = {
-        stockList: [{name: '1'}, {name: '2'}, {name: '3'}, {name: '4'}, {name: '5'}, {name: '6'}],
-        frontend: {
-            pageNumber: 1,
-                recordsCount: 5
+    var initStockListState = {
+        page: {
+            activePage: 1,
+            totalItemsCount: 0,
+            itemsCountPerPage: 5,
+            stocktList: [],
         }
 };
 
-    export default (state = initClientListState, action) => {
+    export default (state = initStockListState, action) => {
         switch (action.type) {
                 case event.GET_STOCK_LIST_REQUEST:
                         return state;
-                    case event.GET_STOCK_LIST_FAIL:
+                case event.GET_STOCK_LIST_FAIL:
                         return state;
-                    case event.GET_STOCK_LIST_SUCCESS:
-                        return {...state, stockList: action.payload};
+                case event.GET_STOCK_LIST_SUCCESS:
+                        return {...state, page: action.payload};
             default:
                 return state;
         }
