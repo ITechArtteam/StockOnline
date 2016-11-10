@@ -10,6 +10,8 @@ class Clients extends React.Component {
         super(props);
         this.onPaginationChange = this.onPaginationChange.bind(this);
         this.onPageLimitSelectChange = this.onPageLimitSelectChange.bind(this);
+        this.onBtnSaveClick = this.onBtnSaveClick.bind(this);
+        this.onBtnDeleteClick = this.onBtnDeleteClick.bind(this);
     }
 
     componentWillMount() {
@@ -26,6 +28,16 @@ class Clients extends React.Component {
 
     onBtnSaveClick() {
         browserHistory.push('/client');
+    }
+
+    onBtnDeleteClick() {
+        var selectedRowKeys = this.refs.table.state.selectedRowKeys;
+        if(selectedRowKeys.length == 0) {
+            // alert: rows not selected
+        } else {
+        //    alert: confirm deleting
+        }
+        console.log(this.refs.table.state);
     }
 
     onTableRowSelect(row, isSelected) {
@@ -72,7 +84,7 @@ class Clients extends React.Component {
                             <div className="list-group-item">
                                 <div className="btn-group-vertical">
                                     <button className="btn btn-default" onClick={this.onBtnSaveClick}>Создать</button>
-                                    <button className="btn btn-default">Удалить</button>
+                                    <button className="btn btn-default" onClick={this.onBtnDeleteClick}>Удалить</button>
                                     <button className="btn btn-default">Поиск</button>
                                     <button className="btn btn-default">Очистить фильтр</button>
                                 </div>
@@ -96,9 +108,9 @@ class Clients extends React.Component {
                     </div>
 
                     <div className="col-xs-9">
-                        <BootstrapTable data={clientList} selectRow={this.selectRowProp} striped={true} hover={true}>
-                            <TableHeaderColumn headerAlign="center" dataField="rowNumber" isKey={true}>№</TableHeaderColumn>
-                            <TableHeaderColumn headerAlign="center" dataField="name" dataFormat={this.nameFormatter}>Название
+                        <BootstrapTable data={clientList} selectRow={this.selectRowProp} striped={true} hover={true} ref="table">
+                            <TableHeaderColumn headerAlign="center" dataField="rowNumber">№</TableHeaderColumn>
+                            <TableHeaderColumn headerAlign="center" dataField="name" isKey={true} dataFormat={this.nameFormatter}>Название
                                 компании</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataAlign="center" dataField="status"
