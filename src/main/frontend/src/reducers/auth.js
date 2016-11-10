@@ -3,7 +3,7 @@ import { AUTH_USER, AUTH_ERROR } from '../actions'
 const initialState = {
     authenticated: false,
     username: "GUEST",
-    role: "GUEST"
+    roles: ["ROLE_GUEST"]
 };
 
 export default function auth(state = initialState, action) {
@@ -13,7 +13,7 @@ export default function auth(state = initialState, action) {
                 ...state,
                 authenticated: true,
                 username: action.username,
-                role: action.role
+                roles: action.roles
             };
         case AUTH_ERROR:
             return {

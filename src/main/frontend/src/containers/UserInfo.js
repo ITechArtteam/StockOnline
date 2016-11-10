@@ -6,7 +6,7 @@ class UserInfo extends React.Component {
         return (
             <div className="user-info">
                 <h2>{this.props.username}</h2>
-                <h2>{this.props.role}</h2>
+                <h2>{this.props.roles}</h2>
             </div>
         )
     }
@@ -15,7 +15,7 @@ class UserInfo extends React.Component {
 function mapStateToProps(state) {
     return {
         username: state.auth.username,
-        role: state.auth.role
+        roles: state.auth.roles.join(', ')
     }
 };
 
