@@ -29,10 +29,7 @@ import Acts from "./containers/Acts.jsx";
 import EditAct from "./containers/EditAct.jsx";
 import EditWorker from "./containers/EditWorker.jsx";
 import configureStore from './store/configureStore'
-import "jquery/dist/jquery.min"
-import "bootstrap/dist/js/bootstrap.min";
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap/dist/css/bootstrap-theme.min.css"
+require("bootstrap-webpack");
 
 
 import {client} from "./actions"

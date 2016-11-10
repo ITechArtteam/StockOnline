@@ -35,7 +35,9 @@
     "jquery":"^2.2.0",
     "react-bootstrap":"^0.30.6",
     "react-bootstrap-select":"^0.14.0",
-    "react-bootstrap-datetimepicker":"0.0.22"
+    "react-bootstrap-datetimepicker":"0.0.22",
+    "react-select":"^1.0.0-rc",
+    "bootstrap-webpack":"0.0.5"
   },
   "scripts": {
     "dev-build": "webpack -optimize-minimize"

@@ -1,6 +1,7 @@
 import React from "react";
-import {Button, FormGroup, Row, Col, Form, ControlLabel} from 'react-bootstrap'
-import {DateTimeField} from 'react-bootstrap-datetimepicker'
+import {Button, FormGroup, Row, Col, Form, ControlLabel, FormControl} from 'react-bootstrap'
+import Select from 'react-select'
+import DateTimeField from 'react-bootstrap-datetimepicker'
 class EditWorker extends React.Component {
 
     constructor(props) {
@@ -9,7 +10,11 @@ class EditWorker extends React.Component {
             date: "1990-06-05",
             format: "YYYY-MM-DD",
             inputFormat: "DD/MM/YYYY",
-            mode: "date"
+            mode: "date",
+            options: [
+                {value: 'one', label: 'One'},
+                {value: 'two', label: 'Two'}
+            ]
         };
     }
 
@@ -18,6 +23,10 @@ class EditWorker extends React.Component {
         return this.setState({date: newDate});
     }
 
+
+    logChange = (val) => {
+        console.log("Selected: " + val);
+    }
 
     render() {
         const {date, format, mode, inputFormat} = this.state;
@@ -29,7 +38,7 @@ class EditWorker extends React.Component {
                             Имя
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Имя"/>
+                            <FormControl placeholder="Имя"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -37,7 +46,7 @@ class EditWorker extends React.Component {
                             Фамилия
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Фамилия"/>
+                            <FormControl placeholder="Фамилия"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -45,7 +54,7 @@ class EditWorker extends React.Component {
                             Отчество
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Отчество"/>
+                            <FormControl placeholder="Отчество"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -67,7 +76,7 @@ class EditWorker extends React.Component {
                             Электронная почта
                         </Col>
                         <Col sm={10}>
-                            <FormContol type="email" placeholder="Электронная почта"/>
+                            <FormControl type="email" placeholder="Электронная почта"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -75,7 +84,7 @@ class EditWorker extends React.Component {
                             Страна
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Страна"/>
+                            <FormControl placeholder="Страна"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -83,7 +92,7 @@ class EditWorker extends React.Component {
                             Город
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Город"/>
+                            <FormControl placeholder="Город"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -91,7 +100,7 @@ class EditWorker extends React.Component {
                             Дом
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Дом"/>
+                            <FormControl placeholder="Дом"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -99,7 +108,7 @@ class EditWorker extends React.Component {
                             Квартира
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Квартира"/>
+                            <FormControl placeholder="Квартира"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -107,7 +116,10 @@ class EditWorker extends React.Component {
                             Роль
                         </Col>
                         <Col sm={10}>
-
+                            <Select name="form-field-name"
+                                    value="one"
+                                    options={this.state.options}
+                                    onChange={this.logChange}/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -115,7 +127,7 @@ class EditWorker extends React.Component {
                             Логин
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Логин"/>
+                            <FormControl placeholder="Логин"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -123,7 +135,7 @@ class EditWorker extends React.Component {
                             Пароль
                         </Col>
                         <Col sm={10}>
-                            <FormContol placeholder="Пароль"/>
+                            <FormControl placeholder="Пароль"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
