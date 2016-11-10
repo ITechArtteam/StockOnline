@@ -31,6 +31,21 @@ var getClientList = (pageNumber, itemsCountPerPage) => {
     }
 };
 
+var setConfirmDeleteDialogVisibility = visibility => {
+    return {
+        type: event.SET_CONFIRM_DELETE_DIALOG_VISIBILITY,
+        payload: visibility
+    }
+};
+var setNothingToDeleteDialogVisibility = visibility => {
+    return {
+        type: event.SET_NOTHING_TO_DELETE_DIALOG_VISIBILITY,
+        payload: visibility
+    }
+};
+
 export default {
     getClientList,
+    setConfirmDeleteDialogVisibility,
+    setNothingToDeleteDialogVisibility
 }

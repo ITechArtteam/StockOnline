@@ -27,10 +27,16 @@ class AlertPopup extends React.Component {
 
 
     render() {
+        var buttons = "";
+        if (!!this.props.buttons)
+            buttons = this.props.buttons.map((item, index) => {
+                return <button key={index} type="button" className={item.btnStyle} onClick={item.onclick}>{item.text}</button>
+            });
         return (
             <div className={this.getStyles()}>
-                <span onClick={this.props.close} className="close" data-dismiss="alert">×</span>
+                <span onClick={this.props.close} className="close">×</span>
                 <p className="message">{this.props.message}</p>
+                {buttons}
             </div>
         )
     }
@@ -40,7 +46,8 @@ AlertPopup.propTypes = {
     close: React.PropTypes.func.isRequired,
     isVisible: React.PropTypes.bool.isRequired,
     message: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string
+    type: React.PropTypes.string,
+    buttons: React.PropTypes.arrayOf(React.PropTypes.object)
 };
 
 export default AlertPopup;

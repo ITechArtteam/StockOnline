@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link, browserHistory} from 'react-router';
+import AlertPopup from '../../components/AlertPopup/AlertPopup'
 
 class Clients extends React.Component {
     constructor(props) {
@@ -33,11 +34,18 @@ class Clients extends React.Component {
     onBtnDeleteClick() {
         var selectedRowKeys = this.refs.table.state.selectedRowKeys;
         if(selectedRowKeys.length == 0) {
+            this.props.showNothingToDeleteDialog();
             // alert: rows not selected
         } else {
+            this.props.showConfirmDeleteDialog();
         //    alert: confirm deleting
         }
         console.log(this.refs.table.state);
+    }
+
+    onConfirmOkBtnClick() {
+        console.log("ok");
+        this.props.closeConfirmDeleteDialog();
     }
 
     onTableRowSelect(row, isSelected) {
@@ -104,7 +112,7 @@ class Clients extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        {/*dib.col-xs-2 end*/}
+                        {/*dib.col-xs-3 end*/}
                     </div>
 
                     <div className="col-xs-9">
@@ -123,12 +131,28 @@ class Clients extends React.Component {
                             pageRangeDisplayed={5}
                             onChange={this.onPaginationChange}
                         />
-                        {/*div.col-xs-10 end*/}
-                    </div>
-                    {/*div.row end*/}
-                </div>
-                {/*div.container end*/}
-            </div>
+                    </div>{/*div.col-xs-9 end*/}
+                    <AlertPopup close={this.props.closeNothingToDeleteDialog}
+                                isVisible={this.props.frontend.isDialogNothingToDeleteVisible}
+                                message="Не выделены записи для удаления."/>
+                    <AlertPopup close={this.props.closeConfirmDeleteDialog}
+                                isVisible={this.props.frontend.isDialogDeleteConfirmVisible}
+                                message="Вы действительно хотите удалить выбранные записи?"
+                                buttons={[
+                                    {
+                                        text: "Ок",
+                                        btnStyle: "btn btn-success",
+                                        onclick: this.onConfirmOkBtnClick
+                                    },
+                                    {
+                                        text: "Отмена",
+                                        btnStyle: "btn btn-primary",
+                                        onclick: this.props.closeConfirmDeleteDialog
+                                    }
+                                ]}
+                    />
+                </div>{/*div.row end*/}
+            </div>/*div.container end*/
         )
     }
 }
@@ -137,7 +161,8 @@ class Clients extends React.Component {
 const mapStateToProps = (state) => {
     // console.log(state);
     return {
-        page: state.clientListReducer.page
+        page: state.clientListReducer.page,
+        frontend: state.clientListReducer.frontend
     }
 };
 
@@ -145,6 +170,18 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getClientList: (pageNumber, itemsCountPerPage) => {
             dispatch(clientListActionCreator.getClientList(pageNumber, itemsCountPerPage))
+        },
+        showConfirmDeleteDialog: () => {
+            dispatch(clientListActionCreator.setConfirmDeleteDialogVisibility(true))
+        },
+        closeConfirmDeleteDialog: () => {
+            dispatch(clientListActionCreator.setConfirmDeleteDialogVisibility(false))
+        },
+        showNothingToDeleteDialog: () => {
+            dispatch(clientListActionCreator.setNothingToDeleteDialogVisibility(true))
+        },
+        closeNothingToDeleteDialog: () => {
+            dispatch(clientListActionCreator.setNothingToDeleteDialogVisibility(false))
         }
     }
 };
