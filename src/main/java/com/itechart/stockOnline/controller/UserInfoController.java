@@ -15,7 +15,7 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
-    @RequestMapping(value = "/username")
+    @RequestMapping(value = "/{username}")
     @ResponseBody
     public UserInfo loadUserInfo(@PathVariable String username) {
         return userInfoService.getUserInfo(username);
