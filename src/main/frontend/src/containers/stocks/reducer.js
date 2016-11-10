@@ -5,7 +5,7 @@ import * as event from './constants'
             activePage: 1,
             totalItemsCount: 0,
             itemsCountPerPage: 5,
-            stocktList: [],
+            stockList: [],
         }
 };
 
