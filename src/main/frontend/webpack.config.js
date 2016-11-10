@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 module.exports = {
     devtool: "eval-source-map",
-    entry: "./src/index.jsx",
+    entry: "./src/index.js",
     output: {
         path: "../webapp/resources/js",
         filename: "bundle.js"
@@ -20,7 +20,6 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 loader: "babel",
-                exclude: [/node_modules/, /public/],
                 query: {
                     presets: ['es2015', 'stage-0', 'react']
                 }
@@ -28,12 +27,15 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader!autoprefixer-loader",
+                loader: "style-loader!css-loader",
             },
             {
                 test: /\.less$/,
-                loader: "style-loader!css-loader!autoprefixer-loader!less",
-                exclude: [/node_modules/, /public/]
+                loader: "style!css!less"
+            },
+            {
+                test: /\.scss$/,
+                loader: "style!css!sass"
             },
             {
                 test: /\.gif$/,
@@ -57,14 +59,6 @@ module.exports = {
                 test: /\.(eot|ttf|wav|mp3)$/,
                 loader: 'file-loader',
             },
-            /* {
-             test: /\.jsx$/,
-             loaders: ['react-hot', 'babel?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-runtime'],
-             exclude: [/node_modules/, /public/],
-             query: {        presets: ['es2015', 'stage-0', 'react']
-             }
-
-             },*/
             {
                 test: /\.json$/,
                 loader: "json-loader"
