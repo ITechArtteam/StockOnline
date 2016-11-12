@@ -34,6 +34,20 @@ public class ClientDtoConverter {
         return company;
     }
 
+    public void updateStockOwnerCompany(StockOwnerCompany companyInBD, StockOwnerCompany newData){
+        Address address = companyInBD.getAddress();
+        address.setCountryName(newData.getAddress().getCountryName());
+        address.setCityName(newData.getAddress().getCityName());
+        address.setStreet(newData.getAddress().getStreet());
+        address.setHome(newData.getAddress().getHome());
+        address.setRoom(newData.getAddress().getRoom());
+        User admin = companyInBD.getAdmin();
+        admin.setLogin(newData.getAdmin().getLogin());
+        admin.setEmail(newData.getAdmin().getEmail());
+        admin.setPassword(newData.getAdmin().getPassword());
+        companyInBD.setName(newData.getName());
+    }
+
     public ClientDto toClientDto(StockOwnerCompany company) {
         ClientDto dto = new ClientDto();
         dto.setName(company.getName());

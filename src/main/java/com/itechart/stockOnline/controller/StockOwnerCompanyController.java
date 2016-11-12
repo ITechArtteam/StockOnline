@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+
 @RestController
 @RequestMapping(value = "/customer")
 public class StockOwnerCompanyController {
@@ -38,8 +40,10 @@ public class StockOwnerCompanyController {
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public ClientDto getClientData(@PathVariable String name){
-        StockOwnerCompany clientCompany = stockOwnerCompanyDao.findByName(name).orElseThrow(DataNotFoundError::new);
-        System.out.println(name);
+        logger.debug("REST request. Path:/customer/{}  method: GET", name);
+        name = convertParameterToUtf(name);
+        StockOwnerCompany clientCompany =
+                stockOwnerCompanyDao.findByName(name).orElseThrow(DataNotFoundError::new);
         return clientDtoConverter.toClientDto(clientCompany);
     }
 
@@ -49,8 +53,11 @@ public class StockOwnerCompanyController {
         logger.debug("REST request. Path:/customer/  method: POST Request body {}", client);
         StockOwnerCompany stockOwnerCompany = clientDtoConverter.toStockOwnerCompany(client);
         if (stockOwnerCompany.getId() > -1){
-            System.out.println("Update");
+            StockOwnerCompany companyInDB =
+                    stockOwnerCompanyDao.findById(stockOwnerCompany.getId()).orElseThrow(DataNotFoundError::new);
+            clientDtoConverter.updateStockOwnerCompany(companyInDB, stockOwnerCompany);
         } else {
+            stockOwnerCompany.setId(null);
             User admin = stockOwnerCompany.getAdmin();
             Address adminAddress = admin.getAddress();
             adminAddress = addressDao.save(adminAddress);
@@ -69,6 +76,14 @@ public class StockOwnerCompanyController {
                 "Данных нет", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
+    private String convertParameterToUtf(String name) {
+        try {
+            name =  new String(name.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.error("Can't converted param {} to utf.", name);
+        }
+        return name;
+    }
 
 
 }

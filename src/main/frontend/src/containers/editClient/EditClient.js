@@ -106,7 +106,6 @@ class EditClient extends React.Component {
             <div className="row">
                 <form id="client_form"
                     className="form-horizontal col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-                    <h4>Данные о компании:</h4>
                     <SimpleInput id="name"
                                  label="Название компании*"
                                  onChange={this.validateOnChange}
@@ -151,8 +150,6 @@ class EditClient extends React.Component {
                                  value={this.props.client.data.room}
                                  errorValue={this.props.client.inputErrors.room}
                                  patternType="Integer"/>
-
-                    <h4>Данные учетной записи:</h4>
                     <SimpleInput id="adminEmail"
                                  label="Email администратора*"
                                  onBlur={this.validateOnBlur}

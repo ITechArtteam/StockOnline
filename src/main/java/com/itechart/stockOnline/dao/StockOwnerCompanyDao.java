@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface StockOwnerCompanyDao extends JpaRepository<StockOwnerCompany, Long> {
     Optional<StockOwnerCompany> findByName(String name);
+    Optional<StockOwnerCompany> findById(Integer id);
     Page<StockOwnerCompany> findAll(Pageable pageable);
 }
