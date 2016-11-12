@@ -39,23 +39,28 @@ public class StockOwnerCompanyController {
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public ClientDto getClientData(@PathVariable String name){
         StockOwnerCompany clientCompany = stockOwnerCompanyDao.findByName(name).orElseThrow(DataNotFoundError::new);
+        System.out.println(name);
         return clientDtoConverter.toClientDto(clientCompany);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @Transactional
-    public String addClient(@RequestBody ClientDto client){
+    public ResponseEntity<Object> addClient(@RequestBody ClientDto client){
         logger.debug("REST request. Path:/customer/  method: POST Request body {}", client);
         StockOwnerCompany stockOwnerCompany = clientDtoConverter.toStockOwnerCompany(client);
-        User admin = stockOwnerCompany.getAdmin();
-        Address adminAddress = admin.getAddress();
-        adminAddress = addressDao.save(adminAddress);
-        admin.setAddress(adminAddress);
-        admin = userDao.save(admin);
-        stockOwnerCompany.setAdmin(admin);
-        stockOwnerCompany.setAddress(addressDao.save(stockOwnerCompany.getAddress()));
-        stockOwnerCompanyDao.save(stockOwnerCompany);
-        return "Ok";
+        if (stockOwnerCompany.getId() > -1){
+            System.out.println("Update");
+        } else {
+            User admin = stockOwnerCompany.getAdmin();
+            Address adminAddress = admin.getAddress();
+            adminAddress = addressDao.save(adminAddress);
+            admin.setAddress(adminAddress);
+            admin = userDao.save(admin);
+            stockOwnerCompany.setAdmin(admin);
+            stockOwnerCompany.setAddress(addressDao.save(stockOwnerCompany.getAddress()));
+            stockOwnerCompanyDao.save(stockOwnerCompany);
+        }
+        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
     }
 
     @ExceptionHandler(value = DataNotFoundError.class)
@@ -63,5 +68,7 @@ public class StockOwnerCompanyController {
         return new ResponseEntity<>(
                 "Данных нет", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
+
+
 
 }

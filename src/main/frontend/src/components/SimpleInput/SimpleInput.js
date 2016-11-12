@@ -6,7 +6,7 @@ class SimpleInput extends React.Component {
     render() {
         return (
             <div className="form-group">
-
+                <label className="control-label">{this.props.label}</label>
                 <input
                     type={this.props.isPassword && !this.props.isVisiblePassword ? "password" : "text"}
                     value={this.props.value}

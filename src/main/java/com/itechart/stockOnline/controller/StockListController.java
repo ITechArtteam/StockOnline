@@ -31,5 +31,4 @@ public class StockListController {
         Page<Stock> stockPage = stockDao.findAll(new PageRequest(pageNumber - 1, recordCount));
         return stockDtoConverter.toStockPage(stockPage);
     }
-
 }

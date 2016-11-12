@@ -25,11 +25,10 @@ class AlertPopup extends React.Component {
 
     }
 
-
     render() {
         return (
             <div className={this.getStyles()}>
-                <span onClick={this.props.close} className="close" data-dismiss="alert">×</span>
+                <span onClick={this.props.close} className="close">×</span>
                 <p className="message">{this.props.message}</p>
             </div>
         )

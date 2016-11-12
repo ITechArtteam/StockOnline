@@ -30,6 +30,7 @@ public class ClientDtoConverter {
         address.setRoom(clientDto.getRoom());
         company.setAddress(address);
         company.setName(clientDto.getName());
+        company.setId(clientDto.getId());
         return company;
     }
 
@@ -46,6 +47,7 @@ public class ClientDtoConverter {
         dto.setAdminLogin(admin.getLogin());
         dto.setAdminEmail(admin.getEmail());
         dto.setAdminPassword(null);
+        dto.setId(company.getId());
         return dto;
     }
 

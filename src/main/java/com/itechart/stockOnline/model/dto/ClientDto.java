@@ -1,6 +1,7 @@
 package com.itechart.stockOnline.model.dto;
 
 public class ClientDto {
+    private int id;
     private String name;
     private String adminLogin;
     private String adminPassword;
@@ -83,10 +84,19 @@ public class ClientDto {
         this.adminEmail = adminEmail;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
-public String toString() {
+    public String toString() {
         return "ClientDto{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", adminLogin='" + adminLogin + '\'' +
                 ", adminPassword='" + adminPassword + '\'' +
                 ", adminEmail='" + adminEmail + '\'' +

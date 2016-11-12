@@ -210,17 +210,7 @@
                     <username>${jdbc.username}</username>
                     <password>${jdbc.password}</password>
                 </configuration>
-                <!-- может и понадобится, удалить 5.11.20
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>clearCheckSums</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                -->
             </plugin>
-            <!--
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -262,7 +252,6 @@
                     </execution>
                 </executions>
             </plugin>
-            -->
         </plugins>
     </build>
 

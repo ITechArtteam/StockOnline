@@ -14,10 +14,9 @@ function getClientDataSuccess(json) {
     }
 }
 
-function getClientDataFail(error) {
+function getClientDataFail() {
     return {
-        type: event.GET_CLIENT_FAIL,
-        error
+        type: event.GET_CLIENT_FAIL
     }
 }
 
@@ -28,8 +27,8 @@ function getClient(clientName) {
             .get(`/customer/${clientName}`)
             .then(json =>
                 dispatch(getClientDataSuccess(json.data))
-            ).catch(error => {
-                dispatch(getClientDataFail(error))
+            ).catch(() => {
+                dispatch(getClientDataFail())
             });
     }
 }
@@ -49,7 +48,7 @@ function addClientSuccess() {
 function addClientFail(error) {
     return {
         type: event.ADD_CLIENT_FAIL,
-        error
+        data: error
     }
 }
 

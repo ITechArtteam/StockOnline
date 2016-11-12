@@ -10,7 +10,8 @@ const initUserState = {
         city: "",
         street: "",
         home: "",
-        room: ""
+        room: "",
+        id: -1
     },
     inputErrors: {
         name: "",
@@ -27,10 +28,7 @@ const initUserState = {
         adminPasswordVisibility: true,
         showAlertPopup: false,
         typeAlertPopup: "danger",
-        messageAlertPop: "ошибка",
-        isFetch: false,
-        isFail: false,
-        error: ""
+        messageAlertPop: "ошибка"
     }
 };
 
@@ -44,14 +42,14 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, type: "success", messageAlertPop: "Клиен сохранен."
+                    showAlertPopup: true, typeAlertPopup: "success", messageAlertPop: "Клиен сохранен."
                 }
             };
         case event.ADD_CLIENT_FAIL:
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, type: "danger", messageAlertPop: "Произошла ошибка."
+                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: "Клиент не сохранен."
                 }
             };
         case event.SET_FIELD:
@@ -79,7 +77,7 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, type: "danger", messageAlertPop: "Клиент не найден."
+                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: "Клиент не найден."
                 }
             };
         case event.SET_VISIBILITY_PASSWORD:
@@ -92,7 +90,7 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, type: action.data.type, messageAlertPop: action.data.message
+                    showAlertPopup: true, typeAlertPopup: action.data.type, messageAlertPop: action.data.message
                 }
             };
         case event.CLOSE_ALERT_POPUP:

@@ -186,12 +186,12 @@ class EditClient extends React.Component {
                         </button>
                         <button type="button" className="btn btn-default">Отменить</button>
                     </div>
-                    <AlertPopup isVisible={this.props.client.frontend.showAlertPopup}
-                                message={this.props.client.frontend.messageAlertPop}
-                                type={this.props.client.frontend.typeAlertPopup}
-                                close={this.closeAlert}
-                    />
                 </form>
+                <AlertPopup isVisible={this.props.client.frontend.showAlertPopup}
+                            message={this.props.client.frontend.messageAlertPop}
+                            type={this.props.client.frontend.typeAlertPopup}
+                            close={this.closeAlert}
+                />
             </div>
         )
     }
