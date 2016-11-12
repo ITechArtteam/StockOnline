@@ -77,7 +77,7 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: "Клиент не найден."
+                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: action.data
                 }
             };
         case event.SET_VISIBILITY_PASSWORD:

@@ -73,16 +73,16 @@ public class StockOwnerCompanyController {
     @ExceptionHandler(value = DataNotFoundError.class)
     public ResponseEntity<Object> dataNotFound(){
         return new ResponseEntity<>(
-                "Данных нет", new HttpHeaders(), HttpStatus.NOT_FOUND);
+                "Компания не найдена", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
-    private String convertParameterToUtf(String name) {
+    private String convertParameterToUtf(String parameter) {
         try {
-            name =  new String(name.getBytes("ISO-8859-1"), "UTF-8");
+            parameter =  new String(parameter.getBytes("ISO-8859-1"), "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            logger.error("Can't converted param {} to utf.", name);
+            logger.error("Can't converted param {} to utf.", parameter);
         }
-        return name;
+        return parameter;
     }
 
 
