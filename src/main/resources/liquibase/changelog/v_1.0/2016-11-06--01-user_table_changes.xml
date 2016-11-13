@@ -107,4 +107,5 @@
                                schemaName="stock_online"
                                tableName="address"/>
     </changeSet>
+
 </databaseChangeLog>

@@ -59,6 +59,7 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     @Override
     public int updateStockOwnerCompany(StockOwnerCompany stockOwnerCompany) {
+        companyValidator.checkNewOwnerCompany(stockOwnerCompany);
         StockOwnerCompany companyInDB =
                 stockOwnerCompanyDao.findById(stockOwnerCompany.getId()).orElseThrow(DataNotFoundError::new);
         ownerCompanyDtoConverter.updateStockOwnerCompany(companyInDB, stockOwnerCompany);

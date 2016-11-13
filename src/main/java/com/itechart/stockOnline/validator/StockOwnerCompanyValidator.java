@@ -1,10 +1,10 @@
 package com.itechart.stockOnline.validator;
 
-import com.itechart.stockOnline.dao.AddressDao;
 import com.itechart.stockOnline.dao.StockOwnerCompanyDao;
 import com.itechart.stockOnline.dao.UserDao;
 import com.itechart.stockOnline.exception.NotValidError;
 import com.itechart.stockOnline.model.StockOwnerCompany;
+import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,55 @@ public class StockOwnerCompanyValidator {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private AddressDao addressDao;
-
     public void checkNewOwnerCompany(StockOwnerCompany ownerCompany){
         OwnerCompanyDto errorDto = new OwnerCompanyDto();
         checkCompanyName(ownerCompany, errorDto);
+        checkAdminEmail(ownerCompany, errorDto);
+        checkAdminLogin(ownerCompany, errorDto);
+        checkAdminPassword(ownerCompany, errorDto);
 
         checkErrors(errorDto);
+    }
+
+    private void checkAdminPassword(StockOwnerCompany ownerCompany, OwnerCompanyDto errorDto) {
+        String password = ownerCompany.getAdmin().getLogin();
+        if (StringUtils.isEmpty(password)){
+            errorDto.setAdminLogin("Введите пароль администратора.");
+        } else if (password.length() < 3){
+            errorDto.setAdminLogin("Слишком короткий пароль администратора.");
+        }
+    }
+
+    private void checkAdminLogin(StockOwnerCompany ownerCompany, OwnerCompanyDto errorDto) {
+        String login = ownerCompany.getAdmin().getLogin();
+        if (StringUtils.isEmpty(login)){
+            errorDto.setAdminLogin("Введите логин администратора.");
+        } else if (login.length() < 3){
+            errorDto.setAdminLogin("Слишком короткий логин администратора.");
+        } else if (!checkRegexp("^[a-z_а-я]*$", login)){
+            errorDto.setAdminLogin("Может содержать только буквы и символ подчеркивания.");
+        }
+        Optional<User> adminInDB = userDao.findByLogin(login);
+        Optional<StockOwnerCompany> ownerCompanyInBD = stockOwnerCompanyDao.findById(ownerCompany.getId());
+        if (adminInDB.isPresent() &&
+                (!ownerCompanyInBD.isPresent() || ownerCompanyInBD.get().getAdmin().getEmail() != login)){
+            errorDto.setAdminLogin("Логин уже занят.");
+        }
+    }
+
+    private void checkAdminEmail(StockOwnerCompany ownerCompany, OwnerCompanyDto errorDto) {
+        String email= ownerCompany.getAdmin().getEmail();
+        if (StringUtils.isEmpty(email)){
+            errorDto.setName("Введите email.");
+        }  else if (!checkRegexp("^[a-z_]+[0-9a-z_\u002E\u005F]*[a-z0-9_]+@([a-z]){2,10}\u002E[a-z]{2,4}$", email)){
+            errorDto.setAdminEmail("Несуществующий email. Верный формат: \"x@xx.xx\"");
+        }
+        Optional<User> adminInDB = userDao.findByEmail(email);
+        Optional<StockOwnerCompany> ownerCompanyInBD = stockOwnerCompanyDao.findById(ownerCompany.getId());
+        if (adminInDB.isPresent() &&
+                (!ownerCompanyInBD.isPresent() || ownerCompanyInBD.get().getAdmin().getEmail() != email)){
+            errorDto.setAdminEmail("Email уже занят.");
+        }
     }
 
     private void checkCompanyName(StockOwnerCompany ownerCompany, OwnerCompanyDto errorDto) {

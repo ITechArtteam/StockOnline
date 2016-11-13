@@ -1,5 +1,6 @@
 package com.itechart.stockOnline.converter;
 
+import com.itechart.stockOnline.exception.NotValidError;
 import com.itechart.stockOnline.model.Address;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
@@ -27,11 +28,23 @@ public class OwnerCompanyDtoConverter {
         address.setCountryName(ownerCompanyDto.getCountry());
         address.setCityName(ownerCompanyDto.getCity());
         address.setStreet(ownerCompanyDto.getStreet());
-        if (StringUtils.isNotEmpty(ownerCompanyDto.getHome())) {
-            address.setHome(Integer.parseInt(ownerCompanyDto.getHome()));
+        try {
+            if (StringUtils.isNotEmpty(ownerCompanyDto.getHome())) {
+                address.setHome(Integer.parseInt(ownerCompanyDto.getHome()));
+            }
+        } catch (NumberFormatException e){
+            OwnerCompanyDto errorDto = new OwnerCompanyDto();
+            errorDto.setHome("Только числа");
+            throw new NotValidError(errorDto);
         }
-        if (StringUtils.isNotEmpty(ownerCompanyDto.getRoom())) {
-            address.setRoom(Integer.parseInt(ownerCompanyDto.getRoom()));
+        try {
+            if (StringUtils.isNotEmpty(ownerCompanyDto.getRoom())) {
+                address.setRoom(Integer.parseInt(ownerCompanyDto.getRoom()));
+            }
+        } catch (NumberFormatException e){
+            OwnerCompanyDto errorDto = new OwnerCompanyDto();
+            errorDto.setRoom("Только числа");
+            throw new NotValidError(errorDto);
         }
         company.setAddress(address);
         company.setName(ownerCompanyDto.getName());

@@ -12,4 +12,5 @@
     <include file="2016-11-04--01-product_in_waybill_fk_bug_fix.xml" relativeToChangelogFile="true"/>
     <include file="2016-11-02--05-client_table_changes.xml" relativeToChangelogFile="true"/>
     <include file="2016-11-06--01-user_table_changes.xml" relativeToChangelogFile="true"/>
+    <include file="2016-11-13--01-user_table_changes.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
