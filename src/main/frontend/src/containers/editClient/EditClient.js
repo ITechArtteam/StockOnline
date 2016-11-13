@@ -76,7 +76,7 @@ class EditClient extends React.Component {
 
     submit(){
         const errors = this.props.client.inputErrors;
-        /*for(let field in errors){
+        for(let field in errors){
             if (errors[field].length > 0){
                 this.props.showAlertPopup("danger", "Исправь ошибки ввода.");
                 return;
@@ -97,7 +97,7 @@ class EditClient extends React.Component {
         if (this.props.client.data.adminEmail < 7){
             this.props.setInputError("adminEmail", "Введите email.");
             return;
-        }*/
+        }
         this.props.addClient(this.props.client.data);
     }
 
