@@ -43,6 +43,10 @@ export default function (state = initUserState, action) {
                 ...state, frontend: {
                     ...state.frontend,
                     showAlertPopup: true, typeAlertPopup: "success", messageAlertPop: "Клиен сохранен."
+                },
+                data: {
+                    ...state.data,
+                    id: action.data
                 }
             };
         case event.ADD_CLIENT_FAIL:
@@ -50,7 +54,7 @@ export default function (state = initUserState, action) {
                 ...state, frontend: {
                     ...state.frontend,
                     showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: "Клиент не сохранен."
-                }
+                }, inputErrors: action.data
             };
         case event.SET_FIELD:
             return {

@@ -25,13 +25,4 @@ GRANT ALL PRIVILEGES ON `stock_online`.* TO 'orel.dmitriy' WITH GRANT OPTION;
 точка входа index.js
 css файлы пока ложим в webapp/resources/css и подключаем в WEB-INF/index.jsp
 
---------------------------------lombok---------------------------------------------------------
-ПОКА НЕ РАБОТАЕТ
-File > Settings > Plugins > Browse repositories... > Search for "lombok" > Install Plugin
-устанавливает плаги lombok для idea. После этого сущности помечаем анотацией @Data и при компиляции
-будет автаматически сгенерены гетеры сетеры конструктор toString getHash и т.д.
-Описание:
-https://projectlombok.org/features/Data.html
-Офф сайт:
-https://projectlombok.org/download.html
 

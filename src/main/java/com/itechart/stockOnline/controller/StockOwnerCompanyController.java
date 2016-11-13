@@ -1,14 +1,11 @@
 package com.itechart.stockOnline.controller;
 
-import com.itechart.stockOnline.converter.ClientDtoConverter;
-import com.itechart.stockOnline.dao.AddressDao;
-import com.itechart.stockOnline.dao.StockOwnerCompanyDao;
-import com.itechart.stockOnline.dao.UserDao;
+import com.itechart.stockOnline.converter.OwnerCompanyDtoConverter;
 import com.itechart.stockOnline.exception.DataNotFoundError;
-import com.itechart.stockOnline.model.Address;
+import com.itechart.stockOnline.exception.NotValidError;
 import com.itechart.stockOnline.model.StockOwnerCompany;
-import com.itechart.stockOnline.model.User;
-import com.itechart.stockOnline.model.dto.ClientDto;
+import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
+import com.itechart.stockOnline.service.StockOwnerCompanyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,47 +24,30 @@ public class StockOwnerCompanyController {
     private static final Logger logger = LoggerFactory.getLogger(StockOwnerCompanyController.class);
 
     @Autowired
-    private StockOwnerCompanyDao stockOwnerCompanyDao;
+    private OwnerCompanyDtoConverter ownerCompanyDtoConverter;
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private AddressDao addressDao;
-
-    @Autowired
-    private ClientDtoConverter clientDtoConverter;
+    private StockOwnerCompanyService companyService;
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public ClientDto getClientData(@PathVariable String name){
+    public OwnerCompanyDto getClientData(@PathVariable String name){
         logger.debug("REST request. Path:/customer/{}  method: GET", name);
         name = convertParameterToUtf(name);
-        StockOwnerCompany clientCompany =
-                stockOwnerCompanyDao.findByName(name).orElseThrow(DataNotFoundError::new);
-        return clientDtoConverter.toClientDto(clientCompany);
+        return companyService.getClientDtoForOwnerCompany(name);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<Object> addClient(@RequestBody ClientDto client){
+    public ResponseEntity<Object> addClient(@RequestBody OwnerCompanyDto client){
         logger.debug("REST request. Path:/customer/  method: POST Request body {}", client);
-        StockOwnerCompany stockOwnerCompany = clientDtoConverter.toStockOwnerCompany(client);
+        StockOwnerCompany stockOwnerCompany = ownerCompanyDtoConverter.toStockOwnerCompany(client);
+        int idCompany;
         if (stockOwnerCompany.getId() > -1){
-            StockOwnerCompany companyInDB =
-                    stockOwnerCompanyDao.findById(stockOwnerCompany.getId()).orElseThrow(DataNotFoundError::new);
-            clientDtoConverter.updateStockOwnerCompany(companyInDB, stockOwnerCompany);
+            idCompany = companyService.updateStockOwnerCompany(stockOwnerCompany);
         } else {
-            stockOwnerCompany.setId(null);
-            User admin = stockOwnerCompany.getAdmin();
-            Address adminAddress = admin.getAddress();
-            adminAddress = addressDao.save(adminAddress);
-            admin.setAddress(adminAddress);
-            admin = userDao.save(admin);
-            stockOwnerCompany.setAdmin(admin);
-            stockOwnerCompany.setAddress(addressDao.save(stockOwnerCompany.getAddress()));
-            stockOwnerCompanyDao.save(stockOwnerCompany);
+            idCompany = companyService.saveStockOwnerCompany(stockOwnerCompany);
         }
-        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(idCompany, new HttpHeaders(), HttpStatus.OK);
     }
 
     @ExceptionHandler(value = DataNotFoundError.class)
@@ -75,6 +55,14 @@ public class StockOwnerCompanyController {
         return new ResponseEntity<>(
                 "Компания не найдена", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = NotValidError.class)
+    public ResponseEntity<Object> fieldHasErrors(NotValidError error){
+        System.out.println(error.getErrorsDto());
+        return new ResponseEntity<>(
+                error.getErrorsDto(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
 
     private String convertParameterToUtf(String parameter) {
         try {

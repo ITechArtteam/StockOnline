@@ -40,9 +40,10 @@ function addClientRequest() {
     }
 }
 
-function addClientSuccess() {
+function addClientSuccess(data) {
     return {
-        type: event.ADD_CLIENT_SUCCESS
+        type: event.ADD_CLIENT_SUCCESS,
+        data: data
     }
 }
 
@@ -60,9 +61,9 @@ function addClient(client) {
         return axios
             .post(`/customer/`, client)
             .then(json =>
-                dispatch(addClientSuccess())
+                dispatch(addClientSuccess(json.data))
             ).catch(error => {
-                dispatch(addClientFail(error))
+                dispatch(addClientFail(error.response.data))
             });
     }
 }

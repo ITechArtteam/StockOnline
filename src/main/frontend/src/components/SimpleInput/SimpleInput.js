@@ -38,7 +38,7 @@ SimpleInput.propTypes = {
     swapStatePassword: React.PropTypes.func,
     label: React.PropTypes.string.isRequired,
     isPassword: React.PropTypes.bool,
-    value: React.PropTypes.string,
+    value: React.PropTypes.any,
     length: React.PropTypes.number,
     id: React.PropTypes.string.isRequired,
     patternType: React.PropTypes.string,
@@ -51,6 +51,7 @@ SimpleInput.defaultProps = {
     errorValue: "",
     isVisiblePassword: false,
     length: 20,
-    onBlur: ()=>{}
+    onBlur: ()=>{},
+    value: ""
 };
 export default SimpleInput;
