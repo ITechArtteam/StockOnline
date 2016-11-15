@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {Provider} from 'react-redux'
-import {Router, IndexRedirect, Route, browserHistory} from 'react-router'
-import configureStore from './store/configureStore'
-import App from './containers/App'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import {Router, IndexRedirect, Route, browserHistory} from 'react-router';
+import configureStore from './store/configureStore';
+import App from './containers/App';
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import Clients from "./containers/systemClients/Clients";
@@ -29,13 +29,13 @@ import CheckGoods from "./containers/CheckGoods";
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
 import RequireRole from "./containers/RequireRole"
-import "jquery/dist/jquery.min"
+import "jquery/dist/jquery.min";
 import "bootstrap/dist/js/bootstrap.min";
-import "bootstrap/dist/css/bootstrap-theme.min.css"
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap-theme.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-select/dist/js/bootstrap-select.min";
-import "bootstrap-select/dist/css/bootstrap-select.min.css"
-
+import "bootstrap-select/dist/css/bootstrap-select.min.css";
+import "./global.css";
 
 import {client} from "./actions"
 
