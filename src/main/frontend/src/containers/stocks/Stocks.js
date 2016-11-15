@@ -20,7 +20,7 @@ class Stocks extends React.Component {
     }
 
     onPageLimitSelectChange() {
-        this.props.getClientList(1, parseInt(this.refs.pageLimitSelect.value));
+        this.props.getStockList(1, parseInt(this.refs.pageLimitSelect.value));
      }
 
     onTableRowSelect(row, isSelected) {
@@ -87,7 +87,9 @@ class Stocks extends React.Component {
                     </div>
                     <div className="col-xs-9">
                         <BootstrapTable data={stockList} selectRow={this.selectRowProp} striped={true} hover={true}>
-                            <TableHeaderColumn headerAlign="center" dataField="name" dataFormat={this.nameFormatter}>Номер склада</TableHeaderColumn>
+                            <TableHeaderColumn headerAlign="center" dataField="rowNumber" isKey={true}>№</TableHeaderColumn>
+                            <TableHeaderColumn headerAlign="center" dataField="name"  dataFormat={this.nameFormatter}>Номер склада</TableHeaderColumn>
+                            <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="company">Название компании</TableHeaderColumn>
                         </BootstrapTable>
@@ -106,19 +108,19 @@ class Stocks extends React.Component {
 }
 
 
-const mapStateToProps = (state) => {
+    const mapStateToProps = (state) => {
     // console.log(state);
-    return {
-        page: state.stockListReducer.page
-    }
-};
+        return {
+            page: state.stockListReducer.page
+        }
+    };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
+    const mapDispatchToProps = (dispatch) => {
+        return {
             getStockList: (pageNumber, itemsCountPerPage) => {
             dispatch(stockListActionCreator.getStockList(pageNumber, itemsCountPerPage))
-}
-}
+        }
+    }
 };
 
 export default connect(
