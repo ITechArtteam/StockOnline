@@ -3,7 +3,7 @@ import {stockListActionCreator} from "./index";
 import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import {Link} from 'react-router'
+import {Link, browserHistory} from 'react-router';
 
 class Stocks extends React.Component {
     constructor(props) {
@@ -22,6 +22,10 @@ class Stocks extends React.Component {
     onPageLimitSelectChange() {
         this.props.getStockList(1, parseInt(this.refs.pageLimitSelect.value));
      }
+
+    onBtnSaveClick() {
+        browserHistory.push('/stock');
+    }
 
     onTableRowSelect(row, isSelected) {
         console.log(row);
@@ -48,7 +52,7 @@ class Stocks extends React.Component {
     render() {
         var stockList = this.props.page.stockList.map((item, index) => {
             return {
-                rowNumber: index,
+                rowNumber: ((this.props.page.activePage - 1) * this.props.page.itemsCountPerPage) + index + 1,
                 name: item.id,
                 company: item.nameCompany,
                 address: item.country + ' г. ' + item.city + ' ул. ' + item.street + ' д. ' + item.home + ' кв. ' + item.room,
@@ -63,7 +67,7 @@ class Stocks extends React.Component {
                         <div className="list-group">
                             <div className="list-group-item">
                                 <div className="btn-group-vertical">
-                                    <button className="btn btn-default">Добавить</button>
+                                    <button className="btn btn-default" onClick={this.onBtnSaveClick}>Добавить</button>
                                     <button className="btn btn-default">Удалить</button>
                                     <button className="btn btn-default">Поиск</button>
                                     <button className="btn btn-default">Очистить фильтр</button>
@@ -87,9 +91,7 @@ class Stocks extends React.Component {
                     </div>
                     <div className="col-xs-9">
                         <BootstrapTable data={stockList} selectRow={this.selectRowProp} striped={true} hover={true}>
-                            <TableHeaderColumn headerAlign="center" dataField="rowNumber" isKey={true}>№</TableHeaderColumn>
-                            <TableHeaderColumn headerAlign="center" dataField="name"  dataFormat={this.nameFormatter}>Номер склада</TableHeaderColumn>
-                            <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
+                            <TableHeaderColumn headerAlign="center" dataField="name" isKey={true} dataFormat={this.nameFormatter}>Номер склада</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="company">Название компании</TableHeaderColumn>
                         </BootstrapTable>
