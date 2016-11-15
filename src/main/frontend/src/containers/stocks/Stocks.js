@@ -8,15 +8,42 @@ import {Link} from 'react-router'
 class Stocks extends React.Component {
     constructor(props) {
         super(props);
-        this.onPaginationChanged = this.onPaginationChanged.bind(this);
+        this.onPaginationChange = this.onPaginationChange.bind(this);
+        this.onPageLimitSelectChange = this.onPageLimitSelectChange.bind(this);
     }
     componentWillMount() {
         this.props.getStockList(this.props.page.activePage, this.props.page.itemsCountPerPage);
     }
 
-    onPaginationChanged(pageNumber) {
+    onPaginationChange(pageNumber) {
         this.props.getStockList(pageNumber, this.props.page.itemsCountPerPage)
     }
+
+    onPageLimitSelectChange() {
+        this.props.getClientList(1, parseInt(this.refs.pageLimitSelect.value));
+     }
+
+    onTableRowSelect(row, isSelected) {
+        console.log(row);
+        console.log("selected: " + isSelected)
+    }
+
+    onSelectAllRows(isSelected) {
+        console.log("is select all: " + isSelected);
+    }
+
+    nameFormatter = (cell, row) => {
+        return <Link to={"/stock/" + cell}>{cell}</Link>
+    };
+
+
+    selectRowProp = {
+        mode: "checkbox",
+        clickToSelect: true,
+        bgColor: "rgb(238, 193, 213)",
+        onSelect: this.onTableRowSelect,
+        onSelectAll: this.onSelectAllRows
+    };
 
     render() {
         var stockList = this.props.page.stockList.map((item, index) => {
@@ -28,56 +55,53 @@ class Stocks extends React.Component {
                 status: item.active
                 }
                 });
-        function onRowSelect(row, isSelected){
-            console.log(row);
-            console.log("selected: " + isSelected)
-        }
-
-        function onSelectAll(isSelected){
-            console.log("is select all: " + isSelected);
-        }
-        var nameFormatter = (cell, row) => {
-            return <Link to={"/stock/" + cell}>{cell}</Link>
-        };
-        var statusFormatter = (cell, row) => {
-            var labelType = cell ? "label-success" : "label-danger";
-            var labelText = cell ? "Активна" : 'Приостановлена';
-            return <div className={'label ' + labelType}>{labelText}</div>
-        };
-
-        var selectRowProp = {
-            mode: "checkbox",
-            clickToSelect: true,
-            bgColor: "rgb(238, 193, 213)",
-            onSelect: onRowSelect,
-            onSelectAll: onSelectAll
-        };
 
         return (
-            <div className="row">
-            {/*<StockTable stockList={this.props.page.stockList}/>*/}
-                <BootstrapTable data={stockList} selectRow={selectRowProp} striped={true} hover={true}>
-                    <TableHeaderColumn headerAlign="center" dataField="rowNumber" isKey={true}>№</TableHeaderColumn>
-                    <TableHeaderColumn headerAlign="center" dataField="name" dataFormat={nameFormatter}>Номер склада</TableHeaderColumn>
-                    <TableHeaderColumn headerAlign="center" dataField="company">Название компании</TableHeaderColumn>
-                    <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
-                </BootstrapTable>
-    <Pagination
-        activePage={this.props.page.activePage}
-        itemsCountPerPage={this.props.page.itemsCountPerPage}
-        totalItemsCount={this.props.page.totalItemsCount}
-        pageRangeDisplayed={5}
-        onChange={this.onPaginationChanged}
-    />
-        Записей на странице:
-            <select className="form-control"
-        ref={'pageLimitSelect'}
-        onChange={() => this.props.getStockList(1, parseInt(this.refs.pageLimitSelect.value))}>
-    <option>5</option>
-        <option>10</option>
-        </select>
-        </div>
-    )
+            <div className="container">
+                <div className="row">
+                    <div className="col-xs-3">
+                        <div className="list-group">
+                            <div className="list-group-item">
+                                <div className="btn-group-vertical">
+                                    <button className="btn btn-default">Добавить</button>
+                                    <button className="btn btn-default">Удалить</button>
+                                    <button className="btn btn-default">Поиск</button>
+                                    <button className="btn btn-default">Очистить фильтр</button>
+                                </div>
+                            </div>
+                            <div className="list-group-item">
+                                <div className="form-inline">
+                                    <div className="form-group">
+                                        <label htmlFor="pageLimitSelect">Записей на странице:</label>
+                                            <select className="form-control"
+                                                ref={'pageLimitSelect'}
+                                                    id="pageLimitSelect"
+                                                    onChange={this.onPageLimitSelectChange}>
+                                                <option>5</option>
+                                                <option>10</option>
+                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xs-9">
+                        <BootstrapTable data={stockList} selectRow={this.selectRowProp} striped={true} hover={true}>
+                            <TableHeaderColumn headerAlign="center" dataField="name" dataFormat={this.nameFormatter}>Номер склада</TableHeaderColumn>
+                            <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
+                            <TableHeaderColumn headerAlign="center" dataField="company">Название компании</TableHeaderColumn>
+                        </BootstrapTable>
+                        <Pagination
+                            activePage={this.props.page.activePage}
+                            itemsCountPerPage={this.props.page.itemsCountPerPage}
+                            totalItemsCount={this.props.page.totalItemsCount}
+                            pageRangeDisplayed={5}
+                            onChange={this.onPaginationChange}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 
