@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {Router, IndexRedirect, Route, browserHistory} from 'react-router'
-import configureStore from './store/configureStore'
+import store from './store/store'
 import App from './containers/App'
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
@@ -14,7 +14,6 @@ import ReportStandard from "./containers/ReportStandard";
 import Stocks from "./containers/stocks/Stocks";
 import EditStock from "./containers/EditStock";
 import Workers from "./containers/Workers";
-import EditWorker from "./containers/EditWorker";
 import Carriers from "./containers/Carriers";
 import EditCarrier from "./containers/EditCarrier";
 import Drivers from "./containers/Drivers";
@@ -28,17 +27,13 @@ import DepartureGoods from "./containers/DepartureGoods";
 import CheckGoods from "./containers/CheckGoods";
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
-import "jquery/dist/jquery.min"
-import "bootstrap/dist/js/bootstrap.min";
-import "bootstrap/dist/css/bootstrap-theme.min.css"
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap-select/dist/js/bootstrap-select.min";
-import "bootstrap-select/dist/css/bootstrap-select.min.css"
+import EditWorkerContainer from "./containers/EditWorkerContainer";
+import "bootstrap-webpack";
 
 
 import {client} from "./actions"
 
-const store = configureStore();
+
 
 ReactDOM.render(
     <Provider store={store}>
@@ -54,7 +49,7 @@ ReactDOM.render(
                 <Route path="/stocks" component={Stocks}/>
                 <Route path="/stock/:id" component={EditStock}/>
                 <Route path="/workers" component={Workers}/>
-                <Route path="/worker/:id" component={EditWorker}/>
+                <Route path="/worker/:id" component={EditWorkerContainer}/>
                 <Route path="/carriers" component={Carriers}/>
                 <Route path="/carrier/:id" component={EditCarrier}/>
                 <Route path="/drivers" component={Drivers}/>

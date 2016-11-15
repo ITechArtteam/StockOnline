@@ -56,10 +56,9 @@ module.exports = {
                 test: /\.json$/,
                 loader: "json-loader"
             },
-            {
-                test: /\.(woff|woff2|eot|ttf)$/,
-                loader: 'url-loader?limit=100000'
-            }
+            { test: /\.(woff|woff2)$/,  loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+            { test: /\.ttf$/,    loader: "file-loader" },
+            { test: /\.eot$/,    loader: "file-loader" }
         ]
     }
 };
