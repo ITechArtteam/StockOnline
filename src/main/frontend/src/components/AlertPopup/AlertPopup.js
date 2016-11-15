@@ -47,7 +47,11 @@ AlertPopup.propTypes = {
     isVisible: React.PropTypes.bool.isRequired,
     message: React.PropTypes.string.isRequired,
     type: React.PropTypes.string,
-    buttons: React.PropTypes.arrayOf(React.PropTypes.object)
+    buttons: React.PropTypes.arrayOf(React.PropTypes.shape({
+        btnStyle : React.PropTypes.string.isRequired,
+        text: React.PropTypes.string.isRequired,
+        onclick: React.PropTypes.func.isRequired
+    }))
 };
 
 export default AlertPopup;

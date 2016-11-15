@@ -13,17 +13,23 @@ class Clients extends React.Component {
         this.onPageLimitSelectChange = this.onPageLimitSelectChange.bind(this);
         this.onBtnSaveClick = this.onBtnSaveClick.bind(this);
         this.onBtnDeleteClick = this.onBtnDeleteClick.bind(this);
+        this.onConfirmOkBtnClick = this.onConfirmOkBtnClick.bind(this);
     }
 
     componentWillMount() {
-        this.props.getClientList(this.props.page.activePage, this.props.page.itemsCountPerPage);
+        this.props.getClientList(1, this.props.page.itemsCountPerPage);
+    }
+    componentDidMount() {
+        this.refs.table.cleanSelected();
     }
 
     onPaginationChange(pageNumber) {
+        this.refs.table.cleanSelected();
         this.props.getClientList(pageNumber, this.props.page.itemsCountPerPage)
     }
 
     onPageLimitSelectChange() {
+        this.refs.table.cleanSelected();
         this.props.getClientList(1, parseInt(this.refs.pageLimitSelect.value));
     }
 
@@ -34,18 +40,28 @@ class Clients extends React.Component {
     onBtnDeleteClick() {
         var selectedRowKeys = this.refs.table.state.selectedRowKeys;
         if(selectedRowKeys.length == 0) {
-            this.props.showNothingToDeleteDialog();
-            // alert: rows not selected
+            this.props.showDialog("Не выделена ни одна строка для удаления", []);
         } else {
-            this.props.showConfirmDeleteDialog();
-        //    alert: confirm deleting
+            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", [
+                {
+                    btnStyle : "btn btn-success",
+                    text: "Ок",
+                    onclick: this.onConfirmOkBtnClick
+                },
+                {
+                    btnStyle: "btn btn-default",
+                    text: "Отмена",
+                    onclick: this.props.closeDialog
+                }]);
         }
         console.log(this.refs.table.state);
     }
 
     onConfirmOkBtnClick() {
-        console.log("ok");
-        this.props.closeConfirmDeleteDialog();
+        this.props.closeDialog();
+        this.props.deleteClients(this.refs.table.state.selectedRowKeys);
+        this.props.getClientList(1, this.props.page.itemsCountPerPage);
+        this.refs.table.cleanSelected();
     }
 
     onTableRowSelect(row, isSelected) {
@@ -132,24 +148,10 @@ class Clients extends React.Component {
                             onChange={this.onPaginationChange}
                         />
                     </div>{/*div.col-xs-9 end*/}
-                    <AlertPopup close={this.props.closeNothingToDeleteDialog}
-                                isVisible={this.props.frontend.isDialogNothingToDeleteVisible}
-                                message="Не выделены записи для удаления."/>
-                    <AlertPopup close={this.props.closeConfirmDeleteDialog}
-                                isVisible={this.props.frontend.isDialogDeleteConfirmVisible}
-                                message="Вы действительно хотите удалить выбранные записи?"
-                                buttons={[
-                                    {
-                                        text: "Ок",
-                                        btnStyle: "btn btn-success",
-                                        onclick: this.onConfirmOkBtnClick
-                                    },
-                                    {
-                                        text: "Отмена",
-                                        btnStyle: "btn btn-primary",
-                                        onclick: this.props.closeConfirmDeleteDialog
-                                    }
-                                ]}
+                    <AlertPopup close={this.props.closeDialog}
+                                isVisible={this.props.alert.isVisible}
+                                message={this.props.alert.text}
+                                buttons={this.props.alert.buttons}
                     />
                 </div>{/*div.row end*/}
             </div>/*div.container end*/
@@ -159,10 +161,9 @@ class Clients extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    // console.log(state);
     return {
         page: state.clientListReducer.page,
-        frontend: state.clientListReducer.frontend
+        alert: state.clientListReducer.alert,
     }
 };
 
@@ -171,17 +172,14 @@ const mapDispatchToProps = (dispatch) => {
         getClientList: (pageNumber, itemsCountPerPage) => {
             dispatch(clientListActionCreator.getClientList(pageNumber, itemsCountPerPage))
         },
-        showConfirmDeleteDialog: () => {
-            dispatch(clientListActionCreator.setConfirmDeleteDialogVisibility(true))
+        showDialog: (text, buttons) => {
+            dispatch(clientListActionCreator.showDialog(text, buttons))
         },
-        closeConfirmDeleteDialog: () => {
-            dispatch(clientListActionCreator.setConfirmDeleteDialogVisibility(false))
+        closeDialog: () => {
+            dispatch(clientListActionCreator.closeDialog())
         },
-        showNothingToDeleteDialog: () => {
-            dispatch(clientListActionCreator.setNothingToDeleteDialogVisibility(true))
-        },
-        closeNothingToDeleteDialog: () => {
-            dispatch(clientListActionCreator.setNothingToDeleteDialogVisibility(false))
+        deleteClients: clientNamesList => {
+            dispatch(clientListActionCreator.deleteClients(clientNamesList))
         }
     }
 };

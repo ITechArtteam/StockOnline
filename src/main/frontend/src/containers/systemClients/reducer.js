@@ -7,9 +7,10 @@ var initClientListState = {
         itemsCountPerPage: 5,
         clientList: [],
     },
-    frontend: {
-        isDialogDeleteConfirmVisible: false,
-        isDialogNothingToDeleteVisible: false
+    alert: {
+        isVisible: false,
+        text: '',
+        buttons: []
     }
 };
 
@@ -23,14 +24,22 @@ export default (state = initClientListState, action) => {
             return {
                 ...state
             };
+        case event.DELETE_CLIENT_LIST_SUCCESS:
+            return {
+                ...state, alert: action.payload
+            };
+        case event.DELETE_CLIENT_LIST_FAIL:
+            return {
+                ...state, alert: action.payload
+            };
         case event.GET_CLIENT_LIST_SUCCESS:
             return {...state, page: action.payload};
 
-        case event.SET_CONFIRM_DELETE_DIALOG_VISIBILITY:
-            return {... state, frontend: {...state.frontend, isDialogDeleteConfirmVisible: action.payload}};
+        case event.SHOW_DIALOG:
+            return {... state, alert: action.payload};
 
-        case event.SET_NOTHING_TO_DELETE_DIALOG_VISIBILITY:
-            return {... state, frontend: {...state.frontend, isDialogNothingToDeleteVisible: action.payload}};
+        case event.CLOSE_DIALOG:
+            return {... state, alert: {...state.alert, isVisible: false}};
 
 
         default:
