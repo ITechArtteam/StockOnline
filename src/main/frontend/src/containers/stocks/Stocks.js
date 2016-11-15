@@ -10,6 +10,8 @@ class Stocks extends React.Component {
         super(props);
         this.onPaginationChange = this.onPaginationChange.bind(this);
         this.onPageLimitSelectChange = this.onPageLimitSelectChange.bind(this);
+        this.onBtnSaveClick = this.onBtnSaveClick.bind(this);
+        this.onBtnDeleteClick = this.onBtnDeleteClick.bind(this);
     }
     componentWillMount() {
         this.props.getStockList(this.props.page.activePage, this.props.page.itemsCountPerPage);
@@ -26,6 +28,16 @@ class Stocks extends React.Component {
     onBtnSaveClick() {
         browserHistory.push('/stock');
     }
+
+    onBtnDeleteClick() {
+        var selectedRowKeys = this.refs.table.state.selectedRowKeys;
+        if(selectedRowKeys.length == 0) {
+            // alert: rows not selected
+        } else {
+         //    alert: confirm deleting
+         }
+        console.log(this.refs.table.state);
+        }
 
     onTableRowSelect(row, isSelected) {
         console.log(row);
@@ -68,7 +80,7 @@ class Stocks extends React.Component {
                             <div className="list-group-item">
                                 <div className="btn-group-vertical">
                                     <button className="btn btn-default" onClick={this.onBtnSaveClick}>Добавить</button>
-                                    <button className="btn btn-default">Удалить</button>
+                                    <button className="btn btn-default" onClick={this.onBtnDeleteClick}>Удалить</button>
                                     <button className="btn btn-default">Поиск</button>
                                     <button className="btn btn-default">Очистить фильтр</button>
                                 </div>
@@ -90,7 +102,7 @@ class Stocks extends React.Component {
                         </div>
                     </div>
                     <div className="col-xs-9">
-                        <BootstrapTable data={stockList} selectRow={this.selectRowProp} striped={true} hover={true}>
+                        <BootstrapTable data={stockList} selectRow={this.selectRowProp} striped={true} hover={true} ref="table">
                             <TableHeaderColumn headerAlign="center" dataField="name" isKey={true} dataFormat={this.nameFormatter}>Номер склада</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="company">Название компании</TableHeaderColumn>
