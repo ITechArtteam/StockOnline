@@ -42,7 +42,8 @@
     "bootstrap-webpack":"0.0.5",
     "react-bootstrap-validation ":"0.1.11",
     "validator":"6.1.0",
-    "lodash":"4.16.6"
+    "lodash":"4.16.6",
+    "react-link-state":"0.1.2"
   },
   "scripts": {
     "dev-build": "webpack -optimize-minimize"

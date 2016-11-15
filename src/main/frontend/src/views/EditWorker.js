@@ -1,5 +1,6 @@
 import React from "react";
 import {Button, FormGroup, Row, Col, Form, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
+import linkState from 'react-link-state';
 import Select from "react-select";
 import DateTimeField from "react-bootstrap-datetimepicker";
 import validator from "validator";
@@ -19,12 +20,7 @@ class EditWorker extends React.Component {
         mode: "date"
     }
 
-    handleChange = (name, e) => {
-        var change = {};
-        change[name] = e.target.value;
-        console.log(change)
-        return this.setState(change);
-    }
+
 
 
     logChange = (val) => {
@@ -122,8 +118,7 @@ class EditWorker extends React.Component {
                             Имя
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Имя" value={this.state.worker.first_name}
-                                         onChange={this.handleChange.bind(this, 'worker.first_name')}/>
+                            <FormControl placeholder="Имя" valueLink={linkState(this, 'worker.first_name')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -133,8 +128,7 @@ class EditWorker extends React.Component {
                             Фамилия
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Фамилия" value={this.state.worker.second_name}
-                                         onChange={this.handleChange.bind(this, 'worker.second_name')}/>
+                            <FormControl valueLink={linkState(this, 'worker.second_name')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -144,8 +138,7 @@ class EditWorker extends React.Component {
                             Отчество
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Отчество" value={this.state.worker.patronymic}
-                                         onChange={this.handleChange.bind(this, 'worker.patronymic')}/>
+                            <FormControl valueLink={linkState(this, 'worker.patronymic')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -160,7 +153,6 @@ class EditWorker extends React.Component {
                                 format={this.state.format}
                                 viewMode={this.state.mode}
                                 inputFormat={this.state.inputFormat}
-                                onChange={this.handleChange.bind(this, 'worker.date')}
                             />
                         </Col>
                     </FormGroup>
@@ -169,8 +161,7 @@ class EditWorker extends React.Component {
                             Электронная почта
                         </Col>
                         <Col sm={10}>
-                            <FormControl type="email" placeholder="Электронная почта" value={this.state.worker.email}
-                                         onChange={this.handleChange.bind(this, 'worker.email')}/>
+                            <FormControl valueLink={linkState(this, 'worker.email')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -180,8 +171,7 @@ class EditWorker extends React.Component {
                             Страна
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Страна" value={this.state.worker.country}
-                                         onChange={this.handleChange.bind(this, 'worker.country')}/>
+                            <FormControl valueLink={linkState(this, 'worker.country')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -191,8 +181,7 @@ class EditWorker extends React.Component {
                             Город
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Город" value={this.state.worker.city}
-                                         onChange={this.handleChange.bind(this, 'worker.city')}/>
+                            <FormControl valueLink={linkState(this, 'worker.city')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -202,8 +191,7 @@ class EditWorker extends React.Component {
                             Дом
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Дом" value={this.state.worker.house}
-                                         onChange={this.handleChange.bind(this, 'worker.house')}/>
+                            <FormControl placeholder="Дом" valueLink={linkState(this, 'worker.house')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -213,8 +201,7 @@ class EditWorker extends React.Component {
                             Квартира
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Квартира" value={this.state.worker.apartment}
-                                         onChange={this.handleChange.bind(this, 'worker.apartment')}/>
+                            <FormControl valueLink={linkState(this, 'worker.apartment')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -234,8 +221,7 @@ class EditWorker extends React.Component {
                             Логин
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Логин" value={this.state.worker.login}
-                                         onChange={this.handleChange.bind(this, 'worker.login')}/>
+                            <FormControl valueLink={linkState(this, 'worker.login')}/>
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
@@ -245,8 +231,8 @@ class EditWorker extends React.Component {
                             Пароль
                         </Col>
                         <Col sm={10}>
-                            <FormControl placeholder="Пароль" value={this.state.worker.password}
-                                         onChange={this.handleChange.bind(this, 'worker.password')}/>
+                            <FormControl valueLink={linkState(this, 'worker.password')}
+                            />
                             <FormControl.Feedback />
                             <HelpBlock>Это боле должно быть заполнено.</HelpBlock>
                         </Col>
