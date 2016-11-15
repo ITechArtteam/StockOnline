@@ -1,8 +1,9 @@
 import React from 'react';
 import {stockListActionCreator} from "./index";
 import {connect} from 'react-redux';
-import StockTable from '../../components/StocksTable/StocksTable'
 import Pagination from "react-js-pagination";
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {Link} from 'react-router'
 
 class Stocks extends React.Component {
     constructor(props) {
@@ -18,9 +19,49 @@ class Stocks extends React.Component {
     }
 
     render() {
+        var stockList = this.props.page.stockList.map((item, index) => {
+            return {
+                rowNumber: index,
+                name: item.id,
+                company: item.nameCompany,
+                address: item.country + ' г. ' + item.city + ' ул. ' + item.street + ' д. ' + item.home + ' кв. ' + item.room,
+                status: item.active
+                }
+                });
+        function onRowSelect(row, isSelected){
+            console.log(row);
+            console.log("selected: " + isSelected)
+        }
+
+        function onSelectAll(isSelected){
+            console.log("is select all: " + isSelected);
+        }
+        var nameFormatter = (cell, row) => {
+            return <Link to={"/stock/" + cell}>{cell}</Link>
+        };
+        var statusFormatter = (cell, row) => {
+            var labelType = cell ? "label-success" : "label-danger";
+            var labelText = cell ? "Активна" : 'Приостановлена';
+            return <div className={'label ' + labelType}>{labelText}</div>
+        };
+
+        var selectRowProp = {
+            mode: "checkbox",
+            clickToSelect: true,
+            bgColor: "rgb(238, 193, 213)",
+            onSelect: onRowSelect,
+            onSelectAll: onSelectAll
+        };
+
         return (
             <div className="row">
-            <StockTable stockList={this.props.page.stockList}/>
+            {/*<StockTable stockList={this.props.page.stockList}/>*/}
+                <BootstrapTable data={stockList} selectRow={selectRowProp} striped={true} hover={true}>
+                    <TableHeaderColumn headerAlign="center" dataField="rowNumber" isKey={true}>№</TableHeaderColumn>
+                    <TableHeaderColumn headerAlign="center" dataField="name" dataFormat={nameFormatter}>Номер склада</TableHeaderColumn>
+                    <TableHeaderColumn headerAlign="center" dataField="company">Название компании</TableHeaderColumn>
+                    <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
+                </BootstrapTable>
     <Pagination
         activePage={this.props.page.activePage}
         itemsCountPerPage={this.props.page.itemsCountPerPage}
