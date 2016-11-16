@@ -41,6 +41,7 @@ public class StockDtoConverter {
         dto.setStreet(address.getStreet());
         dto.setHome(address.getHome());
         dto.setRoom(address.getRoom());
+        dto.setNameCompany(stock.getCompany().getName());
         Logger.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);
         return dto;
     }
