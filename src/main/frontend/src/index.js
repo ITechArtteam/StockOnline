@@ -28,6 +28,8 @@ import CheckGoods from "./containers/CheckGoods";
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
 import EditWorkerContainer from "./containers/EditWorkerContainer";
+import "jquery";
+import "bootstrap";
 import "bootstrap-webpack";
 
 

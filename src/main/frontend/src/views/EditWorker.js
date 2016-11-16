@@ -1,17 +1,26 @@
 import React from "react";
-import {Grid, Button, FormGroup, Row, Col, Form, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
+import {Button, FormGroup, Row, Col, Form, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
 import linkState from "react-link-state";
-import Multiselect from "react-widgets/lib/Multiselect";
+import _ from "lodash";
+import Select from "react-simpler-select"
+
 
 class EditWorker extends React.Component {
     constructor(props) {
         super(props);
+
         console.log(this)
     }
 
     state = {
         worker: this.props.worker,
-        roles: ["Администратор системы", "Администратор склада", "Диспетчер склада", "Менеджер по складу", "Контролёр", "Владенлец склада"]
+        roles: [
+            {value: 'Администратор системы', label: 'Администратор системы'},
+            {value: 'Администратор склада', label: 'Администратор склада'},
+            {value: 'Диспетчер склада', label: 'Диспетчер склада'},
+            {value: 'Менеджер по складу', label: 'Менеджер по складу'},
+            {value: 'Контролёр', label: 'Контролёр'},
+            {value: 'Владенлец склада', label: 'Владенлец склада', clearableValue: false}]
     }
 
     componentWillReceiveProps(nextProps) {
@@ -22,13 +31,17 @@ class EditWorker extends React.Component {
         console.log("Selected: " + val);
     }
 
-    onSaveClick =() =>{
+    handleSelectChange = (newValue) => {
+        this.setState({worker: _.extend(this.state.worker, {roles: newValue})});
+    }
+
+    onSaveClick = () => {
         console.log("onSaveClick");
         console.log(this.state.worker);
         this.props.onSaveClick(this.state.worker);
     }
 
-    onCloseClick =() =>{
+    onCloseClick = () => {
         console.log("onCloseClick");
         console.log(this.state.worker);
     }
@@ -139,7 +152,12 @@ class EditWorker extends React.Component {
                                 Роль
                             </Col>
                             <Col sm={10}>
-                                <Multiselect data={this.state.roles} />
+                                <Select
+                                    name="multiple-languages"
+                                    value={this.state.worker.roles}
+                                    options={this.state.roles}
+                                    onChange={this.handleSelectChange}
+                                />
                             </Col>
                         </FormGroup>
                         <FormGroup>
@@ -167,7 +185,8 @@ class EditWorker extends React.Component {
                         <FormGroup>
                             <Col smOffset={2} sm={10}>
                                 <div className="btn-group" role="group">
-                                    <Button type="submit" bsStyle="primary" onClick={this.onSaveClick}>Сохранить</Button>
+                                    <Button type="submit" bsStyle="primary"
+                                            onClick={this.onSaveClick}>Сохранить</Button>
                                     <Button onClick={this.onCloseClick}>Отмена</Button>
                                 </div>
                             </Col>

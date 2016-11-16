@@ -34,6 +34,7 @@ export function saveWorker(worker) {
     console.log(worker)
     return axios.post('/api/worker/', worker)
         .then(response => {
+
             return response;
         });
 }

@@ -6,14 +6,15 @@ import * as workerApi from "../api/worker-api";
 
 class EditWorkerContainer extends React.Component {
 
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props,context);
         var id = this.props.params.id;
+
         if ($.isNumeric(id)) {
             workerApi.getWorker(id);
         }
     }
-
+//this.context.router  - replace('/newURL)
     saveWorker = (worker) => {
         workerApi.saveWorker(worker);
     }
@@ -25,6 +26,10 @@ class EditWorkerContainer extends React.Component {
             <EditWorker worker={this.props.worker} onSaveClick={this.saveWorker}/>
         );
     }
+}
+
+EditWorkerContainer.contentTypes = {
+    router : React.PropTypes.object.isRequired
 }
 
 const mapStateToProps = (store) => {

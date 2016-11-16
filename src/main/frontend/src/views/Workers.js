@@ -1,5 +1,12 @@
 import React from "react";
+import "bootstrap"
+import "bootstrap-webpack";
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
+import "react-bootstrap-table/dist/react-bootstrap-table.min.css"
+import "react-bootstrap-table/css/react-bootstrap-table.css"
+import "react-bootstrap-table/css/toastr.css"
+
 class Workers extends React.Component {
 
 
