@@ -26,11 +26,6 @@ class AlertPopup extends React.Component {
     }
 
     render() {
-        return (
-            <div className={this.getStyles()}>
-                <span onClick={this.props.close} className="close">×</span>
-                <p className="message">{this.props.message}</p>
-            </div>
             var buttons = "";
             if (!!this.props.buttons)
                 buttons = this.props.buttons.map((item, index) => {
