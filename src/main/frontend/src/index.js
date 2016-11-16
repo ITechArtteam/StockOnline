@@ -53,7 +53,7 @@ ReactDOM.render(
                 <Route path="/report/income" component={ReportIncome}/>
                 <Route path="/report/standard" component={ReportStandard}/>
                 <Route path="/stocks" component={Stocks}/>
-                <Route path="/stock/:id" component={EditStock}/>
+                <Route path="/stock(/:id)" component={EditStock}/>
                 <Route path="/workers" component={Workers}/>
                 <Route path="/worker/:id" component={EditWorker}/>
                 <Route path="/carriers" component={Carriers}/>
