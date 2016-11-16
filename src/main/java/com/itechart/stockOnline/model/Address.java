@@ -25,9 +25,9 @@ public class Address {
 //    @Size(max=50, message="Number of letters in street < 50")
     private String street;
 
-    private int home;
+    private Integer home;
 
-    private int room;
+    private Integer room;
 
     @Column(name = "latitude")
     private Float latitude;
@@ -82,7 +82,7 @@ public class Address {
         this.user = user;
     }
 
-    public int getHome() {
+    public Integer getHome() {
         return home;
     }
 
@@ -107,7 +107,7 @@ public class Address {
                 '}';
     }
 
-    public int getRoom() {
+    public Integer getRoom() {
         return room;
     }
 

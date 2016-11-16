@@ -43,7 +43,11 @@
     "react-bootstrap-validation ":"0.1.11",
     "validator":"6.1.0",
     "lodash":"4.16.6",
-    "react-link-state":"0.1.2"
+    "react-link-state":"0.1.2",
+    "react-bootstrap-date-picker":"3.7.0",
+    "react-binding-component":"1.0.5",
+    "react-widgets":"3.4.4",
+    "globalize":"1.1.2"
   },
   "scripts": {
     "dev-build": "webpack -optimize-minimize"

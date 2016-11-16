@@ -13,7 +13,7 @@ import ReportIncome from "./containers/ReportIncome";
 import ReportStandard from "./containers/ReportStandard";
 import Stocks from "./containers/stocks/Stocks";
 import EditStock from "./containers/EditStock";
-import Workers from "./containers/Workers";
+import WorkersContainer from "./containers/WorkersContainer";
 import Carriers from "./containers/Carriers";
 import EditCarrier from "./containers/EditCarrier";
 import Drivers from "./containers/Drivers";
@@ -48,8 +48,8 @@ ReactDOM.render(
                 <Route path="/report/standard" component={ReportStandard}/>
                 <Route path="/stocks" component={Stocks}/>
                 <Route path="/stock/:id" component={EditStock}/>
-                <Route path="/workers" component={Workers}/>
-                <Route path="/worker/:id" component={EditWorkerContainer}/>
+                <Route path="/workers" component={WorkersContainer}/>
+                <Route path="/worker/(:id)" component={EditWorkerContainer}/>
                 <Route path="/carriers" component={Carriers}/>
                 <Route path="/carrier/:id" component={EditCarrier}/>
                 <Route path="/drivers" component={Drivers}/>

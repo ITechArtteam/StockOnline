@@ -6,7 +6,12 @@ module.exports = {
         path: "../webapp/resources/js",
         filename: "bundle.js"
     },
+    scripts: {
+        "start": "webpack-dev-server --hot --inline"
+    },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
             $: "jquery/dist/jquery.min.js",
             jQuery: "jquery/dist/jquery.min.js",
@@ -35,6 +40,7 @@ module.exports = {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
             },
+            { test: /\.less$/,   loader: "style-loader!css-loader!less-loader" },
             {
                 test: /\.gif$/,
                 loader: "url-loader?limit=10000&mimetype=image/gif"
@@ -56,9 +62,9 @@ module.exports = {
                 test: /\.json$/,
                 loader: "json-loader"
             },
-            { test: /\.(woff|woff2)$/,  loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-            { test: /\.ttf$/,    loader: "file-loader" },
-            { test: /\.eot$/,    loader: "file-loader" }
+            { test: /\.(woff|woff2)$/,  loader: "url-loader" },
+            { test: /\.ttf$/,    loader: "url-loader" },
+            { test: /\.eot$/,    loader: "url-loader" }
         ]
     }
 };

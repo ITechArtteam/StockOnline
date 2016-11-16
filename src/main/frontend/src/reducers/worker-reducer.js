@@ -1,34 +1,40 @@
-import * as types from '../actions/action-types';
-import _ from 'lodash';
+import * as types from "../actions/action-types";
+import _ from "lodash";
 
 const initialState = {
-    workers: [],
-    worker:{
-        first_name:"",
-        second_name:"",
-        patronymic:"",
-        email:"",
-        country:"",
-        city:"",
-        house:"",
-        apartment:"",
-        login:"",
-        password:""
+        workers: [],
+        worker: {
+            id:"",
+            name: "",
+            surname: "",
+            address: {
+                cityName: "",
+                countryName: "",
+                home: "",
+                room: "",
+                street: "",
+            },
+            birthday: "",
+            email: "",
+            login: "",
+            password: "",
+            patronymic: "",
+            roles: [],
+        }
     }
-};
+    ;
 
-const workerReducer = function(state = initialState, action) {
-    console.log(state);
-    switch(action.type) {
+const workerReducer = function (state = initialState, action) {
+    switch (action.type) {
         case types.GET_WORKERS_SUCCESS:
-            return Object.assign({}, state, { workers: action.workers });
+            return Object.assign({}, state, {workers: action.workers});
 
         case types.DELETE_WORKER_SUCCESS:
             const newWorkers = _.filter(state.workers, worker => worker.id != action.id);
-            return Object.assign({}, state, { workers: newWorkers });
+            return Object.assign({}, state, {workers: newWorkers});
 
         case types.GET_WORKER_SUCCESS:
-            return Object.assign({}, state, { worker: action.worker });
+            return Object.assign({}, state, {worker: action.worker});
     }
     return state;
 }
