@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Pagination from "react-js-pagination";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link, browserHistory} from 'react-router';
+import AlertPopup from '../../components/AlertPopup/AlertPopup'
 
 class Stocks extends React.Component {
     constructor(props) {
@@ -12,16 +13,22 @@ class Stocks extends React.Component {
         this.onPageLimitSelectChange = this.onPageLimitSelectChange.bind(this);
         this.onBtnSaveClick = this.onBtnSaveClick.bind(this);
         this.onBtnDeleteClick = this.onBtnDeleteClick.bind(this);
+        this.onConfirmOkBtnClick = this.onConfirmOkBtnClick.bind(this);
     }
     componentWillMount() {
-        this.props.getStockList(this.props.page.activePage, this.props.page.itemsCountPerPage);
+        this.props.getStockList(1, this.props.page.itemsCountPerPage);
+    }
+    componentDidMount() {
+        this.refs.table.cleanSelected();
     }
 
     onPaginationChange(pageNumber) {
+        this.refs.table.cleanSelected();
         this.props.getStockList(pageNumber, this.props.page.itemsCountPerPage)
     }
 
     onPageLimitSelectChange() {
+        this.refs.table.cleanSelected();
         this.props.getStockList(1, parseInt(this.refs.pageLimitSelect.value));
      }
 
@@ -32,12 +39,29 @@ class Stocks extends React.Component {
     onBtnDeleteClick() {
         var selectedRowKeys = this.refs.table.state.selectedRowKeys;
         if(selectedRowKeys.length == 0) {
-            // alert: rows not selected
+            this.props.showDialog("Не выделена ни одна строка для удаления", []);
         } else {
-         //    alert: confirm deleting
+            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", [
+                {
+                    btnStyle : "btn btn-success",
+                    text: "Ок",
+                    onclick: this.onConfirmOkBtnClick
+                },
+                {
+                    btnStyle: "btn btn-default",
+                    text: "Отмена",
+                    onclick: this.props.closeDialog
+                }]);
          }
         console.log(this.refs.table.state);
         }
+
+    onConfirmOkBtnClick() {
+        this.props.closeDialog();
+        this.props.deleteStocks(this.refs.table.state.selectedRowKeys);
+        this.props.getStockList(1, this.props.page.itemsCountPerPage);
+        this.refs.table.cleanSelected();
+    }
 
     onTableRowSelect(row, isSelected) {
         console.log(row);
@@ -100,6 +124,7 @@ class Stocks extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        {/*dib.col-xs-3 end*/}
                     </div>
                     <div className="col-xs-9">
                         <BootstrapTable data={stockList} selectRow={this.selectRowProp} striped={true} hover={true} ref="table">
@@ -114,9 +139,14 @@ class Stocks extends React.Component {
                             pageRangeDisplayed={5}
                             onChange={this.onPaginationChange}
                         />
-                    </div>
-                </div>
-            </div>
+                    </div>{/*div.col-xs-9 end*/}
+                    <AlertPopup close={this.props.closeDialog}
+                        isVisible={this.props.alert.isVisible}
+                        message={this.props.alert.text}
+                        buttons={this.props.alert.buttons}
+                    />
+                </div>{/*div.row end*/}
+            </div>/*div.container end*/
         )
     }
 }
@@ -125,7 +155,8 @@ class Stocks extends React.Component {
     const mapStateToProps = (state) => {
     // console.log(state);
         return {
-            page: state.stockListReducer.page
+            page: state.stockListReducer.page,
+            alert: state.stockListReducer.alert
         }
     };
 
@@ -133,7 +164,17 @@ class Stocks extends React.Component {
         return {
             getStockList: (pageNumber, itemsCountPerPage) => {
             dispatch(stockListActionCreator.getStockList(pageNumber, itemsCountPerPage))
-        }
+            },
+            showDialog: (text, buttons) => {
+                dispatch(stockListActionCreator.showDialog(text, buttons))
+            },
+
+            closeDialog: () => {
+                dispatch(stockListActionCreator.closeDialog())
+            },
+            deleteStocks: stockNamesList => {
+                dispatch(stockListActionCreator.deleteStocks(stockNamesList))
+            }
     }
 };
 
