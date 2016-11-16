@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class StockOwnerCompanyListController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @Transactional
     public ResponseEntity<Object> deleteClients(@RequestParam(value = "namesToDelete") List<String> names) {
         LOGGER.info("REST request. Path:/stockOwners/?namesToDelete={}  method: DELETE", names);
         stockOwnerCompanyDao.deleteByNameIn(names);
