@@ -99,10 +99,10 @@ class Stocks extends React.Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-xs-3">
+                    <div className="col-xs-9">
                         <div className="list-group">
                             <div className="list-group-item">
-                                <div className="btn-group-vertical">
+                                <div className="btn-group-horizontal">
                                     <button className="btn btn-default" onClick={this.onBtnSaveClick}>Добавить</button>
                                     <button className="btn btn-default" onClick={this.onBtnDeleteClick}>Удалить</button>
                                     <button className="btn btn-default">Поиск</button>
