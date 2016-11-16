@@ -28,8 +28,15 @@ public class WorkerController {
         workerService.delete(id);
     }
 
+    @RequestMapping(value="/workers", method = RequestMethod.DELETE )
+    public void deleteWorkers(@RequestBody User[] users){
+        workerService.delete(users);
+    }
+
     @RequestMapping(value="/worker", method = RequestMethod.POST)
     public User saveWorker(@RequestBody User user){
         return workerService.save(user);
     }
+
+
 }

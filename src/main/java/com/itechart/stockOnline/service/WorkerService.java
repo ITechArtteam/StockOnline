@@ -10,4 +10,5 @@ public interface WorkerService {
     User get(int id);
     User save(User user);
     void delete(int id);
+    void delete(User[] workers);
 }

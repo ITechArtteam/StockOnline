@@ -40,31 +40,31 @@ module.exports = {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
             },
-            { test: /\.less$/,   loader: "style-loader!css-loader!less-loader" },
+            {
+                test: /\.less$/,
+                loader: "style-loader!css-loader!less-loader?strictMath&noIeCompat"
+            },
+            {
+                test: /\.scss$/,
+                loaders: ["style", "css", "sass"]
+            },
             {
                 test: /\.gif$/,
                 loader: "url-loader?limit=10000&mimetype=image/gif"
             },
-            {
-                test: /\.jpg$/,
-                loader: "url-loader?limit=10000&mimetype=image/jpg"
-            },
+
             {
                 test: /\.png$/,
                 loader: "url-loader?limit=10000&mimetype=image/png"
             },
-            {
-                test: /\.svg/,
-                loader: "url-loader?limit=26000&mimetype=image/svg+xml"
-            },
+
 
             {
                 test: /\.json$/,
                 loader: "json-loader"
             },
-            { test: /\.(woff|woff2)$/,  loader: "url-loader" },
-            { test: /\.ttf$/,    loader: "url-loader" },
-            { test: /\.eot$/,    loader: "url-loader" }
+
+            {test: /\.(jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/, loader: "url-loader"}
         ]
     }
 };

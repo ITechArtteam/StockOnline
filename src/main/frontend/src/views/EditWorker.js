@@ -2,6 +2,11 @@ import React from "react";
 import {Grid, Button, FormGroup, Row, Col, Form, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
 import linkState from "react-link-state";
 import Multiselect from "react-widgets/lib/Multiselect";
+import "react-widgets/dist/css/react-widgets.css";
+import "./index.less";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 class EditWorker extends React.Component {
     constructor(props) {
@@ -11,24 +16,31 @@ class EditWorker extends React.Component {
 
     state = {
         worker: this.props.worker,
-        roles: ["Администратор системы", "Администратор склада", "Диспетчер склада", "Менеджер по складу", "Контролёр", "Владенлец склада"]
+        roles: [{id: 0, name: "Администратор системы"}, {id: 1, name: "Администратор склада"}, {
+            id: 2,
+            name: "Диспетчер склада"
+        }, {id: 3, name: "Менеджер по складу"}, {id: 4, name: "Контролёр"}, {id: 5, name: "Владелец склада"}]
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({worker: nextProps.worker})
     }
 
+    componentWillUpdate(nextProps, nextState) {
+        console.log(this)
+    }
+
     logChange = (val) => {
         console.log("Selected: " + val);
     }
 
-    onSaveClick =() =>{
+    onSaveClick = () => {
         console.log("onSaveClick");
         console.log(this.state.worker);
         this.props.onSaveClick(this.state.worker);
     }
 
-    onCloseClick =() =>{
+    onCloseClick = () => {
         console.log("onCloseClick");
         console.log(this.state.worker);
     }
@@ -76,7 +88,10 @@ class EditWorker extends React.Component {
                                 Дата рождения
                             </Col>
                             <Col sm={10}>
-
+                                <DatePicker className="form-control"
+                                    selected={moment()}
+                                />
+                                <HelpBlock>Это поле должzxdfdgdgно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>
@@ -139,7 +154,11 @@ class EditWorker extends React.Component {
                                 Роль
                             </Col>
                             <Col sm={10}>
-                                <Multiselect data={this.state.roles} />
+                                <Multiselect data={this.state.roles}
+                                             valueLink={linkState(this, 'worker.roles')}
+                                             textField='name'
+                                             valueField='id'/>
+                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>
@@ -167,7 +186,8 @@ class EditWorker extends React.Component {
                         <FormGroup>
                             <Col smOffset={2} sm={10}>
                                 <div className="btn-group" role="group">
-                                    <Button type="submit" bsStyle="primary" onClick={this.onSaveClick}>Сохранить</Button>
+                                    <Button type="submit" bsStyle="primary"
+                                            onClick={this.onSaveClick}>Сохранить</Button>
                                     <Button onClick={this.onCloseClick}>Отмена</Button>
                                 </div>
                             </Col>

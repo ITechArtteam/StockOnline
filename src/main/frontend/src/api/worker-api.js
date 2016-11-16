@@ -31,7 +31,7 @@ export function deleteWorker(id) {
 
 export function saveWorker(worker) {
     console.log("saveWorker")
-    console.log(worker)
+    console.log(worker.roles)
     return axios.post('/api/worker/', worker)
         .then(response => {
             return response;

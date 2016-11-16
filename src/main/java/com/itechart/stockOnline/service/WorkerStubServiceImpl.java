@@ -5,10 +5,8 @@ import com.itechart.stockOnline.model.User;
 import org.springframework.stereotype.Service;
 
 import javax.jws.soap.SOAPBinding;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 @Service
 public class WorkerStubServiceImpl implements WorkerService{
     private static int key=0;
@@ -59,5 +57,10 @@ public class WorkerStubServiceImpl implements WorkerService{
     @Override
     public void delete(int id) {
         userMap.remove(id);
+    }
+
+    @Override
+    public void delete(User[] workers) {
+        Arrays.stream(workers).forEach((worker)->userMap.remove(worker.getId()));
     }
 }
