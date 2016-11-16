@@ -31,6 +31,63 @@ var getClientList = (pageNumber, itemsCountPerPage) => {
     }
 };
 
+var showDialog = (text, buttons) => {
+    return {
+        type: event.SHOW_DIALOG,
+        payload: {
+            isVisible: true,
+            text: text,
+            buttons: buttons
+        }
+    }
+};
+
+var closeDialog = () => {
+    return {
+        type: event.CLOSE_DIALOG
+    }
+};
+
+var deleteClientsRequest = () => {
+    return {
+        type: event.DELETE_CLIENT_LIST_REQUEST
+    }
+};
+
+var deleteClientsSuccess = () => {
+    return {
+        type: event.DELETE_CLIENT_LIST_SUCCESS,
+        payload: {
+            isVisible: true,
+            text: "Удаление успешно.",
+            buttons: []
+        }
+    }
+};
+
+var deleteClientFail = () => {
+    return {
+        type: event.DELETE_CLIENT_LIST_FAIL,
+        payload: {
+            isVisible: true,
+            text: "Произошла ошибка при удалении.",
+            buttons: []
+        }
+    }
+};
+
+var deleteClients = clientNamesList => {
+    return dispatch => {
+        dispatch(deleteClientsRequest());
+        axios.delete("/stockOwners/?namesToDelete=" + clientNamesList)
+            .then(response =>  dispatch(deleteClientsSuccess()))
+            .catch(error => dispatch(deleteClientFail()))
+    }
+};
+
 export default {
     getClientList,
+    deleteClients,
+    showDialog,
+    closeDialog
 }

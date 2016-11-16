@@ -26,17 +26,17 @@ class AlertPopup extends React.Component {
     }
 
     render() {
-            var buttons = "";
-            if (!!this.props.buttons)
-                buttons = this.props.buttons.map((item, index) => {
-                    return <button key={index} type="button" className={item.btnStyle} onClick={item.onclick}>{item.text}</button>
-                });
-            return (
-                <div className={this.getStyles()}>
-                    <span onClick={this.props.close} className="close">×</span>
-                    <p className="message">{this.props.message}</p>
-                    {buttons}
-                </div>
+        var buttons = "";
+        if (!!this.props.buttons)
+            buttons = this.props.buttons.map((item, index) => {
+                return <button key={index} type="button" className={item.btnStyle} onClick={item.onclick}>{item.text}</button>
+            });
+        return (
+            <div className={this.getStyles()}>
+                <span onClick={this.props.close} className="close">×</span>
+                <p className="message">{this.props.message}</p>
+                {buttons}
+            </div>
         )
     }
 }
