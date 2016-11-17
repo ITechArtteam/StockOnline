@@ -61,7 +61,7 @@ ReactDOM.render(
                 <Route path="/drivers" component={Drivers}/>
                 <Route path="/driver/:id" component={EditDriver}/>
                 <Route path="/waybills" component={Waybills}/>
-                <Route path="/waybill/:id" component={EditWaybill}/>
+                <Route path="/waybill/:id" header="Редактирование накладной" component={EditWaybill}/>
                 <Route path="/goods" component={Goods}/>
                 <Route path="/goods/receipt" component={ReceiptGoods}/>
                 <Route path="/goods/distribution" component={DistributionGoods}/>

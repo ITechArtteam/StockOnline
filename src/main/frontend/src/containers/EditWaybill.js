@@ -20,9 +20,10 @@ class EditWaybill extends React.Component {
     render() {
         return (
             <div className="col-md-6 col-md-offset-3">
-                <h2 className="text-center">{this.props.header}</h2>
+                <h3 className="text-center">{isNaN(this.props.params.id) ? 'Создание накладной' : 'Редактирование накладной'}</h3>
                 <form>
                     <Field name="waybill-number" component={this.renderField} className="form-control" type="text" label="Номер накладной" />
+                    <label className="control-label">Дата регистрации</label>
                     <Calendar format='DD/MM/YYYY' date='4-12-2014' />
                 </form>
             </div>
