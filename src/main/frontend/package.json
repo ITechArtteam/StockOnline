@@ -25,16 +25,20 @@
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.14.1",
     "redux-logger": "^2.7.4",
-    "axios":"0.15.2 ",
-    "autoprefixer-loader":"3.2.0",
-    "bootstrap":"3.3.7",
-    "jquery":"2.2.0",
-    "bootstrap-select":"1.11.2",
+    "axios": "0.15.2 ",
+    "autoprefixer-loader": "3.2.0",
+    "bootstrap": "3.3.7",
+    "jquery": "2.2.0",
+    "bootstrap-select": "1.11.2",
     "react-js-pagination": "2.0.1",
     "react-bootstrap-table": "2.5.7"
   },
   "scripts": {
     "dev-build": "webpack -optimize-minimize"
   },
-  "author": "Dmitriy"
+  "author": "Dmitriy",
+  "dependencies": {
+    "moment-range": "^2.2.0",
+    "react-datepicker": "^0.34.0"
+  }
 }
