@@ -10,7 +10,8 @@ var initClientListState = {
     alert: {
         isVisible: false,
         text: '',
-        buttons: []
+        buttons: [],
+        type: ''
     }
 };
 
