@@ -17,7 +17,12 @@ var getClientListSuccess = json => {
 var getClientListFail = error => {
     return {
         type: event.GET_CLIENT_LIST_FAIL,
-        payload: error
+        payload: {
+            isVisible: true,
+            text: "Произошла ошибка при получении списка клиентов." + error,
+            buttons: [],
+            type: 'danger'
+        }
     }
 };
 
@@ -84,8 +89,7 @@ var deleteClients = clientNamesList => {
             .then(response => {
                 dispatch(deleteClientsSuccess());
                 dispatch(
-                    getClientList(getState().clientListReducer.page.activePage,
-                    getState().clientListReducer.page.itemsCountPerPage));
+                    getClientList(1, getState().clientListReducer.page.itemsCountPerPage));
             })
             .catch(error => dispatch(deleteClientFail()))
     }
