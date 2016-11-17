@@ -39,6 +39,7 @@
   "author": "Dmitriy",
   "dependencies": {
     "moment-range": "^2.2.0",
-    "react-datepicker": "^0.34.0"
+    "react-datepicker": "^0.34.0",
+    "react-select": "^1.0.0-rc.2"
   }
 }

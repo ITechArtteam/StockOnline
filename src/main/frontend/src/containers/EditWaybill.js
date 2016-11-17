@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import * as Actions from '../actions'
+import Select from 'react-select';
 
+import 'react-select/dist/react-select.css';
 import Calendar from 'react-input-calendar'
 require('react-input-calendar/style/index.css');
 
@@ -25,6 +27,7 @@ class EditWaybill extends React.Component {
                     <Field name="waybill-number" component={this.renderField} className="form-control" type="text" label="Номер накладной" />
                     <label className="control-label">Дата регистрации</label>
                     <Calendar format='DD/MM/YYYY' date='4-12-2014' />
+                    <Select name="driver-select" value="1" options={[{value: "one", label: "ONE"}]}/>
                 </form>
             </div>
         )
