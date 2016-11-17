@@ -23,7 +23,7 @@ export default (state = initClientListState, action) => {
             };
         case event.GET_CLIENT_LIST_FAIL:
             return {
-                ...state
+                ...state, alert: action.payload
             };
         case event.DELETE_CLIENT_LIST_SUCCESS:
             return {
