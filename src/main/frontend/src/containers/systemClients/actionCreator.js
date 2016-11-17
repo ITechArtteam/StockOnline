@@ -71,16 +71,22 @@ var deleteClientFail = () => {
         payload: {
             isVisible: true,
             text: "Произошла ошибка при удалении.",
-            buttons: []
+            buttons: [],
+            type: 'danger'
         }
     }
 };
 
 var deleteClients = clientNamesList => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(deleteClientsRequest());
         axios.delete("/stockOwners/?namesToDelete=" + clientNamesList)
-            .then(response =>  dispatch(deleteClientsSuccess()))
+            .then(response => {
+                dispatch(deleteClientsSuccess());
+                dispatch(
+                    getClientList(getState().clientListReducer.page.activePage,
+                    getState().clientListReducer.page.itemsCountPerPage));
+            })
             .catch(error => dispatch(deleteClientFail()))
     }
 };

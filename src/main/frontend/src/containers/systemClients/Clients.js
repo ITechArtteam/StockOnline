@@ -17,10 +17,8 @@ class Clients extends React.Component {
     }
 
     componentWillMount() {
+        if(!!this.refs.table) this.refs.table.cleanSelected();
         this.props.getClientList(1, this.props.page.itemsCountPerPage);
-    }
-    componentDidMount() {
-        this.refs.table.cleanSelected();
     }
 
     onPaginationChange(pageNumber) {
@@ -54,23 +52,12 @@ class Clients extends React.Component {
                     onclick: this.props.closeDialog
                 }]);
         }
-        console.log(this.refs.table.state);
     }
 
     onConfirmOkBtnClick() {
         this.props.closeDialog();
         this.props.deleteClients(this.refs.table.state.selectedRowKeys);
-        this.props.getClientList(1, this.props.page.itemsCountPerPage);
         this.refs.table.cleanSelected();
-    }
-
-    onTableRowSelect(row, isSelected) {
-        console.log(row);
-        console.log("selected: " + isSelected)
-    }
-
-    onSelectAllRows(isSelected) {
-        console.log("is select all: " + isSelected);
     }
 
     nameFormatter = (cell, row) => {
@@ -86,8 +73,6 @@ class Clients extends React.Component {
         mode: "checkbox",
         clickToSelect: true,
         bgColor: "rgb(238, 193, 213)",
-        onSelect: this.onTableRowSelect,
-        onSelectAll: this.onSelectAllRows
     };
 
     render() {
@@ -152,6 +137,7 @@ class Clients extends React.Component {
                                 isVisible={this.props.alert.isVisible}
                                 message={this.props.alert.text}
                                 buttons={this.props.alert.buttons}
+                                type={this.props.alert.type}
                     />
                 </div>{/*div.row end*/}
             </div>/*div.container end*/
