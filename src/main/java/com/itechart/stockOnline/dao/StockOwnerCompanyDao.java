@@ -16,5 +16,5 @@ public interface StockOwnerCompanyDao extends JpaRepository<StockOwnerCompany, L
 
     @Modifying
     @Query("delete from StockOwnerCompany s where s.name in ?1")
-    void deleteByNameIn(Collection<String> names);
+    int deleteByNameIn(Collection<String> names);
 }
