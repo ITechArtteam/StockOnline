@@ -9,11 +9,17 @@ import com.itechart.stockOnline.model.Address;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
+import com.itechart.stockOnline.model.dto.StockOwnerPage;
 import com.itechart.stockOnline.validator.StockOwnerCompanyValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
 
 @Service
 public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
@@ -64,5 +70,24 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
                 stockOwnerCompanyDao.findById(stockOwnerCompany.getId()).orElseThrow(DataNotFoundError::new);
         ownerCompanyDtoConverter.updateStockOwnerCompany(companyInDB, stockOwnerCompany);
         return companyInDB.getId();
+    }
+
+    @Override
+    public StockOwnerPage getStockOwnersPage(int pageNumber, int recordCount) {
+        if(pageNumber <= 0 || recordCount <= 0) {
+            throw new DataNotFoundError();
+        }
+        Page<StockOwnerCompany> clientCompanyPage = stockOwnerCompanyDao.findAll(new PageRequest(pageNumber - 1, recordCount));
+        if(clientCompanyPage.getTotalPages() < pageNumber) {
+            throw new DataNotFoundError();
+        }
+        return ownerCompanyDtoConverter.toStockOwnerPage(clientCompanyPage);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByNames(Collection<String> names) {
+        int deletedCount = stockOwnerCompanyDao.deleteByNameIn(names);
+        logger.info("Stock owner company service: delete by names list - {}. Deleted {} records", names, deletedCount);
     }
 }
