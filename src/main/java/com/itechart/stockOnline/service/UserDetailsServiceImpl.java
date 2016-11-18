@@ -1,6 +1,7 @@
 package com.itechart.stockOnline.service;
 
 import com.itechart.stockOnline.dao.UserDao;
+import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByName(username);
+        User user = userDao.findByLogin(username).orElseThrow(DataNotFoundError::new);
 
         if (user != null) {
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();

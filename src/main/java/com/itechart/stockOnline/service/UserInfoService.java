@@ -18,7 +18,7 @@ public class UserInfoService {
 
     @Transactional(readOnly = true)
     public UserInfo getUserInfo(String username) {
-        User user = userService.findByName(username);
+        User user = userService.findByLogin(username);
 
         Set<String> userRolesStrings = new HashSet<>();
         for (Role role : user.getRoles()) {

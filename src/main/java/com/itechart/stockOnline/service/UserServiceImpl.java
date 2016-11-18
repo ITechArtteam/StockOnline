@@ -2,6 +2,7 @@ package com.itechart.stockOnline.service;
 
 import com.itechart.stockOnline.dao.RoleDao;
 import com.itechart.stockOnline.dao.UserDao;
+import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByName(String name) {
         return userDao.findByName(name);
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        return userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
     }
 }
