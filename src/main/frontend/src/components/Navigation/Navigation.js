@@ -1,13 +1,29 @@
 import React from 'react'
 import {Link} from 'react-router'
+import "./navigation.css"
+import {connect} from "react-redux";
 
 class Navigation extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.checkRoles = this.checkRoles.bind(this);
+    }
+
+    checkRoles(role){
+        if($.inArray(role, this.props.roles) == -1){
+            return "none";
+        }
+        return "";
+
+    }
+
     render() {
         return (
             <nav role="navigation">
                 <ul className="nav nav-pills nav-stacked ">
                     <li><Link to="/">Войти</Link></li>
-                    <li><Link to="/clients" role="button">Клиенты</Link></li>
+                    <li className={this.checkRoles("SUPER_ADMIN")}><Link to="/clients" role="button">Клиенты</Link></li>
                     <li><Link to="/client/">Редактировать клиента</Link></li>
                     <li><Link to="/reports">Отчеты</Link></li>
                     <li><Link to="/report/income">Отчет о прибыли</Link></li>
@@ -35,4 +51,12 @@ class Navigation extends React.Component {
     }
 }
 
-export default Navigation;
+function mapStateToProps(state) {
+    return {
+        roles: state.auth.roles
+    };
+}
+
+export default connect(
+    mapStateToProps
+)(Navigation);

@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {Provider} from 'react-redux'
-import {Router, IndexRedirect, Route, browserHistory} from 'react-router'
-import configureStore from './store/configureStore'
-import App from './containers/App'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import {Router, IndexRedirect, Route, browserHistory} from 'react-router';
+import configureStore from './store/configureStore';
+import App from './containers/App';
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import Clients from "./containers/systemClients/Clients";
@@ -29,13 +29,13 @@ import CheckGoods from "./containers/CheckGoods";
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
 import RequireRole from "./containers/RequireRole"
-import "jquery/dist/jquery.min"
+import "jquery/dist/jquery.min";
 import "bootstrap/dist/js/bootstrap.min";
-import "bootstrap/dist/css/bootstrap-theme.min.css"
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap-theme.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-select/dist/js/bootstrap-select.min";
-import "bootstrap-select/dist/css/bootstrap-select.min.css"
-
+import "bootstrap-select/dist/css/bootstrap-select.min.css";
+import "./global.css";
 
 import {client} from "./actions"
 
@@ -47,7 +47,7 @@ ReactDOM.render(
             <Route path="/" component={App}>
                 <IndexRedirect to="login" />
                 <Route path="/login" component={Login}/>
-                <Route path="/clients" requiredRole="ROLE_USER" component={RequireRole(Clients)}/>
+                <Route path="/clients" requiredRole="SUPER_ADMIN" component={RequireRole(Clients)}/>
                 <Route path="/client(/:name)" component={EditClient}/>
                 <Route path="/reports" component={Reports}/>
                 <Route path="/report/income" component={ReportIncome}/>
@@ -61,7 +61,7 @@ ReactDOM.render(
                 <Route path="/drivers" component={Drivers}/>
                 <Route path="/driver/:id" component={EditDriver}/>
                 <Route path="/waybills" component={Waybills}/>
-                <Route path="/waybill/:id" component={EditWaybill}/>
+                <Route path="/waybill/:id" header="Редактирование накладной" component={EditWaybill}/>
                 <Route path="/goods" component={Goods}/>
                 <Route path="/goods/receipt" component={ReceiptGoods}/>
                 <Route path="/goods/distribution" component={DistributionGoods}/>
