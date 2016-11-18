@@ -1,6 +1,5 @@
 import React from 'react'
-import Navigation from '../components/navigation/Navigation'
-import UserInfo from './UserInfo'
+import {Navigation} from './navigation'
 import {Link} from 'react-router'
 
 class App extends React.Component {

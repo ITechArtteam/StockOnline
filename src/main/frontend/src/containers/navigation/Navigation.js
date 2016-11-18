@@ -1,39 +1,9 @@
 import React from "react";
-import {Link} from "react-router";
 import "./navigation.css";
-import {connect} from "react-redux";
 import UserInfo from '../../containers/UserInfo';
 import NavigationButton from './NavigationButton';
 
 class Navigation extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.checkRoles = this.checkRoles.bind(this);
-        this.checkActive = this.checkActive.bind(this);
-        this.setActiveButton = this.setActiveButton.bind(this);
-    }
-
-    checkRoles(roles) {
-        for (let myIterator = 0; myIterator < roles.length; myIterator++) {
-            if ($.inArray(roles[myIterator], this.props.roles) != -1) {
-                return "";
-            }
-        }
-        return "none";
-    }
-
-    checkActive(buttonText){
-        if (buttonText == this.props.activeNavigationButton){
-            return " active";
-        }
-        return "";
-    }
-
-    setActiveButton(buttonText){
-        this.props.setActiveNavigationButton(buttonText);
-    }
-
     render() {
         return (
             <nav role="navigation" className="navbar navbar-default">
@@ -73,22 +43,4 @@ class Navigation extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        roles: state.auth.roles,
-        activeNavigationButton: state.navigation.frontend.activeNavigationButton
-    };
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setActiveNavigationButton: (buttonText) => {
-            dispatch(navigationActionCreator.setActiveNavigationButton(buttonText))
-        }
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Navigation);
+export default Navigation;

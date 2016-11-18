@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 import {reducer as FormReducer} from 'redux-form'
 import {client} from "../containers/editClient";
-import {navigation} from "../components/navigation";
+import {navigation} from "../containers/navigation";
 import {clientListReducer} from '../containers/systemClients/index';
 import {stockListReducer} from '../containers/stocks/index';
 import AuthReducer from './auth'
