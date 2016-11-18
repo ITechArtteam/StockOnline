@@ -47,28 +47,28 @@ ReactDOM.render(
             <Route path="/" component={App}>
                 <IndexRedirect to="login" />
                 <Route path="/login" component={Login}/>
-                <Route path="/clients" requiredRole="SUPER_ADMIN" component={RequireRole(Clients)}/>
-                <Route path="/client(/:name)" requiredRole="SUPER_ADMIN" component={RequireRole(EditClient)}/>
-                <Route path="/reports" requiredRole="BOSS_STOCK" component={RequireRole(Reports)}/>
-                <Route path="/report/income" requiredRole="SUPER_ADMIN" component={RequireRole(ReportIncome)}/>
-                <Route path="/report/standard" requiredRole="BOSS_STOCK" component={RequireRole(ReportStandard)}/>
-                <Route path="/stocks" requiredRole="ADMIN" component={RequireRole(Stocks)}/>
-                <Route path="/stock(/:id)" requiredRole="ADMIN" component={RequireRole(EditStock)}/>
-                <Route path="/workers" requiredRole="ADMIN" component={RequireRole(Workers)}/>
-                <Route path="/worker(/:id)" requiredRole="ADMIN" component={RequireRole(EditWorker)}/>
-                <Route path="/carriers" requiredRole="DISPATCHER" component={RequireRole(Carriers)}/>
-                <Route path="/carrier(/:id)" requiredRole="DISPATCHER" component={RequireRole(EditCarrier)}/>
-                <Route path="/drivers" requiredRole="DISPATCHER" component={RequireRole(Drivers)}/>
-                <Route path="/driver(/:id)" requiredRole="DISPATCHER" component={RequireRole(EditDriver)}/>
-                <Route path="/waybills" requiredRole="DISPATCHER" component={RequireRole(Waybills)}/>
-                <Route path="/waybill(/:id)" requiredRole="DISPATCHER" header="Редактирование накладной" component={RequireRole(EditWaybill)}/>
-                <Route path="/goods" requiredRole="BOSS_STOCK" component={RequireRole(Goods)}/>
-                <Route path="/goods/receipt" requiredRole="MANAGER" component={RequireRole(ReceiptGoods)}/>
-                <Route path="/goods/distribution" requiredRole="MANAGER" component={RequireRole(DistributionGoods)}/>
-                <Route path="/goods/departure" requiredRole="MANAGER" component={RequireRole(DepartureGoods)}/>
-                <Route path="/goods/check" requiredRole="CONTROLLER" component={RequireRole(CheckGoods)}/>
-                <Route path="/acts" requiredRole="BOSS_STOCK" component={RequireRole(Acts)}/>
-                <Route path="/act(/:id)" requiredRole="CONTROLLER" component={RequireRole(EditAct)}/>
+                <Route path="/clients" requiredRole={["SUPER_ADMIN"]} component={RequireRole(Clients)}/>
+                <Route path="/client(/:name)" requiredRole={["SUPER_ADMIN"]} component={RequireRole(EditClient)}/>
+                <Route path="/reports" requiredRole={["BOSS_STOCK"]} component={RequireRole(Reports)}/>
+                <Route path="/report/income" requiredRole={["SUPER_ADMIN"]} component={RequireRole(ReportIncome)}/>
+                <Route path="/report/standard" requiredRole={["BOSS_STOCK"]} component={RequireRole(ReportStandard)}/>
+                <Route path="/stocks" requiredRole={["ADMIN"]} component={RequireRole(Stocks)}/>
+                <Route path="/stock(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditStock)}/>
+                <Route path="/workers" requiredRole={["ADMIN"]} component={RequireRole(Workers)}/>
+                <Route path="/worker(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditWorker)}/>
+                <Route path="/carriers" requiredRole={["DISPATCHER"]} component={RequireRole(Carriers)}/>
+                <Route path="/carrier(/:id)" requiredRole={["DISPATCHER"]} component={RequireRole(EditCarrier)}/>
+                <Route path="/drivers" requiredRole={["DISPATCHER"]} component={RequireRole(Drivers)}/>
+                <Route path="/driver(/:id)" requiredRole={["DISPATCHER"]} component={RequireRole(EditDriver)}/>
+                <Route path="/waybills" requiredRole={["DISPATCHER"]} component={RequireRole(Waybills)}/>
+                <Route path="/waybill(/:id)" requiredRole={["DISPATCHER"]} header="Редактирование накладной" component={RequireRole(EditWaybill)}/>
+                <Route path="/goods" requiredRole={["BOSS_STOCK", "CONTROLLER"]} component={RequireRole(Goods)}/>
+                <Route path="/goods/receipt" requiredRole={["MANAGER"]} component={RequireRole(ReceiptGoods)}/>
+                <Route path="/goods/distribution" requiredRole={["MANAGER"]} component={RequireRole(DistributionGoods)}/>
+                <Route path="/goods/departure" requiredRole={["MANAGER"]} component={RequireRole(DepartureGoods)}/>
+                <Route path="/goods/check" requiredRole={["CONTROLLER"]} component={RequireRole(CheckGoods)}/>
+                <Route path="/acts" requiredRole={["BOSS_STOCK"]} component={RequireRole(Acts)}/>
+                <Route path="/act(/:id)" requiredRole={["CONTROLLER"]} component={RequireRole(EditAct)}/>
                 <Route path="*" component={RequireRole(NotFound)}/>
             </Route>
         </Router>
