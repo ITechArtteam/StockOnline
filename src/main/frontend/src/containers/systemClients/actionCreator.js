@@ -95,9 +95,17 @@ var deleteClients = clientNamesList => {
     }
 };
 
+var setStatusRadioValue = value => {
+    return {
+        type: event.FORM_CLIENTS_SET_STATUS_RADIO,
+        payload: value
+    }
+};
+
 export default {
     getClientList,
     deleteClients,
     showDialog,
-    closeDialog
+    closeDialog,
+    setStatusRadioValue
 }

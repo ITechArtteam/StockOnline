@@ -78,7 +78,7 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
             throw new DataNotFoundError();
         }
         Page<StockOwnerCompany> clientCompanyPage = stockOwnerCompanyDao.findAll(new PageRequest(pageNumber - 1, recordCount));
-        if(clientCompanyPage.getTotalPages() < pageNumber) {
+        if(clientCompanyPage.getTotalPages() > 0 && clientCompanyPage.getTotalPages() < pageNumber) {
             throw new DataNotFoundError();
         }
         return ownerCompanyDtoConverter.toStockOwnerPage(clientCompanyPage);

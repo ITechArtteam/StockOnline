@@ -6,6 +6,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link, browserHistory} from 'react-router';
 import AlertPopup from '../../components/AlertPopup/AlertPopup'
 import SimpleInput from '../../components/SimpleInput/SimpleInput'
+import {RadioGroup, Radio} from 'react-radio-group'
 
 class Clients extends React.Component {
     constructor(props) {
@@ -102,7 +103,13 @@ class Clients extends React.Component {
                             <SimpleInput onChange={() => {}} label="Название компании" id="in1"/>
                             <SimpleInput onChange={() => {}} label="Адрес" id="in2"/>
                             <label>Статус</label>
-                            {/*todo 2016.17.11: add using react radio group form*/}
+                            <RadioGroup name="companyStatus"
+                                        selectedValue={this.props.frontend.statusRadioValue}
+                                        onChange={newVal => this.props.setStatusRadioValue(newVal)}>
+                                <Radio value="any" />Любой <br/>
+                                <Radio value="active" />Активна <br/>
+                                <Radio value="paused" />Приостановлена <br/>
+                            </RadioGroup>
                             <button className="btn btn-default btn-block">Поиск</button>
                             <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
                         </div>
@@ -158,6 +165,7 @@ const mapStateToProps = (state) => {
     return {
         page: state.clientListReducer.page,
         alert: state.clientListReducer.alert,
+        frontend: state.clientListReducer.frontend
     }
 };
 
@@ -174,6 +182,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         deleteClients: clientNamesList => {
             dispatch(clientListActionCreator.deleteClients(clientNamesList))
+        },
+        setStatusRadioValue: value => {
+            dispatch(clientListActionCreator.setStatusRadioValue(value))
         }
     }
 };

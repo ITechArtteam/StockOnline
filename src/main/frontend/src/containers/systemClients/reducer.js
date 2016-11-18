@@ -12,6 +12,9 @@ var initClientListState = {
         text: '',
         buttons: [],
         type: ''
+    },
+    frontend: {
+        statusRadioValue: 'any'
     }
 };
 
@@ -41,6 +44,8 @@ export default (state = initClientListState, action) => {
 
         case event.CLOSE_DIALOG:
             return {... state, alert: {...state.alert, isVisible: false}};
+        case event.FORM_CLIENTS_SET_STATUS_RADIO:
+            return {...state, frontend: {...state.frontend, statusRadioValue: action.payload}};
 
 
         default:
