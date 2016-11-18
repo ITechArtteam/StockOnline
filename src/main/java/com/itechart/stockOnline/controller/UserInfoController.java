@@ -22,6 +22,7 @@ public class UserInfoController {
     @RequestMapping(value = "/{login}")
     @ResponseBody
     public UserInfo loadUserInfo(@PathVariable String login) {
+        logger.debug("loadUserInfo({})", login);
         UserInfo userInfo = userInfoService.getUserInfo(login);
         logger.debug("user:{} got roles: {}", userInfo.getUsername(), userInfo.getRoles());
         return userInfo;

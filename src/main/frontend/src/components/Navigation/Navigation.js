@@ -23,7 +23,7 @@ class Navigation extends React.Component {
             <nav role="navigation">
                 <ul className="nav nav-pills nav-stacked ">
                     <li><Link to="/">Войти</Link></li>
-                    <li className={this.checkRoles(["ROLE_ADMIN","ROLE_GUEST"])}><Link to="/clients" role="button">Клиенты</Link></li>
+                    <li className={this.checkRoles("SUPER_ADMIN")}><Link to="/clients" role="button">Клиенты</Link></li>
                     <li><Link to="/client/">Редактировать клиента</Link></li>
                     <li><Link to="/reports">Отчеты</Link></li>
                     <li><Link to="/report/income">Отчет о прибыли</Link></li>

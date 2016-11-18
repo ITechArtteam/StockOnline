@@ -17,14 +17,18 @@ public class UserInfoService {
     private UserService userService;
 
     @Transactional(readOnly = true)
-    public UserInfo getUserInfo(String username) {
-        User user = userService.findByLogin(username);
+    public UserInfo getUserInfo(String login) {
+        User user = userService.findByLogin(login);
 
+        return convertUserToUserInfo(user);
+    }
+
+    private UserInfo convertUserToUserInfo(User user) {
         Set<String> userRolesStrings = new HashSet<>();
         for (Role role : user.getRoles()) {
             userRolesStrings.add(role.getName());
         }
 
-        return new UserInfo(user.getName(), userRolesStrings);
+        return new UserInfo(user.getLogin(), userRolesStrings);
     }
 }

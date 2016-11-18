@@ -47,7 +47,7 @@ ReactDOM.render(
             <Route path="/" component={App}>
                 <IndexRedirect to="login" />
                 <Route path="/login" component={Login}/>
-                <Route path="/clients" requiredRole="ROLE_USER" component={RequireRole(Clients)}/>
+                <Route path="/clients" requiredRole="SUPER_ADMIN" component={RequireRole(Clients)}/>
                 <Route path="/client(/:name)" component={EditClient}/>
                 <Route path="/reports" component={Reports}/>
                 <Route path="/report/income" component={ReportIncome}/>
