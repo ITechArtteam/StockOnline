@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux'
 import {reducer as FormReducer} from 'redux-form'
 import {client} from "../containers/editClient";
+import {navigation} from "../components/navigation";
 import {clientListReducer} from '../containers/systemClients/index';
 import {stockListReducer} from '../containers/stocks/index';
 import AuthReducer from './auth'
@@ -8,7 +9,10 @@ import AuthReducer from './auth'
 const rootReducer = combineReducers({
     auth: AuthReducer,
     form: FormReducer,
-    client, clientListReducer, stockListReducer
+    client,
+    clientListReducer,
+    stockListReducer,
+    navigation
 });
 
 export default rootReducer
