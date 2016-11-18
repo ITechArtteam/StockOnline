@@ -31,7 +31,8 @@
     "jquery": "2.2.0",
     "bootstrap-select": "1.11.2",
     "react-js-pagination": "2.0.1",
-    "react-bootstrap-table": "2.5.7"
+    "react-bootstrap-table": "2.5.7",
+    "react-input-calendar": "0.3.14"
   },
   "scripts": {
     "dev-build": "webpack -optimize-minimize"
