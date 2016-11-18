@@ -48,28 +48,28 @@ ReactDOM.render(
                 <IndexRedirect to="login" />
                 <Route path="/login" component={Login}/>
                 <Route path="/clients" requiredRole="SUPER_ADMIN" component={RequireRole(Clients)}/>
-                <Route path="/client(/:name)" component={EditClient}/>
-                <Route path="/reports" component={Reports}/>
-                <Route path="/report/income" component={ReportIncome}/>
-                <Route path="/report/standard" component={ReportStandard}/>
-                <Route path="/stocks" component={Stocks}/>
-                <Route path="/stock(/:id)" component={EditStock}/>
-                <Route path="/workers" component={Workers}/>
-                <Route path="/worker/:id" component={EditWorker}/>
-                <Route path="/carriers" component={Carriers}/>
-                <Route path="/carrier/:id" component={EditCarrier}/>
-                <Route path="/drivers" component={Drivers}/>
-                <Route path="/driver/:id" component={EditDriver}/>
-                <Route path="/waybills" component={Waybills}/>
-                <Route path="/waybill/:id" header="Редактирование накладной" component={EditWaybill}/>
-                <Route path="/goods" component={Goods}/>
-                <Route path="/goods/receipt" component={ReceiptGoods}/>
-                <Route path="/goods/distribution" component={DistributionGoods}/>
-                <Route path="/goods/departure" component={DepartureGoods}/>
-                <Route path="/goods/check" component={CheckGoods}/>
-                <Route path="/acts" component={Acts}/>
-                <Route path="/act/:id" component={EditAct}/>
-                <Route path="*" component={NotFound}/>
+                <Route path="/client(/:name)" requiredRole="SUPER_ADMIN" component={RequireRole(EditClient)}/>
+                <Route path="/reports" requiredRole="BOSS_STOCK" component={RequireRole(Reports)}/>
+                <Route path="/report/income" requiredRole="SUPER_ADMIN" component={RequireRole(ReportIncome)}/>
+                <Route path="/report/standard" requiredRole="BOSS_STOCK" component={RequireRole(ReportStandard)}/>
+                <Route path="/stocks" requiredRole="ADMIN" component={RequireRole(Stocks)}/>
+                <Route path="/stock(/:id)" requiredRole="ADMIN" component={RequireRole(EditStock)}/>
+                <Route path="/workers" requiredRole="ADMIN" component={RequireRole(Workers)}/>
+                <Route path="/worker(/:id)" requiredRole="ADMIN" component={RequireRole(EditWorker)}/>
+                <Route path="/carriers" requiredRole="DISPATCHER" component={RequireRole(Carriers)}/>
+                <Route path="/carrier(/:id)" requiredRole="DISPATCHER" component={RequireRole(EditCarrier)}/>
+                <Route path="/drivers" requiredRole="DISPATCHER" component={RequireRole(Drivers)}/>
+                <Route path="/driver(/:id)" requiredRole="DISPATCHER" component={RequireRole(EditDriver)}/>
+                <Route path="/waybills" requiredRole="DISPATCHER" component={RequireRole(Waybills)}/>
+                <Route path="/waybill(/:id)" requiredRole="DISPATCHER" header="Редактирование накладной" component={RequireRole(EditWaybill)}/>
+                <Route path="/goods" requiredRole="BOSS_STOCK" component={RequireRole(Goods)}/>
+                <Route path="/goods/receipt" requiredRole="MANAGER" component={RequireRole(ReceiptGoods)}/>
+                <Route path="/goods/distribution" requiredRole="MANAGER" component={RequireRole(DistributionGoods)}/>
+                <Route path="/goods/departure" requiredRole="MANAGER" component={RequireRole(DepartureGoods)}/>
+                <Route path="/goods/check" requiredRole="CONTROLLER" component={RequireRole(CheckGoods)}/>
+                <Route path="/acts" requiredRole="BOSS_STOCK" component={RequireRole(Acts)}/>
+                <Route path="/act(/:id)" requiredRole="CONTROLLER" component={RequireRole(EditAct)}/>
+                <Route path="*" component={RequireRole(NotFound)}/>
             </Route>
         </Router>
     </Provider>,

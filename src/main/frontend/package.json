@@ -32,15 +32,12 @@
     "bootstrap-select": "1.11.2",
     "react-js-pagination": "2.0.1",
     "react-bootstrap-table": "2.5.7",
-    "react-input-calendar": "0.3.14"
-  },
-  "scripts": {
-    "dev-build": "webpack -optimize-minimize"
-  },
-  "author": "Dmitriy",
-  "dependencies": {
+    "react-input-calendar": "0.3.14",
     "moment-range": "^2.2.0",
     "react-datepicker": "^0.34.0",
     "react-select": "^1.0.0-rc.2"
+  },
+  "scripts": {
+    "dev-build": "webpack -optimize-minimize"
   }
 }
