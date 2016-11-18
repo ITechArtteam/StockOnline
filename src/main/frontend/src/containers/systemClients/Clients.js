@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Link, browserHistory} from 'react-router';
 import AlertPopup from '../../components/AlertPopup/AlertPopup'
+import SimpleInput from '../../components/SimpleInput/SimpleInput'
 
 class Clients extends React.Component {
     constructor(props) {
@@ -14,10 +15,11 @@ class Clients extends React.Component {
         this.onBtnSaveClick = this.onBtnSaveClick.bind(this);
         this.onBtnDeleteClick = this.onBtnDeleteClick.bind(this);
         this.onConfirmOkBtnClick = this.onConfirmOkBtnClick.bind(this);
+        this.onBtnClearFilterClick = this.onBtnClearFilterClick.bind(this);
     }
 
     componentWillMount() {
-        if(!!this.refs.table) this.refs.table.cleanSelected();
+        if (!!this.refs.table) this.refs.table.cleanSelected();
         this.props.getClientList(1, this.props.page.itemsCountPerPage);
     }
 
@@ -37,12 +39,12 @@ class Clients extends React.Component {
 
     onBtnDeleteClick() {
         var selectedRowKeys = this.refs.table.state.selectedRowKeys;
-        if(selectedRowKeys.length == 0) {
+        if (selectedRowKeys.length == 0) {
             this.props.showDialog("Не выделена ни одна строка для удаления", []);
         } else {
             this.props.showDialog("Вы действительно хотите удалить выбранные записи?", [
                 {
-                    btnStyle : "btn btn-success",
+                    btnStyle: "btn btn-success",
                     text: "Ок",
                     onclick: this.onConfirmOkBtnClick
                 },
@@ -52,6 +54,9 @@ class Clients extends React.Component {
                     onclick: this.props.closeDialog
                 }]);
         }
+    }
+
+    onBtnClearFilterClick() {
     }
 
     onConfirmOkBtnClick() {
@@ -89,49 +94,52 @@ class Clients extends React.Component {
             <div className="container">
                 <div className="row">
                     <div className="col-xs-3">
-                        <div className="list-group">
-                            <div className="list-group-item">
-                                <div className="btn-group-vertical">
-                                    <button className="btn btn-default" onClick={this.onBtnSaveClick}>Создать</button>
-                                    <button className="btn btn-default" onClick={this.onBtnDeleteClick}>Удалить</button>
-                                    <button className="btn btn-default">Поиск</button>
-                                    <button className="btn btn-default">Очистить фильтр</button>
-                                </div>
-                            </div>
-                            <div className="list-group-item">
-                                <div className="form-inline">
-                                    <div className="form-group">
-                                        <label htmlFor="pageLimitSelect">Записей на странице:</label>
-                                        <select className="form-control"
-                                                ref={'pageLimitSelect'}
-                                                id="pageLimitSelect"
-                                                onChange={this.onPageLimitSelectChange}>
-                                            <option>5</option>
-                                            <option>10</option>
-                                        </select>
-                                    </div>
+                        <div className="well well-sm">
+                            <button className="btn btn-default btn-block" onClick={this.onBtnSaveClick}>Создать</button>
+                            <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
+                        </div>
+                        <div className="well well-sm">
+                            <SimpleInput onChange={() => {}} label="Название компании" id="in1"/>
+                            <SimpleInput onChange={() => {}} label="Адрес" id="in2"/>
+                            <label>Статус</label>
+                            {/*todo 2016.17.11: add using react radio group form*/}
+                            <button className="btn btn-default btn-block">Поиск</button>
+                            <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
+                        </div>
+                        <div className="well well-sm">
+                            <div className="form-inline">
+                                <div className="form-group">
+                                    <label htmlFor="pageLimitSelect">Записей на странице:</label>
+                                    <select className="form-control"
+                                            ref={'pageLimitSelect'}
+                                            id="pageLimitSelect"
+                                            onChange={this.onPageLimitSelectChange}>
+                                        <option>5</option>
+                                        <option>10</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                        {/*dib.col-xs-3 end*/}
-                    </div>
+                    </div> {/*dib.col-xs-3 end*/}
 
                     <div className="col-xs-9">
-                        <BootstrapTable data={clientList} selectRow={this.selectRowProp} striped={true} hover={true} ref="table">
-                            <TableHeaderColumn headerAlign="center" dataField="rowNumber">№</TableHeaderColumn>
-                            <TableHeaderColumn headerAlign="center" dataField="name" isKey={true} dataFormat={this.nameFormatter}>Название
-                                компании</TableHeaderColumn>
-                            <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
-                            <TableHeaderColumn headerAlign="center" dataAlign="center" dataField="status"
-                                               dataFormat={this.statusFormatter}>Статус</TableHeaderColumn>
-                        </BootstrapTable>
-                        <Pagination
-                            activePage={this.props.page.activePage}
-                            itemsCountPerPage={this.props.page.itemsCountPerPage}
-                            totalItemsCount={this.props.page.totalItemsCount}
-                            pageRangeDisplayed={5}
-                            onChange={this.onPaginationChange}
-                        />
+                            <BootstrapTable data={clientList} selectRow={this.selectRowProp} striped={true} hover={true}
+                                            ref="table">
+                                <TableHeaderColumn headerAlign="center" dataField="rowNumber">№</TableHeaderColumn>
+                                <TableHeaderColumn headerAlign="center" dataField="name" isKey={true}
+                                                   dataFormat={this.nameFormatter}>Название
+                                    компании</TableHeaderColumn>
+                                <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
+                                <TableHeaderColumn headerAlign="center" dataAlign="center" dataField="status"
+                                                   dataFormat={this.statusFormatter}>Статус</TableHeaderColumn>
+                            </BootstrapTable>
+                            <Pagination
+                                activePage={this.props.page.activePage}
+                                itemsCountPerPage={this.props.page.itemsCountPerPage}
+                                totalItemsCount={this.props.page.totalItemsCount}
+                                pageRangeDisplayed={5}
+                                onChange={this.onPaginationChange}
+                            />
                     </div>{/*div.col-xs-9 end*/}
                     <AlertPopup close={this.props.closeDialog}
                                 isVisible={this.props.alert.isVisible}
@@ -139,8 +147,8 @@ class Clients extends React.Component {
                                 buttons={this.props.alert.buttons}
                                 type={this.props.alert.type}
                     />
-                </div>{/*div.row end*/}
-            </div>/*div.container end*/
+                </div> {/*div.row end*/}
+            </div> /*div.container end*/
         )
     }
 }
