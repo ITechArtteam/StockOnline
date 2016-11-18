@@ -102,10 +102,22 @@ var setStatusRadioValue = value => {
     }
 };
 
+var setFilterInputValue = (inputId, value) => {
+    return {
+        type: event.SET_FILTER_INPUT_VALUE,
+        payload: {
+            inputId: inputId,
+            value: value
+        }
+    }
+
+};
+
 export default {
     getClientList,
     deleteClients,
     showDialog,
     closeDialog,
-    setStatusRadioValue
+    setStatusRadioValue,
+    setFilterInputValue
 }
