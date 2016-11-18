@@ -35,7 +35,8 @@
     "react-input-calendar": "0.3.14",
     "moment-range": "^2.2.0",
     "react-datepicker": "^0.34.0",
-    "react-select": "^1.0.0-rc.2"
+    "react-select": "^1.0.0-rc.2",
+    "react-radio-group": "3.0.1"
   },
   "scripts": {
     "dev-build": "webpack -optimize-minimize"
