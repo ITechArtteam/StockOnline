@@ -3,6 +3,21 @@ import './simpleInput.css';
 
 class SimpleInput extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.getClassNameForShowPassword = this.getClassNameForShowPassword.bind(this);
+    }
+
+    getClassNameForShowPassword(){
+        if (this.props.isPassword){
+            if (this.props.isVisiblePassword){
+                return "glyphicon glyphicon-eye-open passwordShowIcon";
+            }
+            return "glyphicon glyphicon-eye-close passwordShowIcon";
+        }
+        return "none";
+    }
+
     render() {
         return (
             <div className="form-group">
@@ -24,9 +39,7 @@ class SimpleInput extends React.Component {
                 />
                 <label className={this.props.errorValue == "" ? "none" : "error"}>{this.props.errorValue}</label>
                 <span id={this.props.id + "Visibility"} onClick={this.props.swapStatePassword}
-                      className={this.props.isPassword ?
-                          this.props.isVisiblePassword ? "glyphicon glyphicon-eye-open"
-                              : "glyphicon glyphicon-eye-close" : "none"}/>
+                      className={this.getClassNameForShowPassword()}/>
             </div>
         )
     }
