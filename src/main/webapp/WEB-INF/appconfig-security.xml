@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http use-expressions="true">
-        <intercept-url pattern="/userinfo/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
+        <intercept-url pattern="/userinfo/**" access="isAuthenticated()" />
         <intercept-url pattern="/**" access="permitAll()" />
         <form-login login-page='/' default-target-url='/'
                     always-use-default-target='true'
