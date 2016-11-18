@@ -14,7 +14,9 @@ var initClientListState = {
         type: ''
     },
     frontend: {
-        statusRadioValue: 'any'
+        statusRadioValue: 'any',
+        filterCompanyNameValue: '',
+        filterAddressValue: ''
     }
 };
 
@@ -46,6 +48,8 @@ export default (state = initClientListState, action) => {
             return {... state, alert: {...state.alert, isVisible: false}};
         case event.FORM_CLIENTS_SET_STATUS_RADIO:
             return {...state, frontend: {...state.frontend, statusRadioValue: action.payload}};
+        case event.SET_FILTER_INPUT_VALUE:
+            return {...state, frontend: {...state.frontend, [action.payload.inputId]: action.payload.value}};
 
 
         default:

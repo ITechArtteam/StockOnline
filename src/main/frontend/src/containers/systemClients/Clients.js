@@ -34,6 +34,14 @@ class Clients extends React.Component {
         this.props.getClientList(1, parseInt(this.refs.pageLimitSelect.value));
     }
 
+    onInputValueChane = e => {
+        const nameField = e.target.id;
+        const value = e.target.value;
+        console.log(value);
+
+        this.props.setFilterInputValue(nameField, value);
+    };
+
     onBtnSaveClick() {
         browserHistory.push('/client');
     }
@@ -100,8 +108,14 @@ class Clients extends React.Component {
                             <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
                         </div>
                         <div className="well well-sm">
-                            <SimpleInput onChange={() => {}} label="Название компании" id="in1"/>
-                            <SimpleInput onChange={() => {}} label="Адрес" id="in2"/>
+                            <SimpleInput id="filterCompanyNameValue"
+                                         label="Название компании"
+                                         value={this.props.frontend.filterCompanyNameValue}
+                                         onChange={this.onInputValueChane} />
+                            <SimpleInput id="filterAddressValue"
+                                         label="Адрес"
+                                         value={this.props.frontend.filterAddressValue}
+                                         onChange={this.onInputValueChane} />
                             <label>Статус</label>
                             <RadioGroup name="companyStatus"
                                         selectedValue={this.props.frontend.statusRadioValue}
@@ -185,6 +199,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setStatusRadioValue: value => {
             dispatch(clientListActionCreator.setStatusRadioValue(value))
+        },
+        setFilterInputValue: (inputId, value) => {
+            dispatch(clientListActionCreator.setFilterInputValue(inputId, value))
         }
     }
 };
