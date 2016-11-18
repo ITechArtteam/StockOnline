@@ -12,7 +12,6 @@ class Navigation extends React.Component {
 
     checkRoles(roles){
         for (let myIterator = 0; myIterator < roles.length; myIterator++) {
-            console.log(roles[myIterator]);
             if ($.inArray(roles[myIterator], this.props.roles) != -1) {
                 return "";
             }
