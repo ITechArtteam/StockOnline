@@ -103,6 +103,8 @@ export default function (state = initUserState, action) {
                     ...state.frontend, showAlertPopup: false
                 }
             };
+        case event.SET_DEFAULT_VALUE:
+            return initUserState;
         default:
             return state;
     }

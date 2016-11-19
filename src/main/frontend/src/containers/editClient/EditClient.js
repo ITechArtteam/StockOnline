@@ -101,6 +101,10 @@ class EditClient extends React.Component {
         this.props.addClient(this.props.client.data);
     }
 
+    componentWillUnmount(){
+        this.props.setDefaultValue();
+    }
+
     render() {
         return (
             <div className="row">
@@ -222,6 +226,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         closeAlertPopup: () => {
             dispatch(clientActionCreator.closeAlertPopup())
+        },
+        setDefaultValue: () => {
+            dispatch(clientActionCreator.setDefaultValue())
         }
     }
 };

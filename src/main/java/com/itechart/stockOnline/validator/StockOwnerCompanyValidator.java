@@ -34,7 +34,7 @@ public class StockOwnerCompanyValidator {
     }
 
     private void checkAdminPassword(StockOwnerCompany ownerCompany, OwnerCompanyDto errorDto) {
-        String password = ownerCompany.getAdmin().getLogin();
+        String password = ownerCompany.getAdmin().getPassword();
         if (StringUtils.isEmpty(password)){
             errorDto.setAdminLogin("Введите пароль администратора.");
         } else if (password.length() < 3){
@@ -54,7 +54,7 @@ public class StockOwnerCompanyValidator {
         Optional<User> adminInDB = userDao.findByLogin(login);
         Optional<StockOwnerCompany> ownerCompanyInBD = stockOwnerCompanyDao.findById(ownerCompany.getId());
         if (adminInDB.isPresent() &&
-                (!ownerCompanyInBD.isPresent() || ownerCompanyInBD.get().getAdmin().getEmail() != login)){
+                (!ownerCompanyInBD.isPresent() || !ownerCompanyInBD.get().getAdmin().getLogin().equals(login))){
             errorDto.setAdminLogin("Логин уже занят.");
         }
     }
@@ -69,7 +69,7 @@ public class StockOwnerCompanyValidator {
         Optional<User> adminInDB = userDao.findByEmail(email);
         Optional<StockOwnerCompany> ownerCompanyInBD = stockOwnerCompanyDao.findById(ownerCompany.getId());
         if (adminInDB.isPresent() &&
-                (!ownerCompanyInBD.isPresent() || ownerCompanyInBD.get().getAdmin().getEmail() != email)){
+                (!ownerCompanyInBD.isPresent() || !ownerCompanyInBD.get().getAdmin().getEmail().equals(email))){
             errorDto.setAdminEmail("Email уже занят.");
         }
     }
@@ -84,9 +84,7 @@ public class StockOwnerCompanyValidator {
             errorDto.setName("Может содержать только буквы и символ подчеркивания.");
         }
         Optional<StockOwnerCompany> ownerCompanyInBD = stockOwnerCompanyDao.findByName(ownerCompany.getName());
-        System.out.println(ownerCompanyInBD.get());
-        System.out.println(ownerCompany);
-        if (ownerCompanyInBD.isPresent() && ownerCompany.getId() != ownerCompanyInBD.get().getId()){
+        if (ownerCompanyInBD.isPresent() && !ownerCompany.getId().equals(ownerCompanyInBD.get().getId()) ){
             errorDto.setName("Имя компании уже занято.");
         }
     }

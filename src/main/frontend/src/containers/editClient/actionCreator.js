@@ -17,7 +17,7 @@ function getClientDataSuccess(json) {
 function getClientDataFail(dataError) {
     return {
         type: event.GET_CLIENT_FAIL,
-        data: dataError
+        data: dataError.data
     }
 }
 
@@ -29,7 +29,7 @@ function getClient(clientName) {
             .then(json =>
                 dispatch(getClientDataSuccess(json.data))
             ).catch(error => {
-                dispatch(getClientDataFail(error.response.data))
+                dispatch(getClientDataFail(error.response))
             });
     }
 }
@@ -48,19 +48,17 @@ function addClientSuccess(data) {
 }
 
 function addClientFail(error) {
-    try {
-        $.parseJSON(error);
+    if (error.status == 400 && error.data.id == 0) {
         return {
             type: event.ADD_CLIENT_FAIL,
-            data: error
+            data: error.data
         }
-    } catch(e){
+    } else {
         return {
             type: event.ADD_CLIENT_FAIL,
             data: ""
         }
     }
-
 }
 
 function addClient(client) {
@@ -72,7 +70,7 @@ function addClient(client) {
             .then(json =>
                 dispatch(addClientSuccess(json.data))
             ).catch(error => {
-                dispatch(addClientFail(error.response.data))
+                dispatch(addClientFail(error.response))
             });
     }
 }
@@ -123,6 +121,11 @@ function closeAlertPopup() {
     }
 }
 
+function setDefaultValue() {
+    return {
+        type: event.SET_DEFAULT_VALUE
+    }
+}
 
 export default {
     getClient,
@@ -131,5 +134,6 @@ export default {
     setInputErrorMessage,
     setVisibilityPassword,
     showAlertPopup,
-    closeAlertPopup
+    closeAlertPopup,
+    setDefaultValue
 };
