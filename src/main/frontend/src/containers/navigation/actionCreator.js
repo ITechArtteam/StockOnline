@@ -1,10 +1,10 @@
 import * as event from "./constants";
 
-function setActiveNavigationButton(buttonText) {
+function setActiveNavigationButton(refPath) {
     return {
         type: event.SET_ACTIVE_NAVIGATION_BUTTON,
         data: {
-            buttonText
+            refPath
         }
     }
 }

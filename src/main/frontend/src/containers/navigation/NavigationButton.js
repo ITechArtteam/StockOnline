@@ -1,6 +1,5 @@
 import {connect} from "react-redux";
 import React from "react";
-import {navigationActionCreator} from "./index";
 import {Link} from "react-router";
 
 class NavigationButton extends React.Component {
@@ -21,8 +20,9 @@ class NavigationButton extends React.Component {
         return "none";
     }
 
-    checkActive(buttonText){
-        if (buttonText == this.props.activeNavigationButton){
+    checkActive(buttonTo){
+        let regExpPath = new RegExp('^'+ buttonTo + '(/|$)', 'i' );
+        if (regExpPath.test(this.props.activeNavigationButton)){
             return " active";
         }
         return "";
@@ -34,8 +34,7 @@ class NavigationButton extends React.Component {
 
     render() {
         return(
-            <li className={this.checkRoles() + this.checkActive(this.props.buttonText)}
-                onClick={()=>this.setActiveButton(this.props.buttonText)}>
+            <li className={this.checkRoles() + this.checkActive(this.props.to)}>
                 <Link to={this.props.to}>{this.props.buttonText}</Link>
             </li>
         )
@@ -50,15 +49,7 @@ function mapStateToProps(state) {
     };
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setActiveNavigationButton: (buttonText) => {
-            dispatch(navigationActionCreator.setActiveNavigationButton(buttonText))
-        }
-    }
-};
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(NavigationButton);
