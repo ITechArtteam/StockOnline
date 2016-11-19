@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -22,9 +23,19 @@ public class StockOwnerCompanyListController {
     private StockOwnerCompanyService stockOwnerCompanyService;
 
     @RequestMapping(value = "/page/{pageNumber}/limit/{recordCount}", method = RequestMethod.GET)
-    public StockOwnerPage getClientList(@PathVariable Integer pageNumber, @PathVariable Integer recordCount) {
-        LOGGER.info("REST request. Path:/stockOwners/page/{}/limit/{}  method: GET", pageNumber, recordCount);
-        return stockOwnerCompanyService.getStockOwnersPage(pageNumber, recordCount);
+    public StockOwnerPage getClientList(@PathVariable Integer pageNumber,
+                                        @PathVariable Integer recordCount,
+                                        @RequestParam String name,
+                                        @RequestParam String address,
+                                        @RequestParam String status) {
+        try {
+            name = new String(name.getBytes("UTF-8"), "ISO-8859-1");
+            address = new String(address.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        LOGGER.info("REST request. Path:/stockOwners/page/{}/limit/{}/?name={}&address={}&status={}  method: GET", pageNumber, recordCount, name, address, status);
+        return stockOwnerCompanyService.getStockOwnersPage(pageNumber, recordCount, name, address, status);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)

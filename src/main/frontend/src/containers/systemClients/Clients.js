@@ -17,6 +17,7 @@ class Clients extends React.Component {
         this.onBtnDeleteClick = this.onBtnDeleteClick.bind(this);
         this.onConfirmOkBtnClick = this.onConfirmOkBtnClick.bind(this);
         this.onBtnClearFilterClick = this.onBtnClearFilterClick.bind(this);
+        this.onBtnSearchClick = this.onBtnSearchClick.bind(this);
     }
 
     componentWillMount() {
@@ -37,7 +38,6 @@ class Clients extends React.Component {
     onInputValueChane = e => {
         const nameField = e.target.id;
         const value = e.target.value;
-        console.log(value);
 
         this.props.setFilterInputValue(nameField, value);
     };
@@ -66,6 +66,14 @@ class Clients extends React.Component {
     }
 
     onBtnClearFilterClick() {
+        this.props.setStatusRadioValue('2');
+        this.props.setFilterInputValue('filterCompanyNameValue', '');
+        this.props.setFilterInputValue('filterAddressValue', '');
+        this.props.getClientList(1, this.refs.pageLimitSelect.value);
+    }
+
+    onBtnSearchClick() {
+        this.props.getClientList(1, this.refs.pageLimitSelect.value);
     }
 
     onConfirmOkBtnClick() {
@@ -120,11 +128,11 @@ class Clients extends React.Component {
                             <RadioGroup name="companyStatus"
                                         selectedValue={this.props.frontend.statusRadioValue}
                                         onChange={newVal => this.props.setStatusRadioValue(newVal)}>
-                                <Radio value="any" />Любой <br/>
-                                <Radio value="active" />Активна <br/>
-                                <Radio value="paused" />Приостановлена <br/>
+                                <Radio value="2" />Любой <br/>
+                                <Radio value="1" />Активна <br/>
+                                <Radio value="0" />Приостановлена <br/>
                             </RadioGroup>
-                            <button className="btn btn-default btn-block">Поиск</button>
+                            <button className="btn btn-default btn-block" onClick={this.onBtnSearchClick}>Поиск</button>
                             <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
                         </div>
                         <div className="well well-sm">
