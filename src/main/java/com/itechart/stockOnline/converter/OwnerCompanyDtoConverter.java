@@ -25,6 +25,7 @@ public class OwnerCompanyDtoConverter {
         admin.setLogin(ownerCompanyDto.getAdminLogin());
         admin.setPassword(ownerCompanyDto.getAdminPassword());
         admin.setEmail(ownerCompanyDto.getAdminEmail());
+        admin.setAddress(new Address());
         company.setAdmin(admin);
         Address address = new Address();
         address.setCountryName(ownerCompanyDto.getCountry());

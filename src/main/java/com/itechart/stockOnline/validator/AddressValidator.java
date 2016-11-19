@@ -10,7 +10,6 @@ import java.util.Map;
 public class AddressValidator {
     private Address address;
 
-
     public Map<String, String> check(Address address){
         this.address = address;
         Map<String, String> errors = new HashMap<>();
@@ -20,7 +19,7 @@ public class AddressValidator {
     }
 
     private void checkHome(Map<String, String> errors) {
-        int home = address.getHome();
+        Integer home = address.getHome();
         if (home < 0){
             errors.put("home", "Номер дома должен быть больше 0.");
             return;
@@ -32,7 +31,7 @@ public class AddressValidator {
     }
 
     private void checkRoom(Map<String, String> errors) {
-        int room = address.getRoom();
+        Integer room = address.getRoom();
         if (room < 0){
             errors.put("room", "Номер квартиры должен быть больше 0.");
             return;

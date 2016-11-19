@@ -21,14 +21,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-
-import static com.itechart.stockOnline.dao.specification.StockOwnerCompanySpecifications.*;
-import static org.springframework.data.jpa.domain.Specifications.*;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static com.itechart.stockOnline.dao.specification.StockOwnerCompanySpecifications.*;
+import static org.springframework.data.jpa.domain.Specifications.where;
 
 @Service
 public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
@@ -116,6 +114,7 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
         stockOwnerCompany.getAdmin().setId(companyInDB.getAdmin().getId());
 
         companyInDB.setAdmin(userService.update(stockOwnerCompany.getAdmin()));
+
         stockOwnerCompany.getAddress().setId(companyInDB.getAddress().getId());
         companyInDB.setAddress(addressService.update(stockOwnerCompany.getAddress()));
     }

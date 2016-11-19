@@ -51,7 +51,11 @@ public class Address {
     @OneToMany(mappedBy = "address")
     private Set<User> user;
 
-    public Address() {    }
+    public Address() {
+        home = 0;
+        room = 0;
+        id = 0L;
+    }
 
     public Long getId() {
         return id;
