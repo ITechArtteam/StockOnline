@@ -8,11 +8,22 @@ import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
+import com.itechart.stockOnline.model.dto.StockOwnerPage;
 import com.itechart.stockOnline.validator.StockOwnerCompanyValidator;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+
+import static com.itechart.stockOnline.dao.specification.StockOwnerCompanySpecifications.*;
+import static org.springframework.data.jpa.domain.Specifications.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -107,5 +118,47 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
         companyInDB.setAdmin(userService.update(stockOwnerCompany.getAdmin()));
         stockOwnerCompany.getAddress().setId(companyInDB.getAddress().getId());
         companyInDB.setAddress(addressService.update(stockOwnerCompany.getAddress()));
+    }
+
+    @Override
+    public StockOwnerPage getStockOwnersPage(int pageNumber, int recordCount, String name, String address, String status) {
+        if(pageNumber <= 0 || recordCount <= 0) {
+            throw new DataNotFoundError();
+        }
+        Specification<StockOwnerCompany> specification = null;
+        if(StringUtils.isNotEmpty(name)) {
+            specification = where(nameLike(name));
+        }
+
+        if(StringUtils.isNotEmpty(address)) {
+            if(specification != null) {
+                specification = where(specification).and(addressLike(address));
+            } else {
+                specification = where(addressLike(address));
+            }
+        }
+
+        if(StringUtils.isNotBlank(status) && !StringUtils.equals(status, "2")) {
+            boolean isActive = StringUtils.equals(status, "1");
+            if(specification != null) {
+                specification = where(specification).and(statusEqual(isActive));
+            } else {
+                specification = where(statusEqual(isActive));
+            }
+        }
+
+
+        Page<StockOwnerCompany> clientCompanyPage = stockOwnerCompanyDao.findAll(specification, new PageRequest(pageNumber - 1, recordCount));
+        if(clientCompanyPage.getTotalPages() > 0 && clientCompanyPage.getTotalPages() < pageNumber) {
+            throw new DataNotFoundError();
+        }
+        return ownerCompanyDtoConverter.toStockOwnerPage(clientCompanyPage);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByNames(Collection<String> names) {
+        int deletedCount = stockOwnerCompanyDao.deleteByNameIn(names);
+        logger.info("Stock owner company service: delete by names list - {}. Deleted {} records", names, deletedCount);
     }
 }
