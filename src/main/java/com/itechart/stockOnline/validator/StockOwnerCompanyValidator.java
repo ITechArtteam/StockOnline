@@ -24,6 +24,7 @@ public class StockOwnerCompanyValidator {
 
     public void checkNewOwnerCompany(StockOwnerCompany ownerCompany){
         OwnerCompanyDto errorDto = new OwnerCompanyDto();
+
         checkCompanyName(ownerCompany, errorDto);
         checkAdminEmail(ownerCompany, errorDto);
         checkAdminLogin(ownerCompany, errorDto);
@@ -83,6 +84,8 @@ public class StockOwnerCompanyValidator {
             errorDto.setName("Может содержать только буквы и символ подчеркивания.");
         }
         Optional<StockOwnerCompany> ownerCompanyInBD = stockOwnerCompanyDao.findByName(ownerCompany.getName());
+        System.out.println(ownerCompanyInBD.get());
+        System.out.println(ownerCompany);
         if (ownerCompanyInBD.isPresent() && ownerCompany.getId() != ownerCompanyInBD.get().getId()){
             errorDto.setName("Имя компании уже занято.");
         }

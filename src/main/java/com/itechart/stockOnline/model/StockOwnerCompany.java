@@ -90,7 +90,6 @@ public class StockOwnerCompany {
                 ", isActive=" + isActive +
                 ", stocks=" + stocks +
                 ", address=" + address +
-                ", users=" + users +
                 '}';
     }
 }

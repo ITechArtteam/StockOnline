@@ -48,10 +48,19 @@ function addClientSuccess(data) {
 }
 
 function addClientFail(error) {
-    return {
-        type: event.ADD_CLIENT_FAIL,
-        data: error
+    try {
+        $.parseJSON(error);
+        return {
+            type: event.ADD_CLIENT_FAIL,
+            data: error
+        }
+    } catch(e){
+        return {
+            type: event.ADD_CLIENT_FAIL,
+            data: ""
+        }
     }
+
 }
 
 function addClient(client) {

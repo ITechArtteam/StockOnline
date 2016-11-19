@@ -161,7 +161,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", stockOwnerCompany=" + stockOwnerCompany +
-                ", admins=" + admins +
                 ", address=" + address +
                 ", roles=" + roles +
                 '}';

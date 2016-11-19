@@ -101,9 +101,6 @@ public class Address {
                 ", room=" + room +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", stocks=" + stocks +
-                ", clientCompanies=" + clientCompanies +
-                ", user=" + user +
                 '}';
     }
 
