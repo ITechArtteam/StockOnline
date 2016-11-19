@@ -4,7 +4,9 @@ import com.itechart.stockOnline.converter.OwnerCompanyDtoConverter;
 import com.itechart.stockOnline.dao.StockOwnerCompanyDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
+import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.StockOwnerCompany;
+import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
 import com.itechart.stockOnline.validator.StockOwnerCompanyValidator;
 import org.slf4j.Logger;
@@ -13,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
@@ -56,10 +60,21 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
         logger.debug("saveStockOwnerCompany({})", stockOwnerCompany);
         validationFields(stockOwnerCompany);
 
-        stockOwnerCompany.setAdmin(userService.save(stockOwnerCompany.getAdmin()));
+        User admin = setAdminRole(stockOwnerCompany);
+        stockOwnerCompany.setAdmin(userService.save(admin));
         stockOwnerCompany.setAddress(addressService.save(stockOwnerCompany.getAddress()));
 
         return stockOwnerCompanyDao.save(stockOwnerCompany);
+    }
+
+    private User setAdminRole(StockOwnerCompany stockOwnerCompany) {
+        User admin = stockOwnerCompany.getAdmin();
+        Role role = new Role();
+        role.setName("ADMIN");
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        admin.setRoles(roles);
+        return admin;
     }
 
     private void validationFields(StockOwnerCompany stockOwnerCompany) {
@@ -79,7 +94,7 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
         if (companyInDB == null){
             throw new DataNotFoundError("StockOwnerCompany with id: " + stockOwnerCompany.getId());
         }
-        logger.debug("updateStockOwnerCompany: {} -> {}", companyInDB, stockOwnerCompany);
+        logger.debug("updateStockOwnerCompany: \n{} -> \n{}", companyInDB, stockOwnerCompany);
         updateData(stockOwnerCompany, companyInDB);
 
         return companyInDB;
@@ -87,7 +102,10 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     private void updateData(StockOwnerCompany stockOwnerCompany, StockOwnerCompany companyInDB) {
         companyInDB.setName(stockOwnerCompany.getName());
+        stockOwnerCompany.getAdmin().setId(companyInDB.getAdmin().getId());
+
         companyInDB.setAdmin(userService.update(stockOwnerCompany.getAdmin()));
+        stockOwnerCompany.getAddress().setId(companyInDB.getAddress().getId());
         companyInDB.setAddress(addressService.update(stockOwnerCompany.getAddress()));
     }
 }

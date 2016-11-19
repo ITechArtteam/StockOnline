@@ -48,10 +48,20 @@ function addClientSuccess(data) {
 }
 
 function addClientFail(error) {
-    if (error.status == 400 && error.data.id == 0) {
+    if (error.status == 400) {
         return {
             type: event.ADD_CLIENT_FAIL,
-            data: error.data
+            data: {
+                name: !!error.data.companyName ? error.data.companyName : "",
+                adminEmail: !!error.data.email ? error.data.email : "",
+                adminLogin: !!error.data.login ? error.data.login : "",
+                adminPassword: !!error.data.password ? error.data.password : "",
+                country: !!error.data.country ? error.data.country : "",
+                city: !!error.data.city ? error.data.city : "",
+                street: !!error.data.street ? error.data.street : "",
+                home: !!error.data.home ? error.data.home : "",
+                room: !!error.data.room ? error.data.room : ""
+            }
         }
     } else {
         return {

@@ -31,4 +31,5 @@
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <beans:constructor-arg name="strength" value="11"/>
     </beans:bean>
+    <global-method-security secured-annotations="enabled"/>
 </beans:beans>

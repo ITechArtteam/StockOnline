@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
         if (userInDB == null){
             throw new DataNotFoundError("User with id: " + user.getId());
         }
-        logger.debug("updateUser: {} -> {}", userInDB, user);
+        logger.debug("updateUser: \n{} -> \n{}", userInDB, user);
 
         updateData(user, userInDB);
 
@@ -70,6 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void updateData(User user, User userInDB) {
+        user.getAddress().setId(userInDB.getAddress().getId());
         userInDB.setAddress(addressService.update(user.getAddress()));
         userInDB.setName(user.getName());
         userInDB.setSurname(user.getSurname());
@@ -78,8 +79,10 @@ public class UserServiceImpl implements UserService {
         userInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userInDB.setLogin(user.getLogin());
         userInDB.setBirthday(user.getBirthday());
-        setRolesFromDB(user);
-        userInDB.setRoles(user.getRoles());
+        if (user.getRoles() != null) {
+            setRolesFromDB(user);
+            userInDB.setRoles(user.getRoles());
+        }
     }
 
     private void setRolesFromDB(User user) {

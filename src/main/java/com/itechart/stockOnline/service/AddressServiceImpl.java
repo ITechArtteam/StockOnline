@@ -42,7 +42,7 @@ public class AddressServiceImpl implements AddressService {
             throw new DataNotFoundError("Address with id: " + address.getId());
         }
 
-        logger.debug("updateAddress: {} -> {}", addressInDB, address);
+        logger.debug("updateAddress: \n{} -> \n{}", addressInDB, address);
         updateData(address, addressInDB);
         return address;
     }
@@ -64,10 +64,4 @@ public class AddressServiceImpl implements AddressService {
         }
     }
 
-    @Override
-    public Address findById(Long id) {
-        Address address = addressDao.findOne(id);
-        logger.debug("findById({}): {}", id, address);
-        return address;
-    }
 }

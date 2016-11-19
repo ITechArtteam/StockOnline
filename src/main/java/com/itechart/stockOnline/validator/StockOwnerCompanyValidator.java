@@ -37,7 +37,7 @@ public class StockOwnerCompanyValidator {
             errors.put("companyName", "Может содержать только буквы и символ подчеркивания.");
         }
         Optional<StockOwnerCompany> ownerCompanyInBD = stockOwnerCompanyDao.findByName(ownerCompany.getName());
-        if (ownerCompanyInBD.isPresent() && !ownerCompany.getId().equals(ownerCompanyInBD.get().getId()) ){
+        if (ownerCompanyInBD.isPresent() && !ownerCompanyInBD.get().getId().equals(ownerCompany.getId())){
             errors.put("companyName", "Имя компании уже занято.");
         }
     }

@@ -13,4 +13,9 @@ public class ValidationError extends RuntimeException {
     public Map<String, String> getErrors() {
         return errors;
     }
+
+    @Override
+    public String toString(){
+        return errors.toString();
+    }
 }
