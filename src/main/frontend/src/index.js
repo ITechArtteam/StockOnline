@@ -20,7 +20,7 @@ import EditCarrier from "./containers/EditCarrier";
 import Drivers from "./containers/Drivers";
 import EditDriver from "./containers/EditDriver";
 import Waybills from "./containers/Waybills";
-import EditWaybill from "./containers/EditWaybill";
+import WaybillRegistration from "./containers/WaybillRegistration";
 import Goods from "./containers/Goods";
 import ReceiptGoods from "./containers/ReceiptGoods";
 import DistributionGoods from "./containers/DistributionGoods";
@@ -61,7 +61,7 @@ ReactDOM.render(
                 <Route path="/drivers" requiredRole={["DISPATCHER"]} component={RequireRole(Drivers)}/>
                 <Route path="/driver(/:id)" requiredRole={["DISPATCHER"]} component={RequireRole(EditDriver)}/>
                 <Route path="/waybills" requiredRole={["DISPATCHER"]} component={RequireRole(Waybills)}/>
-                <Route path="/waybill(/:id)" requiredRole={["DISPATCHER"]} header="Редактирование накладной" component={RequireRole(EditWaybill)}/>
+                <Route path="/registerwaybill" requiredRole={["DISPATCHER"]} component={RequireRole(WaybillRegistration)}/>
                 <Route path="/goods" requiredRole={["BOSS_STOCK", "CONTROLLER"]} component={RequireRole(Goods)}/>
                 <Route path="/goods/receipt" requiredRole={["MANAGER"]} component={RequireRole(ReceiptGoods)}/>
                 <Route path="/goods/distribution" requiredRole={["MANAGER"]} component={RequireRole(DistributionGoods)}/>
