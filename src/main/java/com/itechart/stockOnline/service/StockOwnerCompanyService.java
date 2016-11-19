@@ -10,6 +10,6 @@ public interface StockOwnerCompanyService {
     OwnerCompanyDto getClientDtoForOwnerCompany(String nameCompany);
     int saveStockOwnerCompany(StockOwnerCompany stockOwnerCompany);
     int updateStockOwnerCompany(StockOwnerCompany stockOwnerCompany);
-    StockOwnerPage getStockOwnersPage(int pageNumber, int recordCount);
+    StockOwnerPage getStockOwnersPage(int pageNumber, int recordCount, String name, String address, String status);
     void deleteByNames(Collection<String> names);
 }

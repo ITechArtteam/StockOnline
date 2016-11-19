@@ -23,11 +23,14 @@ public class Address {
     private String cityName;
 
 //    @Size(max=50, message="Number of letters in street < 50")
+    @Column(name = "street")
     private String street;
 
-    private int home;
+    @Column(name = "home")
+    private Integer home;
 
-    private int room;
+    @Column(name = "room")
+    private Integer room;
 
     @Column(name = "latitude")
     private Float latitude;
@@ -82,12 +85,20 @@ public class Address {
         this.user = user;
     }
 
-    public int getHome() {
+    public Integer getHome() {
         return home;
     }
 
-    public void setHome(int home) {
+    public void setHome(Integer home) {
         this.home = home;
+    }
+
+    public Integer getRoom() {
+        return room;
+    }
+
+    public void setRoom(Integer room) {
+        this.room = room;
     }
 
     @Override
@@ -105,14 +116,6 @@ public class Address {
                 ", clientCompanies=" + clientCompanies +
                 ", user=" + user +
                 '}';
-    }
-
-    public int getRoom() {
-        return room;
-    }
-
-    public void setRoom(int room) {
-        this.room = room;
     }
 
     public Set<StockOwnerCompany> getStockOwnerCompanies() {

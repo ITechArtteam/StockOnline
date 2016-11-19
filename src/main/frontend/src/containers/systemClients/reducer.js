@@ -14,7 +14,7 @@ var initClientListState = {
         type: ''
     },
     frontend: {
-        statusRadioValue: 'any',
+        statusRadioValue: '2',
         filterCompanyNameValue: '',
         filterAddressValue: ''
     }

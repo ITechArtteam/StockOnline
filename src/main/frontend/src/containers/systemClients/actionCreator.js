@@ -1,5 +1,6 @@
 import * as event from './constants'
 import * as axios from "axios";
+import * as $ from "jquery";
 
 var getClientListRequest = () => {
     return {
@@ -19,7 +20,7 @@ var getClientListFail = error => {
         type: event.GET_CLIENT_LIST_FAIL,
         payload: {
             isVisible: true,
-            text: "Произошла ошибка при получении списка клиентов." + error,
+            text: `Произошла ошибка при получении списка клиентов.${error}`,
             buttons: [],
             type: 'danger'
         }
@@ -27,12 +28,23 @@ var getClientListFail = error => {
 };
 
 var getClientList = (pageNumber, itemsCountPerPage) => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(getClientListRequest());
+        var status = getState().clientListReducer.frontend.statusRadioValue;
+        var name = getState().clientListReducer.frontend.filterCompanyNameValue;
+        var address = getState().clientListReducer.frontend.filterAddressValue;
+        console.log(name);
         return axios
-            .get('/stockOwners/page/' + pageNumber + '/limit/' + itemsCountPerPage)
+            .get(`/stockOwners/page/${pageNumber}/limit/${itemsCountPerPage}`,
+                {
+                    params: {
+                        name: name,
+                        address: address,
+                        status: status
+                    }
+                })
             .then(response => dispatch(getClientListSuccess(response.data)))
-            .catch(error => dispatch(getClientListFail(error.response)))
+            .catch(error => dispatch(getClientListFail(error)))
     }
 };
 
@@ -85,7 +97,7 @@ var deleteClientFail = () => {
 var deleteClients = clientNamesList => {
     return (dispatch, getState) => {
         dispatch(deleteClientsRequest());
-        axios.delete("/stockOwners/?namesToDelete=" + clientNamesList)
+        axios.delete(`/stockOwners/?namesToDelete=${clientNamesList}`)
             .then(response => {
                 dispatch(deleteClientsSuccess());
                 dispatch(
