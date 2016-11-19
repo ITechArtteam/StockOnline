@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -37,7 +36,6 @@ public class StockOwnerCompanyController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @Transactional
     public ResponseEntity<Object> addClient(@RequestBody OwnerCompanyDto client){
         logger.debug("REST request. Path:/customer/  method: POST Request body {}", client);
         StockOwnerCompany stockOwnerCompany = ownerCompanyDtoConverter.toStockOwnerCompany(client);

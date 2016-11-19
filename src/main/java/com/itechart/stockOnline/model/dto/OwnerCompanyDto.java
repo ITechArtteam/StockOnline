@@ -1,7 +1,7 @@
 package com.itechart.stockOnline.model.dto;
 
 public class OwnerCompanyDto {
-    private int id;
+    private Long id;
     private String name;
     private String adminLogin;
     private String adminPassword;
@@ -13,7 +13,7 @@ public class OwnerCompanyDto {
     private String room;
 
     public OwnerCompanyDto() {
-        this.id = 0;
+        this.id = 0L;
         name = "";
         adminLogin = "";
         adminPassword = "";
@@ -81,11 +81,11 @@ public class OwnerCompanyDto {
         this.adminEmail = adminEmail;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

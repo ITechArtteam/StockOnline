@@ -10,7 +10,7 @@ import java.util.Set;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "country_name")
 //  @NotNull(message="Country must be specified.")
@@ -50,8 +50,13 @@ public class Address {
 
     public Address() {    }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCountryName() { return countryName; }
     public void setCountryName(String countryName) { this.countryName = countryName; }

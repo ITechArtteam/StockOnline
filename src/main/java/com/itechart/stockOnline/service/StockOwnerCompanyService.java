@@ -5,6 +5,6 @@ import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
 
 public interface StockOwnerCompanyService {
     OwnerCompanyDto getClientDtoForOwnerCompany(String nameCompany);
-    int saveStockOwnerCompany(StockOwnerCompany stockOwnerCompany);
-    int updateStockOwnerCompany(StockOwnerCompany stockOwnerCompany);
+    StockOwnerCompany saveStockOwnerCompany(StockOwnerCompany stockOwnerCompany);
+    StockOwnerCompany updateStockOwnerCompany(StockOwnerCompany stockOwnerCompany);
 }

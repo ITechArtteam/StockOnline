@@ -1,6 +1,6 @@
 package com.itechart.stockOnline.converter;
 
-import com.itechart.stockOnline.exception.NotValidError;
+import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.Address;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
@@ -12,7 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class OwnerCompanyDtoConverter {
@@ -33,37 +35,23 @@ public class OwnerCompanyDtoConverter {
                 address.setHome(Integer.parseInt(ownerCompanyDto.getHome()));
             }
         } catch (NumberFormatException e){
-            OwnerCompanyDto errorDto = new OwnerCompanyDto();
-            errorDto.setHome("Только числа");
-            throw new NotValidError(errorDto);
+            Map<String, String> errors = new HashMap<>();
+            errors.put("home", "Только числа");
+            throw new ValidationError(errors);
         }
         try {
             if (StringUtils.isNotEmpty(ownerCompanyDto.getRoom())) {
                 address.setRoom(Integer.parseInt(ownerCompanyDto.getRoom()));
             }
         } catch (NumberFormatException e){
-            OwnerCompanyDto errorDto = new OwnerCompanyDto();
-            errorDto.setRoom("Только числа");
-            throw new NotValidError(errorDto);
+            Map<String, String> errors = new HashMap<>();
+            errors.put("room", "Только числа");
+            throw new ValidationError(errors);
         }
         company.setAddress(address);
         company.setName(ownerCompanyDto.getName());
         company.setId(ownerCompanyDto.getId());
         return company;
-    }
-
-    public void updateStockOwnerCompany(StockOwnerCompany companyInBD, StockOwnerCompany newData){
-        Address address = companyInBD.getAddress();
-        address.setCountryName(newData.getAddress().getCountryName());
-        address.setCityName(newData.getAddress().getCityName());
-        address.setStreet(newData.getAddress().getStreet());
-        address.setHome(newData.getAddress().getHome());
-        address.setRoom(newData.getAddress().getRoom());
-        User admin = companyInBD.getAdmin();
-        admin.setLogin(newData.getAdmin().getLogin());
-        admin.setEmail(newData.getAdmin().getEmail());
-        admin.setPassword(newData.getAdmin().getPassword());
-        companyInBD.setName(newData.getName());
     }
 
     public OwnerCompanyDto toClientDto(StockOwnerCompany company) {
@@ -83,7 +71,7 @@ public class OwnerCompanyDtoConverter {
         return dto;
     }
 
-    public StockOwnerCompanyBriefDto toStockOwnerCompanyBriefDto(StockOwnerCompany company) {
+    private StockOwnerCompanyBriefDto toStockOwnerCompanyBriefDto(StockOwnerCompany company) {
         StockOwnerCompanyBriefDto dto = new StockOwnerCompanyBriefDto();
         dto.setName(company.getName());
         Address address = company.getAddress();
