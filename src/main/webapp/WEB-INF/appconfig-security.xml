@@ -7,8 +7,9 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
+
     <http use-expressions="true">
-        <intercept-url pattern="/userinfo/**" access="isAuthenticated()" />
         <intercept-url pattern="/**" access="permitAll()" />
         <form-login login-page='/' default-target-url='/'
                     always-use-default-target='true'
