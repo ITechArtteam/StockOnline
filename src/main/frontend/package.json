@@ -42,6 +42,7 @@
     "dev-build": "webpack -optimize-minimize"
   },
   "dependencies": {
+    "react-redux-form": "^1.2.4",
     "react-table": "^3.1.2"
   }
 }
