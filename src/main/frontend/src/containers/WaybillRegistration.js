@@ -21,10 +21,20 @@ class WaybillRegistration extends React.Component {
         </fieldset>
     );
 
+    renderTextArea = ({ input, label, type, meta: { touched, error } }) => (
+        <fieldset className={`form-group ${touched && error ? 'has-error' : ''}`}>
+            <label className="control-label">{label}</label>
+            <div>
+                <textarea {...input} placeholder={label} className="form-control" type={type} />
+                {touched && error && <div className="help-block">{error}</div>}
+            </div>
+        </fieldset>
+    );
+
     render() {
         return (
             <div className="col-md-6 col-md-offset-3">
-                <h3 className="text-center">{isNaN(this.props.params.id) ? 'Создание накладной' : 'Редактирование накладной'}</h3>
+                <h3 className="text-center">Регистрация накладной</h3>
                 <form>
                     <Field name="waybill-number"
                            component={this.renderField}
@@ -54,9 +64,9 @@ class WaybillRegistration extends React.Component {
                            type="text"
                            label="Водитель" />
                     <Field name="description"
-                           component={this.renderField}
+                           component={this.renderTextArea}
                            className="form-control"
-                           type="textarea"
+                           type="ывавыа"
                            label="Дополнительное описание товарной партии" />
                     <Field name="goods-total-sum"
                            component={this.renderField}
