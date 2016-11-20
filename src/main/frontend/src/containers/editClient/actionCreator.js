@@ -105,7 +105,7 @@ function setVisibilityPassword(nameField) {
 }
 
 
-function setData(nameField, value) {
+function setFieldData(nameField, value) {
     return {
         type: event.SET_FIELD,
         data: {
@@ -139,7 +139,7 @@ function setDefaultValue() {
 
 export default {
     getClient,
-    setData,
+    setFieldData,
     addClient,
     setInputErrorMessage,
     setVisibilityPassword,

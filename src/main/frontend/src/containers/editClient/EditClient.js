@@ -61,7 +61,6 @@ class EditClient extends React.Component {
                 break;
             }
         }
-        this.props.setClientData(nameField, value);
     }
 
     swapStatePassword(e){
@@ -210,7 +209,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(clientActionCreator.getClient(clientName))
         },
         setClientData: (nameField, fieldValue) => {
-            dispatch(clientActionCreator.setData(nameField, fieldValue))
+            dispatch(clientActionCreator.setFieldData(nameField, fieldValue))
         },
         addClient: (data) => {
             dispatch(clientActionCreator.addClient(data))
