@@ -31,11 +31,11 @@ public class UserValidator {
 
     private void checkPassword(Map<String, String> errors) {
         String password = user.getPassword();
-        if (StringUtils.isEmpty(password)){
+        if (StringUtils.isEmpty(password) && user.getId() == null ){
             errors.put("password","Пароль не должен быть пустым.");
             return;
         }
-        if (password.length() < 3){
+        if (password.length() < 3 && user.getId() == null){
             errors.put("password","Пароль должен содержать минимум 3 символа.");
             return;
         }

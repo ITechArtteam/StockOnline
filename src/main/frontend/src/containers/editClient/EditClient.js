@@ -90,7 +90,7 @@ class EditClient extends React.Component {
             this.props.setInputError("adminLogin", "Введите логин.");
             return;
         }
-        if (this.props.client.data.adminPassword < 3){
+        if (this.props.client.data.adminPassword < 3 && this.props.client.data.id == -1){
             this.props.setInputError("adminPassword", "Введите пароль.");
             return;
         }
@@ -172,7 +172,7 @@ class EditClient extends React.Component {
                                  patternType="Login"/>
 
                     <SimpleInput id="adminPassword"
-                                 label="Пароль администратора*"
+                                 label={"Пароль администратора" + this.props.client.data.id == -1 ? "*" : ""}
                                  patternType="isRequired"
                                  onChange={this.validateOnChange}
                                  value={this.props.client.data.adminPassword}
