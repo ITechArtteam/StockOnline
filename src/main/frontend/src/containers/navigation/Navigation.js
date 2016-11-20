@@ -45,8 +45,10 @@ class Navigation extends React.Component {
                         <NavigationButton mustHaveRoles={["MANAGER"]} to="/goods/distribution"
                                           buttonText="Распределение товара"/>
                         <NavigationButton mustHaveRoles={["MANAGER"]} to="/goods/departure" buttonText="Убытие товара"/>
-                        <NavigationButton mustHaveRoles={["CONTROLLER"]} to="/goods/check"
-                                          buttonText="Проверка товара"/>
+                        <NavigationButton mustHaveRoles={["CONTROLLER"]} to="/goods/checkInput"
+                                          buttonText="Проверка прибывших товаров"/>
+                        <NavigationButton mustHaveRoles={["CONTROLLER"]} to="/goods/checkOutput"
+                                          buttonText="Проверка выданных товаров"/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK", "CONTROLLER"]} to="/goods" buttonText="Товары"/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK"]} to="/acts" buttonText="Акты"/>
                         <NavigationButton mustHaveRoles={["CONTROLLER"]} to="/act" buttonText="Редактировать акт"/>
