@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,13 +57,13 @@ public class StockOwnerCompanyController {
 
             User userInDB = userService.findByCompany(stockOwnerCompany);
             admin.setId(userInDB.getId());
+            admin.setStockOwnerCompany(stockOwnerCompany);
             userService.update(admin);
         } else {
             stockOwnerCompany = companyService.saveStockOwnerCompany(stockOwnerCompany);
 
             admin = setAdminRole(admin);
             admin.setStockOwnerCompany(stockOwnerCompany);
-            userService.save(admin);
             userService.save(admin);
         }
         return new ResponseEntity<>(stockOwnerCompany.getId(), new HttpHeaders(), HttpStatus.OK);
