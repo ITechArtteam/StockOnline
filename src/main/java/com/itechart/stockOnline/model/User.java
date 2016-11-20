@@ -37,9 +37,6 @@ public class User {
     @JoinColumn(name = "company", nullable = true)
     private StockOwnerCompany stockOwnerCompany;
 
-    @OneToMany(mappedBy = "admin")
-    private Set<StockOwnerCompany> admins;
-
     @ManyToOne
     @JoinColumn(name = "address", nullable = false)
     private Address address;
@@ -139,14 +136,6 @@ public class User {
 
     public void setStockOwnerCompany(StockOwnerCompany stockOwnerCompany) {
         this.stockOwnerCompany = stockOwnerCompany;
-    }
-
-    public Set<StockOwnerCompany> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(Set<StockOwnerCompany> admins) {
-        this.admins = admins;
     }
 
     @Override

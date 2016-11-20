@@ -9,7 +9,7 @@ import java.util.Collection;
 public interface StockOwnerCompanyService {
     OwnerCompanyDto getClientDtoForOwnerCompany(String nameCompany);
     StockOwnerCompany saveStockOwnerCompany(StockOwnerCompany stockOwnerCompany);
-    StockOwnerCompany updateStockOwnerCompany(StockOwnerCompany stockOwnerCompany);
+    StockOwnerCompany update(StockOwnerCompany stockOwnerCompany);
     StockOwnerPage getStockOwnersPage(int pageNumber, int recordCount, String name, String address, String status);
     void deleteByNames(Collection<String> names);
 }

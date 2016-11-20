@@ -1,7 +1,6 @@
 package com.itechart.stockOnline.model;
 
 import javax.persistence.*;
-//import javax.validation.constraints.Size;
 
 import java.util.Set;
 
@@ -16,10 +15,6 @@ public class StockOwnerCompany {
     @Column(name = "name")
 //    @Size(max=50, message="Number of letters in name < 50")
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "admin")
-    private User admin;
 
     @Column(name = "is_active")
     private Boolean isActive;
@@ -37,12 +32,10 @@ public class StockOwnerCompany {
     public StockOwnerCompany() {
         isActive = false;
         address = new Address();
-        admin = new User();
     }
     public StockOwnerCompany(String name) {
         isActive = false;
         address = new Address();
-        admin = new User();
         this.name = name;
     }
 
@@ -71,14 +64,6 @@ public class StockOwnerCompany {
         this.users = users;
     }
 
-    public User getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(User admin) {
-        this.admin = admin;
-    }
-
     public Address getAddress() {
         return address;
     }
@@ -92,7 +77,6 @@ public class StockOwnerCompany {
         return "StockOwnerCompany{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", admin=" + admin +
                 ", isActive=" + isActive +
                 ", stocks=" + stocks +
                 ", address=" + address +

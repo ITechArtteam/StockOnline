@@ -21,12 +21,6 @@ public class OwnerCompanyDtoConverter {
 
     public StockOwnerCompany toStockOwnerCompany(OwnerCompanyDto ownerCompanyDto){
         StockOwnerCompany company = new StockOwnerCompany();
-        User admin = new User();
-        admin.setLogin(ownerCompanyDto.getAdminLogin());
-        admin.setPassword(ownerCompanyDto.getAdminPassword());
-        admin.setEmail(ownerCompanyDto.getAdminEmail());
-        admin.setAddress(new Address());
-        company.setAdmin(admin);
         Address address = new Address();
         address.setCountryName(ownerCompanyDto.getCountry());
         address.setCityName(ownerCompanyDto.getCity());
@@ -55,7 +49,16 @@ public class OwnerCompanyDtoConverter {
         return company;
     }
 
-    public OwnerCompanyDto toClientDto(StockOwnerCompany company) {
+    public User toUser(OwnerCompanyDto ownerCompanyDto){
+        User admin = new User();
+        admin.setLogin(ownerCompanyDto.getAdminLogin());
+        admin.setPassword(ownerCompanyDto.getAdminPassword());
+        admin.setEmail(ownerCompanyDto.getAdminEmail());
+        admin.setAddress(new Address());
+        return admin;
+    }
+
+    public OwnerCompanyDto toClientDto(StockOwnerCompany company, User admin) {
         OwnerCompanyDto dto = new OwnerCompanyDto();
         dto.setName(company.getName());
         Address address = company.getAddress();
@@ -64,7 +67,6 @@ public class OwnerCompanyDtoConverter {
         dto.setStreet(address.getStreet());
         dto.setHome(Integer.toString(address.getHome()));
         dto.setRoom(Integer.toString(address.getRoom()));
-        User admin = company.getAdmin();
         dto.setAdminLogin(admin.getLogin());
         dto.setAdminEmail(admin.getEmail());
         dto.setAdminPassword("");
