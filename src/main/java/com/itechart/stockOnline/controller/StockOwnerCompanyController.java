@@ -6,6 +6,7 @@ import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
 import com.itechart.stockOnline.service.StockOwnerCompanyService;
+import com.itechart.stockOnline.util.ControllerHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class StockOwnerCompanyController {
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public OwnerCompanyDto getClientData(@PathVariable String name){
         logger.debug("REST request. Path:/customer/{}  method: GET", name);
-        name = convertParameterToUtf(name);
+        name = ControllerHelper.convertToUtf(name);
         return companyService.getClientDtoForOwnerCompany(name);
     }
 
@@ -64,16 +65,4 @@ public class StockOwnerCompanyController {
         return new ResponseEntity<>(
                 error.getErrors(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
-
-
-    private String convertParameterToUtf(String parameter) {
-        try {
-            parameter =  new String(parameter.getBytes("ISO-8859-1"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.debug("Can't converted param {} to utf.", parameter);
-        }
-        return parameter;
-    }
-
-
 }
