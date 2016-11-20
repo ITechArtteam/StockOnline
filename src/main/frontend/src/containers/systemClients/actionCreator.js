@@ -1,6 +1,5 @@
 import * as event from './constants'
 import * as axios from "axios";
-import * as $ from "jquery";
 
 var getClientListRequest = () => {
     return {
@@ -33,7 +32,6 @@ var getClientList = (pageNumber, itemsCountPerPage) => {
         var status = getState().clientListReducer.frontend.statusRadioValue;
         var name = getState().clientListReducer.frontend.filterCompanyNameValue;
         var address = getState().clientListReducer.frontend.filterAddressValue;
-        console.log(name);
         return axios
             .get(`/stockOwners/page/${pageNumber}/limit/${itemsCountPerPage}`,
                 {
