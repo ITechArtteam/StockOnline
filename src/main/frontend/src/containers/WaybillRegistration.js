@@ -64,53 +64,66 @@ class WaybillRegistration extends React.Component {
                     <div className="form-group">
                         <label className="control-label">Сумма товаров по накладной</label>
                         <input
-                                type="text"
-                                className="form-control"
-                                name="goods-total-sum"
-                                readonly="readonly" />
+                            type="text"
+                            className="form-control"
+                            name="goods-total-sum"
+                            disabled />
                     </div>
                     <div className="form-group">
                         <label className="control-label">Количество товаров по накладной</label>
                         <input
-                                type="text"
-                                className="form-control"
-                                name="goods-total-amount"
-                                readonly="readonly" />
+                            type="text"
+                            className="form-control"
+                            name="goods-total-amount"
+                            disabled />
                     </div>
                     <div className="form-group">
                         <label className="control-label">Диспетчер склада</label>
                         <input
-                                type="text"
-                                className="form-control"
-                                name="dispatcher"
-                                readonly="readonly" />
+                            type="text"
+                            className="form-control"
+                            name="dispatcher"
+                            disabled />
                     </div>
                     <div className="form-group">
                         <label className="control-label">Дата и время регистрации накладной</label>
                         <input
-                                type="text"
-                                className="form-control"
-                                name="goods-total-sum"
-                                readonly="readonly" />
+                            type="text"
+                            className="form-control"
+                            name="goods-total-sum"
+                            disabled />
                     </div>
                     <div className="form-group">
                         <label className="control-label">Описание товаров</label>
-                        <BootstrapTable data={
-                        [
-                            {
-                                name: 'TESTNAME',
-                                weight: 'TESTWEIGHT',
-                                price: 'TESTPRICE',
-                                storeWay: 'TESTSTOREWAY'
-                            },
-                            {
-                                name: 'TESTNAME11',
-                                weight: 'TESTWEIGHT1',
-                                price: 'TESTPRICE1',
-                                storeWay: 'TESTSTOREWAY1'
+                        <BootstrapTable
+                            data={
+                                [
+                                    {
+                                        name: 'TESTNAME',
+                                        weight: 'TESTWEIGHT',
+                                        price: 'TESTPRICE',
+                                        storeWay: 'TESTSTOREWAY'
+                                    },
+                                    {
+                                        name: 'TESTNAME11',
+                                        weight: 'TESTWEIGHT1',
+                                        price: 'TESTPRICE1',
+                                        storeWay: 'TESTSTOREWAY1'
+                                    }
+                                ]
                             }
-                        ]
-                    } hover={true} striped={false} >
+                            selectRow={{
+                                mode: "checkbox",
+                                clickToSelect: true,
+                                bgColor: "rgb(238, 193, 213)"
+                            }}
+                            options={{
+                                noDataText: "Товары не указаны",
+                                handleConfirmDeleteRow(next, dropRowKeys) {
+                                    next();
+                                }
+                            }}
+                                        hover striped condensed insertRow deleteRow >
                             <TableHeaderColumn isKey dataField="name">Наименование</TableHeaderColumn>
                             <TableHeaderColumn dataField="weight">Вес</TableHeaderColumn>
                             <TableHeaderColumn dataField="price">Стоимость</TableHeaderColumn>
