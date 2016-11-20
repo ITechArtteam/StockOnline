@@ -172,8 +172,8 @@ class EditClient extends React.Component {
                                  patternType="Login"/>
 
                     <SimpleInput id="adminPassword"
-                                 label={"Пароль администратора" + this.props.client.data.id == -1 ? "*" : ""}
-                                 patternType="isRequired"
+                                 label={this.props.client.data.id == -1 ? "Пароль администратора*" : "Пароль администратора"}
+                                 patternType={this.props.client.data.id == -1 ? "isRequired" : ""}
                                  onChange={this.validateOnChange}
                                  value={this.props.client.data.adminPassword}
                                  errorValue={this.props.client.inputErrors.adminPassword}

@@ -60,8 +60,8 @@ public class StockOwnerCompanyController {
             admin.setStockOwnerCompany(stockOwnerCompany);
             userService.update(admin);
         } else {
+            stockOwnerCompany.setActive(true);
             stockOwnerCompany = companyService.saveStockOwnerCompany(stockOwnerCompany);
-
             admin = setAdminRole(admin);
             admin.setStockOwnerCompany(stockOwnerCompany);
             userService.save(admin);
