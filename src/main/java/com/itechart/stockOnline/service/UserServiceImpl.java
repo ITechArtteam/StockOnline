@@ -5,6 +5,7 @@ import com.itechart.stockOnline.dao.UserDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.Role;
+import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.validator.UserValidator;
 import org.slf4j.Logger;
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
         return userDao.save(user);
     }
 
+
     @Override
     @Transactional
     public User update(User user) {
@@ -79,6 +81,7 @@ public class UserServiceImpl implements UserService {
         userInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userInDB.setLogin(user.getLogin());
         userInDB.setBirthday(user.getBirthday());
+        userInDB.setStockOwnerCompany(user.getStockOwnerCompany());
         if (user.getRoles() != null) {
             setRolesFromDB(user);
             userInDB.setRoles(user.getRoles());
@@ -106,6 +109,17 @@ public class UserServiceImpl implements UserService {
     public User findByLogin(String login) {
         User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
         logger.debug("findByLogin({}): {}", login, user);
+        return user;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findByCompany(StockOwnerCompany company) {
+        User user = userDao.findByStockOwnerCompany(company);
+        if (user == null){
+            throw new DataNotFoundError(String.format("User not found for company %s", company));
+        }
+        logger.debug("findByStockOwnerCompany({}): {}", company, user);
         return user;
     }
 }

@@ -3,6 +3,7 @@ package com.itechart.stockOnline.controller;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.dto.StockOwnerPage;
 import com.itechart.stockOnline.service.StockOwnerCompanyService;
+import com.itechart.stockOnline.util.ControllerHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,9 @@ public class StockOwnerCompanyListController {
                                         @RequestParam String name,
                                         @RequestParam String address,
                                         @RequestParam String status) {
-        try {
-            name = new String(name.getBytes("UTF-8"), "ISO-8859-1");
-            address = new String(address.getBytes("ISO-8859-1"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         LOGGER.info("REST request. Path:/stockOwners/page/{}/limit/{}/?name={}&address={}&status={}  method: GET", pageNumber, recordCount, name, address, status);
+        name = ControllerHelper.convertToUtf(name);
+        address = ControllerHelper.convertToUtf(address);
         return stockOwnerCompanyService.getStockOwnersPage(pageNumber, recordCount, name, address, status);
     }
 

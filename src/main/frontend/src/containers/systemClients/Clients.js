@@ -22,7 +22,7 @@ class Clients extends React.Component {
 
     componentWillMount() {
         if (!!this.refs.table) this.refs.table.cleanSelected();
-        this.props.getClientList(1, this.props.page.itemsCountPerPage);
+        this.onBtnClearFilterClick();
     }
 
     onPaginationChange(pageNumber) {
@@ -69,11 +69,11 @@ class Clients extends React.Component {
         this.props.setStatusRadioValue('2');
         this.props.setFilterInputValue('filterCompanyNameValue', '');
         this.props.setFilterInputValue('filterAddressValue', '');
-        this.props.getClientList(1, this.refs.pageLimitSelect.value);
+        this.props.getClientList(1, this.props.page.itemsCountPerPage);
     }
 
     onBtnSearchClick() {
-        this.props.getClientList(1, this.refs.pageLimitSelect.value);
+        this.props.getClientList(1, this.props.page.itemsCountPerPage);
     }
 
     onConfirmOkBtnClick() {
@@ -102,7 +102,7 @@ class Clients extends React.Component {
             return {
                 rowNumber: ((this.props.page.activePage - 1) * this.props.page.itemsCountPerPage) + index + 1,
                 name: item.name,
-                address: item.country + ' г. ' + item.city + ' ул. ' + item.street + ' д. ' + item.home + ' кв. ' + item.room,
+                address: item.country + ' г. ' + item.city + item.street + ' д. ' + item.home + ' кв. ' + item.room,
                 status: item.active
             }
         });
@@ -142,7 +142,9 @@ class Clients extends React.Component {
                                     <select className="form-control"
                                             ref={'pageLimitSelect'}
                                             id="pageLimitSelect"
-                                            onChange={this.onPageLimitSelectChange}>
+                                            onChange={this.onPageLimitSelectChange}
+                                            defaultValue={this.props.page.itemsCountPerPage}
+                                    >
                                         <option>5</option>
                                         <option>10</option>
                                     </select>

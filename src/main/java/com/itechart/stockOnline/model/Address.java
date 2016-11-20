@@ -22,15 +22,12 @@ public class Address {
 //    @Size(max=50, message="Number of letters in city < 50")
     private String cityName;
 
-//    @Size(max=50, message="Number of letters in street < 50")
-    @Column(name = "street")
+    //    @Size(max=50, message="Number of letters in street < 50")
     private String street;
 
-    @Column(name = "home")
-    private Integer home;
+    private int home;
 
-    @Column(name = "room")
-    private Integer room;
+    private int room;
 
     @Column(name = "latitude")
     private Float latitude;
@@ -51,11 +48,7 @@ public class Address {
     @OneToMany(mappedBy = "address")
     private Set<User> user;
 
-    public Address() {
-        home = 0;
-        room = 0;
-        id = 0L;
-    }
+    public Address() {    }
 
     public Long getId() {
         return id;
@@ -94,20 +87,12 @@ public class Address {
         this.user = user;
     }
 
-    public Integer getHome() {
+    public int getHome() {
         return home;
     }
 
-    public void setHome(Integer home) {
+    public void setHome(int home) {
         this.home = home;
-    }
-
-    public Integer getRoom() {
-        return room;
-    }
-
-    public void setRoom(Integer room) {
-        this.room = room;
     }
 
     @Override
@@ -122,6 +107,14 @@ public class Address {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';
+    }
+
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
     }
 
     public Set<StockOwnerCompany> getStockOwnerCompanies() {
