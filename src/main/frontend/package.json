@@ -40,5 +40,8 @@
   },
   "scripts": {
     "dev-build": "webpack -optimize-minimize"
+  },
+  "dependencies": {
+    "react-table": "^3.1.2"
   }
 }

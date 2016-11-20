@@ -1,8 +1,10 @@
 import React from 'react'
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import * as Actions from '../actions'
 import Select from 'react-select';
+
 
 import 'react-select/dist/react-select.css';
 import Calendar from 'react-input-calendar'
@@ -76,11 +78,28 @@ class WaybillRegistration extends React.Component {
                            className="form-control"
                            type="text"
                            label="Дата и время регистрации накладной" />
-                    <Field name="goods-descriptions"
-                           component={this.renderField}
-                           className="form-control"
-                           type="text"
-                           label="Описание товаров" />
+                    <label className="control-label">Описание товаров</label>
+                    <BootstrapTable data={
+                        [
+                            {
+                                name: 'TESTNAME',
+                                weight: 'TESTWEIGHT',
+                                price: 'TESTPRICE',
+                                storeWay: 'TESTSTOREWAY'
+                            },
+                            {
+                                name: 'TESTNAME11',
+                                weight: 'TESTWEIGHT1',
+                                price: 'TESTPRICE1',
+                                storeWay: 'TESTSTOREWAY1'
+                            }
+                        ]
+                    } hover={true} striped={false} >
+                        <TableHeaderColumn isKey dataField="name">Наименование</TableHeaderColumn>
+                        <TableHeaderColumn dataField="weight">Вес</TableHeaderColumn>
+                        <TableHeaderColumn dataField="price">Стоимость</TableHeaderColumn>
+                        <TableHeaderColumn dataField="storeWay">Способ хранения</TableHeaderColumn>
+                    </BootstrapTable>
                 </form>
             </div>
         )
