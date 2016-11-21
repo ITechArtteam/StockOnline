@@ -6,6 +6,7 @@ import {searchTransportCompanyForTrain} from "../containers/searchTransportCompa
 import {navigation} from "../containers/navigation";
 import {clientListReducer} from '../containers/systemClients/index';
 import {stockListReducer} from '../containers/stocks/index';
+import {checkOutputGoodsReducer} from '../containers/checkOutputGoods/index'
 import AuthReducer from './auth'
 import workerReducer from "./worker-reducer";
 
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     searchTransportCompanyForDriver,
     clientListReducer,
     stockListReducer,
-    navigation
+    navigation,
+    checkOutputGoodsReducer
 });
 
 export default rootReducer
