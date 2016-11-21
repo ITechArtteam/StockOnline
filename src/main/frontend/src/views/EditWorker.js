@@ -16,10 +16,7 @@ class EditWorker extends React.Component {
 
     state = {
         worker: this.props.worker,
-        roles: [{id: 0, name: "Администратор системы"}, {id: 1, name: "Администратор склада"}, {
-            id: 2,
-            name: "Диспетчер склада"
-        }, {id: 3, name: "Менеджер по складу"}, {id: 4, name: "Контролёр"}, {id: 5, name: "Владелец склада"}]
+        roles: this.props.roles
     }
 
     componentWillReceiveProps(nextProps) {
