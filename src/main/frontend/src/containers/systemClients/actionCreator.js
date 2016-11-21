@@ -61,9 +61,14 @@ var deleteClientsRequest = () => {
 var deleteClients = clientNamesList => {
     return (dispatch, getState) => {
         dispatch(deleteClientsRequest());
-        axios.delete(`/stockOwners/?namesToDelete=${clientNamesList}`)
+        axios.delete('/stockOwners/',
+            {
+                params: {
+                    namesToDelete: clientNamesList.join()
+                }
+            })
             .then(response => {
-                dispatch(showDialog("Удаление успешно.", '', []));
+                dispatch(showDialog(response.data, '', []));
                 dispatch(
                     getClientList(1, getState().clientListReducer.page.itemsCountPerPage));
             })

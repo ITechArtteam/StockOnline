@@ -108,7 +108,6 @@ class Clients extends React.Component {
         });
 
         return (
-            <div className="container">
                 <div className="row">
                     <div className="col-xs-3">
                         <div className="panel panel-default">
@@ -183,8 +182,7 @@ class Clients extends React.Component {
                                 buttons={this.props.alert.buttons}
                                 type={this.props.alert.type}
                     />
-                </div> {/*div.row end*/}
-            </div> /*div.container end*/
+                </div> /*div.row end*/
         )
     }
 }
