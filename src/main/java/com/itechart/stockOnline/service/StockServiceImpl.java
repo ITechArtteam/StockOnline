@@ -105,7 +105,7 @@ public class StockServiceImpl implements StockService {
             }
         }
 
-        Page<Stock> stockPage = stockDao.findAll(/*specification,*/ new PageRequest(pageNumber - 1, recordCount));
+        Page<Stock> stockPage = stockDao.findAll(specification, new PageRequest(pageNumber - 1, recordCount));
         if(stockPage.getTotalPages() > 0 && stockPage.getTotalPages() < pageNumber) {
             throw new DataNotFoundError();
         }

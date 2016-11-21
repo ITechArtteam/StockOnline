@@ -111,9 +111,9 @@ class Stocks extends React.Component {
                             <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
                         </div>
                         <div className="well well-sm">
-                            <SimpleInput id="filterCompanyNameValue"
+                            <SimpleInput id="filterStockNameValue"
                                          label="Склад"
-                                         value={this.props.frontend.filterCompanyNameValue}
+                                         value={this.props.frontend.filterStockNameValue}
                                          onChange={this.onInputValueChane} />
                             <SimpleInput id="filterAddressValue"
                                          label="Адрес"
