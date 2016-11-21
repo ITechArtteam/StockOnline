@@ -49,9 +49,9 @@ class Clients extends React.Component {
     onBtnDeleteClick() {
         var selectedRowKeys = this.refs.table.state.selectedRowKeys;
         if (selectedRowKeys.length == 0) {
-            this.props.showDialog("Не выделена ни одна строка для удаления", []);
+            this.props.showDialog("Не выделена ни одна строка для удаления", '', []);
         } else {
-            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", [
+            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", '', [
                 {
                     btnStyle: "btn btn-success",
                     text: "Ок",
@@ -203,8 +203,8 @@ const mapDispatchToProps = (dispatch) => {
         getClientList: (pageNumber, itemsCountPerPage) => {
             dispatch(clientListActionCreator.getClientList(pageNumber, itemsCountPerPage))
         },
-        showDialog: (text, buttons) => {
-            dispatch(clientListActionCreator.showDialog(text, buttons))
+        showDialog: (text, type, buttons) => {
+            dispatch(clientListActionCreator.showDialog(text, type, buttons))
         },
         closeDialog: () => {
             dispatch(clientListActionCreator.closeDialog())
