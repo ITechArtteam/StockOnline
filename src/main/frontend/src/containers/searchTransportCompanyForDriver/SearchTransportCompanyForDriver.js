@@ -59,63 +59,55 @@ class SearchTransportCompanyForDriver extends React.Component {
 
     render() {
         return (
-            <div className="row">
-                <form id="driver_search"
-                      className="form-horizontal col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-                    <SimpleInput id="passportNumber"
-                                 label="Серия и номер паспорта*"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.searchDriver.data.passportNumber}
-                                 onBlur={this.validateOnBlur}
-                                 patternType="isRequired"
-                                 errorValue={this.props.searchDriver.inputErrors.passportNumber}/>
-                </form>
-                     <input
-                        type={"text"}
-                        value="Имя"
-                        className="form-control"
-                        disabled="true"
-                    />
-                    <input
-                        type={"text"}
-                        value="Фамилия"
-                        className="form-control"
-                        disabled="true"
-                    />
-                    <input
-                        type={"text"}
-                        value="Отчество"
-                        className="form-control"
-                        disabled="true"
-                    />
-                    <input
-                        type={"text"}
-                        value="День рождения"
-                        className="form-control"
-                        disabled="true"
-                    />
-                    <input
-                        type={"text"}
-                        value="Кем выдан паспорт"
-                        className="form-control"
-                        disabled="true"
-                    />
-                    <input
-                        type={"text"}
-                        value="Когда выдан паспорт"
-                        className="form-control"
-                        disabled="true"
-                    />
-                    <input
-                        type={"text"}
-                        value="Серия номер паспорта"
-                        className="form-control"
-                        disabled="true"
-                    />
-                    <div className="btn-group">
-                        <Link activeClassName={"btn btn-lg btn-primary"} to="/registrationOfGoods/driver">Продолжить</Link>
-                        <Link activeClassName={"btn btn-lg btn-primary"} to="/registrationOfGoods/driver">Зарегистрировать водителя</Link>
-                    </div>
+            <div>
+                <div className="row">
+
+                    <form className="form-search">
+                        <div className="input-append">
+                            <input type="text" className="search-query"/>
+                                <button type="submit" className="btn">Search</button>
+                        </div>
+                    </form>
+
+                    <form id="driver_search"
+                          className="form-horizontal col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                        <SimpleInput id="passportNumber"
+                                     label="Серия и номер паспорта*"
+                                     onChange={this.validateOnChange}
+                                     value={this.props.searchDriver.data.passportNumber}
+                                     onBlur={this.validateOnBlur}
+                                     patternType="isRequired"
+                                     errorValue={this.props.searchDriver.inputErrors.passportNumber}/>
+                    </form>
+                    <button className="btn btn-primary">Найти</button>
+                </div>
+                <div className="row">
+                    <dl className="col-sm-3 col-md-3 col-lg-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                        <dt>Имя</dt>
+                        <dd>Дмитрий</dd>
+                        <dt>Фамилия</dt>
+                        <dd>Дмитрий</dd>
+                        <dt>Отчество</dt>
+                        <dd>Дмитрий</dd>
+                        <dt>Дата рождения</dt>
+                        <dd>Дмитрий</dd>
+                    </dl>
+
+                    <dl className="col-sm-3 col-md-3 col-lg-3">
+                        <dt>Кем выдан паспорт</dt>
+                        <dd>Дмитрий</dd>
+                        <dt>Когда выдан паспорт</dt>
+                        <dd>Дмитрий</dd>
+                        <dt>Серия номер паспорта</dt>
+                        <dd>Дмитрий</dd>
+                    </dl>
+
+                </div>
+                <div className="btn-group">
+                    <Link activeClassName={"btn btn-lg btn-primary"} to="/registrationOfGoods/driver">Продолжить</Link>
+                    <Link activeClassName={"btn btn-lg btn-primary"} to="/registrationOfGoods/driver">Зарегистрировать
+                        водителя</Link>
+                </div>
             </div>
         )
     }
