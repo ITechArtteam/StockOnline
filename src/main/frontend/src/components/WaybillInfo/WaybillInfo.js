@@ -31,9 +31,9 @@ class WaybillInfo extends React.Component {
                     </div>
                 </div>
                 <div className="col-xs-8">
-                    <BootstrapTable data={this.props.data.productInWaybills} striped={true}>
-                        <TableHeaderColumn headerAlign="center" dataField="product.name" isKey={true}>Наименование</TableHeaderColumn>
-                        <TableHeaderColumn headerAlign="center" dataField="product.storage.type">Требование к хранению</TableHeaderColumn>
+                    <BootstrapTable data={products} striped={true}>
+                        <TableHeaderColumn headerAlign="center" dataField="name" isKey={true}>Наименование</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataField="storage">Требование к хранению</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataField="count">Количество</TableHeaderColumn>
                     </BootstrapTable>
                 </div>

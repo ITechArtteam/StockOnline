@@ -80,12 +80,12 @@ var deleteClientsSuccess = () => {
     }
 };
 
-var deleteClientFail = () => {
+var deleteClientFail = (error) => {
     return {
         type: event.DELETE_CLIENT_LIST_FAIL,
         payload: {
             isVisible: true,
-            text: "Произошла ошибка при удалении.",
+            text: `Произошла ошибка при удалении. ${error}`,
             buttons: [],
             type: 'danger'
         }
@@ -101,7 +101,7 @@ var deleteClients = clientNamesList => {
                 dispatch(
                     getClientList(1, getState().clientListReducer.page.itemsCountPerPage));
             })
-            .catch(error => dispatch(deleteClientFail()))
+            .catch(error => dispatch(deleteClientFail(error)))
     }
 };
 

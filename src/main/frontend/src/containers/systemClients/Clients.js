@@ -35,7 +35,7 @@ class Clients extends React.Component {
         this.props.getClientList(1, parseInt(this.refs.pageLimitSelect.value));
     }
 
-    onInputValueChane = e => {
+    onInputValueChange = e => {
         const nameField = e.target.id;
         const value = e.target.value;
 
@@ -119,11 +119,11 @@ class Clients extends React.Component {
                             <SimpleInput id="filterCompanyNameValue"
                                          label="Название компании"
                                          value={this.props.frontend.filterCompanyNameValue}
-                                         onChange={this.onInputValueChane} />
+                                         onChange={this.onInputValueChange} />
                             <SimpleInput id="filterAddressValue"
                                          label="Адрес"
                                          value={this.props.frontend.filterAddressValue}
-                                         onChange={this.onInputValueChane} />
+                                         onChange={this.onInputValueChange} />
                             <label>Статус</label>
                             <RadioGroup name="companyStatus"
                                         selectedValue={this.props.frontend.statusRadioValue}

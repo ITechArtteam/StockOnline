@@ -30,6 +30,15 @@ var initOutputGoodsState = {
                 type: 'Нет требований'
             }
         }
+    },
+    alert: {
+        isVisible: false,
+        text: '',
+        buttons: [],
+        type: ''
+    },
+    frontend: {
+        waybillId: ''
     }
 };
 
@@ -41,6 +50,14 @@ export default (state = initOutputGoodsState, action) => {
             return {
                 ...state, waybill: action.payload
             };
+
+        case event.SHOW_DIALOG:
+            return {... state, alert: action.payload};
+
+        case event.CLOSE_DIALOG:
+            return {... state, alert: {...state.alert, isVisible: false}};
+        case event.SET_INPUT_VALUE:
+            return {...state, frontend: {...state.frontend, [action.payload.inputId]: action.payload.value}};
         default:
             return state;
     }

@@ -14,22 +14,48 @@ var findWaybillSuccess = json => {
     }
 };
 
-var findWaybillFail = error => {
-    return {
-        type: event.FIND_WAYBILL_BY_ID_FAIL,
-        payload: error
-    }
-};
-
 var findWaybillById = id => {
     return dispatch => {
         dispatch(findWaybillRequest());
         axios.get(`waybills/${id}`)
             .then(response => dispatch(findWaybillSuccess(response.data)))
-            .catch(error => dispatch(findWaybillFail(error)))
+            .catch(error => dispatch(showDialog(`Накладная не найдена. ${error}`, 'danger', [])))
     }
 };
 
+
+var showDialog = (text, type, buttons) => {
+    return {
+        type: event.SHOW_DIALOG,
+        payload: {
+            isVisible: true,
+            text: text,
+            buttons: buttons,
+            type: type
+        }
+    }
+};
+
+var closeDialog = () => {
+    return {
+        type: event.CLOSE_DIALOG
+    }
+};
+
+var setInputValue = (inputId, value) => {
+    return {
+        type: event.SET_INPUT_VALUE,
+        payload: {
+            inputId: inputId,
+            value: value
+        }
+    }
+
+};
+
 export default {
-    findWaybillById
+    findWaybillById,
+    showDialog,
+    closeDialog,
+    setInputValue
 }
