@@ -111,44 +111,49 @@ class Clients extends React.Component {
             <div className="container">
                 <div className="row">
                     <div className="col-xs-3">
-                        <div className="well well-sm">
-                            <button className="btn btn-default btn-block" onClick={this.onBtnSaveClick}>Создать</button>
-                            <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
+                        <div className="panel panel-default">
+                            <div className="panel-heading">Количество записей на странице</div>
+                            <div className="panel-body">
+                                <select className="form-control"
+                                        ref={'pageLimitSelect'}
+                                        id="pageLimitSelect"
+                                        onChange={this.onPageLimitSelectChange}
+                                        defaultValue={this.props.page.itemsCountPerPage}>
+                                    <option>5</option>
+                                    <option>10</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className="well well-sm">
-                            <SimpleInput id="filterCompanyNameValue"
-                                         label="Название компании"
-                                         value={this.props.frontend.filterCompanyNameValue}
-                                         onChange={this.onInputValueChange} />
-                            <SimpleInput id="filterAddressValue"
-                                         label="Адрес"
-                                         value={this.props.frontend.filterAddressValue}
-                                         onChange={this.onInputValueChange} />
-                            <label>Статус</label>
-                            <RadioGroup name="companyStatus"
-                                        selectedValue={this.props.frontend.statusRadioValue}
-                                        onChange={newVal => this.props.setStatusRadioValue(newVal)}>
-                                <Radio value="2" />Любой <br/>
-                                <Radio value="1" />Активна <br/>
-                                <Radio value="0" />Приостановлена <br/>
-                            </RadioGroup>
-                            <button className="btn btn-default btn-block" onClick={this.onBtnSearchClick}>Поиск</button>
-                            <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
+
+                        <div className="panel panel-default">
+                            <div className="panel-heading">Действия</div>
+                            <div className="panel-body">
+                                <button className="btn btn-default btn-block" onClick={this.onBtnSaveClick}>Создать</button>
+                                <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
+                            </div>
                         </div>
-                        <div className="well well-sm">
-                            <div className="form-inline">
-                                <div className="form-group">
-                                    <label htmlFor="pageLimitSelect">Записей на странице:</label>
-                                    <select className="form-control"
-                                            ref={'pageLimitSelect'}
-                                            id="pageLimitSelect"
-                                            onChange={this.onPageLimitSelectChange}
-                                            defaultValue={this.props.page.itemsCountPerPage}
-                                    >
-                                        <option>5</option>
-                                        <option>10</option>
-                                    </select>
-                                </div>
+
+                        <div className="panel panel-default">
+                            <div className="panel-heading">Поиск компании</div>
+                            <div className="panel-body">
+                                <SimpleInput id="filterCompanyNameValue"
+                                             label="Название компании"
+                                             value={this.props.frontend.filterCompanyNameValue}
+                                             onChange={this.onInputValueChange} />
+                                <SimpleInput id="filterAddressValue"
+                                             label="Адрес"
+                                             value={this.props.frontend.filterAddressValue}
+                                             onChange={this.onInputValueChange} />
+                                <label>Статус</label>
+                                <RadioGroup name="companyStatus"
+                                            selectedValue={this.props.frontend.statusRadioValue}
+                                            onChange={newVal => this.props.setStatusRadioValue(newVal)}>
+                                    <Radio value="2" />Любой <br/>
+                                    <Radio value="1" />Активна <br/>
+                                    <Radio value="0" />Приостановлена <br/>
+                                </RadioGroup>
+                                <button className="btn btn-default btn-block" onClick={this.onBtnSearchClick}>Поиск</button>
+                                <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
                             </div>
                         </div>
                     </div> {/*dib.col-xs-3 end*/}
