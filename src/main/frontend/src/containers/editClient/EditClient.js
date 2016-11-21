@@ -108,8 +108,7 @@ class EditClient extends React.Component {
     render() {
         return (
             <div className="row">
-                <div id="client_form"
-                    className="well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                <div className="well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
                     <SimpleInput id="name"
                                  label="Название компании*"
                                  onChange={this.validateOnChange}

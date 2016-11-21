@@ -2,7 +2,14 @@ import * as event from "./constants";
 
 const initUserState = {
     data: {
-        passportNumber: ""
+        searchNumber: "",
+        name: "",
+        surname: "",
+        patronymic: "",
+        birthday: "",
+        issued_by: "",
+        issued_date: "",
+        serialAndNumber: ""
     },
     inputErrors: {
         passportNumber: ""

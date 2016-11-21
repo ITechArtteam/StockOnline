@@ -1,9 +1,10 @@
 import React from "react";
-import {searchTransportCompanyForDriverActionCreator} from "./index";
 import {connect} from "react-redux";
 import "./style.css";
 import {AlertPopup} from "../../components/AlertPopup";
 import {SimpleInput} from "../../components/SimpleInput";
+import {StaticControl} from "../../components/StaticControl";
+import {searchTransportCompanyForDriverActionCreator} from "./index";
 import {Link} from "react-router";
 
 class SearchTransportCompanyForDriver extends React.Component {
@@ -61,52 +62,45 @@ class SearchTransportCompanyForDriver extends React.Component {
         return (
             <div>
                 <div className="row">
-
-                    <form className="form-search">
-                        <div className="input-append">
-                            <input type="text" className="search-query"/>
-                                <button type="submit" className="btn">Search</button>
+                    <div
+                        className="well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                        <label className="control-label" htmlFor="searchNumber">Серия и номер паспорта</label>
+                        <div className="input-group">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="searchNumber"
+                                placeholder="Серия и номер паспорта"
+                                onChange={this.validateOnChange}
+                                onBlur={this.validateOnBlur}>{this.props.driver.searchNumber}</input>
+                            <span className="input-group-btn">
+                                <button className="btn btn-default" type="button">Найти</button>
+                            </span>
                         </div>
-                    </form>
-
-                    <form id="driver_search"
-                          className="form-horizontal col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-                        <SimpleInput id="passportNumber"
-                                     label="Серия и номер паспорта*"
-                                     onChange={this.validateOnChange}
-                                     value={this.props.searchDriver.data.passportNumber}
-                                     onBlur={this.validateOnBlur}
-                                     patternType="isRequired"
-                                     errorValue={this.props.searchDriver.inputErrors.passportNumber}/>
-                    </form>
-                    <button className="btn btn-primary">Найти</button>
+                        <div className="btn-group function-button-group" role="group">
+                            <Link to="/clients" className="btn btn-primary">Продолжить</Link>
+                            <Link to="/clients" className="btn btn-default">Новый</Link>
+                        </div>
+                    </div>
                 </div>
                 <div className="row">
-                    <dl className="col-sm-3 col-md-3 col-lg-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-                        <dt>Имя</dt>
-                        <dd>Дмитрий</dd>
-                        <dt>Фамилия</dt>
-                        <dd>Дмитрий</dd>
-                        <dt>Отчество</dt>
-                        <dd>Дмитрий</dd>
-                        <dt>Дата рождения</dt>
-                        <dd>Дмитрий</dd>
-                    </dl>
-
-                    <dl className="col-sm-3 col-md-3 col-lg-3">
-                        <dt>Кем выдан паспорт</dt>
-                        <dd>Дмитрий</dd>
-                        <dt>Когда выдан паспорт</dt>
-                        <dd>Дмитрий</dd>
-                        <dt>Серия номер паспорта</dt>
-                        <dd>Дмитрий</dd>
-                    </dl>
-
+                    <div
+                        className="form-horizontal well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                        <legend>Паспортные данные</legend>
+                        <StaticControl label={"Кем выдан:"} value={this.props.driver.issued_by}/>
+                        <StaticControl label={"Когда выдан:"} value={this.props.driver.issued_date}/>
+                        <StaticControl label={"Серия и номер:"} value={this.props.driver.serialAndNumber}/>
+                    </div>
                 </div>
-                <div className="btn-group">
-                    <Link activeClassName={"btn btn-lg btn-primary"} to="/registrationOfGoods/driver">Продолжить</Link>
-                    <Link activeClassName={"btn btn-lg btn-primary"} to="/registrationOfGoods/driver">Зарегистрировать
-                        водителя</Link>
+                <div className="row">
+                    <div
+                        className="form-horizontal well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                        <legend>Личные данные</legend>
+                        <StaticControl label={"Имя:"} value={this.props.driver.name}/>
+                        <StaticControl label={"Фамилия:"} value={this.props.driver.surname}/>
+                        <StaticControl label={"Отчество:"} value={this.props.driver.patronymic}/>
+                        <StaticControl label={"Дата рождения:"} value={this.props.driver.birthday}/>
+                    </div>
                 </div>
             </div>
         )
@@ -115,7 +109,7 @@ class SearchTransportCompanyForDriver extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        searchDriver: state.searchTransportCompanyForDriver
+        driver: state.searchTransportCompanyForDriver
     }
 };
 
