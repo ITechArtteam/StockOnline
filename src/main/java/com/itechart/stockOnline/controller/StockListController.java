@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,7 @@ public class StockListController {
 
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @Transactional
     public ResponseEntity<Object> deleteStocks(@RequestParam(value = "namesToDelete") List<Integer> ids) {
         LOGGER.info("REST request. Path:/stockList/?namesToDelete={}  method: DELETE", ids);
         stockDao.deleteByIdIn(ids);
