@@ -1,17 +1,20 @@
 package com.itechart.stockOnline.model.dto;
 
 public class StockDto {
-    private Integer id;
+    private Long id;
     private String name;
     private String nameCompany;
+    private String adminLogin;
+    private String adminPassword;
+    private String adminEmail;
     private String country;
     private String city;
     private String street;
     private Integer home;
     private Integer room;
 
-    public Integer getId() { return id;  }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return id;  }
+    public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -22,6 +25,15 @@ public class StockDto {
     public void setNameCompany(String nameCompany) {
         this.nameCompany = nameCompany;
     }
+
+    public String getAdminLogin() { return adminLogin; }
+    public void setAdminLogin(String adminLogin) { this.adminLogin = adminLogin; }
+
+    public String getAdminPassword() { return adminPassword; }
+    public void setAdminPassword(String adminPassword) { this.adminPassword = adminPassword; }
+
+    public String getAdminEmail() { return adminEmail; }
+    public void setAdminEmail(String adminEmail) { this.adminEmail = adminEmail; }
 
     public String getCountry() {
         return country;
@@ -64,6 +76,9 @@ public class StockDto {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", nameCompany='" + nameCompany + '\'' +
+                ", adminLogin='" + adminLogin + '\'' +
+                ", adminPassword='" + adminPassword + '\'' +
+                ", adminEmail='" + adminEmail + '\'' +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +

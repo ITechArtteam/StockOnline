@@ -6,6 +6,7 @@ import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.dto.StockDto;
 import com.itechart.stockOnline.model.dto.StockPage;
 import org.springframework.data.domain.Page;
+import com.itechart.stockOnline.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,6 +32,24 @@ public class StockDtoConverter {
         stock.setCompany(new StockOwnerCompany(stockDto.getNameCompany()));
         LOGGER.info("toStock: stockDto:{}, address:{}, stock:{}",stockDto,address,stock);
         return stock;
+    }
+
+    public StockDto toStockDto(Stock stock, User admin) {
+        StockDto dto = new StockDto();
+        dto.setId(stock.getId());
+        Address address = stock.getAddress();
+        dto.setCountry(address.getCountryName());
+        dto.setCity(address.getCityName());
+        dto.setStreet(address.getStreet());
+        dto.setHome(address.getHome());
+        dto.setRoom(address.getRoom());
+        dto.setName(stock.getName());
+        dto.setNameCompany(stock.getCompany().getName());
+        dto.setAdminLogin(admin.getLogin());
+        dto.setAdminEmail(admin.getEmail());
+        dto.setAdminPassword("");
+        LOGGER.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);
+        return dto;
     }
 
     public StockDto toStockDto(Stock stock) {
