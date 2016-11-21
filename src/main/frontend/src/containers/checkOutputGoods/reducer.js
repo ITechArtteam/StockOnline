@@ -53,11 +53,14 @@ export default (state = initOutputGoodsState, action) => {
 
         case event.SHOW_DIALOG:
             return {... state, alert: action.payload};
-
         case event.CLOSE_DIALOG:
             return {... state, alert: {...state.alert, isVisible: false}};
+
         case event.SET_INPUT_VALUE:
             return {...state, frontend: {...state.frontend, [action.payload.inputId]: action.payload.value}};
+
+        case event.ACCEPT_WAYBILL_REQUEST:
+            return state;
         default:
             return state;
     }

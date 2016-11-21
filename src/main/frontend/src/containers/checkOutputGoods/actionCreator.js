@@ -19,7 +19,22 @@ var findWaybillById = id => {
         dispatch(findWaybillRequest());
         axios.get(`waybills/${id}`)
             .then(response => dispatch(findWaybillSuccess(response.data)))
-            .catch(error => dispatch(showDialog(`Накладная не найдена. ${error}`, 'danger', [])))
+            .catch(error => dispatch(showDialog(`Накладная не найдена. ${error}`, 'danger', [])));
+    }
+};
+
+var acceptWaybillRequest= () => {
+    return {
+        type: event.ACCEPT_WAYBILL_REQUEST
+    }
+};
+
+var acceptWaybill = id => {
+    return dispatch => {
+        dispatch(acceptWaybillRequest());
+        axios.put(`waybills/${id}`)
+            .then(response => dispatch(showDialog(`Накладная ${id} успешно одобрена`)))
+            .catch(error => dispatch(showDialog(`Прозошла ошибка при одобрении накладной. ${error}`, 'danger', [])));
     }
 };
 
@@ -57,5 +72,6 @@ export default {
     findWaybillById,
     showDialog,
     closeDialog,
-    setInputValue
+    setInputValue,
+    acceptWaybill
 }

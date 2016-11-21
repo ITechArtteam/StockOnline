@@ -9,6 +9,7 @@ class CheckOutputGoods extends React.Component {
     constructor(props) {
         super(props);
         this.onFindClick = this.onFindClick.bind(this);
+        this.onAcceptClick = this.onAcceptClick.bind(this);
     }
 
     onInputValueChange = e => {
@@ -18,18 +19,32 @@ class CheckOutputGoods extends React.Component {
         this.props.setInputValue(nameField, value);
     };
 
-    onFindClick = () => {
+    onFindClick() {
         this.props.findWaybillById(this.props.frontend.waybillId);
     };
+
+    onAcceptClick() {
+        this.props.acceptWaybill(this.props.frontend.waybillId);
+    }
 
     render(){
         return (
             <div>
-                <SimpleInput id="waybillId"
-                             label="Номер накладной"
-                             value={this.props.frontend.waybillId}
-                             onChange={this.onInputValueChange}/>
-                <button type="button" className="btn btn-default" onClick={this.onFindClick}>Поиск</button>
+                <div className="row">
+                    <div className="col-xs-4">
+                        <SimpleInput id="waybillId"
+                                     label="Номер накладной"
+                                     value={this.props.frontend.waybillId}
+                                     onChange={this.onInputValueChange}/>
+                    </div>
+                    <div className="col-xs-4">
+                        <br/>
+                        <div className="btn-group btn-group-justified">
+                            <div className="btn btn-default" onClick={this.onFindClick}>Поиск</div>
+                            <div className="btn btn-success" onClick={this.onAcceptClick}>Одобрить</div>
+                        </div>
+                    </div>
+                </div>
                 <WaybillInfo data={this.props.waybill}/>
                 <AlertPopup close={this.props.closeDialog}
                             isVisible={this.props.alert.isVisible}
@@ -55,6 +70,9 @@ const mapDispatchToProps = dispatch => {
     return {
         findWaybillById: id => {
             dispatch(checkOutputGoodsActionCreator.findWaybillById(id))
+        },
+        acceptWaybill: id => {
+            dispatch(checkOutputGoodsActionCreator.acceptWaybill(id))
         },
         showDialog: (text, type, buttons) => {
             dispatch(checkOutputGoodsActionCreator.showDialog(text, type, buttons))
