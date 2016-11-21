@@ -1,5 +1,7 @@
 package com.itechart.stockOnline.model;
 
+
+
 import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.Set;
@@ -13,11 +15,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20)
-    private String name;
+    @Column(length = 20, nullable = false)
+    private String login;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(length = 20)
+    private String name;
+
 
     @Column(length = 20)
     private String surname;
@@ -30,8 +36,6 @@ public class User {
     @Column(length = 50, nullable = false)
     private String email;
 
-    @Column(length = 20, nullable = false)
-    private String login;
 
     @ManyToOne
     @JoinColumn(name = "company", nullable = true)
