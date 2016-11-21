@@ -17,17 +17,33 @@ var getStockListSuccess = json => {
 var getStockListFail = error => {
     return {
         type: event.GET_STOCK_LIST_FAIL,
-        payload: error
+        payload: {
+            isVisible: true,
+            text: `Произошла ошибка при получении списка складов.${error}`,
+            buttons: [],
+            type: 'danger'
+        }
     }
 };
 
 var getStockList = (pageNumber, itemsCountPerPage) => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(getStockListRequest());
+        var status = getState().stockListReducer.frontend.statusRadioValue;
+        var name = getState().stockListReducer.frontend.filterStockNameValue;
+        var address = getState().stockListReducer.frontend.filterAddressValue;
         return axios
-            .get('/stockList/page/' + pageNumber + '/limit/' + itemsCountPerPage)
+            .get(`/stockList/page/${pageNumber}/limit/${itemsCountPerPage}`,
+                {
+                    params: {
+                        name: name,
+                        address: address,
+                        status: status
+                    }
+                }
+            )
             .then(response => dispatch(getStockListSuccess(response.data)))
-            .catch(error => dispatch(getStockListFail(error.response)))
+            .catch(error => dispatch(getStockListFail(error)))
     }
 };
 
@@ -70,23 +86,48 @@ var deleteStockFail = () => {
         payload: {
             isVisible: true,
             text: "Произошла ошибка при удалении.",
-            buttons: []
+            buttons: [],
+            type: 'danger'
         }
     }
 };
 
 var deleteStocks = stockNamesList => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(deleteStocksRequest());
-        axios.delete("/stockList/?namesToDelete=" + stockNamesList)
-        .then(response =>  dispatch(deleteStocksSuccess()))
+        axios.delete(`/stockList/?namesToDelete=${stockNamesList}`)
+        .then(response =>{
+            dispatch(deleteStocksSuccess());
+            dispatch(
+                getStockList(1, getState().stockListReducer.page.itemsCountPerPage));
+        })
         .catch(error => dispatch(deleteStockFail()))
+}
+};
+
+var setStatusRadioValue = value => {
+    return {
+        type: event.FORM_STOCKS_SET_STATUS_RADIO,
+        payload: value
     }
+};
+
+var setFilterInputValue = (inputId, value) => {
+    return {
+        type: event.SET_FILTER_INPUT_VALUE,
+        payload: {
+            inputId: inputId,
+            value: value
+        }
+    }
+
 };
 
 export default {
     getStockList,
     deleteStocks,
     showDialog,
-    closeDialog
+    closeDialog,
+    setStatusRadioValue,
+    setFilterInputValue
 }
