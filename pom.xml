@@ -122,8 +122,9 @@
             <artifactId>logback-core</artifactId>
             <version>${logback.version}</version>
         </dependency>
-
     </dependencies>
+
+
     <build>
         <finalName>SpringSecurityApp</finalName>
         <plugins>
