@@ -6,7 +6,6 @@ class CheckInputGoods extends React.Component {
         return (
             <div>
                 CheckInputGoods
-                <WaybillInfo/>
             </div>
         )
     }

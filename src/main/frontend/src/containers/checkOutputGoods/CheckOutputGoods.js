@@ -8,7 +8,7 @@ class CheckOutputGoods extends React.Component {
         return (
             <div>
                 CheckOutputGoods
-                <WaybillInfo/>
+                <WaybillInfo data={this.props.waybill}/>
             </div>
 
         )
@@ -18,6 +18,7 @@ class CheckOutputGoods extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        waybill: state.checkOutputGoodsReducer.waybill
     }
 };
 
