@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {Router, IndexRedirect, Route, browserHistory} from 'react-router';
-import configureStore from './store/configureStore';
+import store from './store/configureStore';
 import App from './containers/App';
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
@@ -13,8 +13,8 @@ import ReportIncome from "./containers/ReportIncome";
 import ReportStandard from "./containers/ReportStandard";
 import Stocks from "./containers/stocks/Stocks";
 import EditStock from "./containers/EditStock";
-import Workers from "./containers/Workers";
-import EditWorker from "./containers/EditWorker";
+import WorkersContainer from "./containers/WorkersContainer";
+import EditWorkerContainer from "./containers/EditWorkerContainer";
 import Carriers from "./containers/Carriers";
 import EditCarrier from "./containers/EditCarrier";
 import Drivers from "./containers/Drivers";
@@ -29,17 +29,14 @@ import CheckGoods from "./containers/CheckGoods";
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
 import RequireRole from "./containers/RequireRole"
-import "jquery/dist/jquery.min";
-import "bootstrap/dist/js/bootstrap.min";
-import "bootstrap/dist/css/bootstrap-theme.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-webpack";
 import "bootstrap-select/dist/js/bootstrap-select.min";
 import "bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./global.css";
 
 import {client} from "./actions"
 
-const store = configureStore();
+
 
 ReactDOM.render(
     <Provider store={store}>
@@ -54,8 +51,8 @@ ReactDOM.render(
                 <Route path="/report/standard" requiredRole={["BOSS_STOCK"]} component={RequireRole(ReportStandard)}/>
                 <Route path="/stocks" requiredRole={["ADMIN"]} component={RequireRole(Stocks)}/>
                 <Route path="/stock(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditStock)}/>
-                <Route path="/workers" requiredRole={["ADMIN"]} component={RequireRole(Workers)}/>
-                <Route path="/worker(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditWorker)}/>
+                <Route path="/workers" requiredRole={["ADMIN"]} component={RequireRole(WorkersContainer)}/>
+                <Route path="/worker(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditWorkerContainer)}/>
                 <Route path="/carriers" requiredRole={["DISPATCHER"]} component={RequireRole(Carriers)}/>
                 <Route path="/carrier(/:id)" requiredRole={["DISPATCHER"]} component={RequireRole(EditCarrier)}/>
                 <Route path="/drivers" requiredRole={["DISPATCHER"]} component={RequireRole(Drivers)}/>
