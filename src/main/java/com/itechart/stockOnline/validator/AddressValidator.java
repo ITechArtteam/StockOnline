@@ -20,6 +20,9 @@ public class AddressValidator {
 
     private void checkHome(Map<String, String> errors) {
         Integer home = address.getHome();
+        if (home == null){
+            return;
+        }
         if (home < 0){
             errors.put("home", "Номер дома должен быть больше 0.");
             return;
@@ -32,6 +35,9 @@ public class AddressValidator {
 
     private void checkRoom(Map<String, String> errors) {
         Integer room = address.getRoom();
+        if ( room == null){
+            return;
+        }
         if (room < 0){
             errors.put("room", "Номер квартиры должен быть больше 0.");
             return;

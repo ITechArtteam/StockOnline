@@ -6,8 +6,8 @@ public class StockDto {
     private String country;
     private String city;
     private String street;
-    private int home;
-    private int room;
+    private Integer home;
+    private Integer room;
 
     public Integer getId() { return id;  }
     public void setId(Integer id) { this.id = id; }
@@ -40,17 +40,17 @@ public class StockDto {
         this.street = street;
     }
 
-    public int getHome() {
+    public Integer getHome() {
         return home;
     }
-    public void setHome(int home) {
+    public void setHome(Integer home) {
         this.home = home;
     }
 
-    public int getRoom() {
+    public Integer getRoom() {
         return room;
     }
-    public void setRoom(int room) {
+    public void setRoom(Integer room) {
         this.room = room;
     }
 
