@@ -66,7 +66,6 @@ class Stocks extends React.Component {
         }
 
     onBtnClearFilterClick() {
-        this.props.setStatusRadioValue('2');
         this.props.setFilterInputValue('filterStockNameValue', '');
         this.props.setFilterInputValue('filterAddressValue', '');
         this.props.getStockList(1, this.props.page.itemsCountPerPage);
@@ -85,11 +84,6 @@ class Stocks extends React.Component {
     nameFormatter = (cell, row) => {
         return <Link to={"/stock/" + cell}>{cell}</Link>
     };
-    statusFormatter = (cell, row) => {
-        var labelType = cell ? "label-success" : "label-danger";
-        var labelText = cell ? "Активна" : 'Приостановлена';
-        return <div className={'label ' + labelType}>{labelText}</div>
-    };
 
     selectRowProp = {
         mode: "checkbox",
@@ -104,8 +98,7 @@ class Stocks extends React.Component {
                 id: item.id,
                 name: item.name,
                 company: item.nameCompany,
-                address: item.country + ' г. ' + item.city + ' ул. ' + item.street + ' д. ' + item.home + ' кв. ' + item.room,
-                status: item.active
+                address: item.country + ' г. ' + item.city + ' ул. ' + item.street + ' д. ' + item.home + ' кв. ' + item.room
                 }
                 });
 
@@ -119,21 +112,13 @@ class Stocks extends React.Component {
                         </div>
                         <div className="well well-sm">
                             <SimpleInput id="filterCompanyNameValue"
-                                         label="Название компании"
+                                         label="Склад"
                                          value={this.props.frontend.filterCompanyNameValue}
                                          onChange={this.onInputValueChane} />
                             <SimpleInput id="filterAddressValue"
                                          label="Адрес"
                                          value={this.props.frontend.filterAddressValue}
                                          onChange={this.onInputValueChane} />
-                            <label>Статус</label>
-                            <RadioGroup name="companyStatus"
-                                        selectedValue={this.props.frontend.statusRadioValue}
-                                        onChange={newVal => this.props.setStatusRadioValue(newVal)}>
-                                <Radio value="2" />Любой <br/>
-                                <Radio value="1" />Активна <br/>
-                                <Radio value="0" />Приостановлена <br/>
-                            </RadioGroup>
                             <button className="btn btn-default btn-block" onClick={this.onBtnSearchClick}>Поиск</button>
                             <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
                         </div>
@@ -204,9 +189,6 @@ class Stocks extends React.Component {
             },
             deleteStocks: stockNamesList => {
                 dispatch(stockListActionCreator.deleteStocks(stockNamesList))
-            },
-            setStatusRadioValue: value => {
-                dispatch(stockListActionCreator.setStatusRadioValue(value))
             },
             setFilterInputValue: (inputId, value) => {
                 dispatch(stockListActionCreator.setFilterInputValue(inputId, value))

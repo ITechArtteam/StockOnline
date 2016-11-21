@@ -14,7 +14,6 @@ import * as event from './constants'
             type: ''
         },
         frontend: {
-            statusRadioValue: '2',
             filterStockNameValue: '',
             filterAddressValue: ''
         }
@@ -46,8 +45,6 @@ import * as event from './constants'
 
                 case event.CLOSE_DIALOG:
                         return {... state, alert: {...state.alert, isVisible: false}};
-                case event.FORM_STOCKS_SET_STATUS_RADIO:
-                        return {...state, frontend: {...state.frontend, statusRadioValue: action.payload}};
                 case event.SET_FILTER_INPUT_VALUE:
                         return {...state, frontend: {...state.frontend, [action.payload.inputId]: action.payload.value}};
 

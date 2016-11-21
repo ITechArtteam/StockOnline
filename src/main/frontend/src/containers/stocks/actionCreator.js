@@ -29,7 +29,6 @@ var getStockListFail = error => {
 var getStockList = (pageNumber, itemsCountPerPage) => {
     return (dispatch, getState) => {
         dispatch(getStockListRequest());
-        var status = getState().stockListReducer.frontend.statusRadioValue;
         var name = getState().stockListReducer.frontend.filterStockNameValue;
         var address = getState().stockListReducer.frontend.filterAddressValue;
         return axios
@@ -37,8 +36,7 @@ var getStockList = (pageNumber, itemsCountPerPage) => {
                 {
                     params: {
                         name: name,
-                        address: address,
-                        status: status
+                        address: address
                     }
                 }
             )
@@ -105,12 +103,6 @@ var deleteStocks = stockNamesList => {
 }
 };
 
-var setStatusRadioValue = value => {
-    return {
-        type: event.FORM_STOCKS_SET_STATUS_RADIO,
-        payload: value
-    }
-};
 
 var setFilterInputValue = (inputId, value) => {
     return {
@@ -128,6 +120,5 @@ export default {
     deleteStocks,
     showDialog,
     closeDialog,
-    setStatusRadioValue,
     setFilterInputValue
 }
