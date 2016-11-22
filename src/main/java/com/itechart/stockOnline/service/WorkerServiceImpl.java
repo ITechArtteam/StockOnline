@@ -5,6 +5,8 @@ import com.itechart.stockOnline.dao.RoleRepository;
 import com.itechart.stockOnline.dao.WorkerRepository;
 import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.User;
+import com.itechart.stockOnline.validation.Validator;
+import com.itechart.stockOnline.validator.Worker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     @Transactional
     public User save(User user) {
+        Validator.BindingResult check = Validator.getValidator().check(user, Worker.class);
         return workerRepository.save(user);
     }
 
