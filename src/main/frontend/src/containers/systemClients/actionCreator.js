@@ -1,25 +1,25 @@
 import * as event from './constants'
 import * as axios from "axios";
 
-var getClientListRequest = () => {
+let getClientListRequest = () => {
     return {
         type: event.GET_CLIENT_LIST_REQUEST
     }
 };
 
-var getClientListSuccess = json => {
+let getClientListSuccess = json => {
     return {
         type: event.GET_CLIENT_LIST_SUCCESS,
         payload: json
     }
 };
 
-var getClientList = (pageNumber, itemsCountPerPage) => {
+let getClientList = (pageNumber, itemsCountPerPage) => {
     return (dispatch, getState) => {
         dispatch(getClientListRequest());
-        var status = getState().clientListReducer.frontend.statusRadioValue;
-        var name = getState().clientListReducer.frontend.filterCompanyNameValue;
-        var address = getState().clientListReducer.frontend.filterAddressValue;
+        let status = getState().clientListReducer.frontend.statusRadioValue;
+        let name = getState().clientListReducer.frontend.filterCompanyNameValue;
+        let address = getState().clientListReducer.frontend.filterAddressValue;
         return axios
             .get(`/stockOwners/page/${pageNumber}/limit/${itemsCountPerPage}`,
                 {
@@ -34,7 +34,7 @@ var getClientList = (pageNumber, itemsCountPerPage) => {
     }
 };
 
-var showDialog = (text, type, buttons) => {
+let showDialog = (text, type, buttons) => {
     return {
         type: event.SHOW_DIALOG,
         payload: {
@@ -46,19 +46,19 @@ var showDialog = (text, type, buttons) => {
     }
 };
 
-var closeDialog = () => {
+let closeDialog = () => {
     return {
         type: event.CLOSE_DIALOG
     }
 };
 
-var deleteClientsRequest = () => {
+let deleteClientsRequest = () => {
     return {
         type: event.DELETE_CLIENT_LIST_REQUEST
     }
 };
 
-var deleteClients = clientNamesList => {
+let deleteClients = clientNamesList => {
     return (dispatch, getState) => {
         dispatch(deleteClientsRequest());
         axios.delete('/stockOwners/',
@@ -76,14 +76,14 @@ var deleteClients = clientNamesList => {
     }
 };
 
-var setStatusRadioValue = value => {
+let setStatusRadioValue = value => {
     return {
         type: event.FORM_CLIENTS_SET_STATUS_RADIO,
         payload: value
     }
 };
 
-var setFilterInputValue = (inputId, value) => {
+let setFilterInputValue = (inputId, value) => {
     return {
         type: event.SET_FILTER_INPUT_VALUE,
         payload: {
@@ -94,11 +94,34 @@ var setFilterInputValue = (inputId, value) => {
 
 };
 
+let setFilterMessageVisibility = visibility => {
+    return {
+        type: event.SET_FILTER_MESSAGE_VISIBILITY,
+        payload: visibility
+    }
+};
+
+let sendFilterRequest = (pageNumber, itemsCountPerPage) => {
+    return dispatch => {
+        dispatch(setFilterMessageVisibility(true));
+        dispatch(getClientList(pageNumber, itemsCountPerPage));
+    }
+};
+
+let clearFilterRequest = (pageNumber, itemsCountPerPage) => {
+    return dispatch => {
+        dispatch(setFilterMessageVisibility(false));
+        dispatch(getClientList(pageNumber, itemsCountPerPage));
+    }
+};
+
 export default {
     getClientList,
     deleteClients,
     showDialog,
     closeDialog,
     setStatusRadioValue,
-    setFilterInputValue
+    setFilterInputValue,
+    sendFilterRequest,
+    clearFilterRequest
 }

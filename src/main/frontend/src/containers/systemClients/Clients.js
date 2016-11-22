@@ -69,11 +69,11 @@ class Clients extends React.Component {
         this.props.setStatusRadioValue('2');
         this.props.setFilterInputValue('filterCompanyNameValue', '');
         this.props.setFilterInputValue('filterAddressValue', '');
-        this.props.getClientList(1, this.props.page.itemsCountPerPage);
+        this.props.clearFilterRequest(1, this.props.page.itemsCountPerPage);
     }
 
     onBtnSearchClick() {
-        this.props.getClientList(1, this.props.page.itemsCountPerPage);
+        this.props.sendFilterRequest(1, this.props.page.itemsCountPerPage);
     }
 
     onConfirmOkBtnClick() {
@@ -158,6 +158,11 @@ class Clients extends React.Component {
                     </div> {/*dib.col-xs-3 end*/}
 
                     <div className="col-xs-9">
+                        <div className="before-table">
+                            <span className={this.props.frontend.isFilterMessageVisible ? "label label-success" : 'none'}>
+                                По вашему запросу найдено {this.props.page.totalItemsCount} записей
+                            </span>
+                        </div>
                             <BootstrapTable data={clientList} selectRow={this.selectRowProp} striped={true} hover={true}
                                             ref="table">
                                 <TableHeaderColumn headerAlign="center" dataField="rowNumber">№</TableHeaderColumn>
@@ -215,6 +220,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         setFilterInputValue: (inputId, value) => {
             dispatch(clientListActionCreator.setFilterInputValue(inputId, value))
+        },
+        sendFilterRequest: (pageNumber, itemsCountPerPage) => {
+            dispatch(clientListActionCreator.sendFilterRequest(pageNumber, itemsCountPerPage))
+        },
+        clearFilterRequest: (pageNumber, itemsCountPerPage) => {
+            dispatch(clientListActionCreator.clearFilterRequest(pageNumber, itemsCountPerPage))
         }
     }
 };
