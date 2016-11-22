@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StockDao extends JpaRepository<Stock, Long>, JpaSpecificationExecutor {
-    Optional<Stock> findById(Integer id);
+    Optional<Stock> findById(Long id);
     Page<Stock> findAll(Pageable pageable);
 
     @Modifying

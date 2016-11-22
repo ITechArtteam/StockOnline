@@ -142,7 +142,7 @@ class Stocks extends React.Component {
                     <div className="col-xs-9">
                         <BootstrapTable data={stockList} selectRow={this.selectRowProp} striped={true} hover={true} ref="table">
                             <TableHeaderColumn headerAlign="center" dataField="id" isKey={true} dataFormat={this.nameFormatter}>Номер склада</TableHeaderColumn>
-                            <TableHeaderColumn headerAlign="center" dataField="name">Склад</TableHeaderColumn>
+                            <TableHeaderColumn headerAlign="center" dataField="name" >Склад</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
                             <TableHeaderColumn headerAlign="center" dataField="company">Название компании</TableHeaderColumn>
                         </BootstrapTable>

@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public interface StockService {
 
-    StockDto getStockDtoForStock(Integer id);
+    StockDto getStockDtoForStock(Long id);
     Stock saveStock(Stock stock);
     Stock update(Stock stock);
     StockPage getStockPage(int pageNumber, int recordCount, String name, String address);

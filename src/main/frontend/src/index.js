@@ -15,7 +15,7 @@ import Reports from "./containers/Reports";
 import ReportIncome from "./containers/ReportIncome";
 import ReportStandard from "./containers/ReportStandard";
 import Stocks from "./containers/stocks/Stocks";
-import EditStock from "./containers/EditStock";
+import EditStock from "./containers/editStock/EditStock";
 import WorkersContainer from "./containers/WorkersContainer";
 import EditWorkerContainer from "./containers/EditWorkerContainer";
 import Waybills from "./containers/Waybills";

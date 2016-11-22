@@ -8,6 +8,7 @@ import {clientListReducer} from '../containers/systemClients/index';
 import {stockListReducer} from '../containers/stocks/index';
 import AuthReducer from './auth'
 import workerReducer from "./worker-reducer";
+import {stock} from '../containers/editStock/index';
 
 const rootReducer = combineReducers({
     auth: AuthReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     searchTransportCompanyForDriver,
     clientListReducer,
     stockListReducer,
+    stock,
     navigation
 });
 
