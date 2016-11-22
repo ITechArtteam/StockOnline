@@ -1,6 +1,14 @@
 import * as event from './constants'
 import * as axios from "axios";
 
+
+let setFilterMessageVisibility = visibility => {
+    return {
+        type: event.SET_FILTER_MESSAGE_VISIBILITY,
+        payload: visibility
+    }
+};
+
 let getClientListRequest = () => {
     return {
         type: event.GET_CLIENT_LIST_REQUEST
@@ -20,6 +28,9 @@ let getClientList = (pageNumber, itemsCountPerPage) => {
         let status = getState().clientListReducer.frontend.statusRadioValue;
         let name = getState().clientListReducer.frontend.filterCompanyNameValue;
         let address = getState().clientListReducer.frontend.filterAddressValue;
+
+        let visibility = (status !== '2' || name !== '' || address !== '');
+        dispatch(setFilterMessageVisibility(visibility));
         return axios
             .get(`/stockOwners/page/${pageNumber}/limit/${itemsCountPerPage}`,
                 {
@@ -94,34 +105,11 @@ let setFilterInputValue = (inputId, value) => {
 
 };
 
-let setFilterMessageVisibility = visibility => {
-    return {
-        type: event.SET_FILTER_MESSAGE_VISIBILITY,
-        payload: visibility
-    }
-};
-
-let sendFilterRequest = (pageNumber, itemsCountPerPage) => {
-    return dispatch => {
-        dispatch(setFilterMessageVisibility(true));
-        dispatch(getClientList(pageNumber, itemsCountPerPage));
-    }
-};
-
-let clearFilterRequest = (pageNumber, itemsCountPerPage) => {
-    return dispatch => {
-        dispatch(setFilterMessageVisibility(false));
-        dispatch(getClientList(pageNumber, itemsCountPerPage));
-    }
-};
-
 export default {
     getClientList,
     deleteClients,
     showDialog,
     closeDialog,
     setStatusRadioValue,
-    setFilterInputValue,
-    sendFilterRequest,
-    clearFilterRequest
+    setFilterInputValue
 }

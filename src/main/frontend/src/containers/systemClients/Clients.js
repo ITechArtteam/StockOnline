@@ -69,11 +69,11 @@ class Clients extends React.Component {
         this.props.setStatusRadioValue('2');
         this.props.setFilterInputValue('filterCompanyNameValue', '');
         this.props.setFilterInputValue('filterAddressValue', '');
-        this.props.clearFilterRequest(1, this.props.page.itemsCountPerPage);
+        this.props.getClientList(1, this.props.page.itemsCountPerPage);
     }
 
     onBtnSearchClick() {
-        this.props.sendFilterRequest(1, this.props.page.itemsCountPerPage);
+        this.props.getClientList(1, this.props.page.itemsCountPerPage);
     }
 
     onConfirmOkBtnClick() {
@@ -220,12 +220,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         setFilterInputValue: (inputId, value) => {
             dispatch(clientListActionCreator.setFilterInputValue(inputId, value))
-        },
-        sendFilterRequest: (pageNumber, itemsCountPerPage) => {
-            dispatch(clientListActionCreator.sendFilterRequest(pageNumber, itemsCountPerPage))
-        },
-        clearFilterRequest: (pageNumber, itemsCountPerPage) => {
-            dispatch(clientListActionCreator.clearFilterRequest(pageNumber, itemsCountPerPage))
         }
     }
 };
