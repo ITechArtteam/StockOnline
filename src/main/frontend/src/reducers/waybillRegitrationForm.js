@@ -1,3 +1,5 @@
+import { HIDE_CHOOSE_SENDER_MODAL, SHOW_CHOOSE_SENDER_MODAL } from '../actions/waybillRegistrationFormActions'
+
 const initialState = {
     number: null,
     registrationDate: null,
@@ -14,5 +16,18 @@ const initialState = {
 };
 
 export default function waybillRegistrationForm(state = initialState, action) {
-
+    switch (action.type) {
+        case HIDE_CHOOSE_SENDER_MODAL:
+            return {
+                ...state,
+                chooseSenderModalIsOpen: false
+            };
+        case SHOW_CHOOSE_SENDER_MODAL:
+            return {
+                ...state,
+                chooseSenderModalIsOpen: true
+            };
+        default:
+            return state;
+    }
 }
