@@ -47,7 +47,7 @@ class Clients extends React.Component {
     }
 
     onBtnDeleteClick() {
-        var selectedRowKeys = this.refs.table.state.selectedRowKeys;
+        let selectedRowKeys = this.refs.table.state.selectedRowKeys;
         if (selectedRowKeys.length == 0) {
             this.props.showDialog("Не выделена ни одна строка для удаления", '', []);
         } else {
@@ -86,8 +86,8 @@ class Clients extends React.Component {
         return <Link to={"/client/" + cell}>{cell}</Link>
     };
     statusFormatter = (cell, row) => {
-        var labelType = cell ? "label-success" : "label-danger";
-        var labelText = cell ? "Активна" : 'Приостановлена';
+        let labelType = cell ? "label-success" : "label-danger";
+        let labelText = cell ? "Активна" : 'Приостановлена';
         return <div className={'label ' + labelType}>{labelText}</div>
     };
 
@@ -97,12 +97,25 @@ class Clients extends React.Component {
         bgColor: "rgb(238, 193, 213)",
     };
 
+    toEmptyStringIfNull = element => {
+        return element || '';
+    };
+
+    addPrefixIfNotEmpty = (element, prefix) => {
+        return (element.length === 0 ? '' : prefix) + element
+    };
+
     render() {
-        var clientList = this.props.page.clientList.map((item, index) => {
+        let clientList = this.props.page.clientList.map((item, index) => {
+            let country = this.toEmptyStringIfNull(item.country);
+            let city = this.addPrefixIfNotEmpty(this.toEmptyStringIfNull(item.city), ' г. ');
+            let street = ' ' + this.toEmptyStringIfNull(item.street);
+            let home = this.addPrefixIfNotEmpty(this.toEmptyStringIfNull(item.home), ' д. ');
+            let room = this.addPrefixIfNotEmpty(this.toEmptyStringIfNull(item.room), ' кв. ');
             return {
                 rowNumber: ((this.props.page.activePage - 1) * this.props.page.itemsCountPerPage) + index + 1,
                 name: item.name,
-                address: item.country + ' г. ' + item.city + item.street + ' д. ' + item.home + ' кв. ' + item.room,
+                address: country + city + street + home + room,
                 status: item.active
             }
         });
@@ -165,12 +178,13 @@ class Clients extends React.Component {
                         </div>
                             <BootstrapTable data={clientList} selectRow={this.selectRowProp} striped={true} hover={true}
                                             ref="table">
-                                <TableHeaderColumn headerAlign="center" dataField="rowNumber">№</TableHeaderColumn>
+                                <TableHeaderColumn headerAlign="center" dataField="rowNumber" width="60">№</TableHeaderColumn>
                                 <TableHeaderColumn headerAlign="center" dataField="name" isKey={true}
                                                    dataFormat={this.nameFormatter}>Название
                                     компании</TableHeaderColumn>
                                 <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
                                 <TableHeaderColumn headerAlign="center" dataAlign="center" dataField="status"
+                                                   width="150"
                                                    dataFormat={this.statusFormatter}>Статус</TableHeaderColumn>
                             </BootstrapTable>
                             <Pagination
