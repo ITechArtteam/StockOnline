@@ -17,6 +17,7 @@ export function hideChooseSenderModal() {
 }
 
 export function showChooseSenderModal() {
+    alert('show action creator');
     return {
         type: SHOW_CHOOSE_SENDER_MODAL
     }
