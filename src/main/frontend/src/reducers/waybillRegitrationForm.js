@@ -18,11 +18,13 @@ const initialState = {
 export default function waybillRegistrationForm(state = initialState, action) {
     switch (action.type) {
         case HIDE_CHOOSE_SENDER_MODAL:
+            alert(action.type);
             return {
                 ...state,
                 chooseSenderModalIsOpen: false
             };
         case SHOW_CHOOSE_SENDER_MODAL:
+            alert('show reducer');
             return {
                 ...state,
                 chooseSenderModalIsOpen: true
