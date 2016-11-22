@@ -6,6 +6,7 @@ import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.dto.StockDto;
 import com.itechart.stockOnline.model.dto.StockPage;
 import org.springframework.data.domain.Page;
+import com.itechart.stockOnline.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 @Component
 public class StockDtoConverter {
-    private final static Logger Logger = LoggerFactory.getLogger(StockDtoConverter.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(StockDtoConverter.class);
     public Stock toStock(StockDto stockDto){
 
         Stock stock = new Stock();
@@ -27,9 +28,28 @@ public class StockDtoConverter {
         address.setRoom(stockDto.getRoom());
         stock.setAddress(address);
         stock.setId(stockDto.getId());
+        stock.setName(stockDto.getName());
         stock.setCompany(new StockOwnerCompany(stockDto.getNameCompany()));
-        Logger.info("toStock: stockDto:{}, address:{}, stock:{}",stockDto,address,stock);
+        LOGGER.info("toStock: stockDto:{}, address:{}, stock:{}",stockDto,address,stock);
         return stock;
+    }
+
+    public StockDto toStockDto(Stock stock, User admin) {
+        StockDto dto = new StockDto();
+        dto.setId(stock.getId());
+        Address address = stock.getAddress();
+        dto.setCountry(address.getCountryName());
+        dto.setCity(address.getCityName());
+        dto.setStreet(address.getStreet());
+        dto.setHome(address.getHome());
+        dto.setRoom(address.getRoom());
+        dto.setName(stock.getName());
+        dto.setNameCompany(stock.getCompany().getName());
+        dto.setAdminLogin(admin.getLogin());
+        dto.setAdminEmail(admin.getEmail());
+        dto.setAdminPassword("");
+        LOGGER.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);
+        return dto;
     }
 
     public StockDto toStockDto(Stock stock) {
@@ -41,8 +61,9 @@ public class StockDtoConverter {
         dto.setStreet(address.getStreet());
         dto.setHome(address.getHome());
         dto.setRoom(address.getRoom());
+        dto.setName(stock.getName());
         dto.setNameCompany(stock.getCompany().getName());
-        Logger.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);
+        LOGGER.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);
         return dto;
     }
 
@@ -56,7 +77,7 @@ public class StockDtoConverter {
         page.forEach((stock) -> stockDtoList.add(toStockDto(stock)));
 
         result.setStockList(stockDtoList);
-        Logger.info("toStockPage: page:{}, stockPage:{}, stockDto:{}",page,result,stockDtoList);
+        LOGGER.info("toStockPage: page:{}, stockPage:{}, stockDto:{}",page,result,stockDtoList);
         return result;
     }
 

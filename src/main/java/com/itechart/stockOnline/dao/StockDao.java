@@ -4,14 +4,18 @@ import com.itechart.stockOnline.model.Stock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public interface StockDao extends JpaRepository<Stock, Long> {
-    Optional<Stock> findById(Integer id);
+public interface StockDao extends JpaRepository<Stock, Long>, JpaSpecificationExecutor {
+    Optional<Stock> findById(Long id);
     Page<Stock> findAll(Pageable pageable);
-    @Transactional
-    void deleteByIdIn(Collection<Integer> ids);
+
+    @Modifying
+    @Query("delete from Stock s where s.id in ?1")
+    int deleteByIdIn(Collection<Integer> ids);
 }

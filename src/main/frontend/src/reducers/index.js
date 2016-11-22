@@ -9,6 +9,7 @@ import {stockListReducer} from '../containers/stocks/index';
 import {checkOutputGoodsReducer} from '../containers/checkOutputGoods/index'
 import AuthReducer from './auth'
 import workerReducer from "./worker-reducer";
+import {stock} from '../containers/editStock/index';
 
 const rootReducer = combineReducers({
     auth: AuthReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     clientListReducer,
     stockListReducer,
     navigation,
-    checkOutputGoodsReducer
+    checkOutputGoodsReducer,
+    stock
 });
 
 export default rootReducer

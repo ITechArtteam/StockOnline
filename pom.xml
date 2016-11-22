@@ -203,7 +203,8 @@
                     <password>${jdbc.password}</password>
                 </configuration>
             </plugin>
-            <plugin>
+
+           <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>${frontend-plugin.version}</version>
