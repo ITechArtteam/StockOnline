@@ -14,18 +14,6 @@ var getClientListSuccess = json => {
     }
 };
 
-var getClientListFail = error => {
-    return {
-        type: event.GET_CLIENT_LIST_FAIL,
-        payload: {
-            isVisible: true,
-            text: `Произошла ошибка при получении списка клиентов.${error}`,
-            buttons: [],
-            type: 'danger'
-        }
-    }
-};
-
 var getClientList = (pageNumber, itemsCountPerPage) => {
     return (dispatch, getState) => {
         dispatch(getClientListRequest());
@@ -42,17 +30,18 @@ var getClientList = (pageNumber, itemsCountPerPage) => {
                     }
                 })
             .then(response => dispatch(getClientListSuccess(response.data)))
-            .catch(error => dispatch(getClientListFail(error)))
+            .catch(error => dispatch(showDialog(`Произошла ошибка при получении списка клиентов.${error}`, 'danger', [])))
     }
 };
 
-var showDialog = (text, buttons) => {
+var showDialog = (text, type, buttons) => {
     return {
         type: event.SHOW_DIALOG,
         payload: {
             isVisible: true,
             text: text,
-            buttons: buttons
+            buttons: buttons,
+            type: type
         }
     }
 };
@@ -69,39 +58,21 @@ var deleteClientsRequest = () => {
     }
 };
 
-var deleteClientsSuccess = () => {
-    return {
-        type: event.DELETE_CLIENT_LIST_SUCCESS,
-        payload: {
-            isVisible: true,
-            text: "Удаление успешно.",
-            buttons: []
-        }
-    }
-};
-
-var deleteClientFail = () => {
-    return {
-        type: event.DELETE_CLIENT_LIST_FAIL,
-        payload: {
-            isVisible: true,
-            text: "Произошла ошибка при удалении.",
-            buttons: [],
-            type: 'danger'
-        }
-    }
-};
-
 var deleteClients = clientNamesList => {
     return (dispatch, getState) => {
         dispatch(deleteClientsRequest());
-        axios.delete(`/stockOwners/?namesToDelete=${clientNamesList}`)
+        axios.delete('/stockOwners/',
+            {
+                params: {
+                    namesToDelete: clientNamesList.join()
+                }
+            })
             .then(response => {
-                dispatch(deleteClientsSuccess());
+                dispatch(showDialog(response.data, '', []));
                 dispatch(
                     getClientList(1, getState().clientListReducer.page.itemsCountPerPage));
             })
-            .catch(error => dispatch(deleteClientFail()))
+            .catch(error => dispatch(showDialog(`Произошла ошибка при удалении. ${error}`, 'danger', [])))
     }
 };
 

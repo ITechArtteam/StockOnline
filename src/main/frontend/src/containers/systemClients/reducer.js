@@ -26,15 +26,7 @@ export default (state = initClientListState, action) => {
             return {
                 ...state
             };
-        case event.GET_CLIENT_LIST_FAIL:
-            return {
-                ...state, alert: action.payload
-            };
         case event.DELETE_CLIENT_LIST_SUCCESS:
-            return {
-                ...state, alert: action.payload
-            };
-        case event.DELETE_CLIENT_LIST_FAIL:
             return {
                 ...state, alert: action.payload
             };

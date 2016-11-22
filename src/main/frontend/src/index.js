@@ -24,7 +24,8 @@ import Goods from "./containers/Goods";
 import ReceiptGoods from "./containers/ReceiptGoods";
 import DistributionGoods from "./containers/DistributionGoods";
 import DepartureGoods from "./containers/DepartureGoods";
-import CheckGoods from "./containers/CheckGoods";
+import CheckOutputGoods from "./containers/checkOutputGoods/CheckOutputGoods";
+import CheckInputGoods from "./containers/checkInputGoods/CheckInputGoods"
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
 import RequireRole from "./containers/RequireRole"
@@ -61,7 +62,8 @@ ReactDOM.render(
                 <Route path="/goods/receipt" requiredRole={["MANAGER"]} component={RequireRole(ReceiptGoods)}/>
                 <Route path="/goods/distribution" requiredRole={["MANAGER"]} component={RequireRole(DistributionGoods)}/>
                 <Route path="/goods/departure" requiredRole={["MANAGER"]} component={RequireRole(DepartureGoods)}/>
-                <Route path="/goods/check" requiredRole={["CONTROLLER"]} component={RequireRole(CheckGoods)}/>
+                <Route path="/goods/checkInput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckInputGoods)}/>
+                <Route path="/goods/checkOutput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckOutputGoods)}/>
                 <Route path="/acts" requiredRole={["BOSS_STOCK"]} component={RequireRole(Acts)}/>
                 <Route path="/act(/:id)" requiredRole={["CONTROLLER"]} component={RequireRole(EditAct)}/>
                 <Route path="*" component={RequireRole(NotFound)}/>
