@@ -9,6 +9,7 @@ var initOutputGoodsState = {
                 count: 10,
                 product: {
                     name: 'Яблоко',
+                    unit: 1,
                     storage: {
                         type: 'Нет требований'
                     }
@@ -18,6 +19,7 @@ var initOutputGoodsState = {
                 count: 20,
                 product: {
                     name: 'Груша',
+                    unit: 2,
                     storage: {
                         type: 'Нет требований'
                     }

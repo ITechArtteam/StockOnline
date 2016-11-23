@@ -171,8 +171,8 @@ class Clients extends React.Component {
                     </div> {/*dib.col-xs-3 end*/}
 
                     <div className="col-xs-9">
-                        <div className="before-table">
-                            <span className={this.props.frontend.isFilterMessageVisible ? "label label-success" : 'none'}>
+                        <div className={this.props.frontend.isFilterMessageVisible ? 'before-table' : 'none'}>
+                            <span className="label label-success">
                                 По вашему запросу найдено {this.props.page.totalItemsCount} записей
                             </span>
                         </div>
