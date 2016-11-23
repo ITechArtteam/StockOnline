@@ -21,3 +21,16 @@ export function showChooseSenderModal() {
         type: SHOW_CHOOSE_SENDER_MODAL
     }
 }
+
+export function changeWaybillNumber(number) {
+    return {
+        type: CHANGE_WAYBILL_NUMBER,
+        number
+    }
+}
+
+export function changeWaybillSenderName(name) {
+    return {
+        senderName: name
+    }
+}
