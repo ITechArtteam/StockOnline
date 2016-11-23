@@ -12,8 +12,11 @@ import {
     ModalFooter
 } from 'react-modal-bootstrap'
 
+import StaticControl from '../../components/StaticControl/StaticControl'
+
 import TextInput from '../../components/TextInput/component'
 import DateInput from '../../components/DateInput/component'
+import DisabledInput from '../../components/DisabledInput/component'
 
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
@@ -87,30 +90,9 @@ class WaybillRegistration extends React.Component {
                             className="form-control"
                             name="description" />
                     </div>
-                    <div className="form-group">
-                        <label className="control-label">Сумма товаров по накладной</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="goods-total-sum"
-                            disabled />
-                    </div>
-                    <div className="form-group">
-                        <label className="control-label">Количество товаров по накладной</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="goods-total-amount"
-                            disabled />
-                    </div>
-                    <div className="form-group">
-                        <label className="control-label">Диспетчер склада</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="dispatcher"
-                            disabled />
-                    </div>
+                    <DisabledInput label="Сумма товаров по накладной" />
+                    <DisabledInput label="Количество товаров по накладной" />
+                    <DisabledInput label="Диспетчер склада" />
                     <div>
                         <label className="control-label">Описание товаров</label>
                         <BootstrapTable
