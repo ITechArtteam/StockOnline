@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/stockOwners")
@@ -29,17 +30,18 @@ public class StockOwnerCompanyListController {
                                         @RequestParam String name,
                                         @RequestParam String address,
                                         @RequestParam String status) {
-        LOGGER.info("REST request. Path:/stockOwners/page/{}/limit/{}/?name={}&address={}&status={}  method: GET", pageNumber, recordCount, name, address, status);
         name = ControllerHelper.convertToUtf(name);
         address = ControllerHelper.convertToUtf(address);
+        LOGGER.info("REST request. Path:/stockOwners/page/{}/limit/{}/?name={}&address={}&status={}  method: GET", pageNumber, recordCount, name, address, status);
         return stockOwnerCompanyService.getStockOwnersPage(pageNumber, recordCount, name, address, status);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteClients(@RequestParam(value = "namesToDelete") List<String> names) {
+        names = names.stream().map(ControllerHelper::convertToUtf).collect(Collectors.toList());
         LOGGER.info("REST request. Path:/stockOwners/?namesToDelete={}  method: DELETE", names);
-        stockOwnerCompanyService.deleteByNames(names);
-        return new ResponseEntity<>(HttpStatus.OK);
+        int deletedCount = stockOwnerCompanyService.deleteByNames(names);
+        return new ResponseEntity<>("Успешно удалено " + deletedCount + " записей", HttpStatus.OK);
     }
 
     @ExceptionHandler(value = DataNotFoundError.class)

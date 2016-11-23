@@ -16,7 +16,8 @@ var initClientListState = {
     frontend: {
         statusRadioValue: '2',
         filterCompanyNameValue: '',
-        filterAddressValue: ''
+        filterAddressValue: '',
+        isFilterMessageVisible: false
     }
 };
 
@@ -26,15 +27,7 @@ export default (state = initClientListState, action) => {
             return {
                 ...state
             };
-        case event.GET_CLIENT_LIST_FAIL:
-            return {
-                ...state, alert: action.payload
-            };
         case event.DELETE_CLIENT_LIST_SUCCESS:
-            return {
-                ...state, alert: action.payload
-            };
-        case event.DELETE_CLIENT_LIST_FAIL:
             return {
                 ...state, alert: action.payload
             };
@@ -50,6 +43,9 @@ export default (state = initClientListState, action) => {
             return {...state, frontend: {...state.frontend, statusRadioValue: action.payload}};
         case event.SET_FILTER_INPUT_VALUE:
             return {...state, frontend: {...state.frontend, [action.payload.inputId]: action.payload.value}};
+
+        case event.SET_FILTER_MESSAGE_VISIBILITY:
+            return {...state, frontend: {...state.frontend, isFilterMessageVisible: action.payload}};
 
 
         default:

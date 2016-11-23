@@ -137,8 +137,9 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     @Override
     @Transactional
-    public void deleteByNames(Collection<String> names) {
+    public int deleteByNames(Collection<String> names) {
         int deletedCount = stockOwnerCompanyDao.deleteByNameIn(names);
         logger.info("Stock owner company service: delete by names list - {}. Deleted {} records", names, deletedCount);
+        return deletedCount;
     }
 }
