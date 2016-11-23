@@ -8,6 +8,7 @@ import StaticControl from '../../components/StaticControl/StaticControl'
 
 import TextInput from '../../components/TextInput/component'
 import DateInput from '../../components/DateInput/component'
+import TextAreaInput from '../../components/TextAreaInput/component'
 import DisabledInput from '../../components/DisabledInput/component'
 import ChooseSenderModalForm from './ChooseSenderModalForm/component'
 
@@ -56,12 +57,7 @@ class WaybillRegistration extends React.Component {
                         </BootstrapTable>
                     </div>
                     <TextInput name="driver" label="Водитель" onChange={() => {}} />
-                    <div className="form-group">
-                        <label className="control-label">Дополнительное описание товарной партии</label>
-                        <textarea
-                            className="form-control"
-                            name="description" />
-                    </div>
+                    <TextAreaInput label="Дополнительное описание товарной партии" value={this.props.description} onChange={() => {}} />
                     <DisabledInput label="Сумма товаров по накладной" />
                     <DisabledInput label="Количество товаров по накладной" />
                     <DisabledInput label="Диспетчер склада" />
