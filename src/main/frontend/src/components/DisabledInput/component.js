@@ -7,7 +7,7 @@ const DisabledInput = (props) => {
             <input
                 type="text"
                 className="form-control"
-                value={props.value || ''}
+                value={props.value}
                 disabled />
         </div>
     )
