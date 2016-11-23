@@ -3,20 +3,13 @@ import { connect } from 'react-redux'
 
 import { Button } from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
-import {
-    Modal,
-    ModalHeader,
-    ModalTitle,
-    ModalClose,
-    ModalBody,
-    ModalFooter
-} from 'react-modal-bootstrap'
 
 import StaticControl from '../../components/StaticControl/StaticControl'
 
 import TextInput from '../../components/TextInput/component'
 import DateInput from '../../components/DateInput/component'
 import DisabledInput from '../../components/DisabledInput/component'
+import ChooseSenderModalForm from './ChooseSenderModalForm/component'
 
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
@@ -32,36 +25,15 @@ class WaybillRegistration extends React.Component {
         this.props.showChooseSenderModal();
     };
 
-    hideChooseSenderModal = () => {
-        this.props.hideChooseSenderModal();
-    };
-
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
                 <h3 className="text-center">Регистрация накладной</h3>
                 <form>
-                    <TextInput name="waybill-number" label="Номер накладной" onChange={() => {}} />
+                    <TextInput name="waybill-number" label="Номер накладной" value={this.props.waybillNumber} onChange={this.props.changeWaybillNumber} />
                     <DateInput format="DD/MM/YYYY" label="Дата регистрации накладной" />
-                    <TextInput name="sender" label="Отправитель" onChange={() => {}} />
-                    <Modal isOpen={this.props.chooseSenderModalIsOpen} onRequestHide={this.hideChooseSenderModal}>
-                        <ModalHeader>
-                            <ModalClose onClick={this.hideChooseSenderModal}/>
-                            <ModalTitle>Modal title</ModalTitle>
-                        </ModalHeader>
-                        <ModalBody>
-                            <Select options={[
-                                {
-                                    value: 'one',
-                                    label: 'labelone'
-                                }
-                            ]} value="one" />
-                        </ModalBody>
-                        <ModalFooter>
-                            <input type="button" className='btn btn-default' onClick={this.hideChooseSenderModal} value="Отмена" />
-                            <input type="button" className='btn btn-primary' value="Выбрать" />
-                        </ModalFooter>
-                    </Modal>
+                    <TextInput name="sender" label="Отправитель" onChange={() => {() => {}}} />
+                    <ChooseSenderModalForm isOpen={this.props.chooseSenderModalIsOpen} onHide={this.props.hideChooseSenderModal} />
                     <TextInput name="carrier" label="Перевозчик" onChange={() => {}} />
                     <div className="form-group">
                         <label className="control-label">Номера транспортных средств</label>
@@ -127,6 +99,7 @@ class WaybillRegistration extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        waybillNumber: state.waybillRegistrationForm.number,
         chooseSenderModalIsOpen: state.waybillRegistrationForm.chooseSenderModalIsOpen
     }
 }
