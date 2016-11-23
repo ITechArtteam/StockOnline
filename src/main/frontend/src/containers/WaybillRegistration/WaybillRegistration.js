@@ -1,16 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import { Button } from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
-import { connect } from 'react-redux'
-import * as Actions from '../actions/waybillRegistrationFormActions'
-import Select from 'react-select';
-
-import 'react-select/dist/react-select.css';
-import Calendar from 'react-input-calendar'
-require('react-input-calendar/style/index.css');
-
-import './WaybillRegistration.css'
-
 import {
     Modal,
     ModalHeader,
@@ -20,41 +12,38 @@ import {
     ModalFooter
 } from 'react-modal-bootstrap'
 
-class WaybillRegistration extends React.Component {
-    hideChooseSender() {
-    }
+import TextInput from '../../components/TextInput/component'
+import DateInput from '../../components/DateInput/component'
 
-    showChooseSender() {
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
+import * as Actions from '../../actions/waybillRegistrationFormActions'
+
+import './style.css'
+
+
+class WaybillRegistration extends React.Component {
+
+    showChooseSenderModal = () => {
         this.props.showChooseSenderModal();
-    }
+    };
+
+    hideChooseSenderModal = () => {
+        this.props.hideChooseSenderModal();
+    };
 
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
                 <h3 className="text-center">Регистрация накладной</h3>
                 <form>
-                    <div className="form-group">
-                        <label className="control-label">Номер накладной</label>
-                        <input
-                            type="text"
-                            name="waybill-number"
-                            className="form-control" />
-                    </div>
-                    <div className="form-group">
-                        <label className="control-label">Дата регистрации накладной</label>
-                        <Calendar format='DD/MM/YYYY' />
-                    </div>
-                    <div className="form-group" onclick={this.showChooseSender}>
-                        <label className="control-label">Отправитель</label>
-                        <input
-                            type="text"
-                            name="sender"
-                            className="form-control"
-                            onBlur={this.showChooseSender} />
-                    </div>
-                    <Modal isOpen={this.props.chooseSenderModalIsOpen} onRequestHide={this.hideChooseSender}>
+                    <TextInput name="waybill-number" label="Номер накладной" onChange={() => {}} />
+                    <DateInput format="DD/MM/YYYY" label="Дата регистрации накладной" />
+                    <TextInput name="sender" label="Отправитель" onChange={() => {}} />
+                    <Modal isOpen={this.props.chooseSenderModalIsOpen} onRequestHide={this.hideChooseSenderModal}>
                         <ModalHeader>
-                            <ModalClose onClick={this.hideChooseSender}/>
+                            <ModalClose onClick={this.hideChooseSenderModal}/>
                             <ModalTitle>Modal title</ModalTitle>
                         </ModalHeader>
                         <ModalBody>
@@ -66,21 +55,11 @@ class WaybillRegistration extends React.Component {
                             ]} value="one" />
                         </ModalBody>
                         <ModalFooter>
-                            <button className='btn btn-default' onClick={this.hideChooseSenderModal}>
-                                Close
-                            </button>
-                            <button className='btn btn-primary'>
-                                Save changes
-                            </button>
+                            <input type="button" className='btn btn-default' onClick={this.hideChooseSenderModal} value="Отмена" />
+                            <input type="button" className='btn btn-primary' value="Выбрать" />
                         </ModalFooter>
                     </Modal>
-                    <div className="form-group">
-                        <label className="control-label">Перевозчик</label>
-                        <input
-                            type="text"
-                            name="carrier"
-                            className="form-control" />
-                    </div>
+                    <TextInput name="carrier" label="Перевозчик" onChange={() => {}} />
                     <div className="form-group">
                         <label className="control-label">Номера транспортных средств</label>
                         <BootstrapTable
@@ -101,13 +80,7 @@ class WaybillRegistration extends React.Component {
                             <TableHeaderColumn isKey dataField="number">Номер</TableHeaderColumn>
                         </BootstrapTable>
                     </div>
-                    <div className="form-group">
-                        <label className="control-label">Водитель</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="driver" />
-                    </div>
+                    <TextInput name="driver" label="Водитель" onChange={() => {}} />
                     <div className="form-group">
                         <label className="control-label">Дополнительное описание товарной партии</label>
                         <textarea
@@ -141,22 +114,7 @@ class WaybillRegistration extends React.Component {
                     <div>
                         <label className="control-label">Описание товаров</label>
                         <BootstrapTable
-                            data={
-                                [
-                                    {
-                                        name: 'TESTNAME',
-                                        weight: 'TESTWEIGHT',
-                                        price: 'TESTPRICE',
-                                        storeWay: 'TESTSTOREWAY'
-                                    },
-                                    {
-                                        name: 'TESTNAME11',
-                                        weight: 'TESTWEIGHT1',
-                                        price: 'TESTPRICE1',
-                                        storeWay: 'TESTSTOREWAY1'
-                                    }
-                                ]
-                            }
+                            data={[]}
                             selectRow={{
                                 mode: "checkbox",
                                 clickToSelect: true,
