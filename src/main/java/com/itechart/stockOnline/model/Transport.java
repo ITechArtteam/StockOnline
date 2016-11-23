@@ -16,14 +16,13 @@ public class Transport {
     private Integer id;
 
     @Column(name = "number")
-//    @Size(max=50, message="Number of letters in number < 50")
     private String number;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private TransportType type;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "driver_id")
     private Driver driver;
 

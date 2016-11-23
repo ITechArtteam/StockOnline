@@ -3,8 +3,13 @@
 }
 
 .before-table {
-    margin: 0 10px;
+    margin: 0 10px 5px;
 }
+
 .react-bs-table table td, .react-bs-table table th {
     white-space: normal;
+}
+
+.react-bs-table {
+    margin: 0 10px;
 }

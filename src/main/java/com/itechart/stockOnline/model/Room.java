@@ -14,7 +14,7 @@ public class Room {
     @Column(name = "cost")
     private Double cost;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
@@ -22,7 +22,7 @@ public class Room {
     @JoinColumn(name = "storage_requirement_id")
     private StorageRequirement storage;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private Set<Shelf> shelfs;
 
     public Room() {

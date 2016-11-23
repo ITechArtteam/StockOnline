@@ -1,12 +1,11 @@
 package com.itechart.stockOnline.model;
 
 
-import com.itechart.stockOnline.validation.*;
-import com.itechart.stockOnline.validator.Worker;
+
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.Set;
+import java.sql.Date;
 
 @Entity
 @Table(name = "users")
@@ -49,15 +48,15 @@ public class User {
     private String email;
 
 
-    @ManyToOne
-    @JoinColumn(name = "company", nullable = true)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "company")
     private StockOwnerCompany stockOwnerCompany;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;

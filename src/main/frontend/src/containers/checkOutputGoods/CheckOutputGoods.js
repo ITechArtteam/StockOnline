@@ -39,7 +39,7 @@ class CheckOutputGoods extends React.Component {
                     </div>
                     <div className="col-xs-4">
                         <br/>
-                        <div className="btn-group btn-group-justified">
+                        <div className="btn-group btn-group-justified before-table">
                             <div className="btn btn-default" onClick={this.onFindClick}>Поиск</div>
                             <div className="btn btn-success" onClick={this.onAcceptClick}>Одобрить</div>
                         </div>

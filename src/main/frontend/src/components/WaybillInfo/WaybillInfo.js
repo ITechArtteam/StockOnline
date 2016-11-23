@@ -7,7 +7,7 @@ class WaybillInfo extends React.Component {
             return {
                 name: item.product.name,
                 storage: item.product.storage.type,
-                count: item.count
+                count: item.count + ' ' + item.product.unit
             }
         });
 
@@ -50,6 +50,7 @@ WaybillInfo.PropTypes = {
             count: React.PropTypes.number.isRequired,
             product: React.PropTypes.objectOf(React.PropTypes.shape({
                 name: React.PropTypes.string.isRequired,
+                unit: React.PropTypes.number.isRequired,
                 storage: React.PropTypes.objectOf(React.PropTypes.shape({
                     type: React.PropTypes.string.isRequired
                 })).isRequired

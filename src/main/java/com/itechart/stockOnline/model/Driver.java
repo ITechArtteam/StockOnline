@@ -15,11 +15,9 @@ public class Driver {
     private Integer id;
 
     @Column(name = "passport_number")
-//    @Size(max=30, message="Number of letters in passport number < 30")
     private String passportNumber;
 
     @Column(name = "passport_issued_by")
-//    @Size(max=30, message="Number of letters in passport issued by < 30")
     private String passportIssuedBy;
 
     @Column(name = "passport_issued_date")
@@ -27,26 +25,23 @@ public class Driver {
     private Date passportIssuedDate;
 
     @Column(name = "first_name")
-//    @Size(max=30, message="Number of letters in first name < 30")
     private String firstName;
 
     @Column(name = "last_name")
-//    @Size(max=30, message="Number of letters in last name < 30")
     private String lastName;
 
     @Column(name = "patronymic")
-//    @Size(max=30, message="Number of letters in patronymic < 30")
     private String patronymic;
 
     @Column(name = "birth_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "transfer_company_id")
     private TransferCompany company;
 
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.PERSIST)
     private Set<Transport> transports;
 
     public Driver() {
