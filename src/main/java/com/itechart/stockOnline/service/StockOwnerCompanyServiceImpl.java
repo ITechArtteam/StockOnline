@@ -60,6 +60,8 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
     @Override
     @Transactional
     public StockOwnerCompany saveStockOwnerCompany(StockOwnerCompany stockOwnerCompany) {
+        stockOwnerCompany.setId(null);
+        stockOwnerCompany.setActive(true);
         logger.debug("saveStockOwnerCompany({})", stockOwnerCompany);
         validationFields(stockOwnerCompany);
         return stockOwnerCompanyDao.save(stockOwnerCompany);
