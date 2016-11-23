@@ -1,37 +1,36 @@
 import * as event from './constants'
 import * as axios from "axios";
 
-var getClientListRequest = () => {
+
+let setFilterMessageVisibility = visibility => {
+    return {
+        type: event.SET_FILTER_MESSAGE_VISIBILITY,
+        payload: visibility
+    }
+};
+
+let getClientListRequest = () => {
     return {
         type: event.GET_CLIENT_LIST_REQUEST
     }
 };
 
-var getClientListSuccess = json => {
+let getClientListSuccess = json => {
     return {
         type: event.GET_CLIENT_LIST_SUCCESS,
         payload: json
     }
 };
 
-var getClientListFail = error => {
-    return {
-        type: event.GET_CLIENT_LIST_FAIL,
-        payload: {
-            isVisible: true,
-            text: `Произошла ошибка при получении списка клиентов.${error}`,
-            buttons: [],
-            type: 'danger'
-        }
-    }
-};
-
-var getClientList = (pageNumber, itemsCountPerPage) => {
+let getClientList = (pageNumber, itemsCountPerPage) => {
     return (dispatch, getState) => {
         dispatch(getClientListRequest());
-        var status = getState().clientListReducer.frontend.statusRadioValue;
-        var name = getState().clientListReducer.frontend.filterCompanyNameValue;
-        var address = getState().clientListReducer.frontend.filterAddressValue;
+        let status = getState().clientListReducer.frontend.statusRadioValue;
+        let name = getState().clientListReducer.frontend.filterCompanyNameValue;
+        let address = getState().clientListReducer.frontend.filterAddressValue;
+
+        let visibility = (status !== '2' || name !== '' || address !== '');
+        dispatch(setFilterMessageVisibility(visibility));
         return axios
             .get(`/stockOwners/page/${pageNumber}/limit/${itemsCountPerPage}`,
                 {
@@ -42,77 +41,60 @@ var getClientList = (pageNumber, itemsCountPerPage) => {
                     }
                 })
             .then(response => dispatch(getClientListSuccess(response.data)))
-            .catch(error => dispatch(getClientListFail(error)))
+            .catch(error => dispatch(showDialog(`Произошла ошибка при получении списка клиентов.${error}`, 'danger', [])))
     }
 };
 
-var showDialog = (text, buttons) => {
+let showDialog = (text, type, buttons) => {
     return {
         type: event.SHOW_DIALOG,
         payload: {
             isVisible: true,
             text: text,
-            buttons: buttons
+            buttons: buttons,
+            type: type
         }
     }
 };
 
-var closeDialog = () => {
+let closeDialog = () => {
     return {
         type: event.CLOSE_DIALOG
     }
 };
 
-var deleteClientsRequest = () => {
+let deleteClientsRequest = () => {
     return {
         type: event.DELETE_CLIENT_LIST_REQUEST
     }
 };
 
-var deleteClientsSuccess = () => {
-    return {
-        type: event.DELETE_CLIENT_LIST_SUCCESS,
-        payload: {
-            isVisible: true,
-            text: "Удаление успешно.",
-            buttons: []
-        }
-    }
-};
-
-var deleteClientFail = () => {
-    return {
-        type: event.DELETE_CLIENT_LIST_FAIL,
-        payload: {
-            isVisible: true,
-            text: "Произошла ошибка при удалении.",
-            buttons: [],
-            type: 'danger'
-        }
-    }
-};
-
-var deleteClients = clientNamesList => {
+let deleteClients = clientNamesList => {
     return (dispatch, getState) => {
         dispatch(deleteClientsRequest());
-        axios.delete(`/stockOwners/?namesToDelete=${clientNamesList}`)
+        axios.delete('/stockOwners/',
+            {
+                params: {
+                    namesToDelete: clientNamesList.join()
+                }
+            })
             .then(response => {
-                dispatch(deleteClientsSuccess());
+                dispatch(showDialog(response.data, '', []));
                 dispatch(
                     getClientList(1, getState().clientListReducer.page.itemsCountPerPage));
             })
-            .catch(error => dispatch(deleteClientFail()))
+            .catch(error => dispatch(showDialog(`Произошла ошибка при удалении. ${error}`, 'danger', [])))
     }
 };
 
-var setStatusRadioValue = value => {
+let setStatusRadioValue = value => {
     return {
         type: event.FORM_CLIENTS_SET_STATUS_RADIO,
         payload: value
     }
 };
 
-var setFilterInputValue = (inputId, value) => {
+let setFilterInputValue = (inputId, value) => {
     return {
         type: event.SET_FILTER_INPUT_VALUE,
         payload: {

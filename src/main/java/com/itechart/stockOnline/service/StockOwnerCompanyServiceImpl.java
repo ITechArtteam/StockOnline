@@ -38,15 +38,12 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     private final UserService userService;
 
-    private final AddressService addressService;
-
     @Autowired
-    public StockOwnerCompanyServiceImpl(StockOwnerCompanyDao stockOwnerCompanyDao, UserService userService, OwnerCompanyDtoConverter ownerCompanyDtoConverter, StockOwnerCompanyValidator companyValidator, AddressService addressService) {
+    public StockOwnerCompanyServiceImpl(StockOwnerCompanyDao stockOwnerCompanyDao, UserService userService, OwnerCompanyDtoConverter ownerCompanyDtoConverter, StockOwnerCompanyValidator companyValidator) {
         this.stockOwnerCompanyDao = stockOwnerCompanyDao;
         this.userService = userService;
         this.ownerCompanyDtoConverter = ownerCompanyDtoConverter;
         this.companyValidator = companyValidator;
-        this.addressService = addressService;
     }
 
 
@@ -64,11 +61,10 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
     @Transactional
     public StockOwnerCompany saveStockOwnerCompany(StockOwnerCompany stockOwnerCompany) {
         stockOwnerCompany.setId(null);
+        stockOwnerCompany.setActive(true);
         logger.debug("saveStockOwnerCompany({})", stockOwnerCompany);
         validationFields(stockOwnerCompany);
-        stockOwnerCompany.setAddress(addressService.save(stockOwnerCompany.getAddress()));
-        stockOwnerCompany = stockOwnerCompanyDao.save(stockOwnerCompany);
-        return stockOwnerCompany;
+        return stockOwnerCompanyDao.save(stockOwnerCompany);
     }
 
     private void validationFields(StockOwnerCompany stockOwnerCompany) {
@@ -96,8 +92,8 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     private void updateData(StockOwnerCompany stockOwnerCompany, StockOwnerCompany companyInDB) {
         companyInDB.setName(stockOwnerCompany.getName());
-        stockOwnerCompany.getAddress().setId(companyInDB.getAddress().getId());
-        companyInDB.setAddress(addressService.update(stockOwnerCompany.getAddress()));
+        companyInDB.setAddress(stockOwnerCompany.getAddress());
+        companyInDB.setActive(stockOwnerCompany.getActive());
     }
 
     @Override
@@ -137,8 +133,9 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     @Override
     @Transactional
-    public void deleteByNames(Collection<String> names) {
+    public int deleteByNames(Collection<String> names) {
         int deletedCount = stockOwnerCompanyDao.deleteByNameIn(names);
         logger.info("Stock owner company service: delete by names list - {}. Deleted {} records", names, deletedCount);
+        return deletedCount;
     }
 }

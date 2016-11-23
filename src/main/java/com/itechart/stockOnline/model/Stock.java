@@ -11,24 +11,30 @@ public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
 
-    @ManyToOne
+    @Column(name = "name")
+    private String name;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company_id")
     private StockOwnerCompany company;
 
-    @OneToMany(mappedBy = "stock")
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     private Set<Room> rooms;
 
     public Stock() {
     }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public Address getAddress() { return address; }
     public void setAddress(Address address) { this.address = address; }
@@ -43,8 +49,9 @@ public class Stock {
     public String toString() {
         return "Stock{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", address=" + address +
-                ", stockOwnerCompany=" + company +
+                ", company=" + company +
                 ", rooms=" + rooms +
                 '}';
     }

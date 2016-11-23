@@ -35,7 +35,9 @@ class AlertPopup extends React.Component {
             <div className={this.getStyles()}>
                 <span onClick={this.props.close} className="close">×</span>
                 <p className="message">{this.props.message}</p>
-                {buttons}
+                <div className="btn-group">
+                    {buttons}
+                </div>
             </div>
         )
     }

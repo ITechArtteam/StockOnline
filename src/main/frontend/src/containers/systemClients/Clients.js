@@ -35,7 +35,7 @@ class Clients extends React.Component {
         this.props.getClientList(1, parseInt(this.refs.pageLimitSelect.value));
     }
 
-    onInputValueChane = e => {
+    onInputValueChange = e => {
         const nameField = e.target.id;
         const value = e.target.value;
 
@@ -47,11 +47,11 @@ class Clients extends React.Component {
     }
 
     onBtnDeleteClick() {
-        var selectedRowKeys = this.refs.table.state.selectedRowKeys;
+        let selectedRowKeys = this.refs.table.state.selectedRowKeys;
         if (selectedRowKeys.length == 0) {
-            this.props.showDialog("Не выделена ни одна строка для удаления", []);
+            this.props.showDialog("Не выделена ни одна строка для удаления", '', []);
         } else {
-            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", [
+            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", '', [
                 {
                     btnStyle: "btn btn-success",
                     text: "Ок",
@@ -86,8 +86,8 @@ class Clients extends React.Component {
         return <Link to={"/client/" + cell}>{cell}</Link>
     };
     statusFormatter = (cell, row) => {
-        var labelType = cell ? "label-success" : "label-danger";
-        var labelText = cell ? "Активна" : 'Приостановлена';
+        let labelType = cell ? "label-success" : "label-danger";
+        let labelText = cell ? "Активна" : 'Приостановлена';
         return <div className={'label ' + labelType}>{labelText}</div>
     };
 
@@ -97,71 +97,94 @@ class Clients extends React.Component {
         bgColor: "rgb(238, 193, 213)",
     };
 
+    toEmptyStringIfNull = element => {
+        return element || '';
+    };
+
+    addPrefixIfNotEmpty = (element, prefix) => {
+        return (element.length === 0 ? '' : prefix) + element
+    };
+
     render() {
-        var clientList = this.props.page.clientList.map((item, index) => {
+        let clientList = this.props.page.clientList.map((item, index) => {
+            let country = this.toEmptyStringIfNull(item.country);
+            let city = this.addPrefixIfNotEmpty(this.toEmptyStringIfNull(item.city), ' г. ');
+            let street = ' ' + this.toEmptyStringIfNull(item.street);
+            let home = this.addPrefixIfNotEmpty(this.toEmptyStringIfNull(item.home), ' д. ');
+            let room = this.addPrefixIfNotEmpty(this.toEmptyStringIfNull(item.room), ' кв. ');
             return {
                 rowNumber: ((this.props.page.activePage - 1) * this.props.page.itemsCountPerPage) + index + 1,
                 name: item.name,
-                address: item.country + ' г. ' + item.city + item.street + ' д. ' + item.home + ' кв. ' + item.room,
+                address: country + city + street + home + room,
                 status: item.active
             }
         });
 
         return (
-            <div className="container">
                 <div className="row">
                     <div className="col-xs-3">
-                        <div className="well well-sm">
-                            <button className="btn btn-default btn-block" onClick={this.onBtnSaveClick}>Создать</button>
-                            <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
+                        <div className="panel panel-default">
+                            <div className="panel-heading">Количество записей на странице</div>
+                            <div className="panel-body">
+                                <select className="form-control"
+                                        ref={'pageLimitSelect'}
+                                        id="pageLimitSelect"
+                                        onChange={this.onPageLimitSelectChange}
+                                        defaultValue={this.props.page.itemsCountPerPage}>
+                                    <option>5</option>
+                                    <option>10</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className="well well-sm">
-                            <SimpleInput id="filterCompanyNameValue"
-                                         label="Название компании"
-                                         value={this.props.frontend.filterCompanyNameValue}
-                                         onChange={this.onInputValueChane} />
-                            <SimpleInput id="filterAddressValue"
-                                         label="Адрес"
-                                         value={this.props.frontend.filterAddressValue}
-                                         onChange={this.onInputValueChane} />
-                            <label>Статус</label>
-                            <RadioGroup name="companyStatus"
-                                        selectedValue={this.props.frontend.statusRadioValue}
-                                        onChange={newVal => this.props.setStatusRadioValue(newVal)}>
-                                <Radio value="2" />Любой <br/>
-                                <Radio value="1" />Активна <br/>
-                                <Radio value="0" />Приостановлена <br/>
-                            </RadioGroup>
-                            <button className="btn btn-default btn-block" onClick={this.onBtnSearchClick}>Поиск</button>
-                            <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
+
+                        <div className="panel panel-default">
+                            <div className="panel-heading">Действия</div>
+                            <div className="panel-body">
+                                <button className="btn btn-default btn-block" onClick={this.onBtnSaveClick}>Создать</button>
+                                <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
+                            </div>
                         </div>
-                        <div className="well well-sm">
-                            <div className="form-inline">
-                                <div className="form-group">
-                                    <label htmlFor="pageLimitSelect">Записей на странице:</label>
-                                    <select className="form-control"
-                                            ref={'pageLimitSelect'}
-                                            id="pageLimitSelect"
-                                            onChange={this.onPageLimitSelectChange}
-                                            defaultValue={this.props.page.itemsCountPerPage}
-                                    >
-                                        <option>5</option>
-                                        <option>10</option>
-                                    </select>
-                                </div>
+
+                        <div className="panel panel-default">
+                            <div className="panel-heading">Поиск компании</div>
+                            <div className="panel-body">
+                                <SimpleInput id="filterCompanyNameValue"
+                                             label="Название компании"
+                                             value={this.props.frontend.filterCompanyNameValue}
+                                             onChange={this.onInputValueChange} />
+                                <SimpleInput id="filterAddressValue"
+                                             label="Адрес"
+                                             value={this.props.frontend.filterAddressValue}
+                                             onChange={this.onInputValueChange} />
+                                <label>Статус</label>
+                                <RadioGroup name="companyStatus"
+                                            selectedValue={this.props.frontend.statusRadioValue}
+                                            onChange={newVal => this.props.setStatusRadioValue(newVal)}>
+                                    <Radio value="2" />Любой <br/>
+                                    <Radio value="1" />Активна <br/>
+                                    <Radio value="0" />Приостановлена <br/>
+                                </RadioGroup>
+                                <button className="btn btn-default btn-block" onClick={this.onBtnSearchClick}>Поиск</button>
+                                <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
                             </div>
                         </div>
                     </div> {/*dib.col-xs-3 end*/}
 
                     <div className="col-xs-9">
+                        <div className={this.props.frontend.isFilterMessageVisible ? 'before-table' : 'none'}>
+                            <span className="label label-success">
+                                По вашему запросу найдено {this.props.page.totalItemsCount} записей
+                            </span>
+                        </div>
                             <BootstrapTable data={clientList} selectRow={this.selectRowProp} striped={true} hover={true}
                                             ref="table">
-                                <TableHeaderColumn headerAlign="center" dataField="rowNumber">№</TableHeaderColumn>
+                                <TableHeaderColumn headerAlign="center" dataField="rowNumber" width="60">№</TableHeaderColumn>
                                 <TableHeaderColumn headerAlign="center" dataField="name" isKey={true}
                                                    dataFormat={this.nameFormatter}>Название
                                     компании</TableHeaderColumn>
                                 <TableHeaderColumn headerAlign="center" dataField="address">Адрес</TableHeaderColumn>
                                 <TableHeaderColumn headerAlign="center" dataAlign="center" dataField="status"
+                                                   width="150"
                                                    dataFormat={this.statusFormatter}>Статус</TableHeaderColumn>
                             </BootstrapTable>
                             <Pagination
@@ -178,8 +201,7 @@ class Clients extends React.Component {
                                 buttons={this.props.alert.buttons}
                                 type={this.props.alert.type}
                     />
-                </div> {/*div.row end*/}
-            </div> /*div.container end*/
+                </div> /*div.row end*/
         )
     }
 }
@@ -198,8 +220,8 @@ const mapDispatchToProps = (dispatch) => {
         getClientList: (pageNumber, itemsCountPerPage) => {
             dispatch(clientListActionCreator.getClientList(pageNumber, itemsCountPerPage))
         },
-        showDialog: (text, buttons) => {
-            dispatch(clientListActionCreator.showDialog(text, buttons))
+        showDialog: (text, type, buttons) => {
+            dispatch(clientListActionCreator.showDialog(text, type, buttons))
         },
         closeDialog: () => {
             dispatch(clientListActionCreator.closeDialog())
