@@ -22,7 +22,7 @@ public class Transport {
     @Enumerated(EnumType.STRING)
     private TransportType type;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "driver_id")
     private Driver driver;
 

@@ -14,7 +14,6 @@ public class TransferCompany {
     private Integer id;
 
     @Column(name = "name")
-//    @Size(max=50, message="Number of letters in name < 50")
     private String name;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)

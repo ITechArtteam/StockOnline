@@ -17,7 +17,7 @@ public class Shelf {
     @Column(name = "is_free")
     private Boolean isFree;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "room_id")
     private Room room;
 
