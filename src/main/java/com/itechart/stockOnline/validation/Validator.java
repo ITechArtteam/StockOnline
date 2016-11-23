@@ -34,7 +34,7 @@ public class Validator {
         NotNull[] annotationsByType = field.getAnnotationsByType(NotNull.class);
         Arrays.stream(annotationsByType).forEach((annotation) -> {
             try {
-                if (field.isAnnotationPresent(NotNull.class) && field.get(object) == null && annotation.group().equals(clazz)) {
+                if (field.get(object) == null && annotation.group().equals(clazz)) {
                     String name = annotation.name();
                     if (name.equals("")) {
                         name = field.getName();
@@ -72,7 +72,7 @@ public class Validator {
         MinSize[] annotationsByType = field.getAnnotationsByType(MinSize.class);
         Arrays.stream(annotationsByType).forEach((annotation) -> {
             try {
-                if (field.isAnnotationPresent(MinSize.class) && field.get(object) != null && field.getType().isAssignableFrom(String.class) && annotation.group().equals(clazz)) {
+                if (field.get(object) != null && field.getType().isAssignableFrom(String.class) && annotation.group().equals(clazz)) {
                     String string = (String) field.get(object);
                     if (string.length() < annotation.value()) {
                         String name = annotation.name();
@@ -92,7 +92,7 @@ public class Validator {
         Email[] annotationsByType = field.getAnnotationsByType(Email.class);
         Arrays.stream(annotationsByType).forEach((annotation) -> {
             try {
-                if (field.isAnnotationPresent(Email.class) && field.get(object) != null && field.getType().isAssignableFrom(String.class) && annotation.group().equals(clazz)) {
+                if (field.get(object) != null && field.getType().isAssignableFrom(String.class) && annotation.group().equals(clazz)) {
                     String string = (String) field.get(object);
                     if (!java.util.regex.Pattern.compile("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$").matcher((String) field.get(object)).matches()) {
                         String name = annotation.name();
@@ -112,7 +112,7 @@ public class Validator {
         Pattern[] annotationsByType = field.getAnnotationsByType(Pattern.class);
         Arrays.stream(annotationsByType).forEach((annotation) -> {
             try {
-                if (field.isAnnotationPresent(Pattern.class) && field.get(object) != null && field.getType().isAssignableFrom(String.class) && annotation.group().equals(clazz)) {
+                if (field.get(object) != null && field.getType().isAssignableFrom(String.class) && annotation.group().equals(clazz)) {
                     String string = (String) field.get(object);
                     if (!java.util.regex.Pattern.compile(annotation.value()).matcher((String) field.get(object)).matches()) {
                         String name = annotation.name();
@@ -132,9 +132,9 @@ public class Validator {
         Validate[] annotationsByType = field.getAnnotationsByType(Validate.class);
         Arrays.stream(annotationsByType).forEach((annotation) -> {
             try {
-                if (field.isAnnotationPresent(Validate.class) && field.get(object) != null && annotation.group().equals(clazz)) {
+                if (field.get(object) != null && annotation.group().equals(clazz)) {
                     BindingResult checkBindingResult = check(object, clazz);
-                    bindingResult.concat(checkBindingResult);
+                    bindingResult.putAll(checkBindingResult);
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -186,7 +186,24 @@ public class Validator {
             }
         }
 
-        public BindingResult concat(BindingResult bindingResult){
+        public Map<String, Throwable> getMap() {
+            return map;
+        }
+
+        public Map<String, String> get(){
+            Map<String, String> map = new HashMap<>();
+            for (String field:this.map.keySet()){
+                map.put(field, this.map.get(field).getMessage());
+            }
+            return map;
+        }
+
+        public void setMap(Map<String, Throwable> map) {
+            this.map = map;
+        }
+
+        public BindingResult putAll(BindingResult bindingResult){
+            this.map.putAll(bindingResult.getMap());
             return this;
         }
 

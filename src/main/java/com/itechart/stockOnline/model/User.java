@@ -15,52 +15,51 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Pattern(value = "^[a-z_а-я]*$", group = User.class, message = "Логин должен содержать только буквы и/или символы подчеркивания.")
-    @NotNull(group = User.class, message = "Логин должен быть заполнен обязательно.")
-    @MinSize(value = 3 , group = User.class, message = "Длина логина должна быть от 3 символов")
-    @NotNull(group = Worker.class, message = "Логин должен быть заполнен обязательно.")
-    @Pattern(value = "^[a-z_а-я]*$", group = Worker.class, message = "Логин должен содержать только буквы и/или символы подчеркивания.")
-    @MinSize(value = 3 , group = Worker.class, message = "Длина логина должна быть от 3 символов")
-    @MaxSize(value = 20 , group = Worker.class, message = "Длина логина не должна превышать 20 символов.")
+    @Pattern(value = "^[a-z_а-я]*$", group = User.class, message = "Логин должен содержать только буквы и/или символы подчеркивания.", name="login")
+    @NotNull(group = User.class, message = "Логин должен быть заполнен обязательно.", name="login")
+    @MinSize(value = 3 , group = User.class, message = "Длина логина должна быть от 3 символов", name="login")
+    @NotNull(group = Worker.class, message = "Логин должен быть заполнен обязательно.", name="login")
+    @Pattern(value = "^[a-z_а-я]*$", group = Worker.class,  name="login", message = "Логин должен содержать только буквы и/или символы подчеркивания.")
+    @MinSize(value = 3 , group = Worker.class,name="login", message = "Длина логина должна быть от 3 символов")
+    @MaxSize(value = 20 , group = Worker.class,name="login", message = "Длина логина не должна превышать 20 символов.")
     @Column(length = 20, nullable = false)
     private String login;
-    @NotNull(group = User.class, message = "Пароль должен быть заполнен обязательно.")
-    @MinSize(value = 3 , group = User.class, message = "Длина пароля должна быть от 3 символов")
-    @NotNull(group = Worker.class, message = "Пароль должен быть заполнен обязательно.")
-    @MaxSize(value = 20 , group = Worker.class, message = "Длина пароля должна быть от 3 до 20 символов")
-    @MinSize(value = 3 , group = Worker.class, message = "Длина пароля должна быть от 3 до 20 символов")
+    @NotNull(group = User.class, name="password", message = "Пароль должен быть заполнен обязательно.")
+    @MinSize(value = 3 , group = User.class, name="password", message = "Длина пароля должна быть от 3 символов")
+    @NotNull(group = Worker.class, name="password", message = "Пароль должен быть заполнен обязательно.")
+    @MaxSize(value = 20 , group = Worker.class, name="password", message = "Длина пароля должна быть от 3 до 20 символов")
+    @MinSize(value = 3 , group = Worker.class, name="password", message = "Длина пароля должна быть от 3 до 20 символов")
     @Column(nullable = false)
     private String password;
-    @NotNull(group = Worker.class, message = "Имя должно быть заполненно обязательно.")
-    @MaxSize(value = 20 , group = Worker.class, message = "Длина имени должна быть до 20 символов.")
+    @NotNull(group = Worker.class, name="name", message = "Имя должно быть заполненно обязательно.")
+    @MaxSize(value = 20 , group = Worker.class, name="name", message = "Длина имени должна быть до 20 символов.")
     @Column(length = 20)
     private String name;
-    @MaxSize(value = 20 , group = Worker.class, message = "Длина фамилии должна быть до 20 символов.")
+    @MaxSize(value = 20 , group = Worker.class, name="surname", message = "Длина фамилии должна быть до 20 символов.")
     @Column(length = 20)
     private String surname;
-    @MaxSize(value = 20 , group = Worker.class, message = "Длина отчества должна быть до 20 символов.")
+    @MaxSize(value = 20 , group = Worker.class, name="surname", message = "Длина отчества должна быть до 20 символов.")
     @Column(length = 20)
     private String patronymic;
     private Date birthday;
-    @NotNull(group = Worker.class, message = "Электронная почта должна быть заполнена.")
-    @MaxSize(value = 50 , group = Worker.class, message = "Длина электронной почты должна быть меньше 50 символов.")
-    @Email(group = Worker.class, message = "Введенная электронная почта невалидна.")
+    @NotNull(group = Worker.class, name="email", message = "Электронная почта должна быть заполнена.")
+    @MaxSize(value = 50 , group = Worker.class, name="email", message = "Длина электронной почты должна быть меньше 50 символов.")
+    @Email(group = Worker.class, name="email",  message = "Введенная электронная почта невалидна.")
     @Column(length = 50, nullable = false)
     private String email;
-    @MaxSize(value = 50 , message = "test должен быть меньше 50")
-    public Integer test;
+
 
     @ManyToOne
     @JoinColumn(name = "company", nullable = true)
     private StockOwnerCompany stockOwnerCompany;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {

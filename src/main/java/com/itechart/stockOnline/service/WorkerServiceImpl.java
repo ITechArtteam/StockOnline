@@ -3,6 +3,7 @@ package com.itechart.stockOnline.service;
 
 import com.itechart.stockOnline.dao.RoleRepository;
 import com.itechart.stockOnline.dao.WorkerRepository;
+import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.validation.Validator;
@@ -35,9 +36,11 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
-    @Transactional
     public User save(User user) {
-        Validator.BindingResult check = Validator.getValidator().check(user, Worker.class);
+        Validator.BindingResult bindingResult = Validator.getValidator().check(user, Worker.class);
+        if (bindingResult.hasErroe()){
+            throw new ValidationError(bindingResult.get());
+        }
         return workerRepository.save(user);
     }
 
