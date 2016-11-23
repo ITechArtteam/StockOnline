@@ -67,8 +67,7 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
         logger.debug("saveStockOwnerCompany({})", stockOwnerCompany);
         validationFields(stockOwnerCompany);
         stockOwnerCompany.setAddress(addressService.save(stockOwnerCompany.getAddress()));
-        stockOwnerCompany = stockOwnerCompanyDao.save(stockOwnerCompany);
-        return stockOwnerCompany;
+        return stockOwnerCompanyDao.save(stockOwnerCompany);
     }
 
     private void validationFields(StockOwnerCompany stockOwnerCompany) {

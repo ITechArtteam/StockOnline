@@ -16,7 +16,6 @@ public class Transport {
     private Integer id;
 
     @Column(name = "number")
-//    @Size(max=50, message="Number of letters in number < 50")
     private String number;
 
     @Column(name = "type")

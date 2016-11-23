@@ -22,7 +22,7 @@ public class Room {
     @JoinColumn(name = "storage_requirement_id")
     private StorageRequirement storage;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private Set<Shelf> shelfs;
 
     public Room() {

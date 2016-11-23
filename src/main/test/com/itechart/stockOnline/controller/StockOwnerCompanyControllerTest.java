@@ -22,6 +22,7 @@ public class StockOwnerCompanyControllerTest {
     @Test
     public void getClientData() {
         User admin = userService.findByLogin("admin");
+        userService.update(admin);
         assertNotNull(admin);
     }
 

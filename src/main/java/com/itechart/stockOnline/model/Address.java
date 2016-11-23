@@ -13,13 +13,10 @@ public class Address {
     private Long id;
 
     @Column(name = "country_name")
-//  @NotNull(message="Country must be specified.")
-//    @Size(max=50, message="Number of letters in country < 50")
     private String countryName;
 
 
     @Column(name = "city_name")
-//    @Size(max=50, message="Number of letters in city < 50")
     private String cityName;
 
     @Column
@@ -38,16 +35,16 @@ public class Address {
     @Column(name = "longitude")
     private Float longitude;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private Set<Stock> stocks;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private Set<ClientCompany> clientCompanies;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private Set<StockOwnerCompany> stockOwnerCompanies;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private Set<User> user;
 
     public Address() {    }

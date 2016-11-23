@@ -24,7 +24,7 @@ public class Stock {
     @JoinColumn(name = "company_id")
     private StockOwnerCompany company;
 
-    @OneToMany(mappedBy = "stock")
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     private Set<Room> rooms;
 
     public Stock() {

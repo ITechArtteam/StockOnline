@@ -46,7 +46,7 @@ public class Driver {
     @JoinColumn(name = "transfer_company_id")
     private TransferCompany company;
 
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
     private Set<Transport> transports;
 
     public Driver() {

@@ -13,20 +13,19 @@ public class StockOwnerCompany {
     private Long id;
 
     @Column(name = "name")
-//    @Size(max=50, message="Number of letters in name < 50")
     private String name;
 
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private Set<Stock> stocks;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address")
     private Address address;
 
-    @OneToMany(mappedBy = "stockOwnerCompany")
+    @OneToMany(mappedBy = "stockOwnerCompany", cascade = CascadeType.ALL)
     private Set<User> users;
 
     public StockOwnerCompany() {

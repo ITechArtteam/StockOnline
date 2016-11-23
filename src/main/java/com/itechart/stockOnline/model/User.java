@@ -1,8 +1,5 @@
 package com.itechart.stockOnline.model;
 
-
-
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.Set;
 import java.sql.Date;
@@ -37,15 +34,15 @@ public class User {
     private String email;
 
 
-    @ManyToOne
-    @JoinColumn(name = "company", nullable = true)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "company")
     private StockOwnerCompany stockOwnerCompany;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
