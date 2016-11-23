@@ -10,7 +10,12 @@ import * as event from './constants'
         alert: {
             isVisible: false,
             text: '',
-            buttons: []
+            buttons: [],
+            type: ''
+        },
+        frontend: {
+            filterStockNameValue: '',
+            filterAddressValue: ''
         }
 };
 
@@ -20,21 +25,18 @@ import * as event from './constants'
                         return {
                             ...state
                         };
-
                 case event.GET_STOCK_LIST_FAIL:
                         return {
-                            ...state
+                            ...state, alert: action.payload
                         };
                 case event.DELETE_STOCK_LIST_SUCCESS:
                         return {
                             ...state, alert: action.payload
                         };
-
                 case event.DELETE_STOCK_LIST_FAIL:
                         return {
                             ...state, alert: action.payload
                         };
-
                 case event.GET_STOCK_LIST_SUCCESS:
                         return {...state, page: action.payload};
 
@@ -43,7 +45,10 @@ import * as event from './constants'
 
                 case event.CLOSE_DIALOG:
                         return {... state, alert: {...state.alert, isVisible: false}};
-            default:
-                return state;
+                case event.SET_FILTER_INPUT_VALUE:
+                        return {...state, frontend: {...state.frontend, [action.payload.inputId]: action.payload.value}};
+
+                default:
+                    return state;
         }
     }

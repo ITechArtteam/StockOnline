@@ -65,8 +65,8 @@ public class OwnerCompanyDtoConverter {
         dto.setCountry(address.getCountryName());
         dto.setCity(address.getCityName());
         dto.setStreet(address.getStreet());
-        dto.setHome(Integer.toString(address.getHome()));
-        dto.setRoom(Integer.toString(address.getRoom()));
+        dto.setHome(address.getHome());
+        dto.setRoom(address.getRoom());
         dto.setAdminLogin(admin.getLogin());
         dto.setAdminEmail(admin.getEmail());
         dto.setAdminPassword("");

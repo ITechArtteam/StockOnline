@@ -97,6 +97,14 @@ public class OwnerCompanyDto {
         this.home = home;
     }
 
+    public void setHome(Integer home) {
+        if (home != null) {
+            this.home = Integer.toString(home);
+        } else {
+            this.home = "";
+        }
+    }
+
     public String getRoom() {
         return room;
     }
@@ -104,6 +112,15 @@ public class OwnerCompanyDto {
     public void setRoom(String room) {
         this.room = room;
     }
+
+    public void setRoom(Integer room) {
+        if (room != null) {
+            this.room = Integer.toString(room);
+        } else {
+            this.room = "";
+        }
+    }
+
 
     @Override
     public String toString() {

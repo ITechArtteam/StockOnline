@@ -8,24 +8,24 @@ import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import Clients from "./containers/systemClients/Clients";
 import EditClient from "./containers/editClient/EditClient";
+import SearchTransportCompanyForDriver from "./containers/searchTransportCompanyForDriver/SearchTransportCompanyForDriver";
+import SearchTransportCompanyForTrain from "./containers/searchTransportCompanyForTrain/SearchTransportCompanyForTrain";
+import RegistrationOfGoods from "./containers/registrationOfGoods/RegistrationOfGoods";
 import Reports from "./containers/Reports";
 import ReportIncome from "./containers/ReportIncome";
 import ReportStandard from "./containers/ReportStandard";
 import Stocks from "./containers/stocks/Stocks";
-import EditStock from "./containers/EditStock";
+import EditStock from "./containers/editStock/EditStock";
 import WorkersContainer from "./containers/WorkersContainer";
 import EditWorkerContainer from "./containers/EditWorkerContainer";
-import Carriers from "./containers/Carriers";
-import EditCarrier from "./containers/EditCarrier";
-import Drivers from "./containers/Drivers";
-import EditDriver from "./containers/EditDriver";
 import Waybills from "./containers/Waybills";
 import WaybillRegistration from "./containers/WaybillRegistration";
 import Goods from "./containers/Goods";
 import ReceiptGoods from "./containers/ReceiptGoods";
 import DistributionGoods from "./containers/DistributionGoods";
 import DepartureGoods from "./containers/DepartureGoods";
-import CheckGoods from "./containers/CheckGoods";
+import CheckOutputGoods from "./containers/checkOutputGoods/CheckOutputGoods";
+import CheckInputGoods from "./containers/checkInputGoods/CheckInputGoods"
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
 import RequireRole from "./containers/RequireRole"
@@ -53,17 +53,17 @@ ReactDOM.render(
                 <Route path="/stock(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditStock)}/>
                 <Route path="/workers" requiredRole={["ADMIN"]} component={RequireRole(WorkersContainer)}/>
                 <Route path="/worker(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditWorkerContainer)}/>
-                <Route path="/carriers" requiredRole={["DISPATCHER"]} component={RequireRole(Carriers)}/>
-                <Route path="/carrier(/:id)" requiredRole={["DISPATCHER"]} component={RequireRole(EditCarrier)}/>
-                <Route path="/drivers" requiredRole={["DISPATCHER"]} component={RequireRole(Drivers)}/>
-                <Route path="/driver(/:id)" requiredRole={["DISPATCHER"]} component={RequireRole(EditDriver)}/>
+                <Route path="/registrationOfGoods" requiredRole={["DISPATCHER"]} component={RequireRole(RegistrationOfGoods)}/>
+                <Route path="/registrationOfGoods/driver" requiredRole={["DISPATCHER"]} component={RequireRole(SearchTransportCompanyForDriver)}/>
+                <Route path="/registrationOfGoods/train" requiredRole={["DISPATCHER"]} component={RequireRole(SearchTransportCompanyForTrain)}/>
                 <Route path="/waybills" requiredRole={["DISPATCHER"]} component={RequireRole(Waybills)}/>
                 <Route path="/registerwaybill" requiredRole={["DISPATCHER"]} component={RequireRole(WaybillRegistration)}/>
                 <Route path="/goods" requiredRole={["BOSS_STOCK", "CONTROLLER"]} component={RequireRole(Goods)}/>
                 <Route path="/goods/receipt" requiredRole={["MANAGER"]} component={RequireRole(ReceiptGoods)}/>
                 <Route path="/goods/distribution" requiredRole={["MANAGER"]} component={RequireRole(DistributionGoods)}/>
                 <Route path="/goods/departure" requiredRole={["MANAGER"]} component={RequireRole(DepartureGoods)}/>
-                <Route path="/goods/check" requiredRole={["CONTROLLER"]} component={RequireRole(CheckGoods)}/>
+                <Route path="/goods/checkInput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckInputGoods)}/>
+                <Route path="/goods/checkOutput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckOutputGoods)}/>
                 <Route path="/acts" requiredRole={["BOSS_STOCK"]} component={RequireRole(Acts)}/>
                 <Route path="/act(/:id)" requiredRole={["CONTROLLER"]} component={RequireRole(EditAct)}/>
                 <Route path="*" component={RequireRole(NotFound)}/>

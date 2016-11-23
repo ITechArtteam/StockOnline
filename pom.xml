@@ -22,7 +22,7 @@
         <openjpa.version>2.4.1</openjpa.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.version>1.8</maven.compiler.version>
+        <maven.compiler.version>3.6.0</maven.compiler.version>
         <openjpa.maven.plugin>1.2</openjpa.maven.plugin>
         <tomcat7.maven.plugin>2.2</tomcat7.maven.plugin>
         <tomcat7.port>8085</tomcat7.port>
@@ -137,8 +137,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
                 <configuration>
-                    <compilerVersion>${maven.compiler.version}</compilerVersion>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                 </configuration>
@@ -209,7 +209,8 @@
                     <password>${jdbc.password}</password>
                 </configuration>
             </plugin>
-            <plugin>
+
+           <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>${frontend-plugin.version}</version>

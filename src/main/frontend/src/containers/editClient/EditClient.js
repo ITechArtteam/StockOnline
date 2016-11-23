@@ -4,6 +4,7 @@ import {clientActionCreator} from "./index";
 import {connect} from 'react-redux';
 import './style.css';
 import {AlertPopup} from '../../components/AlertPopup';
+import {Link} from "react-router";
 
 class EditClient extends React.Component {
 
@@ -61,7 +62,6 @@ class EditClient extends React.Component {
                 break;
             }
         }
-        this.props.setClientData(nameField, value);
     }
 
     swapStatePassword(e){
@@ -108,8 +108,7 @@ class EditClient extends React.Component {
     render() {
         return (
             <div className="row">
-                <form id="client_form"
-                    className="form-horizontal col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                <div className="well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
                     <SimpleInput id="name"
                                  label="Название компании*"
                                  onChange={this.validateOnChange}
@@ -185,9 +184,9 @@ class EditClient extends React.Component {
                         <button type="button" className="btn btn-primary"
                                 onClick={this.submit}>Сохранить
                         </button>
-                        <button type="button" className="btn btn-default">Отменить</button>
+                        <Link to="/clients" className="btn btn-default">Отменить</Link>
                     </div>
-                </form>
+                </div>
                 <AlertPopup isVisible={this.props.client.frontend.showAlertPopup}
                             message={this.props.client.frontend.messageAlertPop}
                             type={this.props.client.frontend.typeAlertPopup}
@@ -210,7 +209,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(clientActionCreator.getClient(clientName))
         },
         setClientData: (nameField, fieldValue) => {
-            dispatch(clientActionCreator.setData(nameField, fieldValue))
+            dispatch(clientActionCreator.setFieldData(nameField, fieldValue))
         },
         addClient: (data) => {
             dispatch(clientActionCreator.addClient(data))
