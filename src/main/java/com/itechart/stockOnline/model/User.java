@@ -3,6 +3,9 @@ package com.itechart.stockOnline.model;
 
 
 
+import com.itechart.stockOnline.validation.*;
+import com.itechart.stockOnline.validator.Worker;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.sql.Date;
