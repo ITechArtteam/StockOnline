@@ -3,13 +3,16 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class WaybillInfo extends React.Component {
     render(){
-        var products = this.props.data.productInWaybills.map((item, index) => {
-            return {
-                name: item.product.name,
-                storage: item.product.storage.type,
-                count: item.count + ' ' + item.product.unit
-            }
-        });
+        let products = [];
+        if(!!this.props.data.productInWaybills) {
+            products = this.props.data.productInWaybills.map((item, index) => {
+                return {
+                    name: item.product.name,
+                    storage: item.product.storage.type,
+                    count: item.count + ' ' + item.product.unit
+                }
+            });
+        }
 
         return (
             <div className="row">
@@ -45,7 +48,7 @@ class WaybillInfo extends React.Component {
 WaybillInfo.PropTypes = {
     data: React.PropTypes.objectOf(React.PropTypes.shape({
         id: React.PropTypes.number.isRequired,
-        status: React.PropTypes.number.isRequired,
+        status: React.PropTypes.string.isRequired,
         productInWaybills: React.PropTypes.arrayOf(React.PropTypes.shape({
             count: React.PropTypes.number.isRequired,
             product: React.PropTypes.objectOf(React.PropTypes.shape({

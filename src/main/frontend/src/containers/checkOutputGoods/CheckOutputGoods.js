@@ -69,7 +69,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         findWaybillById: id => {
-            dispatch(checkOutputGoodsActionCreator.findWaybillById(id))
+            dispatch(checkOutputGoodsActionCreator.findWaybillById(id, 'BATCH_FORMED'))
         },
         acceptWaybill: id => {
             dispatch(checkOutputGoodsActionCreator.acceptWaybill(id))

@@ -1,45 +1,52 @@
 import * as event from './constants'
 import * as axios from "axios";
 
-var findWaybillRequest = () => {
+let findWaybillRequest = () => {
     return {
         type: event.FIND_WAYBILL_BY_ID_REQUEST
     }
 };
 
-var findWaybillSuccess = json => {
+let findWaybillSuccess = json => {
     return {
         type: event.FIND_WAYBILL_BY_ID_SUCCESS,
         payload: json
     }
 };
 
-var findWaybillById = id => {
+let findWaybillById = (id, status) => {
     return dispatch => {
         dispatch(findWaybillRequest());
         axios.get(`/waybills/${id}`)
-            .then(response => dispatch(findWaybillSuccess(response.data)))
+            .then(response => {
+                let message = `Накладная ${id} успешно найдена`;
+                if(response.data.status !== status) {
+                    message += `, но статус не соответствует запрашиваемому статусу ${status}`;
+                }
+                dispatch(showDialog(message, '', []));
+                dispatch(findWaybillSuccess(response.data));
+            })
             .catch(error => dispatch(showDialog(`Накладная не найдена. ${error}`, 'danger', [])));
     }
 };
 
-var acceptWaybillRequest= () => {
+let acceptWaybillRequest= () => {
     return {
         type: event.ACCEPT_WAYBILL_REQUEST
     }
 };
 
-var acceptWaybill = id => {
+let acceptWaybill = id => {
     return dispatch => {
         dispatch(acceptWaybillRequest());
-        axios.put(`waybills/${id}`)
+        axios.put(`/waybills/${id}`)
             .then(response => dispatch(showDialog(`Накладная ${id} успешно одобрена`)))
             .catch(error => dispatch(showDialog(`Прозошла ошибка при одобрении накладной. ${error}`, 'danger', [])));
     }
 };
 
 
-var showDialog = (text, type, buttons) => {
+let showDialog = (text, type, buttons) => {
     return {
         type: event.SHOW_DIALOG,
         payload: {
@@ -51,13 +58,13 @@ var showDialog = (text, type, buttons) => {
     }
 };
 
-var closeDialog = () => {
+let closeDialog = () => {
     return {
         type: event.CLOSE_DIALOG
     }
 };
 
-var setInputValue = (inputId, value) => {
+let setInputValue = (inputId, value) => {
     return {
         type: event.SET_INPUT_VALUE,
         payload: {
