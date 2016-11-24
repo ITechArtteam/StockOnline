@@ -10,13 +10,14 @@ class WorkersContainer extends React.Component {
 
     render() {
         return (
-            <Workers workers={this.props.workers}/>
+            <Workers workers={this.props.workers} message={this.props.message}/>
         );
     }
 }
 const mapStateToProps = (store) => {
     return {
-        workers: store.workerState.workers
+        workers: store.workerState.workers,
+        message: store.workerState.message,
     }
 };
 

@@ -31,7 +31,7 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public User get(Long id) {
-        User worker = workerRepository.getOne(id);
+        User worker = workerRepository.findOne(id);
         return  worker;
     }
 

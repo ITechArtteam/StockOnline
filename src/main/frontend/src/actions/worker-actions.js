@@ -7,6 +7,14 @@ export function getWorkersSuccess(workers) {
     };
 }
 
+
+export function getWorkersUnsuccess(error) {
+    return {
+        type: types.GET_WORKERS_UNSUCCESS ,
+        message:error
+    };
+}
+
 export function getWorkerSuccess(worker) {
     return {
         type: types.GET_WORKER_SUCCESS ,
@@ -14,16 +22,41 @@ export function getWorkerSuccess(worker) {
     };
 }
 
-export function deleteWorkerSuccess(id) {
+
+export function getWorkerUnsuccess(error) {
     return {
-        type: types.DELETE_WORKER_SUCCESS,
-        id
+        type: types.GET_WORKER_UNSUCCESS ,
+        message:error
     };
 }
 
-export function saveWorkerSuccess(worker) {
+export function deleteWorkerSuccess(id, message) {
+    return {
+        type: types.DELETE_WORKER_SUCCESS,
+        id: id,
+        message:message
+    };
+}
+
+
+export function deleteWorkerUnsuccess(error) {
+    return {
+        type: types.DELETE_WORKER_UNSUCCESS,
+        message:error
+    };
+}
+
+export function saveWorkerSuccess(worker, message) {
     return {
         type: types.POST_WORKER_SUCCESS ,
-        worker
+        worker:worker,
+        message:message
+    };
+}
+
+export function saveWorkerUnsuccess(error) {
+    return {
+        type: types.POST_WORKER_UNSUCCESS ,
+        message:error
     };
 }

@@ -15,11 +15,10 @@ class EditWorkerContainer extends React.Component {
         if ($.isNumeric(id)) {
             workerApi.getWorker(id);
         }
-
     }
 
     saveWorker = (worker) => {
-        workerApi.saveWorker(worker);
+        workerApi.saveWorker(worker,'/workers','/worker');
 
     }
 
@@ -28,7 +27,7 @@ class EditWorkerContainer extends React.Component {
     render() {
         console.log(this.props.roles)
         return (
-            <EditWorker worker={this.props.worker} roles={this.props.roles} onSaveClick={this.saveWorker}/>
+            <EditWorker worker={this.props.worker} roles={this.props.roles} onSaveClick={this.saveWorker} message={this.props.message}/>
         );
     }
 }
@@ -36,7 +35,8 @@ class EditWorkerContainer extends React.Component {
 const mapStateToProps = (store) => {
     return {
         worker: store.workerState.worker,
-        roles: store.roleState.roles
+        roles: store.roleState.roles,
+        message: store.workerState.message,
     }
 };
 

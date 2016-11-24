@@ -1,34 +1,23 @@
 import React from "react";
-import {Grid, Button, FormGroup, Row, Col, Form, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
+import {Button, FormGroup, Row, Col, Form, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
 import linkState from "react-link-state";
 import Multiselect from "react-widgets/lib/Multiselect";
 import "react-widgets/dist/css/react-widgets.css";
 import "./EditWorker.less";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import DatePicker from "react-datepicker";
+import moment from "moment";
+import CleverAlert from "./CleverAlert";
 
 class EditWorker extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this)
     }
 
     state = {
+        message: this.props.message,
         worker: this.props.worker,
         roles: this.props.roles
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({worker: nextProps.worker})
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        console.log(this)
-    }
-
-    logChange = (val) => {
-        console.log("Selected: " + val);
     }
 
     onSaveClick = () => {
@@ -45,6 +34,9 @@ class EditWorker extends React.Component {
     render() {
         return (
             <div>
+                <Row>
+                    <CleverAlert message={this.state.message}/>
+                </Row>
                 <Row className="show-grid">
                     <Form horizontal id="worker_form">
                         <FormGroup >
@@ -88,7 +80,7 @@ class EditWorker extends React.Component {
                                 <DatePicker className="form-control"
                                             selected={moment()}
                                 />
-                                <HelpBlock>Это поле должzxdfdgdgно быть заполнено.</HelpBlock>
+                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>

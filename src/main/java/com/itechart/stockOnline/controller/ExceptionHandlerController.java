@@ -8,16 +8,29 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.Map;
 
 @RestController
 public class ExceptionHandlerController {
     private final static Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
-    @ExceptionHandler(value = ValidationError.class)
-    public ResponseEntity<Object> fieldHasErrors(ValidationError error){
+    @ExceptionHandler(ValidationError.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String fieldHasErrors(ValidationError error){
         LOGGER.error("fieldHasErrors({})", error.toString());
-        return new ResponseEntity<>(
-                error.getErrors(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return error.getErrors().toString();
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String exception(Exception exception){
+        LOGGER.error("fieldHasErrors({})", exception.getMessage());
+        return "Ошибка на сервере";
+    }
+
+
 }
