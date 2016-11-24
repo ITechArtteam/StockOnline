@@ -14,7 +14,6 @@ public class StorageRequirement {
     private Integer id;
 
     @Column(name = "type")
-//    @Size(max=50, message="Number of letters in type < 50")
     private String type;
 
     @OneToMany(mappedBy = "storage")

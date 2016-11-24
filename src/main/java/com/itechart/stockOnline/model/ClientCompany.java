@@ -16,14 +16,14 @@ public class ClientCompany {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(mappedBy="sender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="sender")
     private Set<Waybill> senderCompanies;
 
-    @OneToMany(mappedBy="receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="receiver")
     private Set<Waybill> receiverCompanies;
 
     public ClientCompany() {

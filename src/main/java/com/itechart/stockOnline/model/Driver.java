@@ -37,11 +37,11 @@ public class Driver {
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "transfer_company_id")
     private TransferCompany company;
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "driver")
     private Set<Transport> transports;
 
     public Driver() {

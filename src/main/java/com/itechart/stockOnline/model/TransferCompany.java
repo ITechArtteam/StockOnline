@@ -16,7 +16,7 @@ public class TransferCompany {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company")
     private Set<Driver> drivers;
 
     public TransferCompany() {
