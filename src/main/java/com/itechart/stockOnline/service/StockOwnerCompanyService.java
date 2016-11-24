@@ -12,4 +12,5 @@ public interface StockOwnerCompanyService {
     StockOwnerCompany update(StockOwnerCompany stockOwnerCompany);
     StockOwnerPage getStockOwnersPage(int pageNumber, int recordCount, String name, String address, String status);
     int deleteByNames(Collection<String> names);
+    StockOwnerCompany saveOrUpdateStockOwnerCompany(OwnerCompanyDto ownerCompanyDto);
 }

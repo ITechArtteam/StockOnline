@@ -1,8 +1,11 @@
 package com.itechart.stockOnline.service;
 
+import com.itechart.stockOnline.dao.RoleDao;
 import com.itechart.stockOnline.dao.UserDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
+import com.itechart.stockOnline.model.Address;
+import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.validator.UserValidator;
@@ -13,7 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,11 +31,17 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final RoleDao roleDao;
+
+    private final AddressService addressService;
+
     @Autowired
-    public UserServiceImpl(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder, UserValidator userValidator) {
+    public UserServiceImpl(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder, UserValidator userValidator, RoleDao roleDao, AddressService addressService) {
         this.userDao = userDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userValidator = userValidator;
+        this.roleDao = roleDao;
+        this.addressService = addressService;
     }
 
     @Override
@@ -39,6 +50,7 @@ public class UserServiceImpl implements UserService {
         logger.debug("save({})", user);
         validationFields(user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        setRolesFromDB(user);
         return userDao.save(user);
     }
 
@@ -46,7 +58,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User update(User user) {
         validationFields(user);
-
+        if (user.getRoles() != null) {
+            setRolesFromDB(user);
+        }
         User userInDB = userDao.findOne(user.getId());
         if (userInDB == null){
             throw new DataNotFoundError("User with id: " + user.getId());
@@ -70,10 +84,13 @@ public class UserServiceImpl implements UserService {
     }
 
     private void setDependency(User user, User userInDB) {
-        userInDB.setAddress(user.getAddress());
+        Address address = user.getAddress();
+        address.setId(userInDB.getAddress().getId());
+        addressService.update(address);
         userInDB.setStockOwnerCompany(user.getStockOwnerCompany());
-        userInDB.setRoles(user.getRoles());
-
+        if (user.getRoles() != null) {
+            userInDB.setRoles(user.getRoles());
+        }
     }
 
 
@@ -93,6 +110,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(User user) {
+        Address address = user.getAddress();
+        userDao.delete(user);
+        addressService.delete(address);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public User findByCompany(StockOwnerCompany company) {
         User user = userDao.findByStockOwnerCompany(company);
@@ -102,4 +126,13 @@ public class UserServiceImpl implements UserService {
         logger.debug("findByStockOwnerCompany({}): {}", company, user);
         return user;
     }
+
+    public void setRolesFromDB(User user) {
+        Set<Role> rolesFromDB = new HashSet<>();
+        for(Role role: user.getRoles()) {
+            rolesFromDB.add(roleDao.findByName(role.getName()).orElseThrow(DataNotFoundError::new));
+        }
+        user.setRoles(rolesFromDB);
+    }
+
 }

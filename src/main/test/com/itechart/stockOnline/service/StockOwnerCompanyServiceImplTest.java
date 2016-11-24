@@ -43,7 +43,7 @@ public class StockOwnerCompanyServiceImplTest {
     @Test
     public void save(){
         StockOwnerCompany company = getDefault();
-        stockOwnerCompanyService.saveStockOwnerCompany(company);
+        stockOwnerCompanyService.saveOrUpdateStockOwnerCompany(company);
         StockOwnerCompany companyInDB = stockOwnerCompanyDao.findByName("TestName").orElseThrow(DataNotFoundError::new);
 
         assertNotNull(companyInDB.getAddress());
@@ -54,7 +54,7 @@ public class StockOwnerCompanyServiceImplTest {
     @Test
     public void deleteByNames() {
         StockOwnerCompany company = getDefault();
-        company = stockOwnerCompanyService.saveStockOwnerCompany(company);
+        company = stockOwnerCompanyService.saveOrUpdateStockOwnerCompany(company);
         Set<String> companies = new HashSet<>();
         companies.add("TestName");
         User user = getDefaultUser();

@@ -4,7 +4,6 @@ import com.itechart.stockOnline.converter.StockDtoConverter;
 import com.itechart.stockOnline.dao.StockDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Stock;
-import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.StockDto;
 import com.itechart.stockOnline.model.dto.StockPage;
@@ -64,7 +63,7 @@ public class StockServiceImpl implements StockService {
     public Stock saveStock(Stock stock) {
         stock.setId(null);
         logger.debug("saveStock({})", stock);
-        stock.setCompany(stockOwnerCompanyService.saveStockOwnerCompany( stock.getCompany() ));
+        stock.setCompany(stockOwnerCompanyService.saveStockOwnerCompany(stock.getCompany()));
         stock.setAddress(addressService.save(stock.getAddress()));
         stock = stockDao.save(stock);
         return stock;
