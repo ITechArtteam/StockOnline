@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="enum_updates-01" author="MaximMaltsev94">
+        <modifyDataType columnName="status"
+                        newDataType="ENUM('Зарегистрирована', 'Проверка завершена', 'Оформление завершено', 'Партия сформирована', 'Выпуск разрешен', 'Вывезен со склада',
+                        'JOINED', 'CHECKING_COMPLETED', 'REGISTRATION_COMPLETED', 'BATCH_FORMED', 'OUTPUT_RESOLVED', 'OUT_OF_STOCK')"
+                        tableName="waybill"/>
+        <sql>
+            UPDATE waybill SET status = 'JOINED' WHERE status = 'Зарегистрирована';
+            UPDATE waybill SET status = 'CHECKING_COMPLETED' WHERE status = 'Проверка завершена';
+            UPDATE waybill SET status = 'REGISTRATION_COMPLETED' WHERE status = 'Оформление завершено';
+            UPDATE waybill SET status = 'BATCH_FORMED' WHERE status = 'Партия сформирована';
+            UPDATE waybill SET status = 'OUTPUT_RESOLVED' WHERE status = 'Выпуск разрешен';
+            UPDATE waybill SET status = 'OUT_OF_STOCK' WHERE status = 'Вывезен со склада';
+        </sql>
+        <modifyDataType columnName="status"
+                        newDataType="ENUM('JOINED', 'CHECKING_COMPLETED', 'REGISTRATION_COMPLETED', 'BATCH_FORMED', 'OUTPUT_RESOLVED', 'OUT_OF_STOCK')"
+                        tableName="waybill"/>
+    </changeSet>
+
+    <changeSet id="enum_updates-02" author="MaximMaltsev94">
+        <modifyDataType columnName="status"
+                        newDataType="ENUM('Недостача по накладной','Утеря со склада','Кража со склада','Конфискован','Утилизирован',
+                        'SHORTAGE_OF_THE_INVOICE', 'LOSS_FROM_STOCK', 'STEALING_FROM_THE_STOCK', 'CONFISCATED', 'RECOVER')"
+                        tableName="act"/>
+        <sql>
+            UPDATE act SET status = 'SHORTAGE_OF_THE_INVOICE' WHERE status = 'Недостача по накладной';
+            UPDATE act SET status = 'LOSS_FROM_STOCK' WHERE status = 'Утеря со склада';
+            UPDATE act SET status = 'STEALING_FROM_THE_STOCK' WHERE status = 'Кража со склада';
+            UPDATE act SET status = 'CONFISCATED' WHERE status = 'Конфискован';
+            UPDATE act SET status = 'RECOVER' WHERE status = 'Утилизирован';
+        </sql>
+        <modifyDataType columnName="status"
+                        newDataType="ENUM('SHORTAGE_OF_THE_INVOICE', 'LOSS_FROM_STOCK', 'STEALING_FROM_THE_STOCK', 'CONFISCATED', 'RECOVER')"
+                        tableName="act"/>
+    </changeSet>
+
+    <changeSet id="enum_updates-03" author="MaximMaltsev94">
+        <modifyDataType columnName="status"
+                        newDataType="ENUM('Зарегистрирован','Проверка завершена','Принят на хранение','Утерян перевозчиком','Утерян со склада','Кража со склада','Недостача перевозчика','Конфискован','Утилизирован','Снят с хранения','Выпуск разрешен','Вывезен со склада',
+        'JOINED','CHECKING_COMPLETED','APPROVED_FOR_STORAGE','LOST_CARRIER','LOST_FROM_THE_STOCK','STEALING_FROM_THE_STOCK','CARRIER_SHORTAGE','CONFISCATED','RECOVER','OUT_OF_STORAGE','ISSUE_RESOLVED','TAKEN_FROM_THE_STOCK')"
+                        tableName="product"/>
+        <sql>
+            UPDATE product SET status = 'JOINED' WHERE status = 'Зарегистрирован';
+            UPDATE product SET status = 'CHECKING_COMPLETED' WHERE status = 'Проверка завершена';
+            UPDATE product SET status = 'APPROVED_FOR_STORAGE' WHERE status = 'Принят на хранение';
+            UPDATE product SET status = 'LOST_CARRIER' WHERE status = 'Утерян перевозчиком';
+            UPDATE product SET status = 'LOST_FROM_THE_STOCK' WHERE status = 'Утерян со склада';
+            UPDATE product SET status = 'STEALING_FROM_THE_STOCK' WHERE status = 'Кража со склада';
+            UPDATE product SET status = 'CARRIER_SHORTAGE' WHERE status = 'Недостача перевозчика';
+            UPDATE product SET status = 'CONFISCATED' WHERE status = 'Конфискован';
+            UPDATE product SET status = 'RECOVER' WHERE status = 'Утилизирован';
+            UPDATE product SET status = 'OUT_OF_STORAGE' WHERE status = 'Снят с хранения';
+            UPDATE product SET status = 'ISSUE_RESOLVED' WHERE status = 'Выпуск разрешен';
+            UPDATE product SET status = 'TAKEN_FROM_THE_STOCK' WHERE status = 'Вывезен со склада';
+
+        </sql>
+        <modifyDataType columnName="status"
+                        newDataType="ENUM('JOINED','CHECKING_COMPLETED','APPROVED_FOR_STORAGE','LOST_CARRIER','LOST_FROM_THE_STOCK','STEALING_FROM_THE_STOCK','CARRIER_SHORTAGE','CONFISCATED','RECOVER','OUT_OF_STORAGE','ISSUE_RESOLVED','TAKEN_FROM_THE_STOCK')"
+                        tableName="product"/>
+    </changeSet>
+
+    <changeSet id="enum_updates-04" author="MaximMaltsev94">
+
+        <modifyDataType columnName="unit"
+                        newDataType="ENUM('грамм','килограмм','тонна', 'литр', 'милилитр', 'см. куб',
+                        'GRAM','KILOGRAM','TONNE', 'LITER', 'MILLILITER', 'CM_CUBE')"
+                        tableName="product"/>
+        <sql>
+            UPDATE product SET unit = 'GRAM' WHERE unit = 'грамм';
+            UPDATE product SET unit = 'KILOGRAM' WHERE unit = 'килограмм';
+            UPDATE product SET unit = 'TONNE' WHERE unit = 'тонна';
+            UPDATE product SET unit = 'LITER' WHERE unit = 'литр';
+            UPDATE product SET unit = 'MILLILITER' WHERE unit = 'милилитр';
+            UPDATE product SET unit = 'CM_CUBE' WHERE unit = 'см. куб';
+
+        </sql>
+
+        <modifyDataType columnName="unit"
+                        newDataType="ENUM('GRAM','KILOGRAM','TONNE', 'LITER', 'MILLILITER', 'CM_CUBE')"
+                        tableName="product"/>
+    </changeSet>
+
+    <changeSet id="enum_updates-05" author="MaximMaltsev94">
+        <modifyDataType columnName="type"
+                        newDataType="ENUM('Автомобиль', 'Поезд', 'CAR', 'TRAIN')"
+                        tableName="transport"/>
+        <sql>
+            UPDATE transport SET type = 'CAR' WHERE type = 'Автомобиль';
+            UPDATE transport SET type = 'TRAIN' WHERE type = 'Поезд';
+        </sql>
+        <modifyDataType columnName="type"
+                        newDataType="ENUM('CAR', 'TRAIN')"
+                        tableName="transport"/>
+    </changeSet>
+
+</databaseChangeLog>
