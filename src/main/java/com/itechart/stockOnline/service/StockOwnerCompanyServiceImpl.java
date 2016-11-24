@@ -45,12 +45,16 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
     private final AddressService addressService;
 
     @Autowired
+    private StockService stockService;
+
+    @Autowired
     public StockOwnerCompanyServiceImpl(StockOwnerCompanyDao stockOwnerCompanyDao, UserService userService, OwnerCompanyDtoConverter ownerCompanyDtoConverter, StockOwnerCompanyValidator companyValidator, AddressService addressService) {
         this.stockOwnerCompanyDao = stockOwnerCompanyDao;
         this.userService = userService;
         this.ownerCompanyDtoConverter = ownerCompanyDtoConverter;
         this.companyValidator = companyValidator;
         this.addressService = addressService;
+
     }
 
 
@@ -101,10 +105,20 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     @Override
     @Transactional
+    public void delete(StockOwnerCompany company) {
+        company.getUsers().forEach(userService::delete);
+        company.getStocks().forEach(stockService::delete);
+        Address address = company.getAddress();
+        stockOwnerCompanyDao.delete(company);
+        addressService.delete(address);
+    }
+
+    @Override
+    @Transactional
     public int deleteByNames(Collection<String> names) {
-        int deletedCount = stockOwnerCompanyDao.deleteByNameIn(names);
-        logger.info("Stock owner company service: delete by names list - {}. Deleted {} records", names, deletedCount);
-        return deletedCount;
+        stockOwnerCompanyDao.findAllByNameIn(names).forEach(this::delete);
+        logger.info("Stock owner company service: delete by names list - {}. Deleted {} records", names, names.size());
+        return names.size();
     }
 
     @Override

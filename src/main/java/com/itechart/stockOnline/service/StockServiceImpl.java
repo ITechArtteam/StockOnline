@@ -35,16 +35,16 @@ public class StockServiceImpl implements StockService {
 
     private final AddressService addressService;
 
-    private final StockOwnerCompanyService stockOwnerCompanyService;
+    @Autowired
+    private StockOwnerCompanyService stockOwnerCompanyService;
 
 
     @Autowired
-    public StockServiceImpl(StockDao stockDao, UserService userService, StockDtoConverter stockDtoConverter, AddressService addressService, StockOwnerCompanyService stockOwnerCompanyService) {
+    public StockServiceImpl(StockDao stockDao, UserService userService, StockDtoConverter stockDtoConverter, AddressService addressService) {
         this.stockDao = stockDao;
         this.userService = userService;
         this.stockDtoConverter = stockDtoConverter;
         this.addressService = addressService;
-        this.stockOwnerCompanyService = stockOwnerCompanyService;
     }
 
 
@@ -114,6 +114,13 @@ public class StockServiceImpl implements StockService {
             throw new DataNotFoundError();
         }
         return stockDtoConverter.toStockPage(stockPage);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Stock stock) {
+        //implement deleting rooms
+        //stockDao.delete(stock);
     }
 
     @Override
