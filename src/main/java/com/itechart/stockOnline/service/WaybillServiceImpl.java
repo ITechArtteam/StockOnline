@@ -1,6 +1,7 @@
 package com.itechart.stockOnline.service;
 
 import com.itechart.stockOnline.dao.WaybillDao;
+import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Waybill;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,6 @@ public class WaybillServiceImpl implements WaybillService {
     @Override
     public Waybill getById(Long id) {
         Logger.info("Waybill service: get waybill by id - {}", id);
-        return waybillDao.findOne(id);
+        return waybillDao.findById(id).orElseThrow(DataNotFoundError::new);
     }
 }
