@@ -1,6 +1,14 @@
 import * as event from './constants'
 import * as axios from "axios";
 
+
+let setWaybillVisibility = visibility => {
+    return {
+        type: event.SET_WAYBILL_VISIBILITY,
+        payload: visibility
+    }
+};
+
 let findWaybillRequest = () => {
     return {
         type: event.FIND_WAYBILL_BY_ID_REQUEST
@@ -19,14 +27,20 @@ let findWaybillById = (id, status) => {
         dispatch(findWaybillRequest());
         axios.get(`/controller/waybills/${id}`)
             .then(response => {
-                let message = `Накладная ${id} успешно найдена`;
-                if(response.data.status !== status) {
-                    message += `, но статус не соответствует запрашиваемому статусу ${status}`;
+                let message = `Накладная №${id} успешно найдена`;
+                if(response.data.status === status) {
+                    dispatch(findWaybillSuccess(response.data));
+                    dispatch(setWaybillVisibility(true));
+                } else {
+                    message += `, но ee статус "${response.data.status}" не соответствует запрашиваемому статусу "${status}"`;
+                    dispatch(setWaybillVisibility(false));
                 }
                 dispatch(showDialog(message, '', []));
-                dispatch(findWaybillSuccess(response.data));
             })
-            .catch(error => dispatch(showDialog(`Накладная не найдена. ${error}`, 'danger', [])));
+            .catch(error => {
+                dispatch(showDialog(`Накладная №${id}  не найдена. ${error}`, 'danger', []));
+                dispatch(setWaybillVisibility(false));
+            });
     }
 };
 
@@ -72,7 +86,6 @@ let setInputValue = (inputId, value) => {
             value: value
         }
     }
-
 };
 
 export default {
@@ -80,5 +93,6 @@ export default {
     showDialog,
     closeDialog,
     setInputValue,
-    acceptWaybill
+    acceptWaybill,
+    setWaybillVisibility
 }

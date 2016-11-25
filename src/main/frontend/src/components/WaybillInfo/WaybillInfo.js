@@ -15,21 +15,21 @@ class WaybillInfo extends React.Component {
         }
 
         return (
-            <div className="row">
+            <div className={this.props.visible ? "row" : "none"}>
                 <div className="col-xs-4">
                     <div className="panel panel-default">
                         <div className="panel-heading">Накладная</div>
                         <div className="panel-body">
-                            id: {this.props.data.id} <br/>
-                            status: {this.props.data.status}
+                            Номер: {this.props.data.id} <br/>
+                            Статус: {this.props.data.status}
                         </div>
                     </div>
                     <div className="panel panel-default">
                         <div className="panel-heading">Транспортное средство</div>
                         <div className="panel-body">
-                            type: {this.props.data.transport.type} <br/>
-                            number: {this.props.data.transport.number} <br/>
-                            storage: {this.props.data.transport.storage.type}
+                            Тип: {this.props.data.transport.type} <br/>
+                            Номер: {this.props.data.transport.number} <br/>
+                            Требования к хранению: {this.props.data.transport.storage.type}
                         </div>
                     </div>
                 </div>
@@ -46,6 +46,7 @@ class WaybillInfo extends React.Component {
 }
 
 WaybillInfo.PropTypes = {
+    visible: React.PropTypes.bool.isRequired,
     data: React.PropTypes.objectOf(React.PropTypes.shape({
         id: React.PropTypes.number.isRequired,
         status: React.PropTypes.string.isRequired,
@@ -53,14 +54,14 @@ WaybillInfo.PropTypes = {
             count: React.PropTypes.number.isRequired,
             product: React.PropTypes.objectOf(React.PropTypes.shape({
                 name: React.PropTypes.string.isRequired,
-                unit: React.PropTypes.number.isRequired,
+                unit: React.PropTypes.string.isRequired,
                 storage: React.PropTypes.objectOf(React.PropTypes.shape({
                     type: React.PropTypes.string.isRequired
                 })).isRequired
             })).isRequired,
         })).isRequired,
         transport: React.PropTypes.objectOf(React.PropTypes.shape({
-            type: React.PropTypes.number.isRequired,
+            type: React.PropTypes.string.isRequired,
             number: React.PropTypes.string.isRequired,
             storage: React.PropTypes.objectOf(React.PropTypes.shape({
                 type: React.PropTypes.string.isRequired

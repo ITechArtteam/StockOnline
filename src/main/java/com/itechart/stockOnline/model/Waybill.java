@@ -22,7 +22,7 @@ public class Waybill {
     @Enumerated(EnumType.STRING)
     private WaybillStatus status;
 
-    @OneToMany(mappedBy = "waybill")
+    @OneToMany(mappedBy = "waybill", fetch = FetchType.EAGER)
     private Set<ProductInWaybill> productInWaybills;
 
     @ManyToOne
@@ -85,7 +85,7 @@ public class Waybill {
                 "id=" + id +
                 ", registrationDate=" + registrationDate +
                 ", status=" + status +
-                ", productInWaybills=" + productInWaybills +
+//                ", productInWaybills=" + productInWaybills +
                 ", transport=" + transport +
                 ", sender=" + sender +
                 ", receiver=" + receiver +

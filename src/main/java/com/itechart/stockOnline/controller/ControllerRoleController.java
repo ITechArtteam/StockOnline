@@ -3,6 +3,7 @@ package com.itechart.stockOnline.controller;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Waybill;
 import com.itechart.stockOnline.model.dto.forControllerPage.WaybillForControllerDto;
+import com.itechart.stockOnline.model.enums.WaybillStatus;
 import com.itechart.stockOnline.service.WaybillService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;

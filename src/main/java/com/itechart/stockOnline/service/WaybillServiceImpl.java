@@ -22,6 +22,8 @@ public class WaybillServiceImpl implements WaybillService {
     @Override
     public Waybill getById(Long id) {
         Logger.info("Waybill service: get waybill by id - {}", id);
-        return waybillDao.findById(id).orElseThrow(DataNotFoundError::new);
+        Waybill waybill = waybillDao.findById(id).orElseThrow(DataNotFoundError::new);
+        Logger.info("Waybill service: found waybill - {}", waybill);
+        return waybill;
     }
 }

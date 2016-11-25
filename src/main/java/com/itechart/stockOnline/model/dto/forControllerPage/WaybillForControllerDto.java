@@ -1,5 +1,7 @@
 package com.itechart.stockOnline.model.dto.forControllerPage;
 
+import com.itechart.stockOnline.model.ProductInWaybill;
+import com.itechart.stockOnline.model.Transport;
 import com.itechart.stockOnline.model.Waybill;
 import com.itechart.stockOnline.model.enums.WaybillStatus;
 
@@ -16,11 +18,14 @@ public class WaybillForControllerDto {
         if(waybill != null) {
             this.id = waybill.getId();
             this.status = waybill.getStatus();
-            if (waybill.getTransport() != null) {
-                this.transport = new TransportForControllerDto(waybill.getTransport());
+            Transport transport = waybill.getTransport();
+            if (transport != null) {
+                this.transport = new TransportForControllerDto(transport);
             }
-            if (waybill.getProductInWaybills() != null) {
-                this.productInWaybills = waybill.getProductInWaybills().stream()
+
+            Set<ProductInWaybill> productInWaybills = waybill.getProductInWaybills();
+            if (productInWaybills != null) {
+                this.productInWaybills = productInWaybills.stream()
                         .map(ProductInWaybillForControllerDto::new)
                         .collect(Collectors.toSet());
             }
