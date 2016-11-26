@@ -50,11 +50,17 @@ let acceptWaybillRequest= () => {
     }
 };
 
-let acceptWaybill = id => {
+let acceptWaybill = (id, waybillStatus, productStatus) => {
     return dispatch => {
         dispatch(acceptWaybillRequest());
-        axios.put(`/controller/waybills/${id}`)
-            .then(response => dispatch(showDialog(`Накладная ${id} успешно одобрена`)))
+        axios.put(`/controller/waybills/${id}`, {
+                waybillStatus: waybillStatus,
+                productStatus: productStatus
+        })
+            .then(response => {
+                dispatch(showDialog(`Накладная №${id} успешно одобрена`));
+                dispatch(setWaybillVisibility(false));
+            })
             .catch(error => dispatch(showDialog(`Прозошла ошибка при одобрении накладной. ${error}`, 'danger', [])));
     }
 };

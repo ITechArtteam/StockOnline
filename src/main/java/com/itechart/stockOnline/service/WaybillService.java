@@ -4,4 +4,5 @@ import com.itechart.stockOnline.model.Waybill;
 
 public interface WaybillService {
     Waybill getById(Long id);
+    Waybill update(Waybill waybill);
 }

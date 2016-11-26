@@ -21,7 +21,7 @@ class CheckOutputGoods extends React.Component {
     };
 
     onFindClick() {
-        this.props.findWaybillById(this.props.frontend.waybillId);
+        this.props.findWaybillById(this.props.frontend.waybillId, 'Партия сформирована');
     };
 
     onClearClick() {
@@ -30,7 +30,7 @@ class CheckOutputGoods extends React.Component {
     }
 
     onAcceptClick() {
-        this.props.acceptWaybill(this.props.frontend.waybillId);
+        this.props.acceptWaybill(this.props.waybill.id, 'Выпуск разрешен', 'Выпуск разрешен');
     }
 
     render(){
@@ -86,11 +86,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        findWaybillById: id => {
-            dispatch(checkOutputGoodsActionCreator.findWaybillById(id, 'Партия сформирована'))
+        findWaybillById: (id, waybillStatus) => {
+            dispatch(checkOutputGoodsActionCreator.findWaybillById(id, waybillStatus))
         },
-        acceptWaybill: id => {
-            dispatch(checkOutputGoodsActionCreator.acceptWaybill(id))
+        acceptWaybill: (id, waybillStatus, productStatus) => {
+            dispatch(checkOutputGoodsActionCreator.acceptWaybill(id, waybillStatus, productStatus))
         },
         showDialog: (text, type, buttons) => {
             dispatch(checkOutputGoodsActionCreator.showDialog(text, type, buttons))
