@@ -2,9 +2,9 @@ package com.itechart.stockOnline.controller;
 
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
-import com.itechart.stockOnline.model.StockOwnerCompany;
+import com.itechart.stockOnline.model.Driver;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
-import com.itechart.stockOnline.service.StockOwnerCompanyService;
+import com.itechart.stockOnline.service.DriverService;
 import com.itechart.stockOnline.util.ControllerHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,31 +15,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/customer")
-public class StockOwnerCompanyController {
+@RequestMapping(value = "/registrationOfGoods")
+public class DriverController {
 
-    private static final Logger logger = LoggerFactory.getLogger(StockOwnerCompanyController.class);
-
-    private final StockOwnerCompanyService companyService;
-
+    private static final Logger logger = LoggerFactory.getLogger(DriverController.class);
 
     @Autowired
-    public StockOwnerCompanyController(StockOwnerCompanyService companyService) {
-        this.companyService = companyService;
-    }
+    private DriverService driverService;
 
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public OwnerCompanyDto getClientData(@PathVariable String name){
-        name = ControllerHelper.convertToUtf(name);
-        logger.debug("REST request. Path:/customer/{}  method: GET", name);
-        return companyService.getClientDtoForOwnerCompany(name);
+    @RequestMapping(value = "/{passportNumber}", method = RequestMethod.GET)
+    public Driver getDriverData(@PathVariable String passportNumber){
+        passportNumber = ControllerHelper.convertToUtf(passportNumber);
+        logger.debug("REST request. Path:/registrationOfGoods/{}  method: GET", passportNumber);
+        return driverService.findByPassportNumber(passportNumber);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Object> addClient(@RequestBody OwnerCompanyDto client){
+    public ResponseEntity<Object> addDriver(@RequestBody OwnerCompanyDto client){
         logger.debug("REST request. Path:/customer/  method: POST Request body {}", client);
-        StockOwnerCompany company = companyService.saveOrUpdateStockOwnerCompany(client);
-        return new ResponseEntity<>(company.getId(), new HttpHeaders(), HttpStatus.OK);
+
+        return null;
     }
 
 

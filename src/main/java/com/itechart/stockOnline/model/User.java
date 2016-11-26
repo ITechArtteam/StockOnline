@@ -1,8 +1,5 @@
 package com.itechart.stockOnline.model;
 
-
-
-
 import com.itechart.stockOnline.validation.*;
 import com.itechart.stockOnline.validator.Worker;
 
