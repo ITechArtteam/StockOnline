@@ -1,13 +1,11 @@
 import React from 'react'
-
-import Calendar from 'react-input-calendar'
-import 'react-input-calendar/style/index.css'
+import DatePicker from 'react-bootstrap-date-picker'
 
 const DateInput = (props) => {
     return (
-        <div className="form-group">
+        <div className="form-group above-calendar">
             <label className="control-label">{props.label}</label>
-            <Calendar format={props.format} />
+            <DatePicker />
         </div>
     )
 };
