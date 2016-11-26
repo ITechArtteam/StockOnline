@@ -9,7 +9,8 @@ const TextInput = (props) => {
                 name={props.name}
                 value={props.value}
                 className="form-control"
-                onChange={(event) => props.onChange(event.target.value)} />
+                onChange={(event) => props.onChange(event.target.value)}
+                onBlur={props.onBlur} />
         </div>
     )
 };

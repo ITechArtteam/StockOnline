@@ -10,15 +10,37 @@ const initialState = {
     number: "",
     registrationDate: null,
     senderName: "",
-    senderId: null,
+    senderInfo: null,
+    sendersList: [
+        {
+            name: 'TEST_FIRST_SENDER_NAME'
+        },
+        {
+            name: 'TEST_SECOND_SENDER_NAME'
+        }
+    ],
     carrierName: "",
     carrierId: null,
     numbers: [],
-    driverId: null,
+    driverInfo: {
+        id: 1,
+        firstName: 'TEST_DRIVER_FIRSTNAME',
+        lastName: 'TEST_DRIVER_LASTNAME',
+        patronymic: 'TEST_DRIVER_PATRONYMIC',
+        passportNumber: 'zx500'
+    },
     description: "",
     products: [],
     chooseSenderModalIsOpen: false,
     chooseCarrierModalIsOpen: false,
+    transportTypes: [
+        {
+            value: 'AUTO', label: 'Автомобиль'
+        },
+        {
+            value: 'TRAIN', label: 'Поезд'
+        }
+    ],
     transportType: null
 };
 
