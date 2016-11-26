@@ -8,10 +8,11 @@ import {clientListReducer} from '../containers/systemClients/index';
 import {stockListReducer} from '../containers/stocks/index';
 import {checkOutputGoodsReducer} from '../containers/checkOutputGoods/index'
 import AuthReducer from './auth'
-import WaybillRegistrationFormReducer from './waybillRegitrationForm'
+import WaybillRegistrationFormReducer from './../containers/WaybillRegistration/reducer'
 import workerReducer from "./worker-reducer";
 import {stock} from '../containers/editStock/index';
 import roleReducer from "./role-reducer"
+
 const rootReducer = combineReducers({
     waybillRegistrationForm: WaybillRegistrationFormReducer,
     auth: AuthReducer,

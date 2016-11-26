@@ -1,10 +1,4 @@
-import {
-    HIDE_CHOOSE_SENDER_MODAL,
-    SHOW_CHOOSE_SENDER_MODAL,
-    CHANGE_WAYBILL_NUMBER,
-    CHANGE_WAYBILL_SENDER_NAME,
-    EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE
-} from '../actions/waybillRegistrationFormActions'
+import * as Actions from './actions'
 
 const initialState = {
     number: "",
@@ -45,29 +39,31 @@ const initialState = {
 };
 
 export default function waybillRegistrationForm(state = initialState, action) {
+
     switch (action.type) {
-        case CHANGE_WAYBILL_SENDER_NAME: {
+
+        case Actions.CHANGE_WAYBILL_SENDER_NAME: {
             return {
                 ...state,
                 number: action.senderName
             }
         }
-        case CHANGE_WAYBILL_NUMBER:
+        case Actions.CHANGE_WAYBILL_NUMBER:
             return {
                 ...state,
                 number: action.number
             };
-        case HIDE_CHOOSE_SENDER_MODAL:
+        case Actions.HIDE_CHOOSE_SENDER_MODAL:
             return {
                 ...state,
                 chooseSenderModalIsOpen: false
             };
-        case SHOW_CHOOSE_SENDER_MODAL:
+        case Actions.SHOW_CHOOSE_SENDER_MODAL:
             return {
                 ...state,
                 chooseSenderModalIsOpen: true
             };
-        case EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE:
+        case Actions.EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE:
             return {
                 ...state,
                 transportType: action.transportType
