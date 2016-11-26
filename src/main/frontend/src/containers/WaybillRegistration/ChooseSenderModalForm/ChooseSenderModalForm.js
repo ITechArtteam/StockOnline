@@ -21,7 +21,7 @@ class ChooseSenderModalForm extends React.Component {
             <Modal isOpen={this.props.isOpen} onRequestHide={() => {this.props.onHide()}}>
                 <ModalHeader>
                     <ModalClose onClick={() => {this.props.onHide()}}/>
-                    <ModalTitle>Modal title</ModalTitle>
+                    <ModalTitle>Выбор отправителя</ModalTitle>
                 </ModalHeader>
                 <ModalBody>
                     <Select options={[
