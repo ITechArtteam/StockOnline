@@ -2,7 +2,8 @@ import {
     HIDE_CHOOSE_SENDER_MODAL,
     SHOW_CHOOSE_SENDER_MODAL,
     CHANGE_WAYBILL_NUMBER,
-    CHANGE_WAYBILL_SENDER_NAME
+    CHANGE_WAYBILL_SENDER_NAME,
+    EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE
 } from '../actions/waybillRegistrationFormActions'
 
 const initialState = {
@@ -17,7 +18,8 @@ const initialState = {
     description: "",
     products: [],
     chooseSenderModalIsOpen: false,
-    chooseCarrierModalIsOpen: false
+    chooseCarrierModalIsOpen: false,
+    transportType: null
 };
 
 export default function waybillRegistrationForm(state = initialState, action) {
@@ -42,6 +44,11 @@ export default function waybillRegistrationForm(state = initialState, action) {
             return {
                 ...state,
                 chooseSenderModalIsOpen: true
+            };
+        case EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE:
+            return {
+                ...state,
+                transportType: action.transportType
             };
         default:
             return state;

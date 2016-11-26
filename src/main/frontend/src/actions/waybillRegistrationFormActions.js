@@ -9,6 +9,7 @@ export const HIDE_CHOOSE_SENDER_MODAL = 'HIDE_CHOOSE_SENDER_MODAL';
 export const SHOW_CHOOSE_SENDER_MODAL = 'SHOW_CHOOSE_SENDER_MODAL';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE = 'EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE';
 
 export function hideChooseSenderModal() {
     return {
@@ -31,6 +32,14 @@ export function changeWaybillNumber(number) {
 
 export function changeWaybillSenderName(name) {
     return {
+        type: CHANGE_WAYBILL_SENDER_NAME,
         senderName: name
+    }
+}
+
+export function setTransportType(type) {
+    return {
+        type: EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE,
+        transportType: type
     }
 }

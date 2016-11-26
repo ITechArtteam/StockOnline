@@ -17,7 +17,6 @@ import 'react-select/dist/react-select.css';
 
 import * as Actions from '../../actions/waybillRegistrationFormActions'
 
-import './style.css'
 
 
 class WaybillRegistration extends React.Component {
@@ -33,9 +32,22 @@ class WaybillRegistration extends React.Component {
                 <form>
                     <TextInput name="waybill-number" label="Номер накладной" value={this.props.waybillNumber} onChange={this.props.changeWaybillNumber} />
                     <DateInput format="DD/MM/YYYY" label="Дата регистрации накладной" />
-                    <TextInput name="sender" label="Отправитель" onChange={() => {() => {}}} />
+                    <TextInput name="sender" label="Отправитель" onChange={() => {}} />
                     <ChooseSenderModalForm isOpen={this.props.chooseSenderModalIsOpen} onHide={this.props.hideChooseSenderModal} />
                     <TextInput name="carrier" label="Перевозчик" onChange={() => {}} />
+                    <Select
+                        name="form-field-name"
+                        value={this.props.transportType}
+                        options={[
+                            {
+                                value: 'AUTO', label: 'Автомобиль'
+                            },
+                            {
+                                value: 'TRAIN', label: 'Поезд'
+                            }
+                        ]}
+                        onChange={(value) => {this.props.setTransportType(value)}}
+                    />
                     <div className="form-group">
                         <label className="control-label">Номера транспортных средств</label>
                         <BootstrapTable
@@ -96,7 +108,8 @@ class WaybillRegistration extends React.Component {
 function mapStateToProps(state) {
     return {
         waybillNumber: state.waybillRegistrationForm.number,
-        chooseSenderModalIsOpen: state.waybillRegistrationForm.chooseSenderModalIsOpen
+        chooseSenderModalIsOpen: state.waybillRegistrationForm.chooseSenderModalIsOpen,
+        transportType: state.waybillRegistrationForm.transportType
     }
 }
 
