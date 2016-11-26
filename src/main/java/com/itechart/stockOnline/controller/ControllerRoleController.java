@@ -45,7 +45,7 @@ public class ControllerRoleController {
         Logger.info("REST request. Path:/controller/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", id, acceptWaybillDto.getWaybillStatus(), acceptWaybillDto.getWaybillStatus());
         WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(acceptWaybillDto.getWaybillStatus());
         ProductStatus productStatusEnum = ProductStatus.getByAlias(acceptWaybillDto.getProductStatus());
-        controllerRoleService.updateWaybillAndProductStatus(id, waybillStatusEnum, productStatusEnum);
+        controllerRoleService.completeWaybillChecking(id, waybillStatusEnum, productStatusEnum);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

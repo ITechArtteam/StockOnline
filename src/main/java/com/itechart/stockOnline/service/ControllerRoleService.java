@@ -4,5 +4,5 @@ import com.itechart.stockOnline.model.enums.ProductStatus;
 import com.itechart.stockOnline.model.enums.WaybillStatus;
 
 public interface ControllerRoleService {
-    void updateWaybillAndProductStatus(Long waybillId, WaybillStatus waybillStatus, ProductStatus productStatus);
+    void completeWaybillChecking(Long waybillId, WaybillStatus waybillStatus, ProductStatus productStatus);
 }

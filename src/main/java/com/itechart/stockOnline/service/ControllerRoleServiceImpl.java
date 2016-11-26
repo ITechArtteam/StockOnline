@@ -22,11 +22,13 @@ public class ControllerRoleServiceImpl implements ControllerRoleService {
     @Autowired
     private WaybillService waybillService;
 
-    @Autowired ProductService productService;
+    @Autowired
+    private ProductService productService;
 
     @Override
     @Transactional
-    public void updateWaybillAndProductStatus(Long waybillId, WaybillStatus waybillStatus, ProductStatus productStatus) {
+    public void completeWaybillChecking(Long waybillId, WaybillStatus waybillStatus, ProductStatus productStatus) {
+        // TODO: 26.11.2016 add checked_by and check_date info in waybill
         Waybill waybill = waybillService.getById(waybillId);
         waybill.setStatus(waybillStatus);
         Logger.info("Waybill service_updateWaybillAndProductStatus: updating waybill status from {} to {}", waybill.getStatus(), waybillStatus);
