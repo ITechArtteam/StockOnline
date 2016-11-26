@@ -6,18 +6,16 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 
 import StaticControl from '../../components/StaticControl/StaticControl'
 
-import TextInput from './TextInput/TextInput'
-import DateInput from './DateInput/DateInput'
-import TextAreaInput from './TextAreaInput/TextAreaInput'
-import DisabledInput from './DisabledInput/DisabledInput'
+import TextInput from '../../components/TextInput/TextInput'
+import DateInput from '../../components/DateInput/DateInput'
+import TextAreaInput from '../../components/TextAreaInput/TextAreaInput'
+import DisabledInput from '../../components/DisabledInput/DisabledInput'
+import SelectInput from '../../components/SelectInput/SelectInput'
 import ChooseSenderModalForm from './ChooseSenderModalForm/ChooseSenderModalForm'
 
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+
 
 import * as Actions from './actions'
-
-
 
 
 class WaybillRegistration extends React.Component {
@@ -52,14 +50,11 @@ class WaybillRegistration extends React.Component {
                         name="carrier"
                         label="Перевозчик"
                         onChange={() => {}} />
-                    <div className="form-group">
-                        <label className="control-label">Тип транспорта</label>
-                        <Select
-                            name="form-field-name"
-                            value={this.props.transportType}
-                            options={this.props.transportTypes}
-                            onChange={(value) => {this.props.setTransportType(value)}} />
-                    </div>
+                    <SelectInput
+                        label="Тип транспортного средства"
+                        options={[{value: 'TRAIN', label: 'Поезд'}, {value: 'CAR', label: 'Автомобиль'}]}
+                        value={this.props.transportType}
+                        onChange={this.props.setTransportType} />
 
                     <div className="form-group">
                         <label className="control-label">Номера транспортных средств</label>
