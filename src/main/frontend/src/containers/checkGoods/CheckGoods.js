@@ -1,16 +1,20 @@
 import React from 'react'
 import WaybillInfo from "../../components/WaybillInfo/WaybillInfo"
 import {connect} from 'react-redux';
-import {checkOutputGoodsActionCreator} from './index'
+import {checkGoodsActionCreator} from './index'
 import AlertPopup from '../../components/AlertPopup/AlertPopup'
 import SimpleInput from '../../components/SimpleInput/SimpleInput'
 
-class CheckOutputGoods extends React.Component {
+class CheckGoods extends React.Component {
     constructor(props) {
         super(props);
         this.onFindClick = this.onFindClick.bind(this);
         this.onAcceptClick = this.onAcceptClick.bind(this);
         this.onClearClick = this.onClearClick.bind(this);
+    }
+
+    componentWillMount() {
+        this.onClearClick();
     }
 
     onInputValueChange = e => {
@@ -21,7 +25,7 @@ class CheckOutputGoods extends React.Component {
     };
 
     onFindClick() {
-        this.props.findWaybillById(this.props.frontend.waybillId, 'Партия сформирована');
+        this.props.findWaybillById(this.props.frontend.waybillId, this.props.expectedWaybillStatus);
     };
 
     onClearClick() {
@@ -30,7 +34,7 @@ class CheckOutputGoods extends React.Component {
     }
 
     onAcceptClick() {
-        this.props.acceptWaybill(this.props.waybill.id, 'Выпуск разрешен', 'Выпуск разрешен');
+        this.props.acceptWaybill(this.props.waybill.id, this.props.finalWaybillStatus, this.props.finalProductStatus);
     }
 
     render(){
@@ -51,12 +55,12 @@ class CheckOutputGoods extends React.Component {
                                     <button type="button" className="btn btn-default" onClick={this.onFindClick}>Поиск</button>
                                 </div>
                                 <div className="btn-group">
-                                    <button type="button" className="btn btn-danger" onClick={this.onClearClick}>Очистить поиск</button>
+                                    <button type="button" className="btn btn-default" onClick={this.onClearClick}>Очистить поиск</button>
                                 </div>
                                 <div className="btn-group">
                                     <button type="button" className="btn btn-success"
                                             disabled={this.props.frontend.waybillVisible ? "" : "disabled"}
-                                            onClick={this.onAcceptClick}>Одобрить</button>
+                                            onClick={this.onAcceptClick}>{this.props.acceptButtonText}</button>
                                 </div>
                             </div>
                         </div>
@@ -75,34 +79,41 @@ class CheckOutputGoods extends React.Component {
     }
 }
 
+CheckGoods.PropTypes = {
+    expectedWaybillStatus: React.PropTypes.string.isRequired,
+    finalWaybillStatus: React.PropTypes.string.isRequired,
+    finalProductStatus: React.PropTypes.string.isRequired,
+    acceptButtonText: React.PropTypes.string.isRequired
+};
+
 
 const mapStateToProps = state => {
     return {
-        waybill: state.checkOutputGoodsReducer.waybill,
-        alert: state.checkOutputGoodsReducer.alert,
-        frontend: state.checkOutputGoodsReducer.frontend
+        waybill: state.checkGoodsReducer.waybill,
+        alert: state.checkGoodsReducer.alert,
+        frontend: state.checkGoodsReducer.frontend
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         findWaybillById: (id, waybillStatus) => {
-            dispatch(checkOutputGoodsActionCreator.findWaybillById(id, waybillStatus))
+            dispatch(checkGoodsActionCreator.findWaybillById(id, waybillStatus))
         },
         acceptWaybill: (id, waybillStatus, productStatus) => {
-            dispatch(checkOutputGoodsActionCreator.acceptWaybill(id, waybillStatus, productStatus))
+            dispatch(checkGoodsActionCreator.acceptWaybill(id, waybillStatus, productStatus))
         },
         showDialog: (text, type, buttons) => {
-            dispatch(checkOutputGoodsActionCreator.showDialog(text, type, buttons))
+            dispatch(checkGoodsActionCreator.showDialog(text, type, buttons))
         },
         closeDialog: () => {
-            dispatch(checkOutputGoodsActionCreator.closeDialog())
+            dispatch(checkGoodsActionCreator.closeDialog())
         },
         setInputValue: (nameField, value) => {
-            dispatch(checkOutputGoodsActionCreator.setInputValue(nameField, value))
+            dispatch(checkGoodsActionCreator.setInputValue(nameField, value))
         },
         setWaybillVisibility: visibility => {
-            dispatch(checkOutputGoodsActionCreator.setWaybillVisibility(visibility))
+            dispatch(checkGoodsActionCreator.setWaybillVisibility(visibility))
         }
     }
 };
@@ -110,6 +121,6 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CheckOutputGoods);
+)(CheckGoods);
 
 

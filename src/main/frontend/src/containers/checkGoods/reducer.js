@@ -1,6 +1,6 @@
 import * as event from './constants'
 
-let initOutputGoodsState = {
+let initGoodsState = {
     waybill: {
         id: 123,
         status: 0,
@@ -45,7 +45,7 @@ let initOutputGoodsState = {
     }
 };
 
-export default (state = initOutputGoodsState, action) => {
+export default (state = initGoodsState, action) => {
     switch (action.type) {
         case event.FIND_WAYBILL_BY_ID_REQUEST:
             return state;

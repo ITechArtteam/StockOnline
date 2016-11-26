@@ -24,8 +24,8 @@ import Goods from "./containers/Goods";
 import ReceiptGoods from "./containers/ReceiptGoods";
 import DistributionGoods from "./containers/DistributionGoods";
 import DepartureGoods from "./containers/DepartureGoods";
-import CheckOutputGoods from "./containers/checkOutputGoods/CheckOutputGoods";
-import CheckInputGoods from "./containers/checkInputGoods/CheckInputGoods"
+import CheckOutputGoods from "./components/checkGoods/CheckOutputGoods";
+import CheckInputGoods from "./components/checkGoods/CheckInputGoods"
 import Acts from "./containers/Acts";
 import EditAct from "./containers/EditAct";
 import RequireRole from "./containers/RequireRole"
