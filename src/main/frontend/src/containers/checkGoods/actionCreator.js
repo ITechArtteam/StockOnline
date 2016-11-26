@@ -58,10 +58,10 @@ let acceptWaybill = (id, waybillStatus, productStatus) => {
                 productStatus: productStatus
         })
             .then(response => {
-                dispatch(showDialog(`Накладная №${id} успешно одобрена`));
+                dispatch(showDialog(`Для накладной №${id} успешно установлен статус "${waybillStatus}"`));
                 dispatch(setWaybillVisibility(false));
             })
-            .catch(error => dispatch(showDialog(`Прозошла ошибка при одобрении накладной. ${error}`, 'danger', [])));
+            .catch(error => dispatch(showDialog(`Прозошла ошибка при установке статуса накладной. ${error}`, 'danger', [])));
     }
 };
 
