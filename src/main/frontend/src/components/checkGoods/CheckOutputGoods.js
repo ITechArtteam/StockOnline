@@ -8,7 +8,8 @@ class CheckOutputGoods extends React.Component {
                 <CheckGoods expectedWaybillStatus="Партия сформирована"
                             finalWaybillStatus="Выпуск разрешен"
                             finalProductStatus="Выпуск разрешен"
-                            acceptButtonText="Разрешить выпуск"/>
+                            acceptButtonText="Разрешить выпуск"
+                            senderRole="controller"/>
             </div>
         )
     }

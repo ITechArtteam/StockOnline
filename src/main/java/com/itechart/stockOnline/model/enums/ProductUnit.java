@@ -3,6 +3,7 @@ package com.itechart.stockOnline.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.itechart.stockOnline.exception.UnknownEnumAliasError;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ProductUnit {
@@ -29,7 +30,7 @@ public enum ProductUnit {
             if(productUnit.getUnit().equalsIgnoreCase(alias))
                 return productUnit;
         }
-        throw new IllegalArgumentException();
+        throw new UnknownEnumAliasError(ProductUnit.class, alias);
     }
 
     @Override

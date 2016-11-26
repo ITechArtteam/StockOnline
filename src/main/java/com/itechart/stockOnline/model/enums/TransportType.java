@@ -3,6 +3,7 @@ package com.itechart.stockOnline.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.itechart.stockOnline.exception.UnknownEnumAliasError;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum TransportType {
@@ -26,7 +27,7 @@ public enum TransportType {
             if(transportType.getType().equalsIgnoreCase(alias))
                 return transportType;
         }
-        throw new IllegalArgumentException();
+        throw new UnknownEnumAliasError(TransportType.class, alias);
     }
 
     @Override

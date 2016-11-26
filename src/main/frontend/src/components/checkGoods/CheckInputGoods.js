@@ -7,7 +7,8 @@ class CheckInputGoods extends React.Component {
             <CheckGoods expectedWaybillStatus="Зарегистрирована"
                         finalWaybillStatus="Проверка завершена"
                         finalProductStatus="Проверка завершена"
-                        acceptButtonText="Завершить проверку"/>
+                        acceptButtonText="Завершить проверку"
+                        senderRole="controller"/>
         )
     }
 }

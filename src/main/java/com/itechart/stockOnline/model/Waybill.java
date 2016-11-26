@@ -18,6 +18,10 @@ public class Waybill {
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
+    @Column(name = "check_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date checkDate;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private WaybillStatus status;
@@ -54,6 +58,9 @@ public class Waybill {
 
     public Date getRegistrationDate() { return registrationDate; }
     public void setRegistrationDate(Date registrationDate) { this.registrationDate = registrationDate; }
+
+    public Date getCheckDate() { return checkDate; }
+    public void setCheckDate(Date checkDate) { this.checkDate = checkDate; }
 
     public WaybillStatus getStatus() { return status; }
     public void setStatus(WaybillStatus status) { this.status = status; }

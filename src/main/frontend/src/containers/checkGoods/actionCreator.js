@@ -25,7 +25,7 @@ let findWaybillSuccess = json => {
 let findWaybillById = (id, status) => {
     return dispatch => {
         dispatch(findWaybillRequest());
-        axios.get(`/controller/waybills/${id}`)
+        axios.get(`/checkgoods/waybills/${id}`)
             .then(response => {
                 let message = `Накладная №${id} успешно найдена`;
                 if(response.data.status === status) {
@@ -50,10 +50,10 @@ let acceptWaybillRequest= () => {
     }
 };
 
-let acceptWaybill = (id, waybillStatus, productStatus) => {
+let acceptWaybill = (id, waybillStatus, productStatus, senderRole) => {
     return dispatch => {
         dispatch(acceptWaybillRequest());
-        axios.put(`/controller/waybills/${id}`, {
+        axios.put(`/checkgoods/${senderRole}/waybills/${id}`, {
                 waybillStatus: waybillStatus,
                 productStatus: productStatus
         })

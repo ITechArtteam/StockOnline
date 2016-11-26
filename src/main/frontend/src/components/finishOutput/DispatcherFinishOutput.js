@@ -7,7 +7,8 @@ class DispatcherFinishOutput extends React.Component {
             <CheckGoods expectedWaybillStatus="Выпуск разрешен"
                         finalWaybillStatus="Вывезен со склада"
                         finalProductStatus="Вывезен со склада"
-                        acceptButtonText="Разрешить выпуск"/>
+                        acceptButtonText="Разрешить выпуск"
+                        senderRole="dispatcher"/>
         )
     }
 }

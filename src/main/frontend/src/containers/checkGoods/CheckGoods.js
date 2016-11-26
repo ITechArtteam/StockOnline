@@ -34,7 +34,10 @@ class CheckGoods extends React.Component {
     }
 
     onAcceptClick() {
-        this.props.acceptWaybill(this.props.waybill.id, this.props.finalWaybillStatus, this.props.finalProductStatus);
+        this.props.acceptWaybill(this.props.waybill.id,
+            this.props.finalWaybillStatus,
+            this.props.finalProductStatus,
+            this.props.senderRole);
     }
 
     render(){
@@ -83,7 +86,8 @@ CheckGoods.PropTypes = {
     expectedWaybillStatus: React.PropTypes.string.isRequired,
     finalWaybillStatus: React.PropTypes.string.isRequired,
     finalProductStatus: React.PropTypes.string.isRequired,
-    acceptButtonText: React.PropTypes.string.isRequired
+    acceptButtonText: React.PropTypes.string.isRequired,
+    senderRole: React.PropTypes.string.isRequired,
 };
 
 
@@ -100,8 +104,8 @@ const mapDispatchToProps = dispatch => {
         findWaybillById: (id, waybillStatus) => {
             dispatch(checkGoodsActionCreator.findWaybillById(id, waybillStatus))
         },
-        acceptWaybill: (id, waybillStatus, productStatus) => {
-            dispatch(checkGoodsActionCreator.acceptWaybill(id, waybillStatus, productStatus))
+        acceptWaybill: (id, waybillStatus, productStatus, senderRole) => {
+            dispatch(checkGoodsActionCreator.acceptWaybill(id, waybillStatus, productStatus, senderRole))
         },
         showDialog: (text, type, buttons) => {
             dispatch(checkGoodsActionCreator.showDialog(text, type, buttons))
