@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Component
 public class StockOwnerCompanyValidator {
@@ -33,7 +32,7 @@ public class StockOwnerCompanyValidator {
             errors.put("companyName", "Введите название компании.");
         } else if (name.length() < 3){
             errors.put("companyName", "Слишком короткое название компании.");
-        } else if (!checkRegexp("^[a-z_а-я]*$", name)){
+        } else if (!ValidatorUtils.checkRegexp("^[a-z_а-я]*$", name)){
             errors.put("companyName", "Может содержать только буквы и символ подчеркивания.");
         }
         Optional<StockOwnerCompany> ownerCompanyInBD = stockOwnerCompanyDao.findByName(ownerCompany.getName());
@@ -42,7 +41,5 @@ public class StockOwnerCompanyValidator {
         }
     }
 
-    private boolean checkRegexp(String regexp, String str){
-        return Pattern.compile(regexp, Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE).matcher(str).matches();
-    }
+
 }

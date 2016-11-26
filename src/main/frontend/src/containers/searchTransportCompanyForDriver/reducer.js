@@ -63,8 +63,9 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: action.data
-                }
+                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: "Водитель не найден."
+                },
+                inputErrors: action.data
             };
         case event.SET_DEFAULT_VALUE:
             return initUserState;

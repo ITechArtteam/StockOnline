@@ -19,6 +19,14 @@ class SearchTransportCompanyForDriver extends React.Component {
     }
 
     searchNumber() {
+        if (this.props.driver.inputErrors.searchNumber.length > 0) {
+            this.props.showAlertPopup("danger", "Исправь ошибки ввода.");
+            return;
+        }
+        if (!new RegExp("^[a-z]{2,4}[0-9]{3,10}$", "iu").test(this.props.driver.data.searchNumber)) {
+            this.props.setInputError("searchNumber", "Только английские буквы и цифры. Формат:  буквы{2-4}цифры{3-10}");
+            return;
+        }
         this.props.getDriver(this.props.driver.data.searchNumber);
     }
 
@@ -43,14 +51,15 @@ class SearchTransportCompanyForDriver extends React.Component {
         return this.props.driver.inputErrors.searchNumber == "" ? "none" : "inputError passportNumberError";
     }
 
-    getClassForNextButton(){
+    getClassForNextButton() {
         let className = "btn btn-primary";
-        if (!this.props.driver.frontend.isActiveNextButton){
+        if (!this.props.driver.frontend.isActiveNextButton) {
             className += " disabled";
         }
         console.log(className);
         return className;
     }
+
     render() {
         return (
             <div>
@@ -80,6 +89,11 @@ class SearchTransportCompanyForDriver extends React.Component {
                             <Link to="/clients" className="btn btn-default">Новый</Link>
                         </div>
                     </div>
+                    <AlertPopup isVisible={this.props.driver.frontend.showAlertPopup}
+                                message={this.props.driver.frontend.messageAlertPop}
+                                type={this.props.driver.frontend.typeAlertPopup}
+                                close={this.closeAlert}
+                    />
                 </div>
                 <div className="row">
                     <div
