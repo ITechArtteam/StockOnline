@@ -21,33 +21,45 @@ import * as Actions from '../../actions/waybillRegistrationFormActions'
 
 class WaybillRegistration extends React.Component {
 
-    showChooseSenderModal = () => {
-        this.props.showChooseSenderModal();
-    };
+    handleSaveSenderFormSubmit(value) {
+        this.props.hideChooseSenderModal();
+    }
 
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
                 <h3 className="text-center">Регистрация накладной</h3>
                 <form>
-                    <TextInput name="waybill-number" label="Номер накладной" value={this.props.waybillNumber} onChange={this.props.changeWaybillNumber} />
-                    <DateInput format="DD/MM/YYYY" label="Дата регистрации накладной" />
-                    <TextInput name="sender" label="Отправитель" onChange={() => {}} />
-                    <ChooseSenderModalForm isOpen={this.props.chooseSenderModalIsOpen} onHide={this.props.hideChooseSenderModal} />
-                    <TextInput name="carrier" label="Перевозчик" onChange={() => {}} />
-                    <Select
-                        name="form-field-name"
-                        value={this.props.transportType}
-                        options={[
-                            {
-                                value: 'AUTO', label: 'Автомобиль'
-                            },
-                            {
-                                value: 'TRAIN', label: 'Поезд'
-                            }
-                        ]}
-                        onChange={(value) => {this.props.setTransportType(value)}}
-                    />
+                    <TextInput
+                        name="waybill-number"
+                        label="Номер накладной"
+                        value={this.props.waybillNumber}
+                        onChange={this.props.changeWaybillNumber} />
+                    <DateInput
+                        format="DD/MM/YYYY"
+                        label="Дата регистрации накладной" />
+                    <TextInput
+                        name="sender"
+                        label="Отправитель"
+                        onChange={() => {}}
+                        onBlur={this.props.showChooseSenderModal} />
+                    <ChooseSenderModalForm
+                        isOpen={this.props.chooseSenderModalIsOpen}
+                        onSave={(value) => {this.handleSaveSenderFormSubmit(value)}}
+                        onHide={this.props.hideChooseSenderModal} />
+                    <TextInput
+                        name="carrier"
+                        label="Перевозчик"
+                        onChange={() => {}} />
+                    <div className="form-group">
+                        <label className="control-label">Тип транспорта</label>
+                        <Select
+                            name="form-field-name"
+                            value={this.props.transportType}
+                            options={this.props.transportTypes}
+                            onChange={(value) => {this.props.setTransportType(value)}} />
+                    </div>
+
                     <div className="form-group">
                         <label className="control-label">Номера транспортных средств</label>
                         <BootstrapTable
@@ -68,12 +80,18 @@ class WaybillRegistration extends React.Component {
                             <TableHeaderColumn isKey dataField="number">Номер</TableHeaderColumn>
                         </BootstrapTable>
                     </div>
-                    <TextInput name="driver" label="Водитель" onChange={() => {}} />
-                    <TextAreaInput label="Дополнительное описание товарной партии" value={this.props.description} onChange={() => {}} />
+                    <TextInput
+                        name="driver"
+                        label="Водитель"
+                        onChange={() => {}} />
+                    <TextAreaInput
+                        label="Дополнительное описание товарной партии"
+                        value={this.props.description}
+                        onChange={() => {}} />
                     <DisabledInput label="Сумма товаров по накладной" />
                     <DisabledInput label="Количество товаров по накладной" />
                     <DisabledInput label="Диспетчер склада" />
-                    <div>
+                    <div className="form-group">
                         <label className="control-label">Описание товаров</label>
                         <BootstrapTable
                             data={[]}
@@ -97,7 +115,7 @@ class WaybillRegistration extends React.Component {
                         </BootstrapTable>
                     </div>
                     <div className="col-lg-offset-5 vertical-offset">
-                        <Button bsStyle="primary">Сохранить</Button>
+                        <input type="button" className="btn btn-primary" value="Сохранить" />
                     </div>
                 </form>
             </div>
@@ -109,6 +127,8 @@ function mapStateToProps(state) {
     return {
         waybillNumber: state.waybillRegistrationForm.number,
         chooseSenderModalIsOpen: state.waybillRegistrationForm.chooseSenderModalIsOpen,
+        sendersList: state.waybillRegistrationForm.sendersList,
+        transportTypes: state.waybillRegistrationForm.transportTypes,
         transportType: state.waybillRegistrationForm.transportType
     }
 }
