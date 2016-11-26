@@ -10,6 +10,8 @@ export const SHOW_CHOOSE_SENDER_MODAL = 'SHOW_CHOOSE_SENDER_MODAL';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE = 'EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE';
+export const CHOOSE_SENDER_MODAL_LOAD_SENDERS = 'CHOOSE_SENDER_MODAL_LOAD_SENDERS';
+export const CHOOSE_SENDER_MODAL_SELECT_SENDER = 'CHOOSE_SENDER_MODAL_SELECT_SENDER';
 
 export function hideChooseSenderModal() {
     return {
@@ -41,5 +43,19 @@ export function setTransportType(type) {
     return {
         type: EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE,
         transportType: type
+    }
+}
+
+export function loadSenders() {
+    return {
+        type: CHOOSE_SENDER_MODAL_LOAD_SENDERS,
+        senders: [{name: 'first_sender'}, {name: 'second_sender'}]
+    }
+}
+
+export function selectSender(sender) {
+    return {
+        type: CHOOSE_SENDER_MODAL_SELECT_SENDER,
+        selectedSender: sender
     }
 }

@@ -6,16 +6,17 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 
 import StaticControl from '../../components/StaticControl/StaticControl'
 
-import TextInput from '../../components/TextInput/component'
-import DateInput from '../../components/DateInput/component'
-import TextAreaInput from '../../components/TextAreaInput/component'
-import DisabledInput from '../../components/DisabledInput/component'
-import ChooseSenderModalForm from './ChooseSenderModalForm/component'
+import TextInput from './TextInput/TextInput'
+import DateInput from './DateInput/DateInput'
+import TextAreaInput from './TextAreaInput/TextAreaInput'
+import DisabledInput from './DisabledInput/DisabledInput'
+import ChooseSenderModalForm from './ChooseSenderModalForm/ChooseSenderModalForm'
 
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
-import * as Actions from '../../actions/waybillRegistrationFormActions'
+import * as Actions from './actions'
+
 
 
 
