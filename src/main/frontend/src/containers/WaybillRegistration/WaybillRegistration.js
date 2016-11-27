@@ -11,6 +11,7 @@ import DateInput from '../../components/DateInput/DateInput'
 import TextAreaInput from '../../components/TextAreaInput/TextAreaInput'
 import DisabledInput from '../../components/DisabledInput/DisabledInput'
 import SelectInput from '../../components/SelectInput/SelectInput'
+import DriverInfo from './DriverInfo/DriverInfo'
 import ChooseSenderModalForm from './ChooseSenderModalForm/ChooseSenderModalForm'
 import ChooseCarrierModalForm from './ChooseCarrierModalForm/ChooseCarrierModalForm'
 import TransportNumbers from './TransportNumbers/TransportNumbers'
@@ -79,10 +80,7 @@ class WaybillRegistration extends React.Component {
                         value={this.props.transportType}
                         onChange={this.props.setTransportType} />
                     <TransportNumbers transportType={this.props.transportType} />
-                    <TextInput
-                        name="driver"
-                        label="Водитель"
-                        onChange={() => {}} />
+                    <DriverInfo driver={this.props.driver} />
                     <TextAreaInput
                         label="Дополнительное описание товарной партии"
                         value={this.props.description}
@@ -129,7 +127,8 @@ function mapStateToProps(state) {
         chooseCarrierModalFormIsOpen: state.waybillRegistrationForm.chooseCarrierModalFormIsOpen,
         sendersList: state.waybillRegistrationForm.sendersList,
         transportTypes: state.waybillRegistrationForm.transportTypes,
-        transportType: state.waybillRegistrationForm.transportType
+        transportType: state.waybillRegistrationForm.transportType,
+        driver: state.waybillRegistrationForm.driver
     }
 }
 

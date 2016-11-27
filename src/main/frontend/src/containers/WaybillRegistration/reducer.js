@@ -16,7 +16,7 @@ const initialState = {
     carrierName: "",
     carrierId: null,
     numbers: [],
-    driverInfo: {
+    driver: {
         id: 1,
         firstName: 'TEST_DRIVER_FIRSTNAME',
         lastName: 'TEST_DRIVER_LASTNAME',
