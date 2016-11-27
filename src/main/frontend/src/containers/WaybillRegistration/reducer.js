@@ -4,17 +4,30 @@ const initialState = {
     number: "",
     registrationDate: null,
     senderName: "",
-    senderInfo: null,
-    sendersList: [
+    senderId: null,
+    senders: [
         {
+            id: 1,
             name: 'TEST_FIRST_SENDER_NAME'
         },
         {
+            id: 2,
             name: 'TEST_SECOND_SENDER_NAME'
         }
     ],
     carrierName: "",
     carrierId: null,
+    selectedCarrierId: null,
+    carriers: [
+        {
+            id: 1,
+            name: 'TEST_FIRST_CARRIER_NAME'
+        },
+        {
+            id: 2,
+            name: 'TEST_SECOND_CARRIER_NAME'
+        }
+    ],
     numbers: [],
     driver: {
         id: 1,
@@ -117,6 +130,12 @@ export default function waybillRegistrationForm(state = initialState, action) {
             return {
                 ...state,
                 registrationDate: action.date
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SELECT_CARRIER:
+            return {
+                ...state,
+                selectedCarrierId: action.carrierId
             };
 
         default:
