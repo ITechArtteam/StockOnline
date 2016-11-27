@@ -24,7 +24,14 @@ const initialState = {
         passportNumber: 'zx500'
     },
     description: "",
-    products: [],
+    products: [
+        {
+            name: 'first product',
+            cost: '10',
+            count: '2',
+            storage: 'none'
+        }
+    ],
     chooseSenderModalIsOpen: false,
     chooseCarrierModalFormIsOpen: false,
     transportTypes: [

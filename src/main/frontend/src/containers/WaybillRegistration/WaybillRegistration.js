@@ -43,6 +43,16 @@ class WaybillRegistration extends React.Component {
         this.props.hideChooseCarrierModalForm();
     }
 
+    getTotalProductsSum() {
+        return this.props.products.reduce(function(sum, current) {
+            return sum + current.cost * current.count;
+        }, 0) + 'у.е.';
+    }
+
+    getTotalProductsAmout() {
+        return this.props.products.length;
+    }
+
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
@@ -85,9 +95,15 @@ class WaybillRegistration extends React.Component {
                         label="Дополнительное описание товарной партии"
                         value={this.props.description}
                         onChange={this.props.changeWaybillDescription} />
-                    <DisabledInput label="Сумма товаров по накладной" />
-                    <DisabledInput label="Количество товаров по накладной" />
-                    <DisabledInput label="Диспетчер склада" />
+                    <DisabledInput
+                        label="Сумма товаров по накладной"
+                        value={this.getTotalProductsSum()} />
+                    <DisabledInput
+                        label="Количество товаров по накладной"
+                        value={this.getTotalProductsAmout()} />
+                    <DisabledInput
+                        label="Диспетчер склада"
+                        value={this.props.dispatcher} />
                     <div className="form-group">
                         <label className="control-label">Описание товаров</label>
                         <BootstrapTable
@@ -128,7 +144,9 @@ function mapStateToProps(state) {
         sendersList: state.waybillRegistrationForm.sendersList,
         transportTypes: state.waybillRegistrationForm.transportTypes,
         transportType: state.waybillRegistrationForm.transportType,
-        driver: state.waybillRegistrationForm.driver
+        driver: state.waybillRegistrationForm.driver,
+        dispatcher: state.auth.username,
+        products: state.waybillRegistrationForm.products
     }
 }
 
