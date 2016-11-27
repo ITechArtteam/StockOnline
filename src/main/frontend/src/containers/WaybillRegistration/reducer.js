@@ -26,7 +26,7 @@ const initialState = {
     description: "",
     products: [],
     chooseSenderModalIsOpen: false,
-    chooseCarrierModalIsOpen: false,
+    chooseCarrierModalFormIsOpen: false,
     transportTypes: [
         {
             value: 'AUTO', label: 'Автомобиль'
@@ -86,6 +86,18 @@ export default function waybillRegistrationForm(state = initialState, action) {
             return {
                 ...state,
                 selectedSender: action.selectedSender
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SHOW_CHOOSE_CARRIER_MODAL_FORM:
+            return {
+                ...state,
+                chooseCarrierModalFormIsOpen: true
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_HIDE_CHOOSE_CARRIER_MODAL_FORM:
+            return {
+                ...state,
+                chooseCarrierModalFormIsOpen: false
             };
 
         default:

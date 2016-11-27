@@ -12,6 +12,7 @@ import TextAreaInput from '../../components/TextAreaInput/TextAreaInput'
 import DisabledInput from '../../components/DisabledInput/DisabledInput'
 import SelectInput from '../../components/SelectInput/SelectInput'
 import ChooseSenderModalForm from './ChooseSenderModalForm/ChooseSenderModalForm'
+import ChooseCarrierModalForm from './ChooseCarrierModalForm/ChooseCarrierModalForm'
 import TransportNumbers from './TransportNumbers/TransportNumbers'
 
 
@@ -21,8 +22,24 @@ import * as Actions from './actions'
 
 class WaybillRegistration extends React.Component {
 
+    handleSenderNameOnBlur() {
+        if (!this.props.chooseCarrierModalFormIsOpen) {
+            this.props.showChooseSenderModal();
+        }
+    }
+
+    handleCarrierNameOnBlur() {
+        if (!this.props.chooseSenderModalIsOpen) {
+            this.props.showChooseCarrierModalForm();
+        }
+    }
+
     handleSaveSenderFormSubmit(value) {
         this.props.hideChooseSenderModal();
+    }
+
+    handleChooseCarrierFormSubmit(value) {
+        this.props.hideChooseCarrierModalForm();
     }
 
     render() {
@@ -42,7 +59,7 @@ class WaybillRegistration extends React.Component {
                         name="sender"
                         label="Отправитель"
                         onChange={() => {}}
-                        onBlur={this.props.showChooseSenderModal} />
+                        onBlur={() => this.handleSenderNameOnBlur()} />
                     <ChooseSenderModalForm
                         isOpen={this.props.chooseSenderModalIsOpen}
                         onSave={(value) => {this.handleSaveSenderFormSubmit(value)}}
@@ -50,7 +67,12 @@ class WaybillRegistration extends React.Component {
                     <TextInput
                         name="carrier"
                         label="Перевозчик"
-                        onChange={() => {}} />
+                        onChange={() => {}}
+                        onBlur={() => this.handleCarrierNameOnBlur()} />
+                    <ChooseCarrierModalForm
+                        isOpen={this.props.chooseCarrierModalFormIsOpen}
+                        onSave={(value) => {this.handleChooseCarrierFormSubmit(value)}}
+                        onHide={this.props.hideChooseCarrierModalForm} />
                     <SelectInput
                         label="Тип транспортного средства"
                         options={[{value: 'TRAIN', label: 'Поезд'}, {value: 'CAR', label: 'Автомобиль'}]}
@@ -104,6 +126,7 @@ function mapStateToProps(state) {
     return {
         waybillNumber: state.waybillRegistrationForm.number,
         chooseSenderModalIsOpen: state.waybillRegistrationForm.chooseSenderModalIsOpen,
+        chooseCarrierModalFormIsOpen: state.waybillRegistrationForm.chooseCarrierModalFormIsOpen,
         sendersList: state.waybillRegistrationForm.sendersList,
         transportTypes: state.waybillRegistrationForm.transportTypes,
         transportType: state.waybillRegistrationForm.transportType
