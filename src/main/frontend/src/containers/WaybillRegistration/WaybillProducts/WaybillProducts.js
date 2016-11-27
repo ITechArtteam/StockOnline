@@ -11,10 +11,29 @@ import './style.css'
 
 class WaybillProducts extends React.Component {
 
+    handleProductSelect(product, isSelected) {
+        if (isSelected) {
+            this.props.selectProduct(product.name);
+        }
+        else {
+            this.props.selectProduct(null);
+        }
+
+        return true;
+    }
+
+    handleProductDelete() {
+        if (this.props.selectedProductName !== null) {
+            this.props.deleteProduct(this.props.selectedProductName);
+            this.props.selectProduct(null);
+        }
+    }
+
     render() {
         const selectRow = {
             mode: 'radio',
             clickToSelect: true,
+            onSelect: (row, isSelected) => {this.handleProductSelect(row, isSelected)},
             bgColor: "rgb(238, 193, 213)",
             hideSelectColumn: true
         };
@@ -39,7 +58,8 @@ class WaybillProducts extends React.Component {
                     <input
                         type="button"
                         className="btn btn-danger action-button"
-                        value="Удалить" />
+                        value="Удалить"
+                        onClick={() => {this.handleProductDelete()}} />
                 </div>
                 <BootstrapTable
                     data={this.props.products}
@@ -59,7 +79,8 @@ class WaybillProducts extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        products: state.waybillRegistrationForm.waybillProducts.products
+        products: state.waybillRegistrationForm.waybillProducts.products,
+        selectedProductName: state.waybillRegistrationForm.waybillProducts.selectedProductName
     }
 }
 

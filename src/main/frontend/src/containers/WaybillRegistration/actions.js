@@ -25,6 +25,30 @@ export const EDIT_WAYBILL_FORM_ADD_NUMBER = 'EDIT_WAYBILL_FORM_ADD_NUMBER';
 export const EDIT_WAYBILL_FORM_DELETE_NUMBER = 'EDIT_WAYBILL_FORM_DELETE_NUMBER';
 export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SHOW = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SHOW';
 export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_HIDE = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_HIDE';
+export const EDIT_WAYBILL_FORM_SELECT_PRODUCT = 'EDIT_WAYBILL_FORM_SELECT_PRODUCT';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT = 'EDIT_WAYBILL_FORM_ADD_PRODUCT';
+export const EDIT_WAYBILL_FORM_DELETE_PRODUCT = 'EDIT_WAYBILL_FORM_DELETE_PRODUCT';
+
+export function selectProduct(productName) {
+    return {
+        type: EDIT_WAYBILL_FORM_SELECT_PRODUCT,
+        productName
+    }
+}
+
+export function addProduct(product) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_PRODUCT,
+        product
+    }
+}
+
+export function deleteProduct(productName) {
+    return {
+        type: EDIT_WAYBILL_FORM_DELETE_PRODUCT,
+        productName
+    }
+}
 
 export function showAddProductModalForm() {
     return {

@@ -51,6 +51,7 @@ const initialState = {
     },
     description: "",
     waybillProducts: {
+        selectedProductName: null,
         products: [
             {
                 name: 'first product',
@@ -268,6 +269,38 @@ export default function waybillRegistrationForm(state = initialState, action) {
                         ...state.waybillProducts.addProductModalForm,
                         isOpen: false
                     }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SELECT_PRODUCT:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    selectedProductName: action.productName
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    products: [
+                        ...state.waybillProducts.products,
+                        action.product
+                    ]
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_DELETE_PRODUCT:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    products: state.waybillProducts.products.filter(function(product) {
+                        return product.name !== action.productName
+                    })
                 }
             };
 
