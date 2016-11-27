@@ -84,7 +84,7 @@ class WaybillRegistration extends React.Component {
                     <TextAreaInput
                         label="Дополнительное описание товарной партии"
                         value={this.props.description}
-                        onChange={() => {}} />
+                        onChange={this.props.changeWaybillDescription} />
                     <DisabledInput label="Сумма товаров по накладной" />
                     <DisabledInput label="Количество товаров по накладной" />
                     <DisabledInput label="Диспетчер склада" />

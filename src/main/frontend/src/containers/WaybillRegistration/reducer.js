@@ -100,6 +100,12 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 chooseCarrierModalFormIsOpen: false
             };
 
+        case Actions.EDIT_WAYBILL_FORM_CHANGE_WAYBILL_DESCRIPTION:
+            return {
+                ...state,
+                description: action.description
+            };
+
         default:
             return state;
     }
