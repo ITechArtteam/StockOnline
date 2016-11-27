@@ -17,18 +17,24 @@ const initialState = {
     ],
     carrierName: "",
     carrierId: null,
-    selectedCarrierId: null,
-    carriers: [
-        {
-            id: 1,
-            name: 'TEST_FIRST_CARRIER_NAME'
-        },
-        {
-            id: 2,
-            name: 'TEST_SECOND_CARRIER_NAME'
-        }
-    ],
-    numbers: [],
+    selectCarrierModalForm: {
+        selectedCarrierId: null,
+        carriers: [
+            {
+                id: 1,
+                name: 'TEST_FIRST_CARRIER_NAME'
+            },
+            {
+                id: 2,
+                name: 'TEST_SECOND_CARRIER_NAME'
+            }
+        ]
+    },
+    transportNumbers: {
+        numbers: [],
+        car: '',
+        trailer: ''
+    },
     driver: {
         id: 1,
         firstName: 'TEST_DRIVER_FIRSTNAME',
@@ -135,7 +141,28 @@ export default function waybillRegistrationForm(state = initialState, action) {
         case Actions.EDIT_WAYBILL_FORM_SELECT_CARRIER:
             return {
                 ...state,
-                selectedCarrierId: action.carrierId
+                selectCarrierModalForm: {
+                    ...state.selectCarrierModalForm,
+                    selectedCarrierId: action.carrierId
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_CHANGE_CAR_NUMBER:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    car: action.number
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_CHANGE_TRAILER_NUMBER:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    trailer: action.number
+                }
             };
 
         default:

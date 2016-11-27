@@ -54,8 +54,8 @@ class ChooseCarrierModalForm extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        carriers: state.waybillRegistrationForm.carriers,
-        carrierId: state.waybillRegistrationForm.selectedCarrierId
+        carriers: state.waybillRegistrationForm.selectCarrierModalForm.carriers,
+        carrierId: state.waybillRegistrationForm.selectCarrierModalForm.selectedCarrierId
     }
 }
 
