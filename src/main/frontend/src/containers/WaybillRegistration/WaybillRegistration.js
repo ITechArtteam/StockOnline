@@ -13,8 +13,7 @@ import DriverInfo from './DriverInfo/DriverInfo'
 import ChooseSenderModalForm from './ChooseSenderModalForm/ChooseSenderModalForm'
 import ChooseCarrierModalForm from './ChooseCarrierModalForm/ChooseCarrierModalForm'
 import TransportNumbers from './TransportNumbers/TransportNumbers'
-
-
+import WaybillProducts from './WaybillProducts/WaybillProducts'
 
 import * as Actions from './actions'
 
@@ -43,7 +42,7 @@ class WaybillRegistration extends React.Component {
 
     getTotalProductsSum() {
         return this.props.products.reduce(function(sum, current) {
-            return sum + current.cost * current.count;
+            return sum + current.price * current.count;
         }, 0) + 'у.е.';
     }
 
@@ -104,29 +103,7 @@ class WaybillRegistration extends React.Component {
                     <DisabledInput
                         label="Диспетчер склада"
                         value={this.props.dispatcher} />
-                    <div className="form-group">
-                        <label className="control-label">Описание товаров</label>
-                        <BootstrapTable
-                            data={[]}
-                            selectRow={{
-                                mode: "checkbox",
-                                clickToSelect: true,
-                                bgColor: "rgb(238, 193, 213)",
-                                hideSelectColumn: true
-                            }}
-                            options={{
-                                noDataText: "Товары не указаны",
-                                handleConfirmDeleteRow(next, dropRowKeys) {
-                                    next();
-                                }
-                            }}
-                            striped hover insertRow deleteRow >
-                            <TableHeaderColumn isKey dataField="name">Наименование</TableHeaderColumn>
-                            <TableHeaderColumn dataField="weight">Вес</TableHeaderColumn>
-                            <TableHeaderColumn dataField="price">Стоимость</TableHeaderColumn>
-                            <TableHeaderColumn dataField="storeWay">Способ хранения</TableHeaderColumn>
-                        </BootstrapTable>
-                    </div>
+                    <WaybillProducts />
                     <div className="col-lg-offset-5 vertical-offset">
                         <input type="button" className="btn btn-primary" value="Сохранить" />
                     </div>
@@ -147,7 +124,7 @@ function mapStateToProps(state) {
         transportType: state.waybillRegistrationForm.transportType,
         driver: state.waybillRegistrationForm.driver,
         dispatcher: state.auth.username,
-        products: state.waybillRegistrationForm.products
+        products: state.waybillRegistrationForm.waybillProducts.products
     }
 }
 

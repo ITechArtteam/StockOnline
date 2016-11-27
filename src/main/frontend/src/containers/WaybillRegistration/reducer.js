@@ -50,14 +50,23 @@ const initialState = {
         passportNumber: 'zx500'
     },
     description: "",
-    products: [
-        {
-            name: 'first product',
-            cost: '10',
-            count: '2',
-            storage: 'none'
+    waybillProducts: {
+        products: [
+            {
+                name: 'first product',
+                price: '10',
+                count: '2',
+                storage: 'none'
+            }
+        ],
+        addProductModalForm: {
+            isOpen: false,
+            name: '',
+            cost: '',
+            count: '',
+            storage: ''
         }
-    ],
+    },
     chooseSenderModalIsOpen: false,
     chooseCarrierModalFormIsOpen: false,
     transportTypes: [
@@ -235,6 +244,30 @@ export default function waybillRegistrationForm(state = initialState, action) {
                     numbers: state.transportNumbers.numbers.filter(function(number) {
                         return number.number !== action.number;
                     })
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SHOW:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        isOpen: true
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_HIDE:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        isOpen: false
+                    }
                 }
             };
 
