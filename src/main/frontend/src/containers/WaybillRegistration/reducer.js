@@ -31,7 +31,13 @@ const initialState = {
         ]
     },
     transportNumbers: {
-        numbers: [],
+        addNumberModalForm: {
+            isOpen: false,
+            number: ''
+        },
+        numbers: [{
+            number: '11111'
+        }],
         car: '',
         trailer: '',
         selectedNumber: null
@@ -172,6 +178,52 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 transportNumbers: {
                     ...state.transportNumbers,
                     selectedNumber: action.number
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_CHANGE_NUMBER:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    addNumberModalForm: {
+                        ...state.transportNumbers.addNumberModalForm,
+                        number: action.number
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_SHOW: {
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    addNumberModalForm: {
+                        ...state.transportNumbers.addNumberModalForm,
+                        isOpen: true
+                    }
+                }
+            };
+        }
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_HIDE:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    addNumberModalForm: {
+                        ...state.transportNumbers.addNumberModalForm,
+                        isOpen: false
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_NUMBER:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    numbers: [...state.transportNumbers.numbers, action.number]
                 }
             };
 

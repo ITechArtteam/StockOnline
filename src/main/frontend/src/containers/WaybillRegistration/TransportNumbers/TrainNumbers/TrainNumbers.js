@@ -5,6 +5,8 @@ import * as Actions from '../../actions'
 
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 
+import AddNumberModalForm from './AddNumberModalForm/AddNumberModalForm'
+
 import './style.css'
 
 class TrainNumbers extends React.Component {
@@ -41,14 +43,16 @@ class TrainNumbers extends React.Component {
                     <input
                         type="button"
                         value="Добавить"
-                        className="btn btn-primary action-button" />
+                        className="btn btn-primary action-button"
+                        onClick={this.props.showAddNumberModalForm} />
+                    <AddNumberModalForm />
                     <input
                         type="button"
                         value="Удалить"
                         className="btn btn-danger action-button" />
                 </div>
                 <BootstrapTable
-                    data={[]}
+                    data={this.props.numbers}
                     selectRow={selectRow}
                     options={options}
                     striped

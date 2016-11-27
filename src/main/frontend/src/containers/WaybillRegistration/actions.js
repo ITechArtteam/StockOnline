@@ -18,6 +18,36 @@ export const EDIT_WAYBILL_FORM_SELECT_CARRIER = 'EDIT_WAYBILL_FORM_SELECT_CARRIE
 export const EDIT_WAYBILL_FORM_CHANGE_CAR_NUMBER = 'EDIT_WAYBILL_FORM_CHANGE_CAR_NUMBER';
 export const EDIT_WAYBILL_FORM_CHANGE_TRAILER_NUMBER = 'EDIT_WAYBILL_FORM_CHANGE_TRAILER_NUMBER';
 export const EDIT_WAYBILL_FORM_SELECT_NUMBER = 'EDIT_WAYBILL_FORM_SELECT_NUMBER';
+export const EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_SHOW = 'EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_SHOW';
+export const EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_HIDE = 'EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_HIDE';
+export const EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_CHANGE_NUMBER = 'EDIT_WAYBILL_ADD_NUMBER_MODAL_FORM_CHANGE_NUMBER';
+export const EDIT_WAYBILL_FORM_ADD_NUMBER = 'EDIT_WAYBILL_FORM_ADD_NUMBER';
+
+export function addNumber(number) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_NUMBER,
+        number
+    }
+}
+
+export function showAddNumberModalForm() {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_SHOW
+    }
+}
+
+export function hideAddNumberModalForm() {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_HIDE
+    }
+}
+
+export function changeBeingCreatedNumber(number) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_CHANGE_NUMBER,
+        number
+    }
+}
 
 export function selectNumber(number) {
     return {
