@@ -10,7 +10,7 @@ const SelectInput = (props) => {
             <Select
                 value={props.value}
                 options={props.options}
-                onChange={(value) => {props.onChange(value)}}
+                onChange={(value) => {props.onChange(value != null ? value.value : null)}}
                 placeholder={props.label} />
         </div>
     )
