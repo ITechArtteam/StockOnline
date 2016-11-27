@@ -25,7 +25,6 @@ class EditWorkerContainer extends React.Component {
 
 
     render() {
-        console.log(this.props.roles)
         return (
             <EditWorker worker={this.props.worker} roles={this.props.roles} onSaveClick={this.saveWorker} message={this.props.message}/>
         );

@@ -1,19 +1,20 @@
 package com.itechart.stockOnline.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.service.WorkerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
 @RequestMapping(value = "/api")
 public class WorkerController {
     private final static Logger LOGGER = LoggerFactory.getLogger(WorkerController.class);
@@ -50,6 +51,20 @@ public class WorkerController {
         LOGGER.debug("REST request. Path:/worker  method: POST Request body {worker}", worker);
         return workerService.save(worker);
 
+    }
+
+    @ExceptionHandler(ValidationError.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String fieldHasErrors(ValidationError error){
+        LOGGER.error("fieldHasErrors({})", error.toString());
+        return error.getErrors().toString();
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String exception(Exception exception){
+        LOGGER.error("fieldHasErrors({})", exception.getMessage());
+        return "Ошибка на сервере";
     }
 
 

@@ -49,15 +49,16 @@ export function deleteWorker(id, thenRedirectPath, errorRedirectPath) {
 }
 
 export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
-    console.log("saveWorker")
-    console.log(worker.roles)
+    console.log("saveWorker");
+    console.log("saveWorker3");
     return axios.post('/api/worker/', worker)
         .then(response => {
             console.log(response);
             redirect(thenRedirectPath);
-            store.dispatch(saveWorkerSuccess(worker,"Работник добавлен!"))
+            store.dispatch(saveWorkerSuccess(response.data,"Работник добавлен!"))
             return response;
         }).catch(error=>{
+            console.log("Ошибка при добовление работника");
             console.log(error);
             store.dispatch(saveWorkerUnsuccess(error.data))
             redirect(errorRedirectPath);
