@@ -11,10 +11,22 @@ import './style.css'
 
 class TrainNumbers extends React.Component {
 
-    handleNumberSelect(row, isSelected, e) {
-
+    handleNumberSelect(row, isSelected) {
+        if (isSelected) {
+            this.props.selectNumber(row.number);
+        }
+        else {
+            this.props.selectNumber(null);
+        }
 
         return true;
+    }
+
+    handleDeleteNumber() {
+        if (this.props.selectedNumber != null) {
+            this.props.deleteNumber(this.props.selectedNumber);
+            this.props.selectNumber(null);
+        }
     }
 
     render() {
@@ -49,7 +61,8 @@ class TrainNumbers extends React.Component {
                     <input
                         type="button"
                         value="Удалить"
-                        className="btn btn-danger action-button" />
+                        className="btn btn-danger action-button"
+                        onClick={() => {this.handleDeleteNumber()}} />
                 </div>
                 <BootstrapTable
                     data={this.props.numbers}

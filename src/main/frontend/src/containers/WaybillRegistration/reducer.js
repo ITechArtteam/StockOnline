@@ -227,6 +227,17 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 }
             };
 
+        case Actions.EDIT_WAYBILL_FORM_DELETE_NUMBER:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    numbers: state.transportNumbers.numbers.filter(function(number) {
+                        return number.number !== action.number;
+                    })
+                }
+            };
+
         default:
             return state;
     }
