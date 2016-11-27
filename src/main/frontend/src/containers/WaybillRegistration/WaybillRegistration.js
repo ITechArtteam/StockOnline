@@ -12,6 +12,7 @@ import TextAreaInput from '../../components/TextAreaInput/TextAreaInput'
 import DisabledInput from '../../components/DisabledInput/DisabledInput'
 import SelectInput from '../../components/SelectInput/SelectInput'
 import ChooseSenderModalForm from './ChooseSenderModalForm/ChooseSenderModalForm'
+import TransportNumbers from './TransportNumbers/TransportNumbers'
 
 
 
@@ -55,27 +56,7 @@ class WaybillRegistration extends React.Component {
                         options={[{value: 'TRAIN', label: 'Поезд'}, {value: 'CAR', label: 'Автомобиль'}]}
                         value={this.props.transportType}
                         onChange={this.props.setTransportType} />
-
-                    <div className="form-group">
-                        <label className="control-label">Номера транспортных средств</label>
-                        <BootstrapTable
-                            data={[]}
-                            selectRow={{
-                                mode: "checkbox",
-                                clickToSelect: true,
-                                bgColor: "rgb(238, 193, 213)",
-                                hideSelectColumn: true
-                            }}
-                            options={{
-                                noDataText: "Ни один номер не указан",
-                                handleConfirmDeleteRow(next, dropRowKeys) {
-                                    next();
-                                }
-                            }}
-                            striped hover insertRow deleteRow >
-                            <TableHeaderColumn isKey dataField="number">Номер</TableHeaderColumn>
-                        </BootstrapTable>
-                    </div>
+                    <TransportNumbers transportType={this.props.transportType} />
                     <TextInput
                         name="driver"
                         label="Водитель"
