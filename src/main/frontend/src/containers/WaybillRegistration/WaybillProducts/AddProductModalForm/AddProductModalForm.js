@@ -17,11 +17,14 @@ import TextInput from '../../../../components/TextInput/TextInput'
 class AddNumberModalForm extends React.Component {
 
     handleSaveProduct() {
-        /*this.props.addNumber({
-            number: this.props.number
+        this.props.addProduct({
+            name: this.props.name,
+            price: this.props.price,
+            count: this.props.count,
+            storage: this.props.storage
         });
-        this.props.hideAddNumberModalForm();
-        this.props.changeBeingCreatedNumber('');*/
+        this.props.hideAddProductModalForm();
+        this.props.clearAddProductModalFormFields();
     }
 
     render() {
@@ -35,19 +38,19 @@ class AddNumberModalForm extends React.Component {
                     <TextInput
                         label="Название"
                         value={this.props.name}
-                        onChange={() => {}} />
+                        onChange={this.props.changeProductName} />
                     <TextInput
                         label="Количество"
                         value={this.props.count}
-                        onChange={() => {}} />
+                        onChange={this.props.changeProductCount} />
                     <TextInput
                         label="Цена"
                         value={this.props.price}
-                        onChange={() => {}} />
+                        onChange={this.props.changeProductPrice} />
                     <TextInput
                         label="Способ хранения"
                         value={this.props.storage}
-                        onChange={() => {}} />
+                        onChange={this.props.changeProductStorage} />
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideAddProductModalForm} value="Отмена" />

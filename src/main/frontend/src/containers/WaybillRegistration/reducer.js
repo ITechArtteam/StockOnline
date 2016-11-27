@@ -63,7 +63,7 @@ const initialState = {
         addProductModalForm: {
             isOpen: false,
             name: '',
-            cost: '',
+            price: '',
             count: '',
             storage: ''
         }
@@ -301,6 +301,69 @@ export default function waybillRegistrationForm(state = initialState, action) {
                     products: state.waybillProducts.products.filter(function(product) {
                         return product.name !== action.productName
                     })
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_CHANGE_NAME:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        name: action.name
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_CHANGE_PRICE:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        price: action.price
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_CHANGE_COUNT:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        count: action.count
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_CHANGE_STORAGE:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        storage: action.storage
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_CLEAR_FIELDS:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        name: '',
+                        price: '',
+                        count: '',
+                        storage: ''
+                    }
                 }
             };
 
