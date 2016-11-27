@@ -1,4 +1,5 @@
 import * as event from "./constants";
+import * as axios from "axios";
 
 function setInputErrorMessage(nameField, message) {
     return {
@@ -36,9 +37,75 @@ function closeAlertPopup() {
     }
 }
 
+function getDriverDataRequest() {
+    return {
+        type: event.GET_DRIVER_REQUEST
+    }
+}
+
+function getDriverDataSuccess(json) {
+
+    return {
+        type: event.GET_DRIVER_SUCCESS,
+        data: {
+            name: json.firstName,
+            surname: json.lastName,
+            patronymic: json.patronymic,
+            birthday: json.birthDate,
+            issued_by: json.passportIssuedBy,
+            issued_date: json.passportIssuedDate,
+            serialAndNumber: json.passportNumber,
+            id: json.id
+        }
+    }
+}
+
+function getDriverDataFail(dataError) {
+    return {
+        type: event.GET_DRIVER_FAIL,
+        data: dataError.data
+    }
+}
+
+function getDriver(passportNumber) {
+    return function (dispatch) {
+        dispatch(getDriverDataRequest());
+        dispatch(disableNextButton());
+        return axios
+            .get(`/registrationOfGoods/${passportNumber}`)
+            .then(json => {
+                    dispatch(getDriverDataSuccess(json.data));
+                    dispatch(enableNextButton())
+                }
+            ).catch(error => {
+                dispatch(getDriverDataFail(error.response))
+            });
+    }
+}
+
+function setDefaultValue() {
+    return {
+        type: event.SET_DEFAULT_VALUE
+    }
+}
+
+function enableNextButton() {
+    return {
+        type: event.ENABLE_NEXT_BUTTON
+    }
+}
+
+function disableNextButton() {
+    return {
+        type: event.DISABLE_NEXT_BUTTON
+    }
+}
+
 export default {
     setInputErrorMessage,
     setFieldData,
     showAlertPopup,
-    closeAlertPopup
+    closeAlertPopup,
+    getDriver,
+    setDefaultValue
 };

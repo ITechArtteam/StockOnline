@@ -1,6 +1,6 @@
 import * as event from './constants'
 
-var initOutputGoodsState = {
+let initGoodsState = {
     waybill: {
         id: 123,
         status: 0,
@@ -40,11 +40,12 @@ var initOutputGoodsState = {
         type: ''
     },
     frontend: {
-        waybillId: ''
+        waybillId: '',
+        waybillVisible: false
     }
 };
 
-export default (state = initOutputGoodsState, action) => {
+export default (state = initGoodsState, action) => {
     switch (action.type) {
         case event.FIND_WAYBILL_BY_ID_REQUEST:
             return state;
@@ -63,6 +64,8 @@ export default (state = initOutputGoodsState, action) => {
 
         case event.ACCEPT_WAYBILL_REQUEST:
             return state;
+        case event.SET_WAYBILL_VISIBILITY:
+            return {...state, frontend: {...state.frontend, waybillVisible: action.payload}};
         default:
             return state;
     }

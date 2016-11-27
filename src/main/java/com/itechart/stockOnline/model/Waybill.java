@@ -18,34 +18,38 @@ public class Waybill {
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
+    @Column(name = "check_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date checkDate;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private WaybillStatus status;
 
-    @OneToMany(mappedBy = "waybill")
+    @OneToMany(mappedBy = "waybill", fetch = FetchType.EAGER)
     private Set<ProductInWaybill> productInWaybills;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "transport_id")
     private Transport transport;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "sender_id")
     private ClientCompany sender;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "receiver_id")
     private ClientCompany receiver;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "responsible_person_id")
     private User responsiblePerson;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "checked_by")
     private User checkedBy;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "registered_by")
     private User registeredBy;
 
@@ -54,6 +58,9 @@ public class Waybill {
 
     public Date getRegistrationDate() { return registrationDate; }
     public void setRegistrationDate(Date registrationDate) { this.registrationDate = registrationDate; }
+
+    public Date getCheckDate() { return checkDate; }
+    public void setCheckDate(Date checkDate) { this.checkDate = checkDate; }
 
     public WaybillStatus getStatus() { return status; }
     public void setStatus(WaybillStatus status) { this.status = status; }
@@ -85,7 +92,7 @@ public class Waybill {
                 "id=" + id +
                 ", registrationDate=" + registrationDate +
                 ", status=" + status +
-                ", productInWaybills=" + productInWaybills +
+//                ", productInWaybills=" + productInWaybills +
                 ", transport=" + transport +
                 ", sender=" + sender +
                 ", receiver=" + receiver +

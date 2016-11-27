@@ -22,7 +22,7 @@ public class Transport {
     @Enumerated(EnumType.STRING)
     private TransportType type;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "driver_id")
     private Driver driver;
 
@@ -60,9 +60,9 @@ public class Transport {
                 "id=" + id +
                 ", number='" + number + '\'' +
                 ", type=" + type +
-                ", driver=" + driver +
+//                ", driver=" + driver +
                 ", storage=" + storage +
-                ", waybills=" + waybills +
+//                ", waybills=" + waybills +
                 '}';
     }
 }

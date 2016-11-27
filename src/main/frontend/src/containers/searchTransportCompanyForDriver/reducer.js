@@ -9,15 +9,16 @@ const initUserState = {
         birthday: "",
         issued_by: "",
         issued_date: "",
-        serialAndNumber: ""
+        id: "-1"
     },
     inputErrors: {
-        passportNumber: ""
+        searchNumber: ""
     },
     frontend: {
         showAlertPopup: false,
         typeAlertPopup: "danger",
-        messageAlertPop: "ошибка"
+        messageAlertPop: "ошибка",
+        isActiveNextButton: false
     }
 };
 
@@ -47,6 +48,39 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend, showAlertPopup: false
+                }
+            };
+        case event.GET_DRIVER_REQUEST:
+            return state;
+        case event.GET_DRIVER_SUCCESS:
+            return {
+                ...state,
+                data: {
+                    ...state.data, ...action.data
+                }
+            };
+        case event.GET_DRIVER_FAIL:
+            return {
+                ...state, frontend: {
+                    ...state.frontend,
+                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: "Водитель не найден."
+                },
+                inputErrors: action.data
+            };
+        case event.SET_DEFAULT_VALUE:
+            return initUserState;
+        case event.ENABLE_NEXT_BUTTON:
+            return {
+                ...state, frontend: {
+                    ...state.frontend,
+                    isActiveNextButton: true
+                }
+            };
+        case event.DISABLE_NEXT_BUTTON:
+            return {
+                ...state, frontend: {
+                    ...state.frontend,
+                    isActiveNextButton: false
                 }
             };
         default:

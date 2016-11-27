@@ -15,7 +15,14 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany
+    @JoinTable(name = "user_roles",
+            inverseJoinColumns = @JoinColumn(name = "user_id",
+                    nullable = false,
+                    updatable = false),
+            joinColumns = @JoinColumn(name = "role_id",
+                    nullable = false,
+                    updatable = false))
     private Set<User> users;
 
     public Role() {

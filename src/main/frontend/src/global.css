@@ -2,6 +2,14 @@
     display: none !important;
 }
 
+.inputError {
+    color: red;
+    margin: 5px 5px 0;
+    font-family: serif;
+    font-style: italic;
+    font-size: 10pt;
+}
+
 .before-table {
     margin: 0 10px 5px;
 }

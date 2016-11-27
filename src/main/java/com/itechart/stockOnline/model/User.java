@@ -1,8 +1,5 @@
 package com.itechart.stockOnline.model;
 
-
-
-
 import com.itechart.stockOnline.validation.*;
 import com.itechart.stockOnline.validator.Worker;
 
@@ -47,7 +44,7 @@ public class User {
     @NotNull(group = Worker.class, name="email", message = "Электронная почта должна быть заполнена.")
     @MaxSize(value = 50 , group = Worker.class, name="email", message = "Длина электронной почты должна быть меньше 50 символов.")
     @Email(group = Worker.class, name="email",  message = "Введенная электронная почта невалидна.")
-    @Column(length = 50, nullable = false, unique=true)
+    @Column(length = 50, nullable = false)
     private String email;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company")
@@ -57,8 +54,15 @@ public class User {
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            inverseJoinColumns = @JoinColumn(name = "role_id",
+                    nullable = false,
+                    updatable = false),
+            joinColumns = @JoinColumn(name = "user_id",
+                    nullable = false,
+                    updatable = false))
     private Set<Role> roles;
 
     public User() {

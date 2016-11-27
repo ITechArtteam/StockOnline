@@ -46,6 +46,7 @@ public class OwnerCompanyDtoConverter {
         company.setAddress(address);
         company.setName(ownerCompanyDto.getName());
         company.setId(ownerCompanyDto.getId());
+        company.setActive(true);
         return company;
     }
 

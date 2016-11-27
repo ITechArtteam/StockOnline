@@ -35,16 +35,16 @@ public class Address {
     @Column(name = "longitude")
     private Float longitude;
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "address")
     private Set<Stock> stocks;
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "address")
     private Set<ClientCompany> clientCompanies;
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "address")
     private Set<StockOwnerCompany> stockOwnerCompanies;
 
-    @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "address")
     private Set<User> user;
 
     public Address() {    }

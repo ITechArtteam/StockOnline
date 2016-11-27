@@ -48,6 +48,11 @@ public class AddressServiceImpl implements AddressService {
         return address;
     }
 
+    @Override
+    public void delete(Address address) {
+        addressDao.delete(address);
+    }
+
     private void updateData(Address address, Address addressInDB) {
         addressInDB.setCountryName(address.getCountryName());
         addressInDB.setCityName(address.getCityName());

@@ -17,7 +17,6 @@ public class Product {
     private Integer id;
 
     @Column(name = "name")
-//    @Size(max=50, message="Number of letters in name < 50")
     private String name;
 
     @Column(name = "cost")
