@@ -33,7 +33,8 @@ const initialState = {
     transportNumbers: {
         numbers: [],
         car: '',
-        trailer: ''
+        trailer: '',
+        selectedNumber: null
     },
     driver: {
         id: 1,
@@ -162,6 +163,15 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 transportNumbers: {
                     ...state.transportNumbers,
                     trailer: action.number
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SELECT_NUMBER:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    selectedNumber: action.number
                 }
             };
 
