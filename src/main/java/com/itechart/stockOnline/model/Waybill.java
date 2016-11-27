@@ -18,11 +18,15 @@ public class Waybill {
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
+    @Column(name = "check_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date checkDate;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private WaybillStatus status;
 
-    @OneToMany(mappedBy = "waybill")
+    @OneToMany(mappedBy = "waybill", fetch = FetchType.EAGER)
     private Set<ProductInWaybill> productInWaybills;
 
     @ManyToOne
@@ -55,6 +59,9 @@ public class Waybill {
     public Date getRegistrationDate() { return registrationDate; }
     public void setRegistrationDate(Date registrationDate) { this.registrationDate = registrationDate; }
 
+    public Date getCheckDate() { return checkDate; }
+    public void setCheckDate(Date checkDate) { this.checkDate = checkDate; }
+
     public WaybillStatus getStatus() { return status; }
     public void setStatus(WaybillStatus status) { this.status = status; }
 
@@ -85,7 +92,7 @@ public class Waybill {
                 "id=" + id +
                 ", registrationDate=" + registrationDate +
                 ", status=" + status +
-                ", productInWaybills=" + productInWaybills +
+//                ", productInWaybills=" + productInWaybills +
                 ", transport=" + transport +
                 ", sender=" + sender +
                 ", receiver=" + receiver +

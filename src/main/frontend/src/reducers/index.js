@@ -6,7 +6,7 @@ import {searchTransportCompanyForTrain} from "../containers/searchTransportCompa
 import {navigation} from "../containers/navigation";
 import {clientListReducer} from '../containers/systemClients/index';
 import {stockListReducer} from '../containers/stocks/index';
-import {checkOutputGoodsReducer} from '../containers/checkOutputGoods/index'
+import {checkGoodsReducer} from '../containers/checkGoods/index'
 import AuthReducer from './auth'
 import workerReducer from "./worker-reducer";
 import {stock} from '../containers/editStock/index';
@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
     clientListReducer,
     stockListReducer,
     navigation,
-    checkOutputGoodsReducer,
+    checkGoodsReducer,
     stock
 });
 

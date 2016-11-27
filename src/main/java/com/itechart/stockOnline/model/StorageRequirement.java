@@ -49,9 +49,9 @@ public class StorageRequirement {
         return "StorageRequirement{" +
                 "id=" + id +
                 ", type='" + type + '\'' +
-                ", rooms=" + rooms +
-                ", products=" + products +
-                ", transports=" + transports +
+//                ", rooms=" + rooms +
+//                ", products=" + products +
+//                ", transports=" + transports +
                 '}';
     }
 }

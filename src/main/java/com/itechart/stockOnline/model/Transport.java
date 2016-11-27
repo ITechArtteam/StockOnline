@@ -60,9 +60,9 @@ public class Transport {
                 "id=" + id +
                 ", number='" + number + '\'' +
                 ", type=" + type +
-                ", driver=" + driver +
+//                ", driver=" + driver +
                 ", storage=" + storage +
-                ", waybills=" + waybills +
+//                ", waybills=" + waybills +
                 '}';
     }
 }
