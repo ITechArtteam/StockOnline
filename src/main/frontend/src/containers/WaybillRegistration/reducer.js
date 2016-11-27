@@ -113,6 +113,12 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 description: action.description
             };
 
+        case Actions.EDIT_WAYBILL_FORM_CHANGE_REGISTRATION_DATE:
+            return {
+                ...state,
+                registrationDate: action.date
+            };
+
         default:
             return state;
     }

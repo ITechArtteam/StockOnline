@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 
-import StaticControl from '../../components/StaticControl/StaticControl'
-
 import TextInput from '../../components/TextInput/TextInput'
 import DateInput from '../../components/DateInput/DateInput'
 import TextAreaInput from '../../components/TextAreaInput/TextAreaInput'
@@ -49,7 +47,7 @@ class WaybillRegistration extends React.Component {
         }, 0) + 'у.е.';
     }
 
-    getTotalProductsAmout() {
+    getTotalProductsAmount() {
         return this.props.products.length;
     }
 
@@ -64,7 +62,9 @@ class WaybillRegistration extends React.Component {
                         value={this.props.waybillNumber}
                         onChange={this.props.changeWaybillNumber} />
                     <DateInput
+                        value={this.props.registrationDate}
                         format="DD/MM/YYYY"
+                        onChange={this.props.changeRegisrationDate}
                         label="Дата регистрации накладной" />
                     <TextInput
                         name="sender"
@@ -100,7 +100,7 @@ class WaybillRegistration extends React.Component {
                         value={this.getTotalProductsSum()} />
                     <DisabledInput
                         label="Количество товаров по накладной"
-                        value={this.getTotalProductsAmout()} />
+                        value={this.getTotalProductsAmount()} />
                     <DisabledInput
                         label="Диспетчер склада"
                         value={this.props.dispatcher} />
@@ -138,6 +138,7 @@ class WaybillRegistration extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        registrationDate: state.waybillRegistrationForm.registrationDate,
         waybillNumber: state.waybillRegistrationForm.number,
         chooseSenderModalIsOpen: state.waybillRegistrationForm.chooseSenderModalIsOpen,
         chooseCarrierModalFormIsOpen: state.waybillRegistrationForm.chooseCarrierModalFormIsOpen,
