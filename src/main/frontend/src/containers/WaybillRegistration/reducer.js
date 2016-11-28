@@ -1,34 +1,21 @@
 import * as Actions from './actions'
 
 const initialState = {
-    number: "",
+    number: '',
     registrationDate: null,
     senderName: '',
-    senderId: null,
-    senders: [
-        {
-            id: 1,
-            name: 'TEST_FIRST_SENDER_NAME'
-        },
-        {
-            id: 2,
-            name: 'TEST_SECOND_SENDER_NAME'
-        }
-    ],
+    sender: null,
+    selectSenderModalForm: {
+        isOpen: false,
+        selectedSenderName: null,
+        senders: []
+    },
     carrierName: '',
-    carrierId: null,
+    carrier: null,
     selectCarrierModalForm: {
-        selectedCarrierId: null,
-        carriers: [
-            {
-                id: 1,
-                name: 'TEST_FIRST_CARRIER_NAME'
-            },
-            {
-                id: 2,
-                name: 'TEST_SECOND_CARRIER_NAME'
-            }
-        ]
+        isOpen: false,
+        selectedCarrierName: null,
+        carriers: []
     },
     transportNumbers: {
         addNumberModalForm: {
@@ -49,7 +36,7 @@ const initialState = {
         patronymic: 'TEST_DRIVER_PATRONYMIC',
         passportNumber: 'zx500'
     },
-    description: "",
+    description: '',
     waybillProducts: {
         selectedProductName: null,
         products: [
@@ -68,8 +55,6 @@ const initialState = {
             storage: ''
         }
     },
-    chooseSenderModalIsOpen: false,
-    chooseCarrierModalFormIsOpen: false,
     transportTypes: [
         {
             value: 'AUTO', label: 'Автомобиль'
@@ -104,13 +89,19 @@ export default function waybillRegistrationForm(state = initialState, action) {
         case Actions.HIDE_CHOOSE_SENDER_MODAL:
             return {
                 ...state,
-                chooseSenderModalIsOpen: false
+                selectSenderModalForm: {
+                    ...state.selectSenderModalForm,
+                    isOpen: false
+                }
             };
 
         case Actions.SHOW_CHOOSE_SENDER_MODAL:
             return {
                 ...state,
-                chooseSenderModalIsOpen: true
+                selectSenderModalForm: {
+                    ...state.selectSenderModalForm,
+                    isOpen: true
+                }
             };
 
         case Actions.EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE:
@@ -134,13 +125,19 @@ export default function waybillRegistrationForm(state = initialState, action) {
         case Actions.EDIT_WAYBILL_FORM_SHOW_CHOOSE_CARRIER_MODAL_FORM:
             return {
                 ...state,
-                chooseCarrierModalFormIsOpen: true
+                selectCarrierModalForm: {
+                    ...state.selectCarrierModalForm,
+                    isOpen: true
+                }
             };
 
         case Actions.EDIT_WAYBILL_FORM_HIDE_CHOOSE_CARRIER_MODAL_FORM:
             return {
                 ...state,
-                chooseCarrierModalFormIsOpen: false
+                selectCarrierModalForm: {
+                    ...state.selectCarrierModalForm,
+                    isOpen: false
+                }
             };
 
         case Actions.EDIT_WAYBILL_FORM_CHANGE_WAYBILL_DESCRIPTION:
@@ -160,7 +157,7 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 ...state,
                 selectCarrierModalForm: {
                     ...state.selectCarrierModalForm,
-                    selectedCarrierId: action.carrierId
+                    selectedCarrierName: action.carrier
                 }
             };
 
@@ -378,6 +375,52 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 ...state,
                 carrierName: action.name
             };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_DRIVER_INFO:
+            return {
+                ...state,
+                driver: action.driverInfo
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_CARRIERS:
+            return {
+                ...state,
+                selectCarrierModalForm: {
+                    ...state.selectCarrierModalForm,
+                    carriers: action.carriers
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_SENDERS:
+            return {
+                ...state,
+                selectSenderModalForm: {
+                    ...state.selectSenderModalForm,
+                    senders: action.senders
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SELECT_SENDER:
+            return {
+                ...state,
+                selectSenderModalForm: {
+                    ...state.selectSenderModalForm,
+                    selectedSenderName: action.sender
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_SENDER:
+            return {
+                ...state,
+                sender: action.sender
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_CARRIER:
+            return {
+                ...state,
+                carrier: action.carrier
+            };
+
 
         default:
             return state;

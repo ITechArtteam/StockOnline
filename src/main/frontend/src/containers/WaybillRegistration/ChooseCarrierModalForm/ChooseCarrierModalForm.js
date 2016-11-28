@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 
 import * as Actions from '../actions'
 
-import SelectInput from '../../../components/SelectInput/SelectInput'
-
 import {
     Modal,
     ModalHeader,
@@ -14,16 +12,35 @@ import {
     ModalFooter
 } from 'react-modal-bootstrap'
 
+import SelectInput from '../../../components/SelectInput/SelectInput'
+
 class ChooseCarrierModalForm extends React.Component {
 
+    componentWillMount() {
+        this.props.loadCarriers();
+    }
+
     handleSubmit() {
-        this.props.onSave({name: 'testname'})
+        if (this.props.selectedCarrierName !== '') {
+            const carrierName = this.props.selectedCarrierName;
+            const carrier = this.props.carriers.filter(function(carrier) {
+                return carrier.name === carrierName;
+            })[0];
+            this.props.setCarrier(carrier);
+            this.props.changeCarrierName(carrier.name);
+            this.props.hideChooseCarrierModalForm();
+        }
+    }
+
+    handleCancel() {
+        this.props.selectCarrier(null);
+        this.props.hideChooseCarrierModalForm();
     }
 
     createCarriersOptions() {
         return this.props.carriers.reduce(function(options, carrier) {
             options.push({
-                value: carrier.id,
+                value: carrier.name,
                 label: carrier.name
             });
             return options;
@@ -32,19 +49,19 @@ class ChooseCarrierModalForm extends React.Component {
 
     render() {
         return (
-            <Modal isOpen={this.props.isOpen} onRequestHide={() => {this.props.onHide()}}>
+            <Modal isOpen={this.props.isOpen} onRequestHide={() => {this.handleCancel()}}>
                 <ModalHeader>
-                    <ModalClose onClick={() => {this.props.onHide()}}/>
+                    <ModalClose onClick={() => {this.handleCancel()}}/>
                     <ModalTitle>Выбор перевозчика</ModalTitle>
                 </ModalHeader>
                 <ModalBody>
                     <SelectInput
                         options={this.createCarriersOptions()}
-                        value={this.props.carrierId}
+                        value={this.props.selectedCarrierName}
                         onChange={this.props.selectCarrier} />
                 </ModalBody>
                 <ModalFooter>
-                    <input type="button" className='btn btn-default' onClick={() => {this.props.onHide()}} value="Отмена" />
+                    <input type="button" className='btn btn-default' onClick={() => {this.handleCancel()}} value="Отмена" />
                     <input type="button" className='btn btn-primary' onClick={() => {this.handleSubmit()}} value="Выбрать" />
                 </ModalFooter>
             </Modal>
@@ -55,7 +72,7 @@ class ChooseCarrierModalForm extends React.Component {
 function mapStateToProps(state) {
     return {
         carriers: state.waybillRegistrationForm.selectCarrierModalForm.carriers,
-        carrierId: state.waybillRegistrationForm.selectCarrierModalForm.selectedCarrierId
+        selectedCarrierName: state.waybillRegistrationForm.selectCarrierModalForm.selectedCarrierName
     }
 }
 

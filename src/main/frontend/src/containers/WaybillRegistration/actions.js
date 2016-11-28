@@ -35,6 +35,86 @@ export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_CHANGE_STORAGE = 'EDIT_WAY
 export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_CLEAR_FIELDS = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_CLEAR_FIELDS';
 export const EDIT_WAYBILL_FORM_CHANGE_SENDER_NAME = 'EDIT_WAYBILL_FORM_CHANGE_SENDER_NAME';
 export const EDIT_WAYBILL_FORM_CHANGE_CARRIER_NAME = 'EDIT_WAYBILL_FORM_CHANGE_CARRIER_NAME';
+export const EDIT_WAYBILL_FORM_SET_DRIVER_INFO = 'EDIT_WAYBILL_FORM_SET_DRIVER_INFO';
+export const EDIT_WAYBILL_FORM_SET_SENDERS = 'EDIT_WAYBILL_FORM_SET_SENDERS';
+export const EDIT_WAYBILL_FORM_SET_CARRIERS = 'EDIT_WAYBILL_FROM_SET_CARRIERS';
+export const EDIT_WAYBILL_FORM_SELECT_SENDER = 'EDIT_WAYBILL_FORM_SELECT_SENDER';
+export const EDIT_WAYBILL_FORM_SET_SENDER = 'EDIT_WAYBILL_FROM_SET_SENDER';
+export const EDIT_WAYBILL_FORM_SET_CARRIER = 'EDIT_WAYBILL_FROM_SET_CARRIER';
+
+export function setSender(sender) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_SENDER,
+        sender
+    }
+}
+
+export function setCarrier(carrier) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_CARRIER,
+        carrier
+    }
+}
+
+export function selectSender(sender) {
+    return {
+        type: EDIT_WAYBILL_FORM_SELECT_SENDER,
+        sender
+    }
+}
+
+export function loadSenders() {
+    const senders = [
+        {
+            id: 1,
+            name: 'FIRST_TEST_LOADED_SENDER'
+        },
+        {
+            id: 2,
+            name: 'SECOND_TEST_LOADED_SENDER'
+        }
+    ];
+    return function(dispatch) {
+        dispatch(setSenders(senders));
+    }
+}
+
+export function loadCarriers() {
+    const carriers = [
+        {
+            id: 1,
+            name: 'FIRST_TEST_LOADED_CARRIER'
+        },
+        {
+            id: 2,
+            name: 'SECOND_TEST_LOADED_CARRIER'
+        }
+    ];
+    return function(dispatch) {
+        dispatch(setCarriers(carriers));
+    }
+}
+
+export function setSenders(senders) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_SENDERS,
+        senders
+    }
+}
+
+export function setCarriers(carriers) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_CARRIERS,
+        carriers
+    }
+}
+
+export function setDriverInfo(driverInfo) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_DRIVER_INFO,
+        driverInfo
+    }
+}
 
 export function changeSenderName(name) {
     return {
@@ -171,10 +251,10 @@ export function changeTrailerNumber(number) {
     }
 }
 
-export function selectCarrier(carrierId) {
+export function selectCarrier(carrier) {
     return {
         type: EDIT_WAYBILL_FORM_SELECT_CARRIER,
-        carrierId
+        carrier
     }
 }
 
@@ -234,19 +314,5 @@ export function setTransportType(type) {
     return {
         type: EDIT_WAYBILL_FORM_SELECT_TRANSPORT_TYPE,
         transportType: type
-    }
-}
-
-export function loadSenders() {
-    return {
-        type: CHOOSE_SENDER_MODAL_LOAD_SENDERS,
-        senders: [{name: 'first_sender'}, {name: 'second_sender'}]
-    }
-}
-
-export function selectSender(sender) {
-    return {
-        type: CHOOSE_SENDER_MODAL_SELECT_SENDER,
-        selectedSender: sender
     }
 }
