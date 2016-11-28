@@ -50,6 +50,15 @@ class WaybillRegistration extends React.Component {
         return this.props.products.length;
     }
 
+    getCurrentDateTime() {
+        var date = new Date();
+        return date.getDate() + "/" +
+            (date.getMonth() + 1) + "/" +
+            date.getFullYear() + " " +
+            date.getHours() + ":" +
+            date.getMinutes();
+    }
+
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
@@ -103,6 +112,9 @@ class WaybillRegistration extends React.Component {
                     <DisabledInput
                         label="Диспетчер склада"
                         value={this.props.dispatcher} />
+                    <DisabledInput
+                        label="Дата и время регистрации накладной"
+                        value={this.getCurrentDateTime()} />
                     <WaybillProducts />
                     <div className="col-lg-offset-5 vertical-offset">
                         <input type="button" className="btn btn-primary" value="Сохранить" />
