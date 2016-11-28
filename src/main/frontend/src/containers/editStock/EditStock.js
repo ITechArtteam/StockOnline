@@ -4,7 +4,7 @@ import {stockActionCreator} from "./index";
 import {connect} from 'react-redux';
 import './style.css';
 import {AlertPopup} from '../../components/AlertPopup';
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class EditStock extends React.Component {
@@ -19,6 +19,8 @@ class EditStock extends React.Component {
 
     closeAlert(){
         this.props.closeAlertPopup();
+        if(this.props.stock.frontend.messageAlertPop === "Склад сохранен.")
+            browserHistory.push('/stocks');
     }
 
     validateOnChange(e, patternType) {
@@ -46,16 +48,9 @@ class EditStock extends React.Component {
         this.props.setInputError(nameField, "");
         switch (patternType) {
             case "isRequired":
-            case "Login": {
+            case "nameStock": {
                 if (value.length < 3){
-                    this.props.setInputError(nameField, "Минимум 3 символа.");
-                }
-                break;
-            }
-            case "Email": {
-                if (!new RegExp("^[a-z_]+[0-9a-z_\u002E\u005F]*[a-z0-9_]+@([a-z]){2,10}\u002E[a-z]{2,4}$", "iu")
-                        .test(value)) {
-                    this.props.setInputError(nameField, "Несуществующий email. Верный формат: \"x@xx.xx\"");
+                    this.props.setInputError(nameField, "Минимум 1 символа.");
                 }
                 break;
             }
@@ -79,10 +74,6 @@ class EditStock extends React.Component {
         }
         if (this.props.stock.data.name < 3){
             this.props.setInputError("name", "Введите имя.");
-            return;
-        }
-        if (this.props.stock.data.nameCompany < 3){
-            this.props.setInputError("nameCompany", "Введите компанию.");
             return;
         }
         if (this.props.stock.data.country < 3){
@@ -148,27 +139,7 @@ class EditStock extends React.Component {
                                  onChange={this.validateOnChange}
                                  value={this.props.stock.data.home}
                                  errorValue={this.props.stock.inputErrors.home}
-                                 patternType="Integer"/>
-
-                    <SimpleInput id="room"
-                                 label="Квартира"
-                                 length={7}
-                                 onChange={this.validateOnChange}
-                                 value={this.props.stock.data.room}
-                                 errorValue={this.props.stock.inputErrors.room}
-                                 patternType="Integer"/>
-                        <SimpleInput id="nameRoom"
-                                    label="Имя помещение"
-                                    onChange={this.validateOnChange}
-                                    value={this.props.stock.data.nameRoom}
-                                    errorValue={this.props.stock.inputErrors.nameRoom}
-                                    patternType="isRequired"/>
-                        <SimpleInput id="type"
-                                    label="Тип хранения"
-                                    onChange={this.validateOnChange}
-                                    value={this.props.stock.data.type}
-                                    errorValue={this.props.stock.inputErrors.type}
-                                    patternType="isRequired"/>
+                                 patternType="isRequired"/>
 
                     <div className="btn-group" role="group">
                         <button type="button" className="btn btn-primary"
@@ -181,12 +152,7 @@ class EditStock extends React.Component {
                     </div>
                 </div>{/*dib.col-xs-3 end*/}
                 <div className="col-xs-9">
-                    <BootstrapTable  striped={true} hover={true} ref="table">
-                        <TableHeaderColumn headerAlign="center" >Номер помещение</TableHeaderColumn>
-                        <TableHeaderColumn headerAlign="center" >Имя помещение</TableHeaderColumn>
-                        <TableHeaderColumn headerAlign="center" >Тип хранения</TableHeaderColumn>
-                        <TableHeaderColumn headerAlign="center" >Количество мест</TableHeaderColumn>
-                    </BootstrapTable>
+
                 </div>{/*div.col-xs-9 end*/}
 
                 <AlertPopup isVisible={this.props.stock.frontend.showAlertPopup}

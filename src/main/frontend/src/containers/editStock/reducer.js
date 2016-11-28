@@ -3,28 +3,18 @@ import * as event from "./constants";
 const initUserState = {
     data: {
         name: "",
-        nameCompany: "",
         country: "",
         city: "",
         street: "",
         home: "",
-        room: "",
-        nameRoom: "",
-        type: "",
-        count: "",
         id: -1
     },
     inputErrors: {
         name: "",
-        nameCompany: "",
         country: "",
         city: "",
         street: "",
-        home: "",
-        room: "",
-        nameRoom: "",
-        type: "",
-        count: ""
+        home: ""
     },
     frontend: {
         showAlertPopup: false,

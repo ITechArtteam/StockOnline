@@ -36,6 +36,7 @@ import "bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./global.css";
 
 import {client} from "./actions"
+import {stock} from "./actions"
 
 
 

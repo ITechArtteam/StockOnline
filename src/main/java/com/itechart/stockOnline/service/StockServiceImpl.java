@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.access.annotation.Secured;
 
 import java.util.Collection;
 
@@ -60,6 +61,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Secured({"ROLE_ADMIN"})
     public StockPage getStockPage(int pageNumber, int recordCount, String name, String address) {
         if(pageNumber <= 0 || recordCount <= 0) {
             throw new DataNotFoundError();
