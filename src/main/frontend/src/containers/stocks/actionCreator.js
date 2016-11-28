@@ -72,7 +72,7 @@ let deleteStocks = stockNamesList => {
         axios.delete('/stockList/',
             {
                 params: {
-                    namesToDelete: stockNamesList.join()
+                    idsToDelete: stockNamesList.join()
                 }
             })
             .then(response => {

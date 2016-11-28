@@ -9,7 +9,7 @@ import {stockListReducer} from '../containers/stocks/index';
 import {checkGoodsReducer} from '../containers/checkGoods/index'
 import AuthReducer from './auth'
 import workerReducer from "./worker-reducer";
-import {stock} from '../containers/editStock/index';
+import {stock} from "../containers/editStock";
 import roleReducer from "./role-reducer"
 const rootReducer = combineReducers({
     auth: AuthReducer,

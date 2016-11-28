@@ -42,8 +42,8 @@ public class StockListController {
         return stockService.getStockPage(pageNumber, recordCount, name, address);
     }
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteClients(@RequestParam(value = "namesToDelete") List<Integer> ids) {
-        Logger.info("REST request. Path:/stockList/?namesToDelete={}  method: DELETE", ids);
+    public ResponseEntity<Object> deleteClients(@RequestParam(value = "idsToDelete") List<Integer> ids) {
+        Logger.info("REST request. Path:/stockList/?idsToDelete={}  method: DELETE", ids);
         long deletedCount = stockService.deleteByIds(ids);
         return new ResponseEntity<>("Успешно удалено " + deletedCount + " записей", HttpStatus.OK);
     }

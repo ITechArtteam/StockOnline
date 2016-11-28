@@ -35,7 +35,7 @@ class Stocks extends React.Component {
         this.props.getStockList(1, parseInt(this.refs.pageLimitSelect.value));
      }
 
-    onInputValueChane = e => {
+    onInputValueChange = e => {
         const nameField = e.target.id;
         const value = e.target.value;
         this.props.setFilterInputValue(nameField, value);
@@ -49,9 +49,9 @@ class Stocks extends React.Component {
     onBtnDeleteClick() {
         let selectedRowKeys = this.refs.table.state.selectedRowKeys;
         if(selectedRowKeys.length == 0) {
-            this.props.showDialog("Не выделена ни одна строка для удаления", []);
+            this.props.showDialog("Не выделена ни одна строка для удаления", '', []);
         } else {
-            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", [
+            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", '', [
                 {
                     btnStyle : "btn btn-success",
                     text: "Ок",
@@ -114,12 +114,19 @@ class Stocks extends React.Component {
                 }
                 });
 
+
+
+
+
+
+
         return (
+            <div className="container">
                 <div className="row">
                     <div className="col-xs-3">
                         <div className="panel panel-default">
                             <div className="panel-heading">Количество записей на странице</div>
-                                <div className="panel-body">
+                            <div className="panel-body">
                                     <select className="form-control"
                                             ref={'pageLimitSelect'}
                                             id="pageLimitSelect"
@@ -128,19 +135,20 @@ class Stocks extends React.Component {
                                         <option>5</option>
                                         <option>10</option>
                                     </select>
-                                </div>
                             </div>
+                        </div>
 
                         <div className="panel panel-default">
                             <div className="panel-heading">Действия</div>
-                                <div className="panel-body">
+                            <div className="panel-body">
                                     <button className="btn btn-default btn-block" onClick={this.onBtnSaveClick}>Создать</button>
                                     <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
-                                </div>
                             </div>
+                        </div>
+
                         <div className="panel panel-default">
                             <div className="panel-heading">Поиск складов</div>
-                                <div className="panel-body">
+                            <div className="panel-body">
                                     <SimpleInput id="filterStockNameValue"
                                                  label="Склад"
                                                  value={this.props.frontend.filterStockNameValue}
@@ -151,9 +159,9 @@ class Stocks extends React.Component {
                                                  onChange={this.onInputValueChange} />
                                     <button className="btn btn-default btn-block" onClick={this.onBtnSearchClick}>Поиск</button>
                                     <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
-                                </div>
                             </div>
-                        </div> {/*dib.col-xs-3 end*/}
+                        </div>
+                    </div> {/*dib.col-xs-3 end*/}
                     <div className="col-xs-9">
                         <div className={this.props.frontend.isFilterMessageVisible ? 'before-table' : 'none'}>
                             <span className="label label-success">
@@ -181,6 +189,7 @@ class Stocks extends React.Component {
                         type={this.props.alert.type}
                     />
                 </div>{/*div.row end*/}
+            </div>
         )
     }
 }
