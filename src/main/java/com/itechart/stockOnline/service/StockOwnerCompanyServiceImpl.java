@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +70,7 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
     }
 
     @Override
+    @Secured({"ROLE_SUPER_ADMIN"})
     public StockOwnerPage getStockOwnersPage(int pageNumber, int recordCount, String name, String address, String status) {
         if(pageNumber <= 0 || recordCount <= 0) {
             throw new DataNotFoundError();

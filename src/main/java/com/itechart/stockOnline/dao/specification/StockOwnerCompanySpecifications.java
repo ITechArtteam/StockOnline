@@ -7,9 +7,9 @@ import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.StockOwnerCompany_;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 
 public class StockOwnerCompanySpecifications {
     public static Specification<StockOwnerCompany> nameLike(String name) {
@@ -20,22 +20,13 @@ public class StockOwnerCompanySpecifications {
         return ((root, criteriaQuery, criteriaBuilder) -> {
             Join<StockOwnerCompany, Address> addressJoin = root.join(StockOwnerCompany_.address, JoinType.INNER);
 
-            String delimiter = " ";
-
-            Expression<String> expression = criteriaBuilder.concat(addressJoin.get(Address_.countryName), delimiter);
-            expression = criteriaBuilder.concat(expression, addressJoin.get(Address_.cityName));
-            expression = criteriaBuilder.concat(expression, delimiter);
-
-            expression = criteriaBuilder.concat(expression, addressJoin.get(Address_.street));
-            expression = criteriaBuilder.concat(expression, delimiter);
-
-            expression = criteriaBuilder.concat(expression, addressJoin.get(Address_.room).as(String.class));
-            expression = criteriaBuilder.concat(expression, delimiter);
-
-            expression = criteriaBuilder.concat(expression, addressJoin.get(Address_.home).as(String.class));
-            expression = criteriaBuilder.concat(expression, delimiter);
-
-            return criteriaBuilder.like(expression, "%" + address + "%");
+            String lowAddress = "%" + address.toLowerCase() + "%";
+            Predicate countryLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.countryName)), lowAddress);
+            Predicate cityLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.cityName)), lowAddress);
+            Predicate streetLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.street)), lowAddress);
+            Predicate roomLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.room).as(String.class)), lowAddress);
+            Predicate homeLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.home).as(String.class)), lowAddress);
+            return criteriaBuilder.or(countryLike, cityLike, streetLike, roomLike, homeLike);
         });
     }
 

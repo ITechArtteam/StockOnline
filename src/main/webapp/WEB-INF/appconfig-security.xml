@@ -16,6 +16,10 @@
                     username-parameter="username"
                     password-parameter="password"
                     login-processing-url="/login" />
+        <logout
+                invalidate-session="true"
+                logout-url="/logout"
+                delete-cookies="JSESSIONID" />
         <csrf disabled="true" />
     </http>
 

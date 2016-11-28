@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 
 public interface StockOwnerCompanyDao extends JpaRepository<StockOwnerCompany, Long>, JpaSpecificationExecutor {
     Optional<StockOwnerCompany> findByName(String name);
-    Page<StockOwnerCompany> findAll(Pageable pageable);
 
     @Modifying
     @Query("delete from StockOwnerCompany s where s.name in ?1")
