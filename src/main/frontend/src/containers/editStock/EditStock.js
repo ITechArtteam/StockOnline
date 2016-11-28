@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import './style.css';
 import {AlertPopup} from '../../components/AlertPopup';
 import {Link} from "react-router";
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class EditStock extends React.Component {
 
@@ -111,7 +112,7 @@ class EditStock extends React.Component {
     render() {
         return (
             <div className="row">
-                <div className="well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                <div className="col-xs-3">
                     <SimpleInput id="name"
                                  label="Склад*"
                                  onChange={this.validateOnChange}
@@ -119,12 +120,6 @@ class EditStock extends React.Component {
                                  onBlur={this.validateOnBlur}
                                  patternType="isRequired"
                                  errorValue={this.props.stock.inputErrors.name}/>
-                    <SimpleInput id="nameCompany"
-                                 label="Компания*"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.stock.data.nameCompany}
-                                 errorValue={this.props.stock.inputErrors.nameCompany}
-                                 patternType="isRequired"/>
 
                     <SimpleInput id="country"
                                  label="Страна*"
@@ -162,14 +157,38 @@ class EditStock extends React.Component {
                                  value={this.props.stock.data.room}
                                  errorValue={this.props.stock.inputErrors.room}
                                  patternType="Integer"/>
+                        <SimpleInput id="nameRoom"
+                                    label="Имя помещение"
+                                    onChange={this.validateOnChange}
+                                    value={this.props.stock.data.nameRoom}
+                                    errorValue={this.props.stock.inputErrors.nameRoom}
+                                    patternType="isRequired"/>
+                        <SimpleInput id="type"
+                                    label="Тип хранения"
+                                    onChange={this.validateOnChange}
+                                    value={this.props.stock.data.type}
+                                    errorValue={this.props.stock.inputErrors.type}
+                                    patternType="isRequired"/>
 
                     <div className="btn-group" role="group">
+                        <button type="button" className="btn btn-primary"
+                                onClick={this.submit}>Добавить помещение
+                        </button>
                         <button type="button" className="btn btn-primary"
                                 onClick={this.submit}>Сохранить
                         </button>
                         <Link to="/stocks" className="btn btn-default">Отменить</Link>
                     </div>
-                </div>
+                </div>{/*dib.col-xs-3 end*/}
+                <div className="col-xs-9">
+                    <BootstrapTable  striped={true} hover={true} ref="table">
+                        <TableHeaderColumn headerAlign="center" >Номер помещение</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" >Имя помещение</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" >Тип хранения</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" >Количество мест</TableHeaderColumn>
+                    </BootstrapTable>
+                </div>{/*div.col-xs-9 end*/}
+
                 <AlertPopup isVisible={this.props.stock.frontend.showAlertPopup}
                             message={this.props.stock.frontend.messageAlertPop}
                             type={this.props.stock.frontend.typeAlertPopup}

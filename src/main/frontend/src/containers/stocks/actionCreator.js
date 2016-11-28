@@ -1,36 +1,34 @@
 import * as event from './constants'
 import * as axios from "axios";
 
-var getStockListRequest = () => {
+let setFilterMessageVisibility = visibility => {
+    return {
+        type: event.SET_FILTER_MESSAGE_VISIBILITY,
+        payload: visibility
+    }
+};
+
+let getStockListRequest = () => {
     return {
         type: event.GET_STOCK_LIST_REQUEST
     }
 };
 
-var getStockListSuccess = json => {
+let getStockListSuccess = json => {
     return {
         type: event.GET_STOCK_LIST_SUCCESS,
         payload: json
     }
 };
 
-var getStockListFail = error => {
-    return {
-        type: event.GET_STOCK_LIST_FAIL,
-        payload: {
-            isVisible: true,
-            text: `Произошла ошибка при получении списка складов.${error}`,
-            buttons: [],
-            type: 'danger'
-        }
-    }
-};
-
-var getStockList = (pageNumber, itemsCountPerPage) => {
+let getStockList = (pageNumber, itemsCountPerPage) => {
     return (dispatch, getState) => {
         dispatch(getStockListRequest());
-        var name = getState().stockListReducer.frontend.filterStockNameValue;
-        var address = getState().stockListReducer.frontend.filterAddressValue;
+        let name = getState().stockListReducer.frontend.filterStockNameValue;
+        let address = getState().stockListReducer.frontend.filterAddressValue;
+
+        let visibility = (name !== '' || address !== '');
+        dispatch(setFilterMessageVisibility(visibility));
         return axios
             .get(`/stockList/page/${pageNumber}/limit/${itemsCountPerPage}`,
                 {
@@ -41,70 +39,53 @@ var getStockList = (pageNumber, itemsCountPerPage) => {
                 }
             )
             .then(response => dispatch(getStockListSuccess(response.data)))
-            .catch(error => dispatch(getStockListFail(error)))
+            .catch(error => dispatch(showDialog(`Произошла ошибка при получении списка складов.${error}`, 'danger', [])))
     }
 };
 
-var showDialog = (text, buttons) =>  {
+let showDialog = (text, type, buttons) =>  {
     return {
         type: event.SHOW_DIALOG,
         payload: {
             isVisible: true,
             text: text,
-            buttons: buttons
+            buttons: buttons,
+            type: type
         }
     }
 };
-var closeDialog = () => {
+let closeDialog = () => {
   return {
       type: event.CLOSE_DIALOG
   }
 };
 
-var deleteStocksRequest = () => {
+let deleteStocksRequest = () => {
     return {
        type: event.DELETE_STOCK_LIST_REQUEST
     }
 };
 
-var deleteStocksSuccess = () => {
-    return {
-        type: event.DELETE_STOCK_LIST_SUCCESS,
-        payload: {
-            isVisible: true,
-            text: "Удаление успешно.",
-            buttons: []
-        }
-    }
-};
-
-var deleteStockFail = () => {
-    return {
-        type: event.DELETE_STOCK_LIST_FAIL,
-        payload: {
-            isVisible: true,
-            text: "Произошла ошибка при удалении.",
-            buttons: [],
-            type: 'danger'
-        }
-    }
-};
-
-var deleteStocks = stockNamesList => {
+let deleteStocks = stockNamesList => {
     return (dispatch, getState) => {
         dispatch(deleteStocksRequest());
-        axios.delete(`/stockList/?namesToDelete=${stockNamesList}`)
-        .then(response =>{
-            dispatch(deleteStocksSuccess());
-            dispatch(
-                getStockList(1, getState().stockListReducer.page.itemsCountPerPage));
-        })
-        .catch(error => dispatch(deleteStockFail()))
-}
+        axios.delete('/stockList/',
+            {
+                params: {
+                    namesToDelete: stockNamesList.join()
+                }
+            })
+            .then(response => {
+            dispatch(showDialog(response.data, '', []));
+        dispatch(
+            getStockList(1, getState().stockListReducer.page.itemsCountPerPage));
+    })
+    .catch(error => dispatch(showDialog(`Произошла ошибка при удалении. ${error}`, 'danger', [])))
+    }
 };
 
 
-var setFilterInputValue = (inputId, value) => {
+let setFilterInputValue = (inputId, value) => {
     return {
         type: event.SET_FILTER_INPUT_VALUE,
         payload: {

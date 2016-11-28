@@ -9,6 +9,9 @@ const initUserState = {
         street: "",
         home: "",
         room: "",
+        nameRoom: "",
+        type: "",
+        count: "",
         id: -1
     },
     inputErrors: {
@@ -18,7 +21,10 @@ const initUserState = {
         city: "",
         street: "",
         home: "",
-        room: ""
+        room: "",
+        nameRoom: "",
+        type: "",
+        count: ""
     },
     frontend: {
         showAlertPopup: false,
