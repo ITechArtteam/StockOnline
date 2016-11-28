@@ -12,6 +12,7 @@ public interface StockService {
     Stock saveStock(Stock stock);
     Stock update(Stock stock);
     StockPage getStockPage(int pageNumber, int recordCount, String name, String address);
-    void deleteByIds(Collection<Integer> ids);
     void delete(Stock stock);
+    int deleteByIds(Collection<Integer> ids);
+    Stock saveOrUpdateStock(StockDto stockDto);
 }
