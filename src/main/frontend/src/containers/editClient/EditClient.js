@@ -4,7 +4,7 @@ import {clientActionCreator} from "./index";
 import {connect} from 'react-redux';
 import './style.css';
 import {AlertPopup} from '../../components/AlertPopup';
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
 
 class EditClient extends React.Component {
 
@@ -19,6 +19,8 @@ class EditClient extends React.Component {
 
     closeAlert(){
         this.props.closeAlertPopup();
+        if(this.props.client.frontend.messageAlertPop === "Клиен сохранен.")
+            browserHistory.push('/clients');
     }
 
     validateOnChange(e, patternType) {
