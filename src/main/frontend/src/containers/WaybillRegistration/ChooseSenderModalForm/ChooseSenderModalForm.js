@@ -73,7 +73,6 @@ class ChooseSenderModalForm extends React.Component {
 function mapStateToProps(state) {
     return {
         selectedSenderName: state.waybillRegistrationForm.selectSenderModalForm.selectedSenderName,
-        senders: state.waybillRegistrationForm.selectSenderModalForm.senders
     }
 }
 

@@ -21,23 +21,17 @@ import * as Actions from './actions'
 class WaybillRegistration extends React.Component {
 
     handleSenderNameOnBlur() {
-        if (!this.props.chooseCarrierModalFormIsOpen) {
+        if (!this.props.chooseCarrierModalFormIsOpen
+            && (getFilteredItems(this.props.senders, this.props.senderName).length > 0)) {
             this.props.showChooseSenderModal();
         }
     }
 
     handleCarrierNameOnBlur() {
-        if (!this.props.chooseSenderModalIsOpen) {
+        if (!this.props.chooseSenderModalIsOpen
+            && (getFilteredItems(this.props.carriers, this.props.carrierName).length > 0)) {
             this.props.showChooseCarrierModalForm();
         }
-    }
-
-    handleSaveSenderFormSubmit(value) {
-        this.props.hideChooseSenderModal();
-    }
-
-    handleChooseCarrierFormSubmit(value) {
-        this.props.hideChooseCarrierModalForm();
     }
 
     getTotalProductsSum() {
@@ -59,6 +53,16 @@ class WaybillRegistration extends React.Component {
             date.getMinutes();
     }
 
+    handleChangeSenderName(name) {
+        this.props.changeSenderName(name);
+        this.props.setSender(null);
+    }
+
+    handleChangeCarrierName(name) {
+        this.props.changeCarrierName(name);
+        this.props.setCarrier(null);
+    }
+
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
@@ -71,16 +75,16 @@ class WaybillRegistration extends React.Component {
                         onChange={this.props.changeWaybillNumber} />
                     <DateInput
                         value={this.props.registrationDate}
-                        format="DD/MM/YYYY"
-                        onChange={this.props.changeRegisrationDate}
+                        onChange={this.props.changeRegistrationDate}
                         label="Дата регистрации накладной" />
                     <TextInput
                         name="sender"
                         label="Отправитель"
                         value={this.props.senderName}
-                        onChange={this.props.changeSenderName}
+                        onChange={(value) => {this.handleChangeSenderName(value)}}
                         onBlur={() => this.handleSenderNameOnBlur()} />
                     <ChooseSenderModalForm
+                        senders={getFilteredItems(this.props.senders, this.props.senderName)}
                         isOpen={this.props.chooseSenderModalIsOpen}
                         onSave={(value) => {this.handleSaveSenderFormSubmit(value)}}
                         onHide={this.props.hideChooseSenderModal} />
@@ -88,10 +92,11 @@ class WaybillRegistration extends React.Component {
                         name="carrier"
                         label="Перевозчик"
                         value={this.props.carrierName}
-                        onChange={this.props.changeCarrierName}
+                        onChange={(value) => {this.handleChangeCarrierName(value)}}
                         onBlur={() => this.handleCarrierNameOnBlur()} />
                     <ChooseCarrierModalForm
                         isOpen={this.props.chooseCarrierModalFormIsOpen}
+                        carriers={getFilteredItems(this.props.carriers, this.props.carrierName)}
                         onSave={(value) => {this.handleChooseCarrierFormSubmit(value)}}
                         onHide={this.props.hideChooseCarrierModalForm} />
                     <SelectInput
@@ -127,8 +132,16 @@ class WaybillRegistration extends React.Component {
     }
 }
 
+function getFilteredItems(items, filter) {
+    return items.filter(function(item) {
+        return item.name.toUpperCase().startsWith(filter.toUpperCase());
+    });
+}
+
 function mapStateToProps(state) {
     return {
+        carriers: state.waybillRegistrationForm.selectCarrierModalForm.carriers,
+        senders: state.waybillRegistrationForm.selectSenderModalForm.senders,
         senderName: state.waybillRegistrationForm.senderName,
         carrierName: state.waybillRegistrationForm.carrierName,
         registrationDate: state.waybillRegistrationForm.registrationDate,

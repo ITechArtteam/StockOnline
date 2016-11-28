@@ -7,7 +7,7 @@ const DateInput = (props) => {
             <label className="control-label">{props.label}</label>
             <DatePicker
                 value={props.value}
-                onChange={(value, formattedValue) => {props.onChange(formattedValue)}} />
+                onChange={(value) => {props.onChange(value)}}/>
         </div>
     )
 };
