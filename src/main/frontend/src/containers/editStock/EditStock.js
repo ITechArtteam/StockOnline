@@ -101,6 +101,10 @@ class EditStock extends React.Component {
     }
 
     render() {
+        var rooms = [{id:"1",name:"a1",type:"cool",count:"5"},{id:"2",name:"a2",type:"cool",count:"7"},{id:"3",name:"a3",type:"cool",count:"8"}];
+        const cellEditProp = {
+            mode: 'click'
+        };
         return (
             <div className="row">
                 <div className="col-xs-3">
@@ -143,9 +147,6 @@ class EditStock extends React.Component {
 
                     <div className="btn-group" role="group">
                         <button type="button" className="btn btn-primary"
-                                onClick={this.submit}>Добавить помещение
-                        </button>
-                        <button type="button" className="btn btn-primary"
                                 onClick={this.submit}>Сохранить
                         </button>
                         <Link to="/stocks" className="btn btn-default">Отменить</Link>
@@ -153,6 +154,12 @@ class EditStock extends React.Component {
                 </div>{/*dib.col-xs-3 end*/}
                 <div className="col-xs-9">
 
+                    <BootstrapTable data={rooms} cellEdit={ cellEditProp } insertRow={ true }>
+                        <TableHeaderColumn headerAlign="center" dataField="id" width="60" isKey={true} editable={ false } >Id</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataField="name" >Помещение</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataField="type">Тип хранения</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataField="count"editable={ false }>Количество свободных мест</TableHeaderColumn>
+                    </BootstrapTable>
                 </div>{/*div.col-xs-9 end*/}
 
                 <AlertPopup isVisible={this.props.stock.frontend.showAlertPopup}

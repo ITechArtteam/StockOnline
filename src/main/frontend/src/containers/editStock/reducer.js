@@ -1,20 +1,28 @@
 import * as event from "./constants";
 
 const initUserState = {
+    room:{
+        name: "",
+        type: "",
+        count: ""
+    },
     data: {
         name: "",
         country: "",
         city: "",
         street: "",
         home: "",
+        rooms:[],
         id: -1
     },
+
     inputErrors: {
         name: "",
         country: "",
         city: "",
         street: "",
-        home: ""
+        home: "",
+        rooms:[]
     },
     frontend: {
         showAlertPopup: false,
