@@ -89,7 +89,7 @@ class WaybillRegistration extends React.Component {
                         value={this.props.transportType}
                         onChange={this.props.setTransportType} />
                     <TransportNumbers transportType={this.props.transportType} />
-                    <DriverInfo driver={this.props.driver} />
+                    <DriverInfo transportType={this.props.transportType} driver={this.props.driver} />
                     <TextAreaInput
                         label="Дополнительное описание товарной партии"
                         value={this.props.description}

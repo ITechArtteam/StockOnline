@@ -32,7 +32,7 @@ class AddNumberModalForm extends React.Component {
             <Modal isOpen={this.props.isOpen} onRequestHide={this.props.hideAddProductModalForm}>
                 <ModalHeader>
                     <ModalClose onClick={this.props.hideAddProductModalForm}/>
-                    <ModalTitle>Добавить номер</ModalTitle>
+                    <ModalTitle>Добавить товар</ModalTitle>
                 </ModalHeader>
                 <ModalBody>
                     <TextInput
