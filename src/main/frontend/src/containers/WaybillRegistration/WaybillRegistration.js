@@ -77,7 +77,8 @@ class WaybillRegistration extends React.Component {
                     <TextInput
                         name="sender"
                         label="Отправитель"
-                        onChange={() => {}}
+                        value={this.props.senderName}
+                        onChange={this.props.changeSenderName}
                         onBlur={() => this.handleSenderNameOnBlur()} />
                     <ChooseSenderModalForm
                         isOpen={this.props.chooseSenderModalIsOpen}
@@ -86,7 +87,8 @@ class WaybillRegistration extends React.Component {
                     <TextInput
                         name="carrier"
                         label="Перевозчик"
-                        onChange={() => {}}
+                        value={this.props.carrierName}
+                        onChange={this.props.changeCarrierName}
                         onBlur={() => this.handleCarrierNameOnBlur()} />
                     <ChooseCarrierModalForm
                         isOpen={this.props.chooseCarrierModalFormIsOpen}
@@ -127,6 +129,8 @@ class WaybillRegistration extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        senderName: state.waybillRegistrationForm.senderName,
+        carrierName: state.waybillRegistrationForm.carrierName,
         registrationDate: state.waybillRegistrationForm.registrationDate,
         waybillNumber: state.waybillRegistrationForm.number,
         chooseSenderModalIsOpen: state.waybillRegistrationForm.chooseSenderModalIsOpen,

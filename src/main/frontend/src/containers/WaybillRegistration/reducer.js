@@ -3,7 +3,7 @@ import * as Actions from './actions'
 const initialState = {
     number: "",
     registrationDate: null,
-    senderName: "",
+    senderName: '',
     senderId: null,
     senders: [
         {
@@ -15,7 +15,7 @@ const initialState = {
             name: 'TEST_SECOND_SENDER_NAME'
         }
     ],
-    carrierName: "",
+    carrierName: '',
     carrierId: null,
     selectCarrierModalForm: {
         selectedCarrierId: null,
@@ -365,6 +365,18 @@ export default function waybillRegistrationForm(state = initialState, action) {
                         storage: ''
                     }
                 }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_CHANGE_SENDER_NAME:
+            return {
+                ...state,
+                senderName: action.name
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_CHANGE_CARRIER_NAME:
+            return {
+                ...state,
+                carrierName: action.name
             };
 
         default:
