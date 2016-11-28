@@ -17,7 +17,26 @@ export function signInUser(credentials) {
                     url: `/userinfo/${credentials.username}`,
                     success: function (response) {
                         dispatch(authUser(response));
-                        browserHistory.push('/clients');
+                        switch(response.roles[0]) {
+                            case "SUPER_ADMIN":
+                                browserHistory.push('/clients');
+                                break;
+                            case "ADMIN":
+                                browserHistory.push('/stocks');
+                                break;
+                            case "DISPATCHER":
+                                browserHistory.push('/registrationOfGoods');
+                                break;
+                            case "MANAGER":
+                                browserHistory.push('/goods/receipt');
+                                break;
+                            case "CONTROLLER":
+                                browserHistory.push('/goods/checkInput');
+                                break;
+                            case "BOSS_STOCK":
+                                browserHistory.push('/goods');
+                                break;
+                        }
                     },
                     error: function () {
                         dispatch(authError())
