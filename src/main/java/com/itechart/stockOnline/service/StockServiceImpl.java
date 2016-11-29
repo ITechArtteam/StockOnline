@@ -2,8 +2,10 @@ package com.itechart.stockOnline.service;
 
 import com.itechart.stockOnline.converter.StockDtoConverter;
 import com.itechart.stockOnline.dao.StockDao;
+import com.itechart.stockOnline.dao.UserDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Stock;
+import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.Address;
 import com.itechart.stockOnline.model.dto.StockDto;
@@ -18,6 +20,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
 
@@ -30,7 +34,7 @@ public class StockServiceImpl implements StockService {
     private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
     private final StockDao stockDao;
-
+    private final UserDao userDao;
     private final StockDtoConverter stockDtoConverter;
 
     private final UserService userService;
@@ -38,12 +42,9 @@ public class StockServiceImpl implements StockService {
     private final AddressService addressService;
 
     @Autowired
-    private StockOwnerCompanyService stockOwnerCompanyService;
-
-
-    @Autowired
-    public StockServiceImpl(StockDao stockDao, UserService userService, StockDtoConverter stockDtoConverter, AddressService addressService) {
+    public StockServiceImpl(StockDao stockDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter, AddressService addressService) {
         this.stockDao = stockDao;
+        this.userDao = userDao;
         this.userService = userService;
         this.stockDtoConverter = stockDtoConverter;
         this.addressService = addressService;
@@ -133,7 +134,8 @@ public class StockServiceImpl implements StockService {
     @Transactional
     public Stock saveStock(Stock stock) {
         stock.setId(null);
-        logger.debug("saveOrUpdateStock({})", stock);
+        User user = userDao.findByLogin("admin").orElseThrow(DataNotFoundError::new);
+        stock.setCompany(user.getStockOwnerCompany());
         return stockDao.save(stock);
     }
 

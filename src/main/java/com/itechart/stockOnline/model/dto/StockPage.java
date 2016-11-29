@@ -14,7 +14,7 @@ public class StockPage implements Serializable{
     private List<StockDto> stockList;
 
     public StockPage() {
-        Logger.info("Emptyconstructor StockPage");
+
     }
 
     public StockPage(long activePage, long totalItemsCount, long itemsCountPerPage, List<StockDto> stockList) {
@@ -22,8 +22,7 @@ public class StockPage implements Serializable{
         this.totalItemsCount = totalItemsCount;
         this.itemsCountPerPage = itemsCountPerPage;
         this.stockList = stockList;
-        Logger.info("constructor StockPage: activePage:{}, totalItemsCount:{}, itemsCountPerPage:{}, stockList:{}",activePage, totalItemsCount, itemsCountPerPage, stockList);
-    }
+        }
 
     public long getActivePage() {
         return activePage;

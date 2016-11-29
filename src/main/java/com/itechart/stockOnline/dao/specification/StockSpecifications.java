@@ -6,9 +6,9 @@ import com.itechart.stockOnline.model.Stock;
 import com.itechart.stockOnline.model.Stock_;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 
 public class StockSpecifications {
 
@@ -20,22 +20,14 @@ public class StockSpecifications {
         return ((root, criteriaQuery, criteriaBuilder) -> {
             Join<Stock, Address> addressJoin = root.join(Stock_.address, JoinType.INNER);
 
-            String delimiter = " ";
+            String lowAddress = "%" + address.toLowerCase() + "%";
+            Predicate countryLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.countryName)), lowAddress);
+            Predicate cityLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.cityName)), lowAddress);
+            Predicate streetLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.street)), lowAddress);
+            Predicate homeLike = criteriaBuilder.like(criteriaBuilder.lower(addressJoin.get(Address_.home).as(String.class)), lowAddress);
 
-            Expression<String> expression = criteriaBuilder.concat(addressJoin.get(Address_.countryName), delimiter);
-            expression = criteriaBuilder.concat(expression, addressJoin.get(Address_.cityName));
-            expression = criteriaBuilder.concat(expression, delimiter);
 
-            expression = criteriaBuilder.concat(expression, addressJoin.get(Address_.street));
-            expression = criteriaBuilder.concat(expression, delimiter);
-
-            expression = criteriaBuilder.concat(expression, addressJoin.get(Address_.room).as(String.class));
-            expression = criteriaBuilder.concat(expression, delimiter);
-
-            expression = criteriaBuilder.concat(expression, addressJoin.get(Address_.home).as(String.class));
-            expression = criteriaBuilder.concat(expression, delimiter);
-
-            return criteriaBuilder.like(expression, "%" + address + "%");
+            return criteriaBuilder.or(countryLike, cityLike, streetLike, homeLike);
         });
     }
 }
