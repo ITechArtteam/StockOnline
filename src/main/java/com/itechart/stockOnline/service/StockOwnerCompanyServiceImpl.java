@@ -22,10 +22,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.itechart.stockOnline.dao.specification.StockOwnerCompanySpecifications.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -58,6 +55,9 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     }
 
+    public List<StockOwnerCompany> getAll() {
+        return stockOwnerCompanyDao.findAll();
+    }
 
     @Override
     @Transactional(readOnly = true)
