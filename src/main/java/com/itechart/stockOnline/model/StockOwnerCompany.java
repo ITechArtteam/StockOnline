@@ -18,14 +18,14 @@ public class StockOwnerCompany {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company")
     private Set<Stock> stocks;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address")
     private Address address;
 
-    @OneToMany(mappedBy = "stockOwnerCompany", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "stockOwnerCompany")
     private Set<User> users;
 
     public StockOwnerCompany() {

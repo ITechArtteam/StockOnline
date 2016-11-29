@@ -11,19 +11,19 @@ public class TransferCompany {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company")
     private Set<Driver> drivers;
 
     public TransferCompany() {
     }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -36,7 +36,6 @@ public class TransferCompany {
         return "TransferComany{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", drivers=" + drivers +
                 '}';
     }
 }

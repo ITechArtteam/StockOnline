@@ -25,27 +25,27 @@ public class Waybill {
     @OneToMany(mappedBy = "waybill")
     private Set<ProductInWaybill> productInWaybills;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "transport_id")
     private Transport transport;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "sender_id")
     private ClientCompany sender;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "receiver_id")
     private ClientCompany receiver;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "responsible_person_id")
     private User responsiblePerson;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "checked_by")
     private User checkedBy;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "registered_by")
     private User registeredBy;
 

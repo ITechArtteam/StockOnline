@@ -4,6 +4,8 @@ import com.itechart.stockOnline.converter.OwnerCompanyDtoConverter;
 import com.itechart.stockOnline.dao.StockOwnerCompanyDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
+import com.itechart.stockOnline.model.Address;
+import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
@@ -19,8 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 import static com.itechart.stockOnline.dao.specification.StockOwnerCompanySpecifications.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -38,14 +39,24 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     private final UserService userService;
 
+    private final AddressService addressService;
+
     @Autowired
-    public StockOwnerCompanyServiceImpl(StockOwnerCompanyDao stockOwnerCompanyDao, UserService userService, OwnerCompanyDtoConverter ownerCompanyDtoConverter, StockOwnerCompanyValidator companyValidator) {
+    private StockService stockService;
+
+    @Autowired
+    public StockOwnerCompanyServiceImpl(StockOwnerCompanyDao stockOwnerCompanyDao, UserService userService, OwnerCompanyDtoConverter ownerCompanyDtoConverter, StockOwnerCompanyValidator companyValidator, AddressService addressService) {
         this.stockOwnerCompanyDao = stockOwnerCompanyDao;
         this.userService = userService;
         this.ownerCompanyDtoConverter = ownerCompanyDtoConverter;
         this.companyValidator = companyValidator;
+        this.addressService = addressService;
+
     }
 
+    public List<StockOwnerCompany> getAll() {
+        return stockOwnerCompanyDao.findAll();
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -55,45 +66,6 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
         logger.debug("getClientDtoForOwnerCompany({}): {}", nameCompany, clientCompany);
         User admin = userService.findByCompany(clientCompany);
         return ownerCompanyDtoConverter.toClientDto(clientCompany, admin);
-    }
-
-    @Override
-    @Transactional
-    public StockOwnerCompany saveStockOwnerCompany(StockOwnerCompany stockOwnerCompany) {
-        stockOwnerCompany.setId(null);
-        stockOwnerCompany.setActive(true);
-        logger.debug("saveStockOwnerCompany({})", stockOwnerCompany);
-        validationFields(stockOwnerCompany);
-        return stockOwnerCompanyDao.save(stockOwnerCompany);
-    }
-
-    private void validationFields(StockOwnerCompany stockOwnerCompany) {
-        Map<String, String> errors = companyValidator.checkNewOwnerCompany(stockOwnerCompany);
-        if (errors.size() > 0){
-            throw new ValidationError(errors);
-        }
-    }
-
-    @Override
-    @Transactional
-    public StockOwnerCompany update(StockOwnerCompany stockOwnerCompany) {
-        validationFields(stockOwnerCompany);
-
-        StockOwnerCompany companyInDB =
-                stockOwnerCompanyDao.findOne(stockOwnerCompany.getId());
-        if (companyInDB == null){
-            throw new DataNotFoundError("StockOwnerCompany with id: " + stockOwnerCompany.getId());
-        }
-        logger.debug("update: \n{} -> \n{}", companyInDB, stockOwnerCompany);
-        updateData(stockOwnerCompany, companyInDB);
-
-        return companyInDB;
-    }
-
-    private void updateData(StockOwnerCompany stockOwnerCompany, StockOwnerCompany companyInDB) {
-        companyInDB.setName(stockOwnerCompany.getName());
-        companyInDB.setAddress(stockOwnerCompany.getAddress());
-        companyInDB.setActive(stockOwnerCompany.getActive());
     }
 
     @Override
@@ -133,9 +105,88 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     @Override
     @Transactional
+    public void delete(StockOwnerCompany company) {
+        company.getUsers().forEach(userService::delete);
+        company.getStocks().forEach(stockService::delete);
+        Address address = company.getAddress();
+        stockOwnerCompanyDao.delete(company);
+        addressService.delete(address);
+    }
+
+    @Override
+    @Transactional
     public int deleteByNames(Collection<String> names) {
-        int deletedCount = stockOwnerCompanyDao.deleteByNameIn(names);
-        logger.info("Stock owner company service: delete by names list - {}. Deleted {} records", names, deletedCount);
-        return deletedCount;
+        stockOwnerCompanyDao.findAllByNameIn(names).forEach(this::delete);
+        logger.info("Stock owner company service: delete by names list - {}. Deleted {} records", names, names.size());
+        return names.size();
+    }
+
+    @Override
+    @Transactional
+    public StockOwnerCompany saveOrUpdateStockOwnerCompany(OwnerCompanyDto ownerCompanyDto) {
+        StockOwnerCompany stockOwnerCompany = ownerCompanyDtoConverter.toStockOwnerCompany(ownerCompanyDto);
+        User admin = ownerCompanyDtoConverter.toUser(ownerCompanyDto);
+        if (stockOwnerCompany.getId() > -1){
+            stockOwnerCompany = update(stockOwnerCompany);
+
+            admin.setId(userService.findByCompany(stockOwnerCompany).getId());
+            admin.setStockOwnerCompany(stockOwnerCompany);
+            userService.update(admin);
+        } else {
+            stockOwnerCompany = saveStockOwnerCompany(stockOwnerCompany);
+
+            admin = setAdminRole(admin);
+            admin.setStockOwnerCompany(stockOwnerCompany);
+            userService.save(admin);
+        }
+        return stockOwnerCompany;
+    }
+
+    @Override
+    @Transactional
+    public StockOwnerCompany update(StockOwnerCompany stockOwnerCompany) {
+        validationFields(stockOwnerCompany);
+
+        StockOwnerCompany companyInDB =
+                stockOwnerCompanyDao.findOne(stockOwnerCompany.getId());
+        if (companyInDB == null){
+            throw new DataNotFoundError("StockOwnerCompany with id: " + stockOwnerCompany.getId());
+        }
+        logger.debug("update: \n{} -> \n{}", companyInDB, stockOwnerCompany);
+        updateData(stockOwnerCompany, companyInDB);
+
+        return companyInDB;
+    }
+
+    @Override
+    @Transactional
+    public StockOwnerCompany saveStockOwnerCompany(StockOwnerCompany stockOwnerCompany) {
+        stockOwnerCompany.setId(null);
+        stockOwnerCompany.setActive(true);
+        logger.debug("saveOrUpdateStockOwnerCompany({})", stockOwnerCompany);
+        validationFields(stockOwnerCompany);
+        return stockOwnerCompanyDao.save(stockOwnerCompany);
+    }
+
+    private void validationFields(StockOwnerCompany stockOwnerCompany) {
+        Map<String, String> errors = companyValidator.checkNewOwnerCompany(stockOwnerCompany);
+        if (errors.size() > 0){
+            throw new ValidationError(errors);
+        }
+    }
+
+    private void updateData(StockOwnerCompany stockOwnerCompany, StockOwnerCompany companyInDB) {
+        companyInDB.setName(stockOwnerCompany.getName());
+        Address address = stockOwnerCompany.getAddress();
+        address.setId(companyInDB.getAddress().getId());
+        addressService.update(address);
+        companyInDB.setActive(stockOwnerCompany.getActive());
+    }
+
+    private User setAdminRole(User admin) {
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role("ADMIN"));
+        admin.setRoles(roles);
+        return admin;
     }
 }

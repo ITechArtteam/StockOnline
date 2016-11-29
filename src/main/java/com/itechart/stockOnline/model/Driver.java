@@ -1,5 +1,7 @@
 package com.itechart.stockOnline.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 //import javax.validation.constraints.Size;
 
@@ -37,11 +39,13 @@ public class Driver {
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "transfer_company_id")
     private TransferCompany company;
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    @OneToMany(mappedBy = "driver")
     private Set<Transport> transports;
 
     public Driver() {

@@ -17,7 +17,7 @@ var findWaybillSuccess = json => {
 var findWaybillById = id => {
     return dispatch => {
         dispatch(findWaybillRequest());
-        axios.get(`waybills/${id}`)
+        axios.get(`/waybills/${id}`)
             .then(response => dispatch(findWaybillSuccess(response.data)))
             .catch(error => dispatch(showDialog(`Накладная не найдена. ${error}`, 'danger', [])));
     }

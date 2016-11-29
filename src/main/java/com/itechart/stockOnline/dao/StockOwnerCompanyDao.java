@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface StockOwnerCompanyDao extends JpaRepository<StockOwnerCompany, Long>, JpaSpecificationExecutor {
     Optional<StockOwnerCompany> findByName(String name);
@@ -19,4 +20,7 @@ public interface StockOwnerCompanyDao extends JpaRepository<StockOwnerCompany, L
     @Modifying
     @Query("delete from StockOwnerCompany s where s.name in ?1")
     int deleteByNameIn(Collection<String> names);
+
+    @Query("select s from StockOwnerCompany s where s.name in ?1")
+    Stream<StockOwnerCompany> findAllByNameIn(Collection<String> names);
 }

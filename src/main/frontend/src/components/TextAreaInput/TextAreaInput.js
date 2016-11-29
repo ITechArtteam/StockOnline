@@ -8,7 +8,7 @@ const TextAreaInput = (props) => {
             <label className="control-label">{props.label}</label>
                 <textarea
                     className="form-control disabled-resizing"
-                    onChange={props.onChange}
+                    onChange={(event) => props.onChange(event.target.value)}
                     value={props.value}
                 />
         </div>

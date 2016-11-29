@@ -1,8 +1,5 @@
 package com.itechart.stockOnline.model;
 
-
-
-
 import com.itechart.stockOnline.validation.*;
 import com.itechart.stockOnline.validator.Worker;
 
@@ -51,17 +48,23 @@ public class User {
     private String email;
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "company")
     private StockOwnerCompany stockOwnerCompany;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            inverseJoinColumns = @JoinColumn(name = "role_id",
+                    nullable = false,
+                    updatable = false),
+            joinColumns = @JoinColumn(name = "user_id",
+                    nullable = false,
+                    updatable = false))
     private Set<Role> roles;
 
     public User() {

@@ -13,5 +13,5 @@ public interface StockService {
     Stock update(Stock stock);
     StockPage getStockPage(int pageNumber, int recordCount, String name, String address);
     void deleteByIds(Collection<Integer> ids);
-
+    void delete(Stock stock);
 }

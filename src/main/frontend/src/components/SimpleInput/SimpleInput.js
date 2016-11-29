@@ -37,7 +37,7 @@ class SimpleInput extends React.Component {
                         this.props.onBlur(e, this.props.patternType)
                     }}
                 />
-                <label className={this.props.errorValue == "" ? "none" : "error"}>{this.props.errorValue}</label>
+                <label className={this.props.errorValue == "" ? "none" : "inputError"}>{this.props.errorValue}</label>
                 <span id={this.props.id + "Visibility"} onClick={this.props.swapStatePassword}
                       className={this.getClassNameForShowPassword()}/>
             </div>
