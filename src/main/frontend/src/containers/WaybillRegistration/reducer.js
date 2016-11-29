@@ -22,9 +22,7 @@ const initialState = {
             isOpen: false,
             number: ''
         },
-        numbers: [{
-            number: '11111'
-        }],
+        numbers: [],
         car: '',
         trailer: '',
         selectedNumber: null
@@ -39,14 +37,7 @@ const initialState = {
     description: '',
     waybillProducts: {
         selectedProductName: null,
-        products: [
-            {
-                name: 'first product',
-                price: '10',
-                count: '2',
-                storage: 'none'
-            }
-        ],
+        products: [],
         addProductModalForm: {
             isOpen: false,
             name: '',

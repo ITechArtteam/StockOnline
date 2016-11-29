@@ -1,4 +1,4 @@
-package com.itechart.stockOnline.model.dto.waybillownercompany;
+package com.itechart.stockOnline.model.dto.waybillregistration.waybillownercompany;
 
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import org.springframework.stereotype.Component;

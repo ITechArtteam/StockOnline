@@ -21,14 +21,14 @@ import * as Actions from './actions'
 class WaybillRegistration extends React.Component {
 
     handleSenderNameOnBlur() {
-        if (!this.props.chooseCarrierModalFormIsOpen
+        if (!this.props.chooseCarrierModalFormIsOpen && (this.props.senderName.length > 0)
             && (getFilteredItems(this.props.senders, this.props.senderName).length > 0)) {
             this.props.showChooseSenderModal();
         }
     }
 
     handleCarrierNameOnBlur() {
-        if (!this.props.chooseSenderModalIsOpen
+        if (!this.props.chooseSenderModalIsOpen && (this.props.carrierName.length > 0)
             && (getFilteredItems(this.props.carriers, this.props.carrierName).length > 0)) {
             this.props.showChooseCarrierModalForm();
         }
@@ -37,20 +37,11 @@ class WaybillRegistration extends React.Component {
     getTotalProductsSum() {
         return this.props.products.reduce(function(sum, current) {
             return sum + current.price * current.count;
-        }, 0) + 'у.е.';
+        }, 0) + ' у.е.';
     }
 
     getTotalProductsAmount() {
         return this.props.products.length;
-    }
-
-    getCurrentDateTime() {
-        var date = new Date();
-        return date.getDate() + "/" +
-            (date.getMonth() + 1) + "/" +
-            date.getFullYear() + " " +
-            date.getHours() + ":" +
-            date.getMinutes();
     }
 
     handleChangeSenderName(name) {
@@ -61,6 +52,42 @@ class WaybillRegistration extends React.Component {
     handleChangeCarrierName(name) {
         this.props.changeCarrierName(name);
         this.props.setCarrier(null);
+    }
+
+    handleFormSubmit() {
+        const type =  this.props.transportType;
+        let numbers = [];
+        if (type === 'TRAIN') {
+            numbers = this.props.numbers.reduce(function(numbers, number) {
+                numbers.push(number.number);
+                return numbers;
+            }, []);
+        }
+        else if (type === 'CAR') {
+            numbers.push(this.props.carNumber);
+            if (this.props.trailerNumber !== '') {
+                numbers.push(this.props.trailerNumber);
+            }
+        }
+
+        const waybill = {
+            number: this.props.waybillNumber,
+            issueDate: this.props.registrationDate,
+            senderId: this.props.sender.id,
+            carrierId: this.props.carrier.id,
+            transportType: this.props.transportType,
+            numbers: numbers,
+            description: this.props.description,
+            registrationDatetime: getCurrentDateTime(),
+            products: this.props.products
+        };
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(waybill),
+            dataType: 'json',
+            url: '/waybills/register'
+        });
     }
 
     render() {
@@ -76,7 +103,7 @@ class WaybillRegistration extends React.Component {
                     <DateInput
                         value={this.props.registrationDate}
                         onChange={this.props.changeRegistrationDate}
-                        label="Дата регистрации накладной" />
+                        label="Дата выписки накладной" />
                     <TextInput
                         name="sender"
                         label="Отправитель"
@@ -121,15 +148,28 @@ class WaybillRegistration extends React.Component {
                         value={this.props.dispatcher} />
                     <DisabledInput
                         label="Дата и время регистрации накладной"
-                        value={this.getCurrentDateTime()} />
+                        value={getCurrentDateTime()} />
                     <WaybillProducts />
                     <div className="col-lg-offset-5 vertical-offset">
-                        <input type="button" className="btn btn-primary" value="Сохранить" />
+                        <input
+                            type="button"
+                            className="btn btn-primary"
+                            value="Сохранить"
+                            onClick={() => {this.handleFormSubmit()}} />
                     </div>
                 </form>
             </div>
         )
     }
+}
+
+function getCurrentDateTime() {
+    var date = new Date();
+    return date.getDate() + "/" +
+        (date.getMonth() + 1) + "/" +
+        date.getFullYear() + " " +
+        date.getHours() + ":" +
+        date.getMinutes();
 }
 
 function getFilteredItems(items, filter) {
@@ -140,6 +180,11 @@ function getFilteredItems(items, filter) {
 
 function mapStateToProps(state) {
     return {
+        carNumber: state.waybillRegistrationForm.transportNumbers.car,
+        trailerNumber: state.waybillRegistrationForm.transportNumbers.trailer,
+        numbers: state.waybillRegistrationForm.transportNumbers.numbers,
+        carrier: state.waybillRegistrationForm.carrier,
+        sender: state.waybillRegistrationForm.sender,
         carriers: state.waybillRegistrationForm.selectCarrierModalForm.carriers,
         senders: state.waybillRegistrationForm.selectSenderModalForm.senders,
         senderName: state.waybillRegistrationForm.senderName,
