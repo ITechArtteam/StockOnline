@@ -17,7 +17,14 @@ export function signInUser(credentials) {
                     url: `/userinfo/${credentials.username}`,
                     success: function (response) {
                         dispatch(authUser(response));
-                        browserHistory.push('/clients');
+                        switch (response.roles[0]) {
+                            case 'DISPATCHER':
+                                browserHistory.push('/waybills');
+                                break;
+                            default:
+                                browserHistory.push('/clients');
+                                break;
+                        }
                     },
                     error: function () {
                         dispatch(authError())
