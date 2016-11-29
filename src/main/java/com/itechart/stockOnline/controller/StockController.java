@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,9 +42,10 @@ public class StockController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Object> addStock(@RequestBody StockDto stockDto){
-        logger.debug("REST request. Path:/stock/  method: POST Request body {}", stockDto);
-        Stock stock = stockService.saveOrUpdateStock(stockDto);
+    public ResponseEntity<Object> addStock(@RequestBody StockDto stockDto,
+                                           Principal user){
+        logger.debug("REST request. Path:/stock/  method: POST Request body {}, user : {}", stockDto, user);
+        Stock stock = stockService.saveOrUpdateStock(stockDto,user.getName());
         return new ResponseEntity<>(stock.getId(), new HttpHeaders(), HttpStatus.OK);
     }
 

@@ -17,6 +17,8 @@ import com.itechart.stockOnline.util.ControllerHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -35,11 +37,12 @@ public class StockListController {
     public StockPage getStockList(@PathVariable Integer pageNumber,
                                         @PathVariable Integer recordCount,
                                         @RequestParam String name,
-                                        @RequestParam String address) {
+                                        @RequestParam String address,
+                                  Principal user) {
         name = ControllerHelper.convertToUtf(name);
         address = ControllerHelper.convertToUtf(address);
         Logger.info("REST request. Path:/stockList/page/{}/limit/{}/?name={}&address={}  method: GET", pageNumber, recordCount, name, address);
-        return stockService.getStockPage(pageNumber, recordCount, name, address);
+        return stockService.getStockPage(pageNumber, recordCount, name, address, user.getName());
     }
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteClients(@RequestParam(value = "idsToDelete") List<Integer> ids) {

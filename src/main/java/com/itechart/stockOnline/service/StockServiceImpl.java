@@ -40,7 +40,8 @@ public class StockServiceImpl implements StockService {
     private final UserService userService;
 
     private final AddressService addressService;
-
+    @Autowired
+    private StockOwnerCompanyService stockOwnerCompanyService;
     @Autowired
     public StockServiceImpl(StockDao stockDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter, AddressService addressService) {
         this.stockDao = stockDao;
@@ -63,10 +64,15 @@ public class StockServiceImpl implements StockService {
 
     @Override
     @Secured({"ROLE_ADMIN"})
-    public StockPage getStockPage(int pageNumber, int recordCount, String name, String address) {
+    public StockPage getStockPage(int pageNumber, int recordCount, String name, String address, String login) {
         if(pageNumber <= 0 || recordCount <= 0) {
             throw new DataNotFoundError();
         }
+
+        User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
+
+        String company = user.getStockOwnerCompany().getName();
+        logger.info("Stock service: getStockPage company - {}.", login);
         Specification<Stock> specification = null;
         if(StringUtils.isNotEmpty(name)) {
             specification = where(nameLike(name));
@@ -77,6 +83,14 @@ public class StockServiceImpl implements StockService {
                 specification = where(specification).and(addressLike(address));
             } else {
                 specification = where(addressLike(address));
+            }
+        }
+
+        if(StringUtils.isNotEmpty(company)) {
+            if(specification != null) {
+                specification = where(specification).and(companyLike(company));
+            } else {
+                specification = where(companyLike(company));
             }
         }
 
@@ -105,8 +119,10 @@ public class StockServiceImpl implements StockService {
 
     @Override
     @Transactional
-    public Stock saveOrUpdateStock(StockDto stockDto) {
+    public Stock saveOrUpdateStock(StockDto stockDto, String login) {
         Stock stock = stockDtoConverter.toStock(stockDto);
+        User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
+        stock.setCompany(user.getStockOwnerCompany());
         if (stock.getId() > -1){
             stock = update(stock);
         } else {
@@ -134,8 +150,6 @@ public class StockServiceImpl implements StockService {
     @Transactional
     public Stock saveStock(Stock stock) {
         stock.setId(null);
-        User user = userDao.findByLogin("admin").orElseThrow(DataNotFoundError::new);
-        stock.setCompany(user.getStockOwnerCompany());
         return stockDao.save(stock);
     }
 

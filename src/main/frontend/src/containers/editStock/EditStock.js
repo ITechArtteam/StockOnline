@@ -101,7 +101,7 @@ class EditStock extends React.Component {
     }
 
     render() {
-        var rooms = [{name:"103a",type:"A",count:"5"}];
+        var rooms = [];
 
         const cellEditProp = {
             mode: 'click'

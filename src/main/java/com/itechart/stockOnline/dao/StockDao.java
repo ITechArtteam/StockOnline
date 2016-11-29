@@ -22,4 +22,5 @@ public interface StockDao extends JpaRepository<Stock, Long>, JpaSpecificationEx
 
     @Query("select s from Stock s where s.id in ?1")
     Stream<Stock> findAllByIdIn(Collection<Integer> ids);
+
 }
