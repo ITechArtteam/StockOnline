@@ -64,34 +64,28 @@ export function selectSender(sender) {
 }
 
 export function loadSenders() {
-    const senders = [
-        {
-            id: 1,
-            name: 'FIRST_TEST_LOADED_SENDER'
-        },
-        {
-            id: 2,
-            name: 'SECOND_TEST_LOADED_SENDER'
-        }
-    ];
     return function(dispatch) {
-        dispatch(setSenders(senders));
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/customer/',
+            success: function (response) {
+                dispatch(setSenders(response));
+            }
+        });
     }
 }
 
 export function loadCarriers() {
-    const carriers = [
-        {
-            id: 1,
-            name: 'FIRST_TEST_LOADED_CARRIER'
-        },
-        {
-            id: 2,
-            name: 'SECOND_TEST_LOADED_CARRIER'
-        }
-    ];
     return function(dispatch) {
-        dispatch(setCarriers(carriers));
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/transfercompanies/',
+            success: function (response) {
+                dispatch(setCarriers(response));
+            }
+        });
     }
 }
 
