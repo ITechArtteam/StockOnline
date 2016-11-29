@@ -153,7 +153,8 @@ function mapStateToProps(state) {
         transportType: state.waybillRegistrationForm.transportType,
         driver: state.waybillRegistrationForm.driver,
         dispatcher: state.auth.username,
-        products: state.waybillRegistrationForm.waybillProducts.products
+        products: state.waybillRegistrationForm.waybillProducts.products,
+        description: state.waybillRegistrationForm.description
     }
 }
 
