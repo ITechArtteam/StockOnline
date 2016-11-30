@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import "./navigation.css";
 import UserInfo from "../../containers/UserInfo";
 import NavigationButton from "./NavigationButton";
+import LogoutButton from "./LogoutButton";
 import {navigationActionCreator} from "./index";
 import {browserHistory} from "react-router";
 
@@ -18,18 +19,15 @@ class Navigation extends React.Component {
         return (
             <nav role="navigation" className="navbar navbar-default">
                 <div className="collapse navbar-collapse row">
-                    <ul className="nav navbar-nav col-sm-9 col-md-9 col-lg-9">
+                    <ul className="nav navbar-nav col-sm-8 col-md-8 col-lg-8">
                         <NavigationButton mustHaveRoles={["ROLE_GUEST"]} to="/login" buttonText="Войти"/>
                         <NavigationButton mustHaveRoles={["SUPER_ADMIN"]} to="/clients" buttonText="Клиенты"/>
-                        <NavigationButton mustHaveRoles={["SUPER_ADMIN"]} to="/client"
-                                          buttonText="Редактировать клиента"/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK"]} to="/reports" buttonText="Отчеты"/>
                         <NavigationButton mustHaveRoles={["SUPER_ADMIN"]} to="/report/income"
                                           buttonText="Отчет о прибыли"/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK"]} to="/report/standard"
                                           buttonText="Стандартные отчеты"/>
                         <NavigationButton mustHaveRoles={["ADMIN"]} to="/stocks" buttonText="Склады"/>
-                        <NavigationButton mustHaveRoles={["ADMIN"]} to="/stock" buttonText="Редактировать склад"/>
                         <NavigationButton mustHaveRoles={["ADMIN"]} to="/workers" buttonText="Сотрудники"/>
                         <NavigationButton mustHaveRoles={["ADMIN"]} to="/worker" buttonText="Редактировать сотрудника"/>
                         <NavigationButton mustHaveRoles={["DISPATCHER"]} to="/registrationOfGoods" buttonText="Регистрация товаров"/>
@@ -51,6 +49,9 @@ class Navigation extends React.Component {
                     </ul>
                     <div className="userInfo col-sm-3 col-md-3 col-lg-3">
                         <UserInfo className="userInfo "/>
+                    </div>
+                    <div className="col-sm-1 col-md-1 col-lg-1">
+                        <LogoutButton/>
                     </div>
 
                 </div>

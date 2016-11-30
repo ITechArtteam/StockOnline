@@ -25,7 +25,6 @@ public class StockDtoConverter {
         address.setCityName(stockDto.getCity());
         address.setStreet(stockDto.getStreet());
         address.setHome(stockDto.getHome());
-        address.setRoom(stockDto.getRoom());
         stock.setAddress(address);
         stock.setId(stockDto.getId());
         stock.setName(stockDto.getName());
@@ -42,12 +41,8 @@ public class StockDtoConverter {
         dto.setCity(address.getCityName());
         dto.setStreet(address.getStreet());
         dto.setHome(address.getHome());
-        dto.setRoom(address.getRoom());
         dto.setName(stock.getName());
         dto.setNameCompany(stock.getCompany().getName());
-        dto.setAdminLogin(admin.getLogin());
-        dto.setAdminEmail(admin.getEmail());
-        dto.setAdminPassword("");
         LOGGER.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);
         return dto;
     }
@@ -60,7 +55,6 @@ public class StockDtoConverter {
         dto.setCity(address.getCityName());
         dto.setStreet(address.getStreet());
         dto.setHome(address.getHome());
-        dto.setRoom(address.getRoom());
         dto.setName(stock.getName());
         dto.setNameCompany(stock.getCompany().getName());
         LOGGER.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);

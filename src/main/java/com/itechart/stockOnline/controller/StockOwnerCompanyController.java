@@ -4,6 +4,8 @@ import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
+import com.itechart.stockOnline.model.dto.waybillregistration.waybillownercompany.StockOwnerCompanyWaybillDto;
+import com.itechart.stockOnline.model.dto.waybillregistration.waybillownercompany.StockOwnerCompanyWaybillDtoBuilder;
 import com.itechart.stockOnline.service.StockOwnerCompanyService;
 import com.itechart.stockOnline.util.ControllerHelper;
 import org.slf4j.Logger;
@@ -14,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/customer")
 public class StockOwnerCompanyController {
@@ -22,10 +26,20 @@ public class StockOwnerCompanyController {
 
     private final StockOwnerCompanyService companyService;
 
+    @Autowired
+    private StockOwnerCompanyWaybillDtoBuilder waybillDtoBuilder;
 
     @Autowired
     public StockOwnerCompanyController(StockOwnerCompanyService companyService) {
         this.companyService = companyService;
+    }
+
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @ResponseBody
+    public List<StockOwnerCompanyWaybillDto> getStockOwnerCompaniesForWaybill() {
+        List<StockOwnerCompany> companies = companyService.getAll();
+
+        return waybillDtoBuilder.buildDtoList(companies);
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)

@@ -19,7 +19,7 @@ import EditStock from "./containers/editStock/EditStock";
 import WorkersContainer from "./containers/WorkersContainer";
 import EditWorkerContainer from "./containers/EditWorkerContainer";
 import Waybills from "./containers/Waybills";
-import WaybillRegistration from "./containers/WaybillRegistration";
+import WaybillRegistration from "./containers/WaybillRegistration/WaybillRegistration";
 import Goods from "./containers/Goods";
 import ReceiptGoods from "./containers/ReceiptGoods";
 import DistributionGoods from "./containers/DistributionGoods";
@@ -36,6 +36,7 @@ import "bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./global.css";
 
 import {client} from "./actions"
+import {stock} from "./actions"
 
 
 

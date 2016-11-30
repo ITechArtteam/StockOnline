@@ -4,7 +4,7 @@ import {clientActionCreator} from "./index";
 import {connect} from 'react-redux';
 import './style.css';
 import {AlertPopup} from '../../components/AlertPopup';
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
 
 class EditClient extends React.Component {
 
@@ -19,6 +19,8 @@ class EditClient extends React.Component {
 
     closeAlert(){
         this.props.closeAlertPopup();
+        if(this.props.client.frontend.messageAlertPop === "Клиен сохранен.")
+            browserHistory.push('/clients');
     }
 
     validateOnChange(e, patternType) {
@@ -108,83 +110,88 @@ class EditClient extends React.Component {
     render() {
         return (
             <div className="row">
-                <div className="well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-                    <SimpleInput id="name"
-                                 label="Название компании*"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.name}
-                                 onBlur={this.validateOnBlur}
-                                 patternType="isRequired"
-                                 errorValue={this.props.client.inputErrors.name}/>
+                <div className="col-xs-5 col-xs-offset-3">
+                    <div className="panel panel-default">
+                        <div className="panel-heading">Информация о компании-клиенте</div>
+                        <div className="panel-body">
+                            <SimpleInput id="name"
+                                         label="Название компании*"
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.name}
+                                         onBlur={this.validateOnBlur}
+                                         patternType="isRequired"
+                                         errorValue={this.props.client.inputErrors.name}/>
 
-                    <SimpleInput id="country"
-                                 label="Страна"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.country}
-                                 errorValue={this.props.client.inputErrors.country}
-                                 patternType="SimpleName"/>
+                            <SimpleInput id="country"
+                                         label="Страна"
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.country}
+                                         errorValue={this.props.client.inputErrors.country}
+                                         patternType="SimpleName"/>
 
-                    <SimpleInput id="city"
-                                 label="Город"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.city}
-                                 errorValue={this.props.client.inputErrors.city}
-                                 patternType="SimpleName"/>
+                            <SimpleInput id="city"
+                                         label="Город"
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.city}
+                                         errorValue={this.props.client.inputErrors.city}
+                                         patternType="SimpleName"/>
 
-                    <SimpleInput id="street"
-                                 label="Улица"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.street}
-                                 errorValue={this.props.client.inputErrors.street}
-                                 patternType="SimpleName"/>
+                            <SimpleInput id="street"
+                                         label="Улица"
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.street}
+                                         errorValue={this.props.client.inputErrors.street}
+                                         patternType="SimpleName"/>
 
-                    <SimpleInput id="home"
-                                 label="Дом"
-                                 length={7}
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.home}
-                                 errorValue={this.props.client.inputErrors.home}
-                                 patternType="Integer"/>
+                            <SimpleInput id="home"
+                                         label="Дом"
+                                         length={7}
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.home}
+                                         errorValue={this.props.client.inputErrors.home}
+                                         patternType="Integer"/>
 
-                    <SimpleInput id="room"
-                                 label="Квартира"
-                                 length={7}
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.room}
-                                 errorValue={this.props.client.inputErrors.room}
-                                 patternType="Integer"/>
-                    <SimpleInput id="adminEmail"
-                                 label="Email администратора*"
-                                 onBlur={this.validateOnBlur}
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.adminEmail}
-                                 errorValue={this.props.client.inputErrors.adminEmail}
-                                 patternType="Email"
-                                 length={40}
-                    />
+                            <SimpleInput id="room"
+                                         label="Квартира"
+                                         length={7}
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.room}
+                                         errorValue={this.props.client.inputErrors.room}
+                                         patternType="Integer"/>
+                            <SimpleInput id="adminEmail"
+                                         label="Email администратора*"
+                                         onBlur={this.validateOnBlur}
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.adminEmail}
+                                         errorValue={this.props.client.inputErrors.adminEmail}
+                                         patternType="Email"
+                                         length={40}
+                            />
 
-                    <SimpleInput id="adminLogin"
-                                 label="Логин администратора*"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.adminLogin}
-                                 errorValue={this.props.client.inputErrors.adminLogin}
-                                 patternType="Login"/>
+                            <SimpleInput id="adminLogin"
+                                         label="Логин администратора*"
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.adminLogin}
+                                         errorValue={this.props.client.inputErrors.adminLogin}
+                                         patternType="Login"/>
 
-                    <SimpleInput id="adminPassword"
-                                 label={this.props.client.data.id == -1 ? "Пароль администратора*" : "Пароль администратора"}
-                                 patternType={this.props.client.data.id == -1 ? "isRequired" : ""}
-                                 onChange={this.validateOnChange}
-                                 value={this.props.client.data.adminPassword}
-                                 errorValue={this.props.client.inputErrors.adminPassword}
-                                 isPassword={true}
-                                 isVisiblePassword={this.props.client.frontend.adminPasswordVisibility}
-                                 swapStatePassword={this.swapStatePassword}/>
+                            <SimpleInput id="adminPassword"
+                                         label={this.props.client.data.id == -1 ? "Пароль администратора*" : "Пароль администратора"}
+                                         patternType={this.props.client.data.id == -1 ? "isRequired" : ""}
+                                         onChange={this.validateOnChange}
+                                         value={this.props.client.data.adminPassword}
+                                         errorValue={this.props.client.inputErrors.adminPassword}
+                                         isPassword={true}
+                                         isVisiblePassword={this.props.client.frontend.adminPasswordVisibility}
+                                         swapStatePassword={this.swapStatePassword}/>
 
-                    <div className="btn-group" role="group">
-                        <button type="button" className="btn btn-primary"
-                                onClick={this.submit}>Сохранить
-                        </button>
-                        <Link to="/clients" className="btn btn-default">Отменить</Link>
+                            <div className="btn-group" role="group">
+                                <button type="button" className="btn btn-primary"
+                                        onClick={this.submit}>Сохранить
+                                </button>
+                                <Link to="/clients" className="btn btn-default">Отменить</Link>
+                            </div>
+                        </div> {/*div.panel-body end*/}
                     </div>
                 </div>
                 <AlertPopup isVisible={this.props.client.frontend.showAlertPopup}

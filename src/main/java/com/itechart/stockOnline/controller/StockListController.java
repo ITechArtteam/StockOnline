@@ -17,31 +17,38 @@ import com.itechart.stockOnline.util.ControllerHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/stockList")
 public class StockListController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(StockListController.class);
+    private final static Logger Logger = LoggerFactory.getLogger(StockListController.class);
+
+    private StockService stockService;
 
     @Autowired
-    private StockService stockService;
+    public StockListController(StockService stockService) {
+        this.stockService = stockService;
+    }
 
     @RequestMapping(value = "/page/{pageNumber}/limit/{recordCount}", method = RequestMethod.GET)
     public StockPage getStockList(@PathVariable Integer pageNumber,
                                         @PathVariable Integer recordCount,
                                         @RequestParam String name,
-                                        @RequestParam String address) {
-        LOGGER.info("REST request. Path:/stockList/page/{}/limit/{}/?name={}&address={}  method: GET", pageNumber, recordCount, name, address);
+                                        @RequestParam String address,
+                                  Principal user) {
         name = ControllerHelper.convertToUtf(name);
         address = ControllerHelper.convertToUtf(address);
-        return stockService.getStockPage(pageNumber, recordCount, name, address);
+        Logger.info("REST request. Path:/stockList/page/{}/limit/{}/?name={}&address={}  method: GET", pageNumber, recordCount, name, address);
+        return stockService.getStockPage(pageNumber, recordCount, name, address, user.getName());
     }
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteClients(@RequestParam(value = "namesToDelete") List<Integer> ids) {
-        LOGGER.info("REST request. Path:/stockList/?namesToDelete={}  method: DELETE", ids);
-        stockService.deleteByIds(ids);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Object> deleteClients(@RequestParam(value = "idsToDelete") List<Integer> ids) {
+        Logger.info("REST request. Path:/stockList/?idsToDelete={}  method: DELETE", ids);
+        long deletedCount = stockService.deleteByIds(ids);
+        return new ResponseEntity<>("Успешно удалено " + deletedCount + " записей", HttpStatus.OK);
     }
 
     @ExceptionHandler(value = DataNotFoundError.class)

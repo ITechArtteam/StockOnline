@@ -53,12 +53,11 @@ function addStockFail(error) {
             type: event.ADD_STOCK_FAIL,
             data: {
                 name: !!error.data.name ? error.data.name : "",
-                nameCompany: !!error.data.nameCompany ? error.data.nameCompany : "",
                 country: !!error.data.country ? error.data.country : "",
                 city: !!error.data.city ? error.data.city : "",
                 street: !!error.data.street ? error.data.street : "",
-                home: !!error.data.home ? error.data.home : "",
-                room: !!error.data.room ? error.data.room : ""
+                home: !!error.data.home ? error.data.home : ""
+
             }
         }
     } else {

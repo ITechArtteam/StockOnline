@@ -18,13 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.itechart.stockOnline.dao.specification.StockOwnerCompanySpecifications.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -57,6 +55,9 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
 
     }
 
+    public List<StockOwnerCompany> getAll() {
+        return stockOwnerCompanyDao.findAll();
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -69,6 +70,7 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
     }
 
     @Override
+    @Secured({"ROLE_SUPER_ADMIN"})
     public StockOwnerPage getStockOwnersPage(int pageNumber, int recordCount, String name, String address, String status) {
         if(pageNumber <= 0 || recordCount <= 0) {
             throw new DataNotFoundError();

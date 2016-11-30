@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,17 +28,11 @@ public class StockController {
 
     private static final Logger logger = LoggerFactory.getLogger(StockController.class);
 
-    private final StockDtoConverter stockDtoConverter;
-
     private final StockService stockService;
 
-    private final UserService userService;
-
     @Autowired
-    public StockController(StockService stockService, StockDtoConverter stockDtoConverter, UserService userService) {
+    public StockController(StockService stockService) {
         this.stockService = stockService;
-        this.stockDtoConverter = stockDtoConverter;
-        this.userService = userService;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -47,14 +42,10 @@ public class StockController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Object> addStock(@RequestBody StockDto stockDto){
-        logger.debug("REST request. Path:/stock/  method: POST Request body {}", stockDto);
-        Stock stock = stockDtoConverter.toStock(stockDto);
-        if (stock.getId() > -1){
-            stock = stockService.update(stock);
-        } else {
-            stock = stockService.saveStock(stock);
-        }
+    public ResponseEntity<Object> addStock(@RequestBody StockDto stockDto,
+                                           Principal user){
+        logger.debug("REST request. Path:/stock/  method: POST Request body {}, user : {}", stockDto, user);
+        Stock stock = stockService.saveOrUpdateStock(stockDto,user.getName());
         return new ResponseEntity<>(stock.getId(), new HttpHeaders(), HttpStatus.OK);
     }
 
