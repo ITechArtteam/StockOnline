@@ -157,6 +157,11 @@ class EditDriver extends React.Component {
                                 value={this.props.driver.data.passportIssuedDate}
                                 onChange={this.props.changePassportIssuedDate}
                                 label="Дата выдачи"/>
+                            <DateInput
+                                    value={this.props.driver.data.birthDate}
+                                    onChange={this.props.changeBirthDate}
+                                    label="Дата рождения"/>
+
                             <SimpleInput id="firstName"
                                  label="Имя*"
                                  onChange={this.validateOnChange}
@@ -182,10 +187,7 @@ class EditDriver extends React.Component {
                                  errorValue={this.props.driver.inputErrors.fatherName}
                                  patternType="driver"/>
 
-                            <DateInput
-                                       value={this.props.driver.data.birthDate}
-                                        onChange={this.props.changeBirthDate}
-                                        label="Дата рождения"/>
+
 
                             <div className="btn-group" role="group">
                                 <button type="button" className="btn btn-primary"

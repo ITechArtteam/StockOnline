@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 //import javax.validation.constraints.Size;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
