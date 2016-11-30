@@ -5,8 +5,8 @@ public class DriverDto {
     private String transferCompany;
     private String firstName;
     private String lastName;
-    private String patronymic;
-    private String birtDate;
+    private String fatherName;
+    private String birthDate;
     private String passportNumber;
     private String passportIssuedBy;
     private String passportIssuedDate;
@@ -43,20 +43,20 @@ public class DriverDto {
         this.lastName = lastName;
     }
 
-    public String getPatronymic() {
-        return patronymic;
+    public String getFatherName() {
+        return fatherName;
     }
 
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
     }
 
-    public String getBirtDate() {
-        return birtDate;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirtDate(String birtDate) {
-        this.birtDate = birtDate;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getPassportNumber() {
@@ -90,8 +90,8 @@ public class DriverDto {
                 ", transferCompany='" + transferCompany + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", birtDate='" + birtDate + '\'' +
+                ", patronymic='" + fatherName + '\'' +
+                ", birtDate='" + birthDate + '\'' +
                 ", passportNumber='" + passportNumber + '\'' +
                 ", passportIssuedBy='" + passportIssuedBy + '\'' +
                 ", passportIssuedDate='" + passportIssuedDate + '\'' +

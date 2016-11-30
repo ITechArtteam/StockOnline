@@ -31,7 +31,7 @@ public class DriverController {
         return driverService.findByPassportNumber(passportNumber);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/editDriver", method = RequestMethod.POST)
     public ResponseEntity<Object> addDriver(@RequestBody DriverDto driverDto){
         logger.debug("REST request. Path:/editDriver/  method: POST Request body {}", driverDto);
         Driver driver = driverService.saveOrUpdateDriver(driverDto);

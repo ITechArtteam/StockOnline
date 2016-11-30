@@ -25,7 +25,7 @@ function getDriver(driverName) {
     return function (dispatch) {
         dispatch(getDriverDataRequest());
         return axios
-            .get(`/editDriver/${driverName}`)
+            .get(`/registrationOfGoods/editDriver/${driverName}`)
             .then(json =>
                 dispatch(getDriverDataSuccess(json.data))
             ).catch(error => {
@@ -90,7 +90,7 @@ function addDriver(driver) {
         dispatch(addDriverRequest());
 
         return axios
-            .post(`/editDriver/`, driver)
+            .post(`/registrationOfGoods/editDriver/`, driver)
             .then(json =>
                 dispatch(addDriverSuccess(json.data))
             ).catch(error => {

@@ -67,7 +67,7 @@ class SearchTransportCompanyForDriver extends React.Component {
     }
 
     createDiver(){
-        browserHistory.push('/editDriver');
+        browserHistory.push('/registrationOfGoods/editDriver');
     }
 
     render() {

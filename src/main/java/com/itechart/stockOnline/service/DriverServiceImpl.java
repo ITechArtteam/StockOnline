@@ -1,6 +1,7 @@
 package com.itechart.stockOnline.service;
 
 
+import com.itechart.stockOnline.converter.DriverDtoConverter;
 import com.itechart.stockOnline.dao.DriverDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
@@ -24,15 +25,19 @@ public class DriverServiceImpl implements DriverService {
 
     private final DriverValidator driverValidator;
 
+    private final DriverDtoConverter driverDtoConverter;
+
     @Autowired
-    public DriverServiceImpl(DriverDao driverDao, DriverValidator driverValidator) {
+    public DriverServiceImpl(DriverDao driverDao, DriverValidator driverValidator,  DriverDtoConverter driverDtoConverter) {
         this.driverDao = driverDao;
         this.driverValidator = driverValidator;
+        this.driverDtoConverter = driverDtoConverter;
     }
 
     @Override
     public Driver save(Driver driver) {
-        return null;
+        driver.setId(null);
+        return driverDao.save(driver);
     }
 
     @Override
@@ -61,14 +66,13 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     @Transactional
-    public Driver saveOrUpdateStock(DriverDto driverDto) {
-        Driver driver = stockDtoConverter.toDriver(driverDto);
-        User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
-        driver.setCompany(user.getStockOwnerCompany());
+    public Driver saveOrUpdateDriver(DriverDto driverDto) {
+        Driver driver = driverDtoConverter.toDriver(driverDto);
+        logger.debug("saveOrUpdateDriver({}), !!!! driver - {}", driverDto,driver);
         if (driver.getId() > -1){
             driver = update(driver);
         } else {
-            driver = saveStock(driver);
+            driver = save(driver);
         }
         return driver;
     }

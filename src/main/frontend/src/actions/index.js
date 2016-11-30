@@ -17,13 +17,6 @@ export function signInUser(credentials) {
                     url: `/userinfo/${credentials.username}`,
                     success: function (response) {
                         dispatch(authUser(response));
-                        /*switch (response.roles[0]) {
-                            case 'DISPATCHER':
-                                browserHistory.push('/waybills');
-                                break;
-                            default:
-                                browserHistory.push('/clients');
-                                break;*/
                         switch(response.roles[0]) {
                             case "SUPER_ADMIN":
                                 browserHistory.push('/clients');
@@ -42,6 +35,9 @@ export function signInUser(credentials) {
                                 break;
                             case "BOSS_STOCK":
                                 browserHistory.push('/goods');
+                                break;
+                            default:
+                                browserHistory.push('/login');
                                 break;
                         }
                     },

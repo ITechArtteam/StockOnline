@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 //import javax.validation.constraints.Size;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
@@ -40,7 +40,7 @@ public class Driver {
     private Date birthDate;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "transfer_company_id")
     private TransferCompany company;
 
