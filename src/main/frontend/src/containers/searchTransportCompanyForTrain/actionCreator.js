@@ -1,39 +1,107 @@
 import * as event from "./constants";
 import * as axios from "axios";
 
-function getClientDataRequest() {
+
+function setInputErrorMessage(nameField, message) {
     return {
-        type: event.GET_CLIENT_REQUEST
+        type: event.SET_INPUT_ERROR_MESSAGE,
+        data: {
+            nameField,
+            message
+        }
     }
 }
 
-function getClientDataSuccess(json) {
+function setFieldData(nameField, value) {
     return {
-        type: event.GET_CLIENT_SUCCESS,
-        data: json
+        type: event.SET_FIELD,
+        data: {
+            nameField,
+            value
+        }
     }
 }
 
-function getClientDataFail(dataError) {
+function showAlertPopup(type, message) {
     return {
-        type: event.GET_CLIENT_FAIL,
-        data: dataError.data
+        type: event.SHOW_ALERT_POPUP,
+        data: {
+            type,
+            message
+        }
     }
 }
 
-function getClient(clientName) {
+function closeAlertPopup() {
+    return {
+        type: event.CLOSE_ALERT_POPUP
+    }
+}
+
+
+function getTrainDataRequest() {
+    return {
+        type: event.GET_TRAIN_REQUEST
+    }
+}
+
+function getTrainDataSuccess(json) {
+
+    return {
+        type: event.GET_TRAIN_SUCCESS,
+        data: {
+            json
+        }
+    }
+}
+
+function getTrainDataFail(error) {
+    return {
+        type: event.GET_TRAIN_FAIL,
+        data: {
+            showAlertPopup: true,
+            typeAlertPopup: "danger",
+            messageAlertPop: error.response.data,
+            buttons: [
+                {
+                    btnStyle: "btn btn-success",
+                    text: "Создать",
+                    onclick: onConfirmOkBtnClick
+                }
+            ]
+        }
+    }
+}
+
+function onConfirmOkBtnClick() {
+    //TODO Регистрация компании перевозчика
+}
+
+function getTrain(transferCompanyName) {
     return function (dispatch) {
-        dispatch(getClientDataRequest());
+        dispatch(getTrainDataRequest());
         return axios
-            .get(`/customer/${clientName}`)
-            .then(json =>
-                dispatch(getClientDataSuccess(json.data))
-            ).catch(error => {
-                dispatch(getClientDataFail(error.response))
+            .get(`/registrationOfGoods/train/${transferCompanyName}`)
+            .then(json => {
+                    dispatch(getTrainDataSuccess(json.data));
+                }
+            ).catch((error) => {
+                dispatch(getTrainDataFail(error))
             });
     }
 }
 
+function setDefaultValue() {
+    return {
+        type: event.SET_DEFAULT_VALUE
+    }
+}
+
 export default {
-    getClient
+    setInputErrorMessage,
+    setFieldData,
+    showAlertPopup,
+    closeAlertPopup,
+    getTrain,
+    setDefaultValue
 };

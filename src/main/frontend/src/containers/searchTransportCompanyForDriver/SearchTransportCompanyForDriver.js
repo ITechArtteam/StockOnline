@@ -139,8 +139,8 @@ const mapDispatchToProps = (dispatch) => {
         setInputError: (nameField, message) => {
             dispatch(searchTransportCompanyForDriverActionCreator.setInputErrorMessage(nameField, message))
         },
-        getDriver: (paswwportNumber) => {
-            dispatch(searchTransportCompanyForDriverActionCreator.getDriver(paswwportNumber))
+        getDriver: (passportNumber) => {
+            dispatch(searchTransportCompanyForDriverActionCreator.getDriver(passportNumber))
         },
         setDefaultValue: () => {
             dispatch(searchTransportCompanyForDriverActionCreator.setDefaultValue())
