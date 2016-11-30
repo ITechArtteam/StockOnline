@@ -9,6 +9,7 @@ public class StockDto {
     private String street;
     private Integer home;
 
+
     public Long getId() { return id;  }
     public void setId(Long id) { this.id = id; }
 

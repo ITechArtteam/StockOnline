@@ -16,6 +16,7 @@ import ReportIncome from "./containers/ReportIncome";
 import ReportStandard from "./containers/ReportStandard";
 import Stocks from "./containers/stocks/Stocks";
 import EditStock from "./containers/editStock/EditStock";
+import EditDriver from "./containers/editDriver/EditDriver";
 import WorkersContainer from "./containers/WorkersContainer";
 import EditWorkerContainer from "./containers/EditWorkerContainer";
 import Waybills from "./containers/Waybills";
@@ -35,9 +36,7 @@ import "bootstrap-select/dist/js/bootstrap-select.min";
 import "bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./global.css";
 
-import {client} from "./actions"
-import {stock} from "./actions"
-
+import {client} from "./actions";
 
 
 ReactDOM.render(
@@ -60,6 +59,7 @@ ReactDOM.render(
                 <Route path="/registrationOfGoods/train" requiredRole={["DISPATCHER"]} component={RequireRole(SearchTransportCompanyForTrain)}/>
                 <Route path="/waybills" requiredRole={["DISPATCHER"]} component={RequireRole(Waybills)}/>
                 <Route path="/registerwaybill" requiredRole={["DISPATCHER"]} component={RequireRole(WaybillRegistration)}/>
+                <Route path="/editDriver(/:id)" requiredRole={["DISPATCHER"]} component={RequireRole(EditDriver)}/>
                 <Route path="/goods" requiredRole={["BOSS_STOCK", "CONTROLLER"]} component={RequireRole(Goods)}/>
                 <Route path="/goods/receipt" requiredRole={["MANAGER"]} component={RequireRole(ReceiptGoods)}/>
                 <Route path="/goods/distribution" requiredRole={["MANAGER"]} component={RequireRole(DistributionGoods)}/>

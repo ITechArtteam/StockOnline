@@ -4,7 +4,7 @@ import "./style.css";
 import {AlertPopup} from "../../components/AlertPopup";
 import {SimpleInput} from "../../components/SimpleInput";
 import {StaticControl} from "../../components/StaticControl";
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
 import {searchTransportCompanyForDriverActionCreator} from "./index";
 
 class SearchTransportCompanyForDriver extends React.Component {
@@ -67,7 +67,7 @@ class SearchTransportCompanyForDriver extends React.Component {
     }
 
     createDiver(){
-        //TODO к регистрации нового водителя
+        browserHistory.push('/editDriver');
     }
 
     render() {

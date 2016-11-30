@@ -4,6 +4,7 @@ import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.Driver;
 import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
+import com.itechart.stockOnline.model.dto.DriverDto;
 import com.itechart.stockOnline.service.DriverService;
 import com.itechart.stockOnline.util.ControllerHelper;
 import org.slf4j.Logger;
@@ -31,10 +32,10 @@ public class DriverController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Object> addDriver(@RequestBody OwnerCompanyDto client){
-        logger.debug("REST request. Path:/customer/  method: POST Request body {}", client);
-
-        return null;
+    public ResponseEntity<Object> addDriver(@RequestBody DriverDto driverDto){
+        logger.debug("REST request. Path:/editDriver/  method: POST Request body {}", driverDto);
+        Driver driver = driverService.saveOrUpdateDriver(driverDto);
+        return new ResponseEntity<>(driver.getId(), new HttpHeaders(), HttpStatus.OK);
     }
 
 

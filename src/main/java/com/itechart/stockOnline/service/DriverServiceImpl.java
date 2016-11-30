@@ -5,11 +5,13 @@ import com.itechart.stockOnline.dao.DriverDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.Driver;
+import com.itechart.stockOnline.model.dto.DriverDto;
 import com.itechart.stockOnline.validator.DriverValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -55,5 +57,19 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public void delete(Driver driver) {
 
+    }
+
+    @Override
+    @Transactional
+    public Driver saveOrUpdateStock(DriverDto driverDto) {
+        Driver driver = stockDtoConverter.toDriver(driverDto);
+        User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
+        driver.setCompany(user.getStockOwnerCompany());
+        if (driver.getId() > -1){
+            driver = update(driver);
+        } else {
+            driver = saveStock(driver);
+        }
+        return driver;
     }
 }

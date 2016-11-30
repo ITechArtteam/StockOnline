@@ -11,6 +11,7 @@ import AuthReducer from './auth'
 import WaybillRegistrationFormReducer from './../containers/WaybillRegistration/reducer'
 import workerReducer from "./worker-reducer";
 import {stock} from "../containers/editStock";
+import Driver from './../containers/editDriver/reducer';
 import roleReducer from "./role-reducer"
 
 const rootReducer = combineReducers({
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
     stockListReducer,
     navigation,
     checkGoodsReducer,
-    stock
+    stock,
+    driver: Driver
 });
 
 export default rootReducer
