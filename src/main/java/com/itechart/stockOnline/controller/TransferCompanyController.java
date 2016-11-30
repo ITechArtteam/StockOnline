@@ -3,7 +3,7 @@ package com.itechart.stockOnline.controller;
 import com.itechart.stockOnline.model.TransferCompany;
 import com.itechart.stockOnline.model.dto.transfercompany.TransferCompanyDto;
 import com.itechart.stockOnline.model.dto.transfercompany.TransferCompanyDtoBuilder;
-import com.itechart.stockOnline.service.transfercompany.TransferCompanyService;
+import com.itechart.stockOnline.service.TransferCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

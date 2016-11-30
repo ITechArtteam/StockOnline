@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TransferCompanyServiceImpl implements TransferCompanyService {
 
@@ -34,6 +36,10 @@ public class TransferCompanyServiceImpl implements TransferCompanyService {
         }
         logger.debug("findByName({}): {}", name, company);
         return company;
+    }
+
+    public List<TransferCompany> getAll() {
+        return transferCompanyDao.findAll();
     }
 
     @Override

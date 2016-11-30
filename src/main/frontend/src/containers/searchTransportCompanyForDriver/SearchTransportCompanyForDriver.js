@@ -16,6 +16,8 @@ class SearchTransportCompanyForDriver extends React.Component {
         this.searchNumber = this.searchNumber.bind(this);
         this.getClassForError = this.getClassForError.bind(this);
         this.getClassForNextButton = this.getClassForNextButton.bind(this);
+        this.next = this.next.bind(this);
+        this.createDiver = this.createDiver.bind(this);
     }
 
     searchNumber() {
@@ -60,6 +62,14 @@ class SearchTransportCompanyForDriver extends React.Component {
         return className;
     }
 
+    next(){
+        //TODO к регистрации ТТН
+    }
+
+    createDiver(){
+        //TODO к регистрации нового водителя
+    }
+
     render() {
         return (
             <div>
@@ -85,8 +95,8 @@ class SearchTransportCompanyForDriver extends React.Component {
                                 className={this.getClassForError()}>{this.props.driver.inputErrors.searchNumber}</label>
                         </div>
                         <div className="btn-group function-button-group" role="group">
-                            <Link to="/clients" className={this.getClassForNextButton()}>Продолжить</Link>
-                            <Link to="/clients" className="btn btn-default">Новый</Link>
+                            <button onClick={this.next} className={this.getClassForNextButton()}>Продолжить</button>
+                            <button onClick={this.createDiver} className="btn btn-default">Новый</button>
                         </div>
                     </div>
                     <AlertPopup isVisible={this.props.driver.frontend.showAlertPopup}
