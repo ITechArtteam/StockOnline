@@ -37,14 +37,9 @@ public class DriverDtoConverter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
         driver.setPassportNumber(driverDto.getPassportNumber());
         driver.setPassportIssuedBy(driverDto.getPassportIssuedBy());
 
-
-        //Пока так, потом нужно будет сначала найти из базы
-        driver.setCompany(new TransferCompany(driverDto.getTransferCompany()));
         return driver;
     }
 }

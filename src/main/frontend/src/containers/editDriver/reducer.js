@@ -57,7 +57,7 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, typeAlertPopup: "success", messageAlertPop: "Водетель сохранен."
+                    showAlertPopup: true, typeAlertPopup: "success", messageAlertPop: "Водитель сохранен."
                 },
                 data: {
                     ...state.data,

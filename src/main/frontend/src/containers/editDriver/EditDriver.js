@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import './style.css';
 import {AlertPopup} from '../../components/AlertPopup';
 import {Link, browserHistory} from "react-router";
-import DatePicker from 'react-bootstrap-date-picker'
 import DateInput from '../../components/DateInput/DateInput'
 
 class EditDriver extends React.Component {
