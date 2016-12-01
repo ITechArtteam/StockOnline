@@ -37,7 +37,7 @@ import "bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./global.css";
 
 import {client} from "./actions";
-
+import {stock} from "./actions";
 
 ReactDOM.render(
     <Provider store={store}>
@@ -55,7 +55,7 @@ ReactDOM.render(
                 <Route path="/workers" requiredRole={["ADMIN"]} component={RequireRole(WorkersContainer)}/>
                 <Route path="/worker(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditWorkerContainer)}/>
                 <Route path="/registrationOfGoods" requiredRole={["DISPATCHER"]} component={RequireRole(RegistrationOfGoods)}/>
-                <Route path="/registrationOfGoods/driver" requiredRole={["DISPATCHER"]} component={RequireRole(SearchTransportCompanyForDriver)}/>
+                <Route path="/registrationOfGoods/driver(/:passportNumber)" requiredRole={["DISPATCHER"]} component={RequireRole(SearchTransportCompanyForDriver)}/>
                 <Route path="/registrationOfGoods/train" requiredRole={["DISPATCHER"]} component={RequireRole(SearchTransportCompanyForTrain)}/>
                 <Route path="/waybills" requiredRole={["DISPATCHER"]} component={RequireRole(Waybills)}/>
                 <Route path="/registerwaybill" requiredRole={["DISPATCHER"]} component={RequireRole(WaybillRegistration)}/>

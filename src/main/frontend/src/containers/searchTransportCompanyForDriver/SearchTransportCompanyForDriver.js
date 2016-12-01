@@ -31,10 +31,16 @@ class SearchTransportCompanyForDriver extends React.Component {
         }
         this.props.getDriver(this.props.driver.data.searchNumber);
     }
-
     componentWillUnmount() {
         this.props.setDefaultValue();
     }
+
+    componentWillMount(){
+        if (!!this.props.params.passportNumber)
+          this.props.getDriver(this.props.params.passportNumber);
+    }
+
+
 
     closeAlert() {
         this.props.closeAlertPopup();

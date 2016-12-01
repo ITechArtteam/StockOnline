@@ -19,8 +19,10 @@ class EditDriver extends React.Component {
 
     closeAlert(){
         this.props.closeAlertPopup();
-        if(this.props.driver.frontend.messageAlertPop === "Водитель сохранен.")
-            browserHistory.push('/registrationOfGoods/driver');
+        if(this.props.driver.frontend.messageAlertPop === "Водитель сохранен."){
+            browserHistory.push(`/registrationOfGoods/driver/${this.props.driver.data.passportNumber}`);
+        }
+
     }
 
     validateOnChange(e, patternType) {
