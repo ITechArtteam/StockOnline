@@ -9,11 +9,13 @@ import {stockListReducer} from '../containers/stocks/index';
 import {checkGoodsReducer} from '../containers/checkGoods/index'
 import AuthReducer from './auth'
 import workerReducer from "./worker-reducer";
+import workersReducer from "./workers-reducer";
 import {stock} from '../containers/editStock/index';
 import roleReducer from "./role-reducer"
 const rootReducer = combineReducers({
     auth: AuthReducer,
     workerState:workerReducer,
+    workersState:workersReducer,
     form: FormReducer,
     roleState:roleReducer,
     client,

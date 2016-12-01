@@ -1,62 +1,38 @@
 import * as types from '../actions/action-types';
 
-export function getWorkersSuccess(workers) {
-    return {
-        type: types.GET_WORKERS_SUCCESS ,
-        workers
-    };
-}
 
-
-export function getWorkersUnsuccess(error) {
-    return {
-        type: types.GET_WORKERS_UNSUCCESS ,
-        message:error
-    };
-}
-
-export function getWorkerSuccess(worker) {
+export function getWorkerSuccess(worker, response) {
     return {
         type: types.GET_WORKER_SUCCESS ,
-        worker
+        response: response,
+        worker: worker
     };
 }
 
 
-export function getWorkerUnsuccess(error) {
+export function getWorkerUnsuccess(response) {
     return {
         type: types.GET_WORKER_UNSUCCESS ,
-        message:error
+        response:response
     };
 }
 
-export function deleteWorkerSuccess(id, message) {
-    return {
-        type: types.DELETE_WORKER_SUCCESS,
-        id: id,
-        message:message
-    };
-}
-
-
-export function deleteWorkerUnsuccess(error) {
+export function deleteWorkerUnsuccess(response) {
     return {
         type: types.DELETE_WORKER_UNSUCCESS,
-        message:error
+        response:response
     };
 }
 
-export function saveWorkerSuccess(worker, message) {
-    return {
-        type: types.POST_WORKER_SUCCESS ,
-        worker:worker,
-        message:message
-    };
-}
-
-export function saveWorkerUnsuccess(error) {
+export function saveWorkerUnsuccess(response) {
     return {
         type: types.POST_WORKER_UNSUCCESS ,
-        message:error
+        response:response
     };
+}
+
+export function closeWorkerResponse() {
+    return {
+        type: types.CLOSE_WORKER_RESPONSE,
+    }
 }

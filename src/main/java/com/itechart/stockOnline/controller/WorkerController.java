@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -35,36 +37,40 @@ public class WorkerController {
     }
 
     @RequestMapping(value = "/worker/{id}", method = RequestMethod.DELETE)
-    public void deleteWorker(@PathVariable Long id) {
+    public void deleteWorker(@PathVariable Long id, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/worker/{id}  method: DELETE", id);
         workerService.delete(id);
+        response.addHeader("result", "Worker have deleted.");
     }
 
+
     @RequestMapping(value = "/workers", method = RequestMethod.DELETE)
-    public void deleteWorkers(@RequestBody User[] workers) {
-        LOGGER.debug("REST request. Path:/workers  method: DELETE Request body {workers}", workers);
-        workerService.delete(workers);
+    public void deleteWorkers(@RequestParam(value = "ids") List<Long> workersId, HttpServletResponse response ) {
+        LOGGER.debug("REST request. Path:/workers?ids={}  method: DELETE Request body {workers}", workersId);
+        workerService.delete(workersId.toArray(new Long[workersId.size()]));
+        response.addHeader("result", "Worker has deleted.");
     }
 
     @RequestMapping(value = "/worker", method = RequestMethod.POST)
-    public User saveWorker(@RequestBody User worker) {
+    public void saveWorker(@RequestBody User worker, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/worker  method: POST Request body {worker}", worker);
-        return workerService.save(worker);
-
+        User saveWorker = workerService.save(worker);
+        response.addHeader("result", "Worker has added.");
     }
 
     @ExceptionHandler(ValidationError.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String fieldHasErrors(ValidationError error){
+    public Map<String, String> fieldHasErrors(ValidationError error, HttpServletResponse response){
         LOGGER.error("fieldHasErrors({})", error.toString());
-        return error.getErrors().toString();
+        response.addHeader("result", "Fields is not valid.");
+        return error.getErrors();
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String exception(Exception exception){
+    public void exception(Exception exception, HttpServletResponse response){
         LOGGER.error("fieldHasErrors({})", exception.getMessage());
-        return "Ошибка на сервере";
+        response.addHeader("result", "Server error.");
     }
 
 

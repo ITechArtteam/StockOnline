@@ -1,73 +1,55 @@
 import axios from 'axios';
-import { getWorkersSuccess, getWorkerSuccess, getWorkersUnsuccess, deleteWorkerSuccess, saveWorkerSuccess, saveWorkerUnsuccess, deleteWorkerUnsuccess } from '../actions/worker-actions';
+import { getWorkerSuccess, saveWorkerUnsuccess, deleteWorkerUnsuccess, closeWorkerResponse } from '../actions/worker-actions';
+import { getWorkersSuccess, getWorkersUnsuccess, deleteWorkerSuccess, saveWorkerSuccess, closeWorkersResponse } from '../actions/workers-actions';
 import store from '../store/configureStore'
 import {browserHistory} from 'react-router';
 
-export function getWorkers(thenRedirectPath, errorRedirectPath) {
-    return axios.get('/api/workers')
-        .then(response => {
-            console.log(response);
-            store.dispatch(getWorkersSuccess(response.data));
-            redirect(thenRedirectPath);
-            return response;
-        }).catch(error=>{
-            console.log(error);
-            store.dispatch(getWorkersUnsuccess(error.data));
-            redirect(errorRedirectPath);
-            return error
-        });
-}
+
 
 export function getWorker(id, thenRedirectPath, errorRedirectPath) {
     return axios.get('/api/worker/'+id)
         .then(response => {
-            console.log(response);
             store.dispatch(getWorkerSuccess(response.data));
             redirect(thenRedirectPath);
-            return response;
         }).catch(error=>{
-            console.log(error);
-            store.dispatch(getWorkersUnsuccess(error.data))
+            store.dispatch(getWorkersUnsuccess(error.response))
             redirect(errorRedirectPath);
-            return error
         });
 }
 
 export function deleteWorker(id, thenRedirectPath, errorRedirectPath) {
     return axios.delete('/api/worker/' + id)
         .then(response => {
-            console.log(response);
-            store.dispatch(deleteWorkerSuccess(id, "Работник удалён!"));
+            store.dispatch(deleteWorkerSuccess(id, response));
             redirect(thenRedirectPath);
-            return response;
         }).catch(error=>{
-            console.log(error);
-            store.dispatch(deleteWorkerUnsuccess(error.data))
+            store.dispatch(deleteWorkerUnsuccess(error.response))
             redirect(errorRedirectPath);
-            return error
         });
 }
 
 export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
-    console.log("saveWorker");
-    console.log("saveWorker3");
+    console.log(worker)
     return axios.post('/api/worker/', worker)
         .then(response => {
-            console.log(response);
+            console.log(response)
+            store.dispatch(saveWorkerSuccess(response.data,response))
             redirect(thenRedirectPath);
-            store.dispatch(saveWorkerSuccess(response.data,"Работник добавлен!"))
-            return response;
         }).catch(error=>{
-            console.log("Ошибка при добовление работника");
-            console.log(error);
-            store.dispatch(saveWorkerUnsuccess(error.data))
+            console.log(error)
+            store.dispatch(saveWorkerUnsuccess(error.response))
             redirect(errorRedirectPath);
-            return error
         });
 }
 
+export function closeResponse(){
+    store.dispatch(closeWorkerResponse());
+}
+
 function redirect(path){
-    if (path!=null){
+    if (path!==null && path!==undefined){
         browserHistory.push(path);
     }
 }
+
+

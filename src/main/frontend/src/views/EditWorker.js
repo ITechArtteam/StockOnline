@@ -7,7 +7,7 @@ import "./EditWorker.less";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-import CleverAlert from "./CleverAlert";
+
 
 class EditWorker extends React.Component {
     constructor(props) {
@@ -15,35 +15,56 @@ class EditWorker extends React.Component {
     }
 
     state = {
-        message: this.props.message,
         worker: this.props.worker,
-        roles: this.props.roles
+        roles: this.props.roles,
+        disabledSaveButton: false
+    }
+
+    getDate = ()=>{
+        console.log(this.state.worker.date)
+        if (this.state.worker.date!=''&&this.state.worker.date!=undefined) {
+            console.log( moment(this.state.worker.date, 'DD/MM/YYYY'))
+            return moment(this.state.worker.date, 'DD/MM/YYYY')
+        }
+        return null;
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({worker: nextProps.worker, roles: nextProps.roles});
     }
 
     onSaveClick = () => {
-        console.log("onSaveClick");
-        console.log(this.state.worker);
+        this.setState({disabledSaveButton: true});
         this.props.onSaveClick(this.state.worker);
+        this.setState({disabledSaveButton: false});
     }
 
     onCloseClick = () => {
-        console.log("onCloseClick");
-        console.log(this.state.worker);
+        this.props.onCloseClick();
     }
+
+    handleChange = (date)=>{
+        console.log(date);
+        var newWorker = _.extend({}, this.state.worker);
+        console.log(date.format('DD/MM/YYYY'));
+        newWorker.date= date.format('DD/MM/YYYY');
+        console.log(newWorker.date);
+        this.setState({ worker: newWorker });
+
+    }
+
 
     render() {
         return (
             <div>
-                <Row>
-                    <CleverAlert message={this.state.message}/>
-                </Row>
                 <Row className="show-grid">
                     <Form horizontal id="worker_form">
                         <FormGroup >
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Имя
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Имя"
                                              valueLink={linkState(this, 'worker.name')}/>
                                 <FormControl.Feedback />
@@ -51,10 +72,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Фамилия
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Фамилия"
                                              valueLink={linkState(this, 'worker.surname')}/>
                                 <FormControl.Feedback />
@@ -62,10 +83,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Отчество
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Отчество"
                                              valueLink={linkState(this, 'worker.patronymic')}/>
                                 <FormControl.Feedback />
@@ -73,21 +94,22 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Дата рождения
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <DatePicker className="form-control"
-                                            selected={moment()}
+                                            selected={this.getDate()}
+                                            onChange={this.handleChange}
                                 />
                                 <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Электронная почта
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl type="email" placeholder="Электронная почта"
                                              valueLink={linkState(this, 'worker.email')}/>
                                 <FormControl.Feedback />
@@ -95,10 +117,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Страна
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Страна"
                                              valueLink={linkState(this, 'worker.address.countryName')}/>
                                 <FormControl.Feedback />
@@ -106,10 +128,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Город
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Город"
                                              valueLink={linkState(this, 'worker.address.cityName')}/>
                                 <FormControl.Feedback />
@@ -117,10 +139,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Дом
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Дом"
                                              valueLink={linkState(this, 'worker.address.home')}/>
                                 <FormControl.Feedback />
@@ -128,10 +150,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Квартира
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Квартира"
                                              valueLink={linkState(this, 'worker.address.room')}/>
                                 <FormControl.Feedback />
@@ -139,10 +161,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Роль
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <Multiselect data={this.state.roles}
                                              valueLink={linkState(this, 'worker.roles')}
                                              textField='name'
@@ -151,10 +173,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Логин
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Логин"
                                              valueLink={linkState(this, 'worker.login')}/>
                                 <FormControl.Feedback />
@@ -162,10 +184,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col sm={2} componentClass={ControlLabel}>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Пароль
                             </Col>
-                            <Col sm={10}>
+                            <Col sm={5}>
                                 <FormControl placeholder="Пароль"
                                              valueLink={linkState(this, 'worker.password')}/>
                                 <FormControl.Feedback />
@@ -173,9 +195,9 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={2} sm={10}>
+                            <Col smOffset={3} sm={9}>
                                 <div className="btn-group" role="group">
-                                    <Button type="submit" bsStyle="primary"
+                                    <Button disabled={this.state.disabledSaveButton} bsStyle="primary"
                                             onClick={this.onSaveClick}>Сохранить</Button>
                                     <Button onClick={this.onCloseClick}>Отмена</Button>
                                 </div>

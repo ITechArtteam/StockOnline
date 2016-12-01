@@ -1,4 +1,4 @@
-.alert {
+.alert-popup {
     position: fixed;
     left: 50%;
     top: 150px;
@@ -8,11 +8,11 @@
     overflow: hidden;
 }
 
-.close {
+.close-popup {
     margin: 0;
 }
 
-.message {
+.message-popup {
     margin-top: 20px;
     word-wrap: break-word;
 }

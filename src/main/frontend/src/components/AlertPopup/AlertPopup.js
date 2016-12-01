@@ -9,7 +9,7 @@ class AlertPopup extends React.Component {
 
     getStyles(){
         if (this.props.isVisible) {
-            let style = "alert";
+            let style = "alert-popup";
             switch(this.props.type){
                 case "danger":
                     style += " alert-danger";
@@ -33,8 +33,8 @@ class AlertPopup extends React.Component {
             });
         return (
             <div className={this.getStyles()}>
-                <span onClick={this.props.close} className="close">×</span>
-                <p className="message">{this.props.message}</p>
+                <span onClick={this.props.close} className="close-popup">×</span>
+                <p className="message-popup">{this.props.message}</p>
                 <div className="btn-group">
                     {buttons}
                 </div>

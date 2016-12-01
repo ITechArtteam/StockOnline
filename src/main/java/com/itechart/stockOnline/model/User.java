@@ -2,6 +2,7 @@ package com.itechart.stockOnline.model;
 
 import com.itechart.stockOnline.validation.*;
 import com.itechart.stockOnline.validator.Worker;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,18 +17,18 @@ public class User {
     private Long id;
     @Pattern(value = "^[a-z_а-я]*$", group = User.class, message = "Логин должен содержать только буквы и/или символы подчеркивания.", name="login")
     @NotNull(group = User.class, message = "Логин должен быть заполнен обязательно.", name="login")
-    @MinSize(value = 3 , group = User.class, message = "Длина логина должна быть от 3 символов", name="login")
+    @MinSize(value = 3 , group = User.class, message = "Длина логина должна быть от 3 символов.", name="login")
     @NotNull(group = Worker.class, message = "Логин должен быть заполнен обязательно.", name="login")
     @Pattern(value = "^[a-z_а-я]*$", group = Worker.class,  name="login", message = "Логин должен содержать только буквы и/или символы подчеркивания.")
-    @MinSize(value = 3 , group = Worker.class,name="login", message = "Длина логина должна быть от 3 символов")
+    @MinSize(value = 3 , group = Worker.class,name="login", message = "Длина логина должна быть от 3 символов.")
     @MaxSize(value = 20 , group = Worker.class,name="login", message = "Длина логина не должна превышать 20 символов.")
     @Column(length = 20, nullable = false)
     private String login;
     @NotNull(group = User.class, name="password", message = "Пароль должен быть заполнен обязательно.")
-    @MinSize(value = 3 , group = User.class, name="password", message = "Длина пароля должна быть от 3 символов")
+    @MinSize(value = 3 , group = User.class, name="password", message = "Длина пароля должна быть от 3 символов.")
     @NotNull(group = Worker.class, name="password", message = "Пароль должен быть заполнен обязательно.")
-    @MaxSize(value = 20 , group = Worker.class, name="password", message = "Длина пароля должна быть от 3 до 20 символов")
-    @MinSize(value = 3 , group = Worker.class, name="password", message = "Длина пароля должна быть от 3 до 20 символов")
+    @MaxSize(value = 20 , group = Worker.class, name="password", message = "Длина пароля должна быть от 3 до 20 символов.")
+    @MinSize(value = 3 , group = Worker.class, name="password", message = "Длина пароля должна быть от 3 до 20 символов.")
     @Column(nullable = false)
     private String password;
     @NotNull(group = Worker.class, name="name", message = "Имя должно быть заполненно обязательно.")
@@ -40,6 +41,7 @@ public class User {
     @MaxSize(value = 20 , group = Worker.class, name="surname", message = "Длина отчества должна быть до 20 символов.")
     @Column(length = 20)
     private String patronymic;
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date birthday;
     @NotNull(group = Worker.class, name="email", message = "Электронная почта должна быть заполнена.")
     @MaxSize(value = 50 , group = Worker.class, name="email", message = "Длина электронной почты должна быть меньше 50 символов.")
@@ -50,12 +52,12 @@ public class User {
     @JoinColumn(name = "company")
     private StockOwnerCompany stockOwnerCompany;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             inverseJoinColumns = @JoinColumn(name = "role_id",
                     nullable = false,

@@ -8,7 +8,8 @@ import java.util.List;
 public interface WorkerService {
     List<User> getAll();
     User get(Long id);
-    User save(User user);
+    User save(User worker);
     void delete(Long id);
+    void delete(Long... ids);
     void delete(User[] workers);
 }
