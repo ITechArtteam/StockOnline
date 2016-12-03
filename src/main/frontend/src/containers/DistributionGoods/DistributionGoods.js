@@ -3,7 +3,7 @@ import {distributionGoodsActionCreator} from "./index";
 import {connect} from 'react-redux';
 import SimpleInput from '../../components/SimpleInput/SimpleInput'
 import AlertPopup from '../../components/AlertPopup/AlertPopup'
-import WaybillInfo from "../../components/WaybillInfo/WaybillInfo"
+import WaybillInfo from "./WaybillInfo/WaybillInfo"
 
 class DistributionGoods extends React.Component {
     constructor (props) {

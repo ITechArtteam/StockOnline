@@ -18,6 +18,13 @@ let setWaybillVisibility = visibility => {
     }
 };
 
+let setShelfModalVisibility = visibility => {
+    return {
+        type: event.SET_SELECT_SHELF_MODAL_VISIBILITY,
+        payload: visibility
+    }
+};
+
 
 let showDialog = (text, type, buttons) => {
     return {
@@ -81,5 +88,6 @@ export default {
     showDialog,
     closeDialog,
     findWaybillById,
-    setWaybillVisibility
+    setWaybillVisibility,
+    setShelfModalVisibility
 }

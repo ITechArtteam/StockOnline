@@ -47,6 +47,9 @@ let initDistributionGoodsState = {
     frontend: {
         waybillId: '',
         waybillVisible: false
+    },
+    selectShelfModal: {
+        isVisible: false,
     }
 };
 
@@ -62,6 +65,8 @@ export default (state = initDistributionGoodsState, action) => {
 
         case event.SET_WAYBILL_VISIBILITY:
             return {...state, frontend: {...state.frontend, waybillVisible: action.payload}};
+        case event.SET_SELECT_SHELF_MODAL_VISIBILITY:
+            return {...state, selectShelfModal: {...state.selectShelfModal, isVisible: action.payload}};
 
         case event.SHOW_DIALOG:
             return {... state, alert: action.payload};
