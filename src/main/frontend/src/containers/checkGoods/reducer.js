@@ -4,6 +4,11 @@ let initGoodsState = {
     waybill: {
         id: 123,
         status: 0,
+        registeredBy: {
+            name: '',
+            surname: '',
+            patronymic: ''
+        },
         productInWaybills: [
             {
                 count: 10,
