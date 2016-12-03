@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TransferCompanyDao extends JpaRepository<TransferCompany, Long>{
     TransferCompany findByName(String name);
+
+    TransferCompany findByDriversId(Long id);
 }

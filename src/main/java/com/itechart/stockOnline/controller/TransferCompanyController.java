@@ -4,17 +4,18 @@ import com.itechart.stockOnline.model.TransferCompany;
 import com.itechart.stockOnline.model.dto.transfercompany.TransferCompanyDto;
 import com.itechart.stockOnline.model.dto.transfercompany.TransferCompanyDtoBuilder;
 import com.itechart.stockOnline.service.TransferCompanyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/transfercompanies")
 public class TransferCompanyController {
+
+    private static final Logger logger = LoggerFactory.getLogger(TransferCompanyController.class);
 
     @Autowired
     private TransferCompanyService transferCompanyService;
@@ -29,4 +30,12 @@ public class TransferCompanyController {
 
         return dtoBuilder.createDtoList(transferCompanies);
     }
+
+    @RequestMapping(value = "/driver/{driverId}", method = RequestMethod.GET)
+    public TransferCompany getDriversTransferCompany(@PathVariable Long driverId){
+        TransferCompany transferCompany = transferCompanyService.findByDriverId(driverId);
+        logger.debug("GET Path:/getDriversTransferCompany/{} :{}", driverId, transferCompany);
+        return transferCompany;
+    }
+
 }

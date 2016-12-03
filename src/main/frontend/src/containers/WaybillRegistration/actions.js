@@ -120,7 +120,7 @@ export function changeSenderName(name) {
 export function changeCarrierName(name) {
     return {
         type: EDIT_WAYBILL_FORM_CHANGE_CARRIER_NAME,
-        name
+        name: name
     }
 }
 

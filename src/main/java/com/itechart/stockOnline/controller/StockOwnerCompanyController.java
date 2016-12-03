@@ -35,7 +35,6 @@ public class StockOwnerCompanyController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    @ResponseBody
     public List<StockOwnerCompanyWaybillDto> getStockOwnerCompaniesForWaybill() {
         List<StockOwnerCompany> companies = companyService.getAll();
 

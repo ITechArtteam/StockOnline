@@ -10,4 +10,6 @@ public interface TransferCompanyService {
     TransferCompany findByName(String name);
     List<TransferCompany> getAll();
     void delete(TransferCompany company);
+
+    TransferCompany findByDriverId(Long driverId);
 }

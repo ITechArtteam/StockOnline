@@ -1,5 +1,6 @@
 import * as event from "./constants";
 import * as axios from "axios";
+import {changeCarrierName} from "../WaybillRegistration/actions.js";
 
 function setInputErrorMessage(nameField, message) {
     return {
@@ -75,7 +76,12 @@ function getDriver(passportNumber) {
             .get(`/registrationOfGoods/${passportNumber}`)
             .then(json => {
                     dispatch(getDriverDataSuccess(json.data));
-                    dispatch(enableNextButton())
+                    dispatch(enableNextButton());
+                    axios.get(`/transfercompanies/driver/${json.data.id}`)
+                        .then(json => {
+                            dispatch(changeCarrierName(json.data.name));
+                            console.log(json.data.name);
+                        });
                 }
             ).catch(error => {
                 dispatch(getDriverDataFail(error.response))

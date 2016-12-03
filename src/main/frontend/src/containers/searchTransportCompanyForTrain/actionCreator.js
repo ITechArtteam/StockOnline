@@ -1,6 +1,7 @@
 import * as event from "./constants";
 import * as axios from "axios";
-
+import {changeCarrierName, setTransportType} from "../WaybillRegistration/actions.js";
+import {browserHistory} from "react-router";
 
 function setInputErrorMessage(nameField, message) {
     return {
@@ -84,6 +85,9 @@ function getTrain(transferCompanyName) {
             .get(`/registrationOfGoods/train/${transferCompanyName}`)
             .then(json => {
                     dispatch(getTrainDataSuccess(json.data));
+                    dispatch(changeCarrierName(json.data.name));
+                    dispatch(setTransportType("TRAIN"));
+                    browserHistory.push('/registerwaybill');
                 }
             ).catch((error) => {
                 dispatch(getTrainDataFail(error))

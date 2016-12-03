@@ -46,4 +46,9 @@ public class TransferCompanyServiceImpl implements TransferCompanyService {
     public void delete(TransferCompany company) {
 
     }
+
+    @Override
+    public TransferCompany findByDriverId(Long driverId) {
+        return transferCompanyDao.findByDriversId(driverId);
+    }
 }

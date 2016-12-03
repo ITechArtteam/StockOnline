@@ -3,7 +3,6 @@ package com.itechart.stockOnline.controller;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.Driver;
-import com.itechart.stockOnline.model.dto.OwnerCompanyDto;
 import com.itechart.stockOnline.model.dto.DriverDto;
 import com.itechart.stockOnline.service.DriverService;
 import com.itechart.stockOnline.util.ControllerHelper;

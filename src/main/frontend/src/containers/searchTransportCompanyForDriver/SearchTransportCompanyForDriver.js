@@ -6,6 +6,7 @@ import {SimpleInput} from "../../components/SimpleInput";
 import {StaticControl} from "../../components/StaticControl";
 import {Link, browserHistory} from "react-router";
 import {searchTransportCompanyForDriverActionCreator} from "./index";
+import {setDriverInfo, setTransportType} from "../WaybillRegistration/actions.js";
 
 class SearchTransportCompanyForDriver extends React.Component {
 
@@ -31,15 +32,15 @@ class SearchTransportCompanyForDriver extends React.Component {
         }
         this.props.getDriver(this.props.driver.data.searchNumber);
     }
+
     componentWillUnmount() {
         this.props.setDefaultValue();
     }
 
-    componentWillMount(){
+    componentWillMount() {
         if (!!this.props.params.passportNumber)
-          this.props.getDriver(this.props.params.passportNumber);
+            this.props.getDriver(this.props.params.passportNumber);
     }
-
 
 
     closeAlert() {
@@ -64,15 +65,23 @@ class SearchTransportCompanyForDriver extends React.Component {
         if (!this.props.driver.frontend.isActiveNextButton) {
             className += " disabled";
         }
-        console.log(className);
         return className;
     }
 
-    next(){
-        //TODO к регистрации ТТН
+    next() {
+        let driver = {
+            id: this.props.driver.data.id,
+            firstName: this.props.driver.data.name,
+            lastName: this.props.driver.data.surname,
+            patronymic: this.props.driver.data.patronymic,
+            passportNumber: this.props.driver.data.serialAndNumber
+        };
+        this.props.setDriverInfoInTTN(driver);
+        this.props.setTransportType("CAR");
+        browserHistory.push('/registerwaybill');
     }
 
-    createDiver(){
+    createDiver() {
         browserHistory.push('/registrationOfGoods/editDriver');
     }
 
@@ -137,7 +146,8 @@ class SearchTransportCompanyForDriver extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        driver: state.searchTransportCompanyForDriver
+        driver: state.searchTransportCompanyForDriver,
+        TTN: state.waybillRegistrationForm
     }
 };
 
@@ -160,6 +170,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         setDefaultValue: () => {
             dispatch(searchTransportCompanyForDriverActionCreator.setDefaultValue())
+        },
+        setDriverInfoInTTN: (driverInfo) => {
+            dispatch(setDriverInfo(driverInfo))
+        },
+        setTransportType: (type) => {
+            dispatch(setTransportType(type))
         }
     }
 };
