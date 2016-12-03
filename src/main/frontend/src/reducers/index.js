@@ -14,6 +14,7 @@ import workersReducer from "./workers-reducer";
 import {stock} from "../containers/editStock";
 import Driver from './../containers/editDriver/reducer';
 import roleReducer from "./role-reducer"
+import {distributionGoodsReducer} from '../containers/DistributionGoods/index'
 
 const rootReducer = combineReducers({
     waybillRegistrationForm: WaybillRegistrationFormReducer,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
     navigation,
     checkGoodsReducer,
     stock,
+    distributionGoodsReducer,
     driver: Driver
 });
 
