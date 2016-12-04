@@ -11,23 +11,23 @@ let setWaybillVisibility = visibility => {
 
 let findWaybillRequest = () => {
     return {
-        type: event.FIND_WAYBILL_BY_ID_REQUEST
+        type: event.FIND_WAYBILL_BY_NUMBER_REQUEST
     }
 };
 
 let findWaybillSuccess = json => {
     return {
-        type: event.FIND_WAYBILL_BY_ID_SUCCESS,
+        type: event.FIND_WAYBILL_BY_NUMBER_SUCCESS,
         payload: json
     }
 };
 
-let findWaybillById = (id, status) => {
+let findWaybillByNumber = (number, status) => {
     return dispatch => {
         dispatch(findWaybillRequest());
-        axios.get(`/checkgoods/waybills/${id}`)
+        axios.get(`/checkgoods/waybills/${number}`)
             .then(response => {
-                let message = `Накладная №${id} успешно найдена`;
+                let message = `Накладная №${number} успешно найдена`;
                 if(response.data.status === status) {
                     dispatch(findWaybillSuccess(response.data));
                     dispatch(setWaybillVisibility(true));
@@ -38,7 +38,7 @@ let findWaybillById = (id, status) => {
                 dispatch(showDialog(message, '', []));
             })
             .catch(error => {
-                dispatch(showDialog(`Накладная №${id}  не найдена. ${error}`, 'danger', []));
+                dispatch(showDialog(`Накладная №${number}  не найдена. ${error}`, 'danger', []));
                 dispatch(setWaybillVisibility(false));
             });
     }
@@ -50,15 +50,15 @@ let acceptWaybillRequest= () => {
     }
 };
 
-let acceptWaybill = (id, waybillStatus, productStatus, senderRole) => {
+let acceptWaybill = (number, waybillStatus, productStatus, senderRole) => {
     return dispatch => {
         dispatch(acceptWaybillRequest());
-        axios.put(`/checkgoods/${senderRole}/waybills/${id}`, {
+        axios.put(`/checkgoods/${senderRole}/waybills/${number}`, {
                 waybillStatus: waybillStatus,
                 productStatus: productStatus
         })
             .then(response => {
-                dispatch(showDialog(`Для накладной №${id} успешно установлен статус "${waybillStatus}"`));
+                dispatch(showDialog(`Для накладной №${number} успешно установлен статус "${waybillStatus}"`));
                 dispatch(setWaybillVisibility(false));
             })
             .catch(error => dispatch(showDialog(`Прозошла ошибка при установке статуса накладной. ${error}`, 'danger', [])));
@@ -95,7 +95,7 @@ let setInputValue = (inputId, value) => {
 };
 
 export default {
-    findWaybillById,
+    findWaybillByNumber,
     showDialog,
     closeDialog,
     setInputValue,

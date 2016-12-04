@@ -50,7 +50,7 @@ let closeDialog = () => {
 
 let findWaybillRequest = () => {
     return {
-        type: event.FIND_WAYBILL_BY_ID_REQUEST
+        type: event.FIND_WAYBILL_BY_NUMBER_REQUEST
     }
 };
 
@@ -59,19 +59,19 @@ let findWaybillSuccess = json => {
         json.productInWaybills[i].product.places = [];
     }
     return {
-        type: event.FIND_WAYBILL_BY_ID_SUCCESS,
+        type: event.FIND_WAYBILL_BY_NUMBER_SUCCESS,
         payload: json
     }
 };
 
-let findWaybillById = (id, status) => {
+let findWaybillByNumber = (number, status) => {
     return dispatch => {
         dispatch(findWaybillRequest());
         $.ajax({
             type: 'GET',
-            url: `/checkgoods/waybills/${id}`,
+            url: `/checkgoods/waybills/${number}`,
             success: response => {
-                let message = `Накладная №${id} успешно найдена`;
+                let message = `Накладная №${number} успешно найдена`;
                 if(response.status === status) {
                     dispatch(findWaybillSuccess(response));
                     dispatch(setWaybillVisibility(true));
@@ -82,7 +82,7 @@ let findWaybillById = (id, status) => {
                 dispatch(showDialog(message, '', []));
             },
             error: error => {
-                dispatch(showDialog(`Накладная №${id}  не найдена. ${error.statusText}`, 'danger', []));
+                dispatch(showDialog(`Накладная №${number}  не найдена. ${error.statusText}`, 'danger', []));
                 dispatch(setWaybillVisibility(false));
             }
         });
@@ -113,7 +113,7 @@ export default {
     setInputValue,
     showDialog,
     closeDialog,
-    findWaybillById,
+    findWaybillByNumber,
     setWaybillVisibility,
     setShelfModalVisibility,
     addProductOnPlace,

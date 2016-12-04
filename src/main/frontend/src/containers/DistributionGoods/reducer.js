@@ -3,7 +3,7 @@ import * as $ from "jquery";
 
 let initDistributionGoodsState = {
     waybill: {
-        id: 123,
+        number: 123,
         status: 0,
         registeredBy: {
             name: '',
@@ -61,9 +61,9 @@ let initDistributionGoodsState = {
 export default (state = initDistributionGoodsState, action) => {
     switch (action.type) {
 
-        case event.FIND_WAYBILL_BY_ID_REQUEST:
+        case event.FIND_WAYBILL_BY_NUMBER_REQUEST:
             return state;
-        case event.FIND_WAYBILL_BY_ID_SUCCESS:
+        case event.FIND_WAYBILL_BY_NUMBER_SUCCESS:
             return {
                 ...state, waybill: action.payload
             };

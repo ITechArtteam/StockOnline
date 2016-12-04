@@ -25,7 +25,7 @@ class DistributionGoods extends React.Component {
     };
 
     onFindClick() {
-        this.props.findWaybillById(this.props.frontend.waybillId);
+        this.props.findWaybillByNumber(this.props.frontend.waybillId);
     }
 
     clearState() {
@@ -72,8 +72,8 @@ const mapDispatchToProps = (dispatch) => {
         setInputValue: (nameField, value) => {
             dispatch(distributionGoodsActionCreator.setInputValue(nameField, value))
         },
-        findWaybillById: (id) => {
-            dispatch(distributionGoodsActionCreator.findWaybillById(id, 'Проверка завершена'))
+        findWaybillByNumber: (number) => {
+            dispatch(distributionGoodsActionCreator.findWaybillByNumber(number, 'Проверка завершена'))
         },
         showDialog: (text, type, buttons) => {
             dispatch(distributionGoodsActionCreator.showDialog(text, type, buttons))

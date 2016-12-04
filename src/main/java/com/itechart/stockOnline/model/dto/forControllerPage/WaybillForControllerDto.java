@@ -17,7 +17,7 @@ public class WaybillForControllerDto {
 
     private String DATE_PATTERN = "dd.MM.yyyy";
 
-    private Long id;
+    private String number;
     private WaybillStatus status;
     private String registrationDate;
     private TransportForControllerDto transport;
@@ -26,7 +26,7 @@ public class WaybillForControllerDto {
 
     public WaybillForControllerDto(Waybill waybill) {
         if(waybill != null) {
-            this.id = waybill.getId();
+            this.number = waybill.getNumber();
             this.status = waybill.getStatus();
             this.registrationDate = DateFormatUtils.format(waybill.getRegistrationDate(), DATE_PATTERN);
             Transport transport = waybill.getTransport();
@@ -49,12 +49,12 @@ public class WaybillForControllerDto {
         }
     }
 
-    public Long getId() {
-        return id;
+    public String getNumber() {
+        return number;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public WaybillStatus getStatus() {
