@@ -10,4 +10,5 @@ public interface WaybillService {
     void completeWayBillChecking(Long waybillId, WaybillStatus waybillStatus, ProductStatus productStatus, String userName);
     void setWaybillAndProductsStatus(Long waybillId, WaybillStatus waybillStatus, ProductStatus productStatus);
     void setWaybillAndProductsStatus(Waybill waybill, WaybillStatus waybillStatus, ProductStatus productStatus);
+    Waybill save(Waybill waybill);
 }

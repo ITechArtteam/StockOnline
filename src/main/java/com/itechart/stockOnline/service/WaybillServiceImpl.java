@@ -30,6 +30,9 @@ public class WaybillServiceImpl implements WaybillService {
     private UserService userService;
 
     @Autowired
+    private TransportService transportService;
+
+    @Autowired
     private ProductService productService;
 
     @Autowired
@@ -87,5 +90,10 @@ public class WaybillServiceImpl implements WaybillService {
             return p;
         }).collect(Collectors.toList());
         productService.update(productList);
+    }
+
+    public Waybill save(Waybill waybill) {
+        transportService.save(waybill.getTransport());
+        return waybillDao.save(waybill);
     }
 }
