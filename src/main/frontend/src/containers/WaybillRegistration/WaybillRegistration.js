@@ -21,15 +21,14 @@ import * as Actions from './actions'
 class WaybillRegistration extends React.Component {
 
     handleSenderNameOnBlur() {
-        if (!this.props.chooseCarrierModalFormIsOpen && (this.props.senderName.length > 0)
+        if (!this.props.chooseCarrierModalFormIsOpen
             && (getFilteredItems(this.props.senders, this.props.senderName).length > 0)) {
             this.props.showChooseSenderModal();
         }
     }
 
     handleCarrierNameOnBlur() {
-        if (!this.props.chooseSenderModalIsOpen && (this.props.carrierName.length > 0)
-            && (getFilteredItems(this.props.carriers, this.props.carrierName).length > 0)) {
+        if (!this.props.chooseSenderModalIsOpen && (getFilteredItems(this.props.carriers, this.props.carrierName).length > 0)) {
             this.props.showChooseCarrierModalForm();
         }
     }
@@ -108,14 +107,13 @@ class WaybillRegistration extends React.Component {
                         name="sender"
                         label="Отправитель"
                         value={this.props.senderName}
+                        resultType={this.props.sender ? 'success' : 'warning'}
                         onChange={(value) => {this.handleChangeSenderName(value)}}
                         onBlur={() => this.handleSenderNameOnBlur()} />
                     <ChooseSenderModalForm
                         senders={getFilteredItems(this.props.senders, this.props.senderName)}
-                        isOpen={this.props.chooseSenderModalIsOpen}
-                        onSave={(value) => {this.handleSaveSenderFormSubmit(value)}}
-                        onHide={this.props.hideChooseSenderModal} />
-                    <TextInput
+                        isOpen={this.props.chooseSenderModalIsOpen} />
+                    <DisabledInput
                         name="carrier"
                         label="Перевозчик"
                         value={this.props.carrierName}
@@ -123,14 +121,10 @@ class WaybillRegistration extends React.Component {
                         onBlur={() => this.handleCarrierNameOnBlur()} />
                     <ChooseCarrierModalForm
                         isOpen={this.props.chooseCarrierModalFormIsOpen}
-                        carriers={getFilteredItems(this.props.carriers, this.props.carrierName)}
-                        onSave={(value) => {this.handleChooseCarrierFormSubmit(value)}}
-                        onHide={this.props.hideChooseCarrierModalForm} />
-                    <SelectInput
+                        carriers={getFilteredItems(this.props.carriers, this.props.carrierName)} />
+                    <DisabledInput
                         label="Тип транспортного средства"
-                        options={[{value: 'TRAIN', label: 'Поезд'}, {value: 'CAR', label: 'Автомобиль'}]}
-                        value={this.props.transportType}
-                        onChange={this.props.setTransportType} />
+                        value={getTransportTypeLabel(this.props.transportTypes, this.props.transportType)} />
                     <TransportNumbers transportType={this.props.transportType} />
                     <DriverInfo transportType={this.props.transportType} driver={this.props.driver} />
                     <TextAreaInput
@@ -163,9 +157,16 @@ class WaybillRegistration extends React.Component {
     }
 }
 
+function getTransportTypeLabel(types, typeName) {
+    const filteredTypes = types.filter(function(type) {
+        return type.value === typeName;
+    });
+    return filteredTypes.length > 0 ? filteredTypes[0].label : '';
+}
+
 function getCurrentDateTime() {
     var date = new Date();
-    return date.getDate() + "/" +
+    return (date.getDate() < 10 ? '0' + date.getDate() : date.getDate) + "/" +
         (date.getMonth() + 1) + "/" +
         date.getFullYear() + " " +
         date.getHours() + ":" +
