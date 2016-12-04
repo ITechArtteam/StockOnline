@@ -26,4 +26,5 @@
     <include file="2016-12-04--04-transport_table_changes.xml" relativeToChangelogFile="true" />
     <include file="2016-12-04--05-transport_table_changes.xml" relativeToChangelogFile="true" />
     <include file="2016-12-04--06-product_table_changes.xml" relativeToChangelogFile="true" />
+    <include file="2016-12-04--07-waybill_table_changes.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>
