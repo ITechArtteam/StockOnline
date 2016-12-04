@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import EditWorker from "../views/EditWorker";
+import EditWorker from "../views/edit_worker/EditWorker";
 import $ from "jquery";
 import * as workerApi from "../api/worker-api";
 import * as roleApi from "../api/role-api";

@@ -55,7 +55,7 @@ public class WorkerController {
     public void saveWorker(@RequestBody User worker, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/worker  method: POST Request body {worker}", worker);
         User saveWorker = workerService.save(worker);
-        response.addHeader("result", "Worker has added.");
+        response.addHeader("result", "Worker has saved.");
     }
 
     @ExceptionHandler(ValidationError.class)

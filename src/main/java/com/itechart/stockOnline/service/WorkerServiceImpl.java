@@ -42,6 +42,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Transactional(readOnly = true)
     public User get(Long id) {
         User worker = workerRepository.findOne(id);
+        worker.setPassword(worker.getPassword());
         return  worker;
     }
 
@@ -51,12 +52,25 @@ public class WorkerServiceImpl implements WorkerService {
         if (bindingResult.hasErroe()){
             throw new ValidationError(bindingResult.get());
         }
-
-        if (workerRepository.findByEmail(worker.getEmail()).isPresent()){
-            bindingResult.addError("email",new EmailBusyException("email занят"));
-        }
-        if (workerRepository.findByLogin(worker.getLogin()).isPresent()){
-            bindingResult.addError("login",new LoginBusyException("login занят"));
+        if (worker.getId()!=null){
+            User one = workerRepository.findOne(worker.getId());
+            if (!one.getEmail().equals(worker.getEmail())){
+                if (workerRepository.findByEmail(worker.getEmail()).isPresent()){
+                    bindingResult.addError("email",new EmailBusyException("email занят"));
+                }
+            }
+            if (!one.getLogin().equals(worker.getLogin())) {
+                if (workerRepository.findByLogin(worker.getLogin()).isPresent()) {
+                    bindingResult.addError("login", new LoginBusyException("login занят"));
+                }
+            }
+        } else {
+            if (workerRepository.findByEmail(worker.getEmail()).isPresent()){
+                bindingResult.addError("email",new EmailBusyException("email занят"));
+            }
+            if (workerRepository.findByLogin(worker.getLogin()).isPresent()){
+                bindingResult.addError("login",new LoginBusyException("login занят"));
+            }
         }
         if (bindingResult.hasErroe()){
             throw new ValidationError(bindingResult.get());

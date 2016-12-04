@@ -20,7 +20,6 @@ export function getWorkers(thenRedirectPath, errorRedirectPath) {
 }
 
 export function deleteWorkers(ids, thenRedirectPath, errorRedirectPath) {
-    console.log(ids)
     axios.delete('/api/workers?ids='+ids).then(response => {
         store.dispatch(deleteWorkersSuccess(ids, response));
         redirect(thenRedirectPath);
@@ -29,7 +28,6 @@ export function deleteWorkers(ids, thenRedirectPath, errorRedirectPath) {
         redirect(errorRedirectPath);
     });
 }
-
 
 export function closeResponse() {
     store.dispatch(deleteResponse());

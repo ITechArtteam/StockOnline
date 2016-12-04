@@ -1,5 +1,5 @@
 import React from "react";
-import Workers from "../views/Workers";
+import Workers from "../views/workers/Workers";
 import {connect} from "react-redux";
 import * as workersApi from "../api/workers-api";
 import CleverPanel from "../views/CleverPanel";
