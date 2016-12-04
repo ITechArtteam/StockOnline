@@ -54,15 +54,17 @@ class WaybillRegistration extends React.Component {
     }
 
     handleFormSubmit() {
-        const type =  this.props.transportType;
+        let type =  this.props.transportType;
         let numbers = [];
         if (type === 'TRAIN') {
+            type = 'Поезд';
             numbers = this.props.numbers.reduce(function(numbers, number) {
                 numbers.push(number.number);
                 return numbers;
             }, []);
         }
         else if (type === 'CAR') {
+            type = 'Автомобиль';
             numbers.push(this.props.carNumber);
             if (this.props.trailerNumber !== '') {
                 numbers.push(this.props.trailerNumber);
@@ -74,9 +76,11 @@ class WaybillRegistration extends React.Component {
             issueDate: this.props.registrationDate,
             senderId: this.props.sender.id,
             carrierId: this.props.carrier.id,
-            transportType: this.props.transportType,
+            driverPassportNumber: this.props.driver.passportNumber,
+            transportType: type,
             numbers: numbers,
             description: this.props.description,
+            dispatcherLogin: this.props.dispatcher,
             registrationDatetime: getCurrentDateTime(),
             products: this.props.products
         };
@@ -166,12 +170,22 @@ function getTransportTypeLabel(types, typeName) {
 
 function getCurrentDateTime() {
     var date = new Date();
-    return (date.getDate() < 10 ? '0' + date.getDate() : date.getDate) + "/" +
-        (date.getMonth() + 1) + "/" +
-        date.getFullYear() + " " +
-        date.getHours() + ":" +
-        date.getMinutes();
+    return (getFormattedNumberValue(date.getDate()) + "/" +
+        (getFormattedNumberValue(date.getMonth() + 1)) + "/" +
+        getFormattedNumberValue(date.getFullYear()) + " " +
+        getFormattedNumberValue(date.getHours()) + ":" +
+        getFormattedNumberValue(date.getMinutes()));
 }
+
+function getFormattedNumberValue(number) {
+    if (number === 0) {
+        return '00';
+    }
+    else {
+        return number > 10 ? number : '0' + number;
+    }
+}
+
 
 function getFilteredItems(items, filter) {
     return items.filter(function(item) {
