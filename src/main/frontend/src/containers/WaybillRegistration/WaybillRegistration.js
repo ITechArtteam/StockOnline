@@ -35,8 +35,8 @@ class WaybillRegistration extends React.Component {
 
     getTotalProductsSum() {
         return this.props.products.reduce(function(sum, current) {
-            return sum + current.price * current.count;
-        }, 0) + ' у.е.';
+                return sum + current.price * current.count;
+            }, 0) + ' у.е.';
     }
 
     getTotalProductsAmount() {
