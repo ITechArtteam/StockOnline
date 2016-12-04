@@ -50,8 +50,8 @@ public class ProductController {
         response.addHeader("result", "Products have deleted.");
     }
 
-    @RequestMapping(value = "/act", method = RequestMethod.POST)
-    public void saveWorker(@RequestBody Product product, HttpServletResponse response) {
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
+    public void saveProduct(@RequestBody Product product, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/product  method: POST Request body {product}", product);
         Product saveProduct = productService.save(product);
         response.addHeader("result", "Product has saved.");
