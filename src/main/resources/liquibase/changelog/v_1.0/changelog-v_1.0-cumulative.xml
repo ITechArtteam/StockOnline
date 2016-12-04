@@ -20,4 +20,10 @@
     <include file="2016-11-23--02-enum_updates.xml" relativeToChangelogFile="true"/>
     <include file="2016-11-24--01-update_room_info.xml" relativeToChangelogFile="true"/>
     <include file="2016-11-26--01-waybill_NN_disabling.xml" relativeToChangelogFile="true"/>
+    <include file="2016-12-04--01-waybill_table_changes.xml" relativeToChangelogFile="true" />
+    <include file="2016-12-04--02-waybill_table_changes.xml" relativeToChangelogFile="true" />
+    <include file="2016-12-04--03-transport_table_changes.xml" relativeToChangelogFile="true" />
+    <include file="2016-12-04--04-transport_table_changes.xml" relativeToChangelogFile="true" />
+    <include file="2016-12-04--05-transport_table_changes.xml" relativeToChangelogFile="true" />
+    <include file="2016-12-04--06-product_table_changes.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>

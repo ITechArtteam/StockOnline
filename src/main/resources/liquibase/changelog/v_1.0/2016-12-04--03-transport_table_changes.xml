@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="evgeny-shilov" id="remove-transport-fk-constraints">
+        <dropForeignKeyConstraint
+                baseTableName="transport"
+                constraintName="fk_transport_driver" />
+        <dropForeignKeyConstraint
+                baseTableName="transport"
+                constraintName="fk_transport_storage_requirement" />
+        <rollback>
+            <addForeignKeyConstraint baseTableName="transport"
+                                     baseColumnNames="driver_id"
+                                     constraintName="fk_transport_driver"
+                                     referencedTableName="driver"
+                                     referencedColumnNames="id" />
+            <addForeignKeyConstraint baseTableName="transport"
+                                     baseColumnNames="storage_requirement_id"
+                                     constraintName="fk_transport_storage_requirement"
+                                     referencedTableName="storage_requirement"
+                                     referencedColumnNames="id" />
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
