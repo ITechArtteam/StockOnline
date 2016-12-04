@@ -7,7 +7,6 @@ import SelectShelfModal from "../SelectShelfModal/SelectShelfModal"
 class WaybillInfo extends React.Component {
     constructor(props) {
         super(props);
-        this.openSelectShelfModal = this.openSelectShelfModal.bind(this);
         this.placesFormatter = this.placesFormatter.bind(this);
     }
     fullNameToShortName(firstName, lastName, patronymic) {
@@ -20,13 +19,18 @@ class WaybillInfo extends React.Component {
         return result;
     }
 
-    openSelectShelfModal() {
-        this.props.setSelectShelfModalVisibility(true);
-    }
-
-    placesFormatter(cell, row) {
+    placesFormatter(cell, rowUpper) {
+        let shelfFormatter = (cell, row) => {
+            return <span>{cell} <a href="#" className="pull-right" onClick={() => this.props.removeProductFromShelf(rowUpper.index, cell)}>X</a></span>
+        };
+        shelfFormatter.bind(this);
         return <div>
-            <button type="button" className="btn btn-default btn-xs" onClick={this.openSelectShelfModal}>Добавить</button>
+            <div className="before-table">
+                <button type="button" className="btn btn-default btn-xs btn-block" onClick={() => this.props.showAddModal(rowUpper.index)}>Добавить</button>
+            </div>
+            <BootstrapTable data={rowUpper.places} striped={true}>
+                <TableHeaderColumn dataField="shelfId" isKey={true} dataFormat={shelfFormatter}>Номер</TableHeaderColumn>
+            </BootstrapTable>
         </div>
     }
 
@@ -35,9 +39,11 @@ class WaybillInfo extends React.Component {
         if(!!this.props.data.productInWaybills) {
             products = this.props.data.productInWaybills.map((item, index) => {
                 return {
+                    index: index,
                     name: item.product.name,
                     storage: item.product.storage.type,
-                    count: item.count + ' ' + item.product.unit
+                    count: item.count + ' ' + item.product.unit,
+                    places: item.product.places
                 }
             });
         }
@@ -127,8 +133,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setSelectShelfModalVisibility: visibility => {
-            dispatch(distributionGoodsActionCreator.setShelfModalVisibility(visibility))
+        showAddModal: (rowIndex) => {
+            dispatch(distributionGoodsActionCreator.setShelfModalVisibility(true, rowIndex))
+        },
+        removeProductFromShelf: (rowIndex, shelfId) => {
+            dispatch(distributionGoodsActionCreator.removeProductFromShelf(rowIndex, shelfId))
         }
     }
 };

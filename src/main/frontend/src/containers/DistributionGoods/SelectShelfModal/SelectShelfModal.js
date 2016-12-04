@@ -23,11 +23,13 @@ class SelectShelfModal extends React.Component {
     }
 
     handleSubmit() {
-        this.props.setSelectShelfModalVisibility(false);
+        //todo: change random to real shelfId
+        this.props.addProductOnPlace(this.props.selectShelfModal.rowIndex, Math.floor(Math.random() * 1000));
+        this.props.closeModal();
     }
 
     handleCancel() {
-        this.props.setSelectShelfModalVisibility(false);
+        this.props.closeModal();
     }
 
     render() {
@@ -40,10 +42,11 @@ class SelectShelfModal extends React.Component {
                 <ModalBody>
                 </ModalBody>
                 <ModalFooter>
-                    <input type="button" className='btn btn-default' onClick={this.handleCancel} value="Отмена" />
-                    <input type="button" className='btn btn-danger' onClick={this.handleCancel} value="Удалить" />
-                    <input type="button" className='btn btn-primary' onClick={this.handleSubmit} value="Добавить" />
-                </ModalFooter>
+                    <div className="btn-group pull-right">
+                        <button type="button" className='btn btn-default' onClick={this.handleCancel}>Отмена</button>
+                        <button type="button" className='btn btn-primary' onClick={this.handleSubmit}>Добавить</button>
+                    </div>
+                 </ModalFooter>
             </Modal>
         )
     }
@@ -51,14 +54,18 @@ class SelectShelfModal extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        selectShelfModal: state.distributionGoodsReducer.selectShelfModal
+        selectShelfModal: state.distributionGoodsReducer.selectShelfModal,
+        waybill: state.distributionGoodsReducer.waybill
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setSelectShelfModalVisibility: visibility => {
-            dispatch(distributionGoodsActionCreator.setShelfModalVisibility(visibility))
+        closeModal: () => {
+            dispatch(distributionGoodsActionCreator.setShelfModalVisibility(false))
+        },
+        addProductOnPlace: (rowIndex, shelfId) => {
+            dispatch(distributionGoodsActionCreator.addProductOnPlace(rowIndex, shelfId))
         }
     }
 };

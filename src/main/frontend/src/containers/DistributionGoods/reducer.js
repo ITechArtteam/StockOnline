@@ -1,13 +1,14 @@
 import * as event from './constants'
+import * as $ from "jquery";
 
 let initDistributionGoodsState = {
     waybill: {
         id: 123,
-            status: 0,
-            registeredBy: {
+        status: 0,
+        registeredBy: {
             name: '',
-                surname: '',
-                patronymic: ''
+            surname: '',
+            patronymic: ''
         },
         productInWaybills: [
             {
@@ -17,7 +18,8 @@ let initDistributionGoodsState = {
                     unit: 1,
                     storage: {
                         type: 'Нет требований'
-                    }
+                    },
+                    places: []
                 }
             },
             {
@@ -27,10 +29,12 @@ let initDistributionGoodsState = {
                     unit: 2,
                     storage: {
                         type: 'Нет требований'
-                    }
+                    },
+                    places: []
                 }
-            }],
-            transport: {
+            }
+        ],
+        transport: {
             type: 1,
                 number: 'AC 2013',
                 storage: {
@@ -50,6 +54,7 @@ let initDistributionGoodsState = {
     },
     selectShelfModal: {
         isVisible: false,
+        rowIndex: 0
     }
 };
 
@@ -66,7 +71,7 @@ export default (state = initDistributionGoodsState, action) => {
         case event.SET_WAYBILL_VISIBILITY:
             return {...state, frontend: {...state.frontend, waybillVisible: action.payload}};
         case event.SET_SELECT_SHELF_MODAL_VISIBILITY:
-            return {...state, selectShelfModal: {...state.selectShelfModal, isVisible: action.payload}};
+            return {...state, selectShelfModal: action.payload};
 
         case event.SHOW_DIALOG:
             return {... state, alert: action.payload};
@@ -75,6 +80,20 @@ export default (state = initDistributionGoodsState, action) => {
 
         case event.SET_INPUT_VALUE:
             return {...state, frontend: {...state.frontend, [action.payload.inputId]: action.payload.value}};
+
+        case event.ADD_PRODUCT_ON_PLACE:
+            let newProductInWaybill = state.waybill.productInWaybills;
+            newProductInWaybill[action.payload.rowIndex].product.places.push({shelfId: action.payload.shelfId});
+            return {...state, waybill: {...state.waybill, productInWaybills: newProductInWaybill}};
+
+        case event.REMOVE_PRODUCT_FROM_PLACE:
+            newProductInWaybill = state.waybill.productInWaybills;
+            let arr = newProductInWaybill[action.payload.rowIndex].product.places;
+            arr = $.grep(arr, (elem, index) => {
+                return elem.shelfId !== action.payload.shelfId;
+            });
+            newProductInWaybill[action.payload.rowIndex].product.places = arr;
+            return {...state, waybill: {...state.waybill, productInWaybills: newProductInWaybill}};
         default:
             return state;
     }

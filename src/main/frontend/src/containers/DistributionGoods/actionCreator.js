@@ -18,10 +18,13 @@ let setWaybillVisibility = visibility => {
     }
 };
 
-let setShelfModalVisibility = visibility => {
+let setShelfModalVisibility = (visibility, rowIndex) => {
     return {
         type: event.SET_SELECT_SHELF_MODAL_VISIBILITY,
-        payload: visibility
+        payload: {
+            isVisible: visibility,
+            rowIndex: rowIndex
+        }
     }
 };
 
@@ -52,6 +55,9 @@ let findWaybillRequest = () => {
 };
 
 let findWaybillSuccess = json => {
+    for(let i = 0; i < json.productInWaybills.length; ++i) {
+        json.productInWaybills[i].product.places = [];
+    }
     return {
         type: event.FIND_WAYBILL_BY_ID_SUCCESS,
         payload: json
@@ -83,11 +89,33 @@ let findWaybillById = (id, status) => {
     }
 };
 
+let addProductOnPlace = (rowIndex, shelfId) => {
+    return {
+        type: event.ADD_PRODUCT_ON_PLACE,
+        payload: {
+            rowIndex: rowIndex,
+            shelfId: shelfId
+        }
+    }
+};
+
+let removeProductFromShelf = (rowIndex, shelfId) => {
+    return {
+        type: event.REMOVE_PRODUCT_FROM_PLACE,
+        payload: {
+            rowIndex: rowIndex,
+            shelfId: shelfId
+        }
+    }
+};
+
 export default {
     setInputValue,
     showDialog,
     closeDialog,
     findWaybillById,
     setWaybillVisibility,
-    setShelfModalVisibility
+    setShelfModalVisibility,
+    addProductOnPlace,
+    removeProductFromShelf,
 }
