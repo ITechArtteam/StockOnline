@@ -53,6 +53,16 @@ public class Waybill {
     @JoinColumn(name = "registered_by")
     private User registeredBy;
 
+    @Column(name = "number")
+    private String number;
+
+    @Column(name = "issuance_date")
+    @Temporal(TemporalType.DATE)
+    private Date issuanceDate;
+
+    @Column(name = "description")
+    private String description;
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -85,6 +95,30 @@ public class Waybill {
 
     public User getRegisteredBy() { return registeredBy; }
     public void setRegisteredBy(User registeredBy) { this.registeredBy = registeredBy; }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public Date getIssuanceDate() {
+        return issuanceDate;
+    }
+
+    public void setIssuanceDate(Date issuanceDate) {
+        this.issuanceDate = issuanceDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public String toString() {
