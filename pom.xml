@@ -37,6 +37,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
@@ -121,13 +129,8 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet}</version>
-            <scope>test</scope>
-        </dependency>
         <!-- TEST -->
+
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -150,7 +153,6 @@
             <version>20.0</version>
         </dependency>
     </dependencies>
-
 
 
     <build>
@@ -236,8 +238,8 @@
                     <password>${jdbc.password}</password>
                 </configuration>
             </plugin>
-
-           <!--<plugin>
+            <!--
+           <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>${frontend-plugin.version}</version>
@@ -277,8 +279,8 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
-
+            </plugin>
+            -->
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>

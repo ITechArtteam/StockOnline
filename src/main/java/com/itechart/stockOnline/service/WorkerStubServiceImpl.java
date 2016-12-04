@@ -60,6 +60,11 @@ public class WorkerStubServiceImpl implements WorkerService{
     }
 
     @Override
+    public void delete(Long... ids) {
+        Arrays.stream(ids).forEach((id)->userMap.remove(id));
+    }
+
+    @Override
     public void delete(User[] workers) {
         Arrays.stream(workers).forEach((worker)->userMap.remove(worker.getId()));
     }

@@ -15,7 +15,7 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "user_roles",
             inverseJoinColumns = @JoinColumn(name = "user_id",
                     nullable = false,

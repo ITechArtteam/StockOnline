@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
     waybillRegistrationForm: WaybillRegistrationFormReducer,
     auth: AuthReducer,
     workerState:workerReducer,
+    workersState:workersReducer,
     form: FormReducer,
     roleState:roleReducer,
     client,

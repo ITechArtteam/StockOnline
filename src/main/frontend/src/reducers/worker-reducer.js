@@ -2,9 +2,9 @@ import * as types from "../actions/action-types";
 import _ from "lodash";
 
 const initialState = {
-        workers: [],
+        response: null,
         worker: {
-            id:"",
+            id: "",
             name: "",
             surname: "",
             address: {
@@ -21,20 +21,27 @@ const initialState = {
             patronymic: "",
             roles: [],
         }
+
     }
     ;
 
 const workerReducer = function (state = initialState, action) {
     switch (action.type) {
-        case types.GET_WORKERS_SUCCESS:
-            return Object.assign({}, state, {workers: action.workers});
-
-        case types.DELETE_WORKER_SUCCESS:
-            const newWorkers = _.filter(state.workers, worker => worker.id != action.id);
-            return Object.assign({}, state, {workers: newWorkers});
 
         case types.GET_WORKER_SUCCESS:
             return Object.assign({}, state, {worker: action.worker});
+
+        case types.GET_WORKER_UNSUCCESS:
+            return Object.assign({}, state, {response: action.response});
+
+        case types.DELETE_WORKER_UNSUCCESS:
+            return Object.assign({}, state, {response: action.response});
+
+        case types.POST_WORKER_UNSUCCESS:
+            return Object.assign({}, state, {response: action.response});
+
+        case types.CLOSE_WORKER_RESPONSE:
+            return Object.assign({}, state, {response: null});
     }
     return state;
 }

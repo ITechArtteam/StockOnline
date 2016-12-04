@@ -1,40 +1,55 @@
 import axios from 'axios';
-import { getWorkersSuccess, getWorkerSuccess, deleteWorkerSuccess, saveWorkerSuccess } from '../actions/worker-actions';
+import { getWorkerSuccess, saveWorkerUnsuccess, deleteWorkerUnsuccess, closeWorkerResponse } from '../actions/worker-actions';
+import { getWorkersSuccess, getWorkersUnsuccess, deleteWorkerSuccess, saveWorkerSuccess, closeWorkersResponse } from '../actions/workers-actions';
 import store from '../store/configureStore'
 import {browserHistory} from 'react-router';
 
-export function getWorkers() {
-    return axios.get('/api/workers')
-        .then(response => {
-            store.dispatch(getWorkersSuccess(response.data));
-            return response;
-        }).catch(error=>{
-        });
-}
 
-export function getWorker(id) {
+
+export function getWorker(id, thenRedirectPath, errorRedirectPath) {
     return axios.get('/api/worker/'+id)
         .then(response => {
             store.dispatch(getWorkerSuccess(response.data));
-            return response;
+            redirect(thenRedirectPath);
         }).catch(error=>{
+            store.dispatch(getWorkersUnsuccess(error.response))
+            redirect(errorRedirectPath);
         });
 }
 
-export function deleteWorker(id) {
+export function deleteWorker(id, thenRedirectPath, errorRedirectPath) {
     return axios.delete('/api/worker/' + id)
         .then(response => {
-            store.dispatch(deleteWorkerSuccess(id));
-            return response;
+            store.dispatch(deleteWorkerSuccess(id, response));
+            redirect(thenRedirectPath);
+        }).catch(error=>{
+            store.dispatch(deleteWorkerUnsuccess(error.response))
+            redirect(errorRedirectPath);
         });
 }
 
-export function saveWorker(worker) {
-    console.log("saveWorker")
-    console.log(worker.roles)
+export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
+    console.log(worker)
     return axios.post('/api/worker/', worker)
         .then(response => {
-
-            return response;
+            console.log(response)
+            store.dispatch(saveWorkerSuccess(response.data,response))
+            redirect(thenRedirectPath);
+        }).catch(error=>{
+            console.log(error)
+            store.dispatch(saveWorkerUnsuccess(error.response))
+            redirect(errorRedirectPath);
         });
 }
+
+export function closeResponse(){
+    store.dispatch(closeWorkerResponse());
+}
+
+function redirect(path){
+    if (path!==null && path!==undefined){
+        browserHistory.push(path);
+    }
+}
+
+
