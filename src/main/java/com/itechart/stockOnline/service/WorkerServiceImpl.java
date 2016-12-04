@@ -22,8 +22,7 @@ import java.util.List;
 public class WorkerServiceImpl implements WorkerService {
     @Autowired
     private WorkerRepository workerRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 

@@ -10,6 +10,7 @@ import {checkGoodsReducer} from '../containers/checkGoods/index'
 import AuthReducer from './auth'
 import WaybillRegistrationFormReducer from './../containers/WaybillRegistration/reducer'
 import workerReducer from "./worker-reducer";
+import workersReducer from "./workers-reducer";
 import {stock} from "../containers/editStock";
 import Driver from './../containers/editDriver/reducer';
 import roleReducer from "./role-reducer"

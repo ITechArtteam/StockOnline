@@ -1,12 +1,14 @@
 package com.itechart.stockOnline.service;
 
 import com.itechart.stockOnline.dao.ProductDao;
+import com.itechart.stockOnline.model.Act;
 import com.itechart.stockOnline.model.Product;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,5 +23,37 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> update(List<Product> products) {
         Logger.info("Product service_update: updating list of products {}", products);
         return productDao.save(products);
+    }
+
+    @Override
+    public List<Product> getAll() {
+        return productDao.findAll();
+    }
+
+    @Override
+    public Product get(Long id) {
+        return productDao.findOne(id);
+    }
+
+    @Override
+    public void delete(Long id) {
+        productDao.delete(id);
+    }
+
+    @Override
+    public Product save(Product product) {
+        return productDao.save(product);
+    }
+
+    @Override
+    public List<Product> save(List<Product> products) {
+        return productDao.save(products);
+    }
+
+    @Override
+    public void delete(Long[] ids) {
+        Arrays.stream(ids).forEach(id -> {
+            productDao.delete(id);
+        });
     }
 }
