@@ -42,6 +42,7 @@ let initDistributionGoodsState = {
             }
         }
     },
+    stocks: [],
     alert: {
         isVisible: false,
         text: '',
@@ -54,7 +55,8 @@ let initDistributionGoodsState = {
     },
     selectShelfModal: {
         isVisible: false,
-        rowIndex: 0
+        rowIndex: 0,
+        selectedStockValue: 0
     }
 };
 
@@ -94,6 +96,11 @@ export default (state = initDistributionGoodsState, action) => {
             });
             newProductInWaybill[action.payload.rowIndex].product.places = arr;
             return {...state, waybill: {...state.waybill, productInWaybills: newProductInWaybill}};
+
+        case event.FIND_STOCK_BY_USER_COMPANY_SUCCESS:
+            return {...state, stocks: action.payload};
+        case event.SELECT_STOCK_VALUE_CHANGED:
+            return {...state, selectShelfModal: {...state.selectShelfModal, selectedStockValue: action.payload}};
         default:
             return state;
     }

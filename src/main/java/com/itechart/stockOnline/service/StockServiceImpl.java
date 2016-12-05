@@ -24,6 +24,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static com.itechart.stockOnline.dao.specification.StockSpecifications.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -60,6 +62,14 @@ public class StockServiceImpl implements StockService {
         logger.debug("getStockDtoForStock({}): {}", id, stock);
         User admin = userService.findByCompany(stock.getCompany());
         return stockDtoConverter.toStockDto(stock, admin);
+    }
+
+    @Override
+    public List<Stock> getByCompanyId(Long companyId) {
+        logger.debug("getByCompanyId({})", companyId);
+        List<Stock> resultList = stockDao.findAllByCompanyId(companyId);
+        logger.info("getByCompanyId({}) - found: {}", companyId, resultList);
+        return resultList;
     }
 
     @Override

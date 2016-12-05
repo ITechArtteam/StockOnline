@@ -109,6 +109,38 @@ let removeProductFromShelf = (rowIndex, shelfId) => {
     }
 };
 
+let findStocksByUserCompanySuccess = json => {
+    let stocks = json.map((elem, index) => {
+        return {
+            value: elem.id,
+            label: elem.name,
+        }
+    });
+    return {
+        type: event.FIND_STOCK_BY_USER_COMPANY_SUCCESS,
+        payload: stocks
+    }
+};
+
+let findStocksByUserCompany = ()=> {
+    return dispatch => {
+        $.ajax({
+            type: 'GET',
+            url: '/stockList/byUserCompany',
+            success: response => {
+                dispatch(findStocksByUserCompanySuccess(response))
+            }
+        })
+    }
+};
+
+let selectStockValueChanged = (stockValue) => {
+    return {
+        type: event.SELECT_STOCK_VALUE_CHANGED,
+        payload: stockValue
+    }
+};
+
 export default {
     setInputValue,
     showDialog,
@@ -118,4 +150,6 @@ export default {
     setShelfModalVisibility,
     addProductOnPlace,
     removeProductFromShelf,
+    findStocksByUserCompany,
+    selectStockValueChanged
 }

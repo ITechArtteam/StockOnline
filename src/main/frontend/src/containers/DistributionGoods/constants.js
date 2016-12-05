@@ -8,3 +8,7 @@ export const SET_SELECT_SHELF_MODAL_VISIBILITY = 'distributionGoods/SET_SELECT_S
 
 export const ADD_PRODUCT_ON_PLACE = 'distributionGoods/ADD_PRODUCT_ON_PLACE';
 export const REMOVE_PRODUCT_FROM_PLACE = 'distributionGoods/REMOVE_PRODUCT_FROM_PLACE';
+
+export const FIND_STOCK_BY_USER_COMPANY_SUCCESS = 'distributionGoods/FIND_STOCK_BY_USER_COMPANY_SUCCESS';
+
+export const SELECT_STOCK_VALUE_CHANGED = 'distributionGoods/SELECT_STOCK_VALUE_CHANGED';

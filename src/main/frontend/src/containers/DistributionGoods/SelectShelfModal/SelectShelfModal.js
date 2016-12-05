@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import {distributionGoodsActionCreator} from "../index";
-
 import {
     Modal,
     ModalHeader,
@@ -11,7 +9,6 @@ import {
     ModalBody,
     ModalFooter
 } from 'react-modal-bootstrap'
-
 import SelectInput from '../../../components/SelectInput/SelectInput'
 
 class SelectShelfModal extends React.Component {
@@ -20,6 +17,10 @@ class SelectShelfModal extends React.Component {
         super(props);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.findStocksByUserCompany();
     }
 
     handleSubmit() {
@@ -40,6 +41,11 @@ class SelectShelfModal extends React.Component {
                     <ModalTitle>Выбор места хранения</ModalTitle>
                 </ModalHeader>
                 <ModalBody>
+                    <SelectInput
+                        options={this.props.stocks}
+                        value={this.props.selectShelfModal.selectedStockValue}
+                        onChange={this.props.selectStockValueChanged}
+                        label="Склад"/>
                 </ModalBody>
                 <ModalFooter>
                     <div className="btn-group pull-right">
@@ -55,7 +61,8 @@ class SelectShelfModal extends React.Component {
 function mapStateToProps(state) {
     return {
         selectShelfModal: state.distributionGoodsReducer.selectShelfModal,
-        waybill: state.distributionGoodsReducer.waybill
+        waybill: state.distributionGoodsReducer.waybill,
+        stocks: state.distributionGoodsReducer.stocks
     }
 }
 
@@ -66,6 +73,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         addProductOnPlace: (rowIndex, shelfId) => {
             dispatch(distributionGoodsActionCreator.addProductOnPlace(rowIndex, shelfId))
+        },
+        findStocksByUserCompany: () => {
+            dispatch(distributionGoodsActionCreator.findStocksByUserCompany());
+        },
+        selectStockValueChanged: (stockValue) => {
+            dispatch(distributionGoodsActionCreator.selectStockValueChanged(stockValue))
         }
     }
 };
