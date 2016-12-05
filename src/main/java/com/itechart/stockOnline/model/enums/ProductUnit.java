@@ -7,6 +7,7 @@ import com.itechart.stockOnline.exception.UnknownEnumAliasError;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ProductUnit {
+    PIECE("шт."),
     GRAM("г."),
     KILOGRAM("кг."),
     TONNE("т."),

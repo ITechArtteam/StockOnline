@@ -1,11 +1,14 @@
 package com.itechart.stockOnline.model.dto.waybillregistration;
 
+import com.itechart.stockOnline.model.enums.ProductUnit;
+
 public class WaybillProductDto {
 
     private String name;
     private Integer count;
-    private Integer price;
+    private Double price;
     private String storage;
+    private ProductUnit unit;
 
     public String getName() {
         return name;
@@ -23,11 +26,11 @@ public class WaybillProductDto {
         this.count = count;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -37,5 +40,13 @@ public class WaybillProductDto {
 
     public void setStorage(String storage) {
         this.storage = storage;
+    }
+
+    public ProductUnit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(ProductUnit unit) {
+        this.unit = unit;
     }
 }

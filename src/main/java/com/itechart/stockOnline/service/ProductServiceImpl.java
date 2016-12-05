@@ -1,8 +1,8 @@
 package com.itechart.stockOnline.service;
 
 import com.itechart.stockOnline.dao.ProductDao;
-import com.itechart.stockOnline.model.Act;
 import com.itechart.stockOnline.model.Product;
+import com.itechart.stockOnline.model.StorageRequirement;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private StorageRequirementService storageRequirementService;
 
     @Override
     @Transactional
@@ -36,12 +39,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product get(String name) {
+        return productDao.findByName(name);
+    }
+
+    @Override
     public void delete(Long id) {
         productDao.delete(id);
     }
 
     @Override
     public Product save(Product product) {
+        StorageRequirement storageRequirement =
+                storageRequirementService.get(product.getStorage().getType());
+        if (storageRequirement == null) {
+            storageRequirement = storageRequirementService.save(product.getStorage());
+        }
+
+        product.setStorage(storageRequirement);
+
         return productDao.save(product);
     }
 

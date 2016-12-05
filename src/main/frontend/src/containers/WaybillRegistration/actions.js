@@ -41,6 +41,35 @@ export const EDIT_WAYBILL_FORM_SET_CARRIERS = 'EDIT_WAYBILL_FROM_SET_CARRIERS';
 export const EDIT_WAYBILL_FORM_SELECT_SENDER = 'EDIT_WAYBILL_FORM_SELECT_SENDER';
 export const EDIT_WAYBILL_FORM_SET_SENDER = 'EDIT_WAYBILL_FROM_SET_SENDER';
 export const EDIT_WAYBILL_FORM_SET_CARRIER = 'EDIT_WAYBILL_FROM_SET_CARRIER';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SELECT_UNIT = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SELECT_UNIT';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNITS = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNITS';
+
+export function selectProductUnit(unit) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SELECT_UNIT,
+        unit
+    }
+}
+
+export function loadUnits() {
+    return function(dispatch) {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: 'api/products/units',
+            success: function (response) {
+                dispatch(setUnits(response));
+            }
+        });
+    }
+}
+
+export function setUnits(units) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNITS,
+        units
+    }
+}
 
 export function setSender(sender) {
     return {

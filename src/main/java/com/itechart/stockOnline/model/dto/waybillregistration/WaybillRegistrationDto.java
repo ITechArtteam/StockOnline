@@ -10,9 +10,11 @@ public class WaybillRegistrationDto {
     private String issueDate;
     private Long senderId;
     private Long carrierId;
+    private String driverPassportNumber;
     private TransportType transportType;
     private List<String> numbers;
     private String description;
+    private String dispatcherLogin;
     private String registrationDatetime;
     private List<WaybillProductDto> products;
 
@@ -48,6 +50,14 @@ public class WaybillRegistrationDto {
         this.carrierId = carrierId;
     }
 
+    public String getDriverPassportNumber() {
+        return driverPassportNumber;
+    }
+
+    public void setDriverId(String driverPassportNumber) {
+        this.driverPassportNumber = driverPassportNumber;
+    }
+
     public TransportType getTransportType() {
         return transportType;
     }
@@ -70,6 +80,18 @@ public class WaybillRegistrationDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setDriverPassportNumber(String driverPassportNumber) {
+        this.driverPassportNumber = driverPassportNumber;
+    }
+
+    public String getDispatcherLogin() {
+        return dispatcherLogin;
+    }
+
+    public void setDispatcherLogin(String dispatcherLogin) {
+        this.dispatcherLogin = dispatcherLogin;
     }
 
     public String getRegistrationDatetime() {
