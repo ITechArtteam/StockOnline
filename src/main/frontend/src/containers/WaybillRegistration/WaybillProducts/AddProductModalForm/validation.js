@@ -1,10 +1,15 @@
 import {
-    isEmpty
+    isEmpty,
+    containsIllegalSymbols,
+    containsOnlyNumbers
 } from '../../ValidationUtils/ValidationUtils'
 
 export function checkName(name, products) {
     if (isEmpty(name)) {
         return 'Не введено название продукта';
+    }
+    else if (containsIllegalSymbols(name)) {
+        return 'Содержатся недопустимые символы';
     }
     else if (productExists(products, name)) {
         return 'Товар с таким названием уже добавлен';
@@ -18,6 +23,9 @@ export function checkPrice(price) {
     if (isEmpty(price)) {
         return 'Не указана цена';
     }
+    else if (!containsOnlyNumbers(price)) {
+        return 'Цена может содержать только цифры';
+    }
     else {
         return '';
     }
@@ -27,6 +35,9 @@ export function checkCount(count) {
     if (isEmpty(count)) {
         return 'Не указано количество';
     }
+    else if (!containsOnlyNumbers(count)) {
+        return 'Количество может содержать только цифры';
+    }
     else {
         return '';
     }
@@ -35,6 +46,9 @@ export function checkCount(count) {
 export function checkStorage(storage) {
     if (isEmpty(storage)) {
         return 'Не указан способ хранения';
+    }
+    else if (containsIllegalSymbols(storage)) {
+        return 'Содержатся недопустимые символы';
     }
     else {
         return '';

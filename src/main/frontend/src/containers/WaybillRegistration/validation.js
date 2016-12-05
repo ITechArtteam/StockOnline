@@ -1,6 +1,12 @@
+import {
+    isEmpty,
+    containsIllegalSymbols,
+    containsOnlyNumbers
+} from './ValidationUtils/ValidationUtils'
+
 export function checkDescription(description) {
-    if (description.length < 1) {
-        return 'Дополнительное описание товарной партии дожно содержать не менее одного символа';
+    if (containsIllegalSymbols(description)) {
+        return 'Содержатся недопустимые символы';
     }
     else {
         return '';
@@ -8,13 +14,109 @@ export function checkDescription(description) {
 }
 
 export function checkWaybillNumber(number) {
-    return 'number-error';
+    if (isEmpty(number)) {
+        return 'Не указан номер накладной';
+    }
+    else if (containsIllegalSymbols(number)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
 }
 
 export function checkSenderName(name) {
-    return 'sender-name-error';
+    if (isEmpty(name)) {
+        return 'Не указано имя отправителя';
+    }
+    else if (containsIllegalSymbols(name)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
 }
 
 export function checkIssuanceDate(date) {
-    return 'issuance-date-error';
+    if (!date) {
+        return 'Не указана дата выписки накладной';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkSender(sender) {
+    if (!sender) {
+        return 'Не выбран отправитель';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkCarrier(carrier) {
+    if (!carrier) {
+        return 'Не выбран перевозчик';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkDriver(driver, transportType) {
+    if ((transportType === 'CAR') && !driver) {
+        return 'Не выбран водитель';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkNumbers(numbers) {
+    if (numbers.length < 1) {
+        return 'Не указан ни один номер';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkCarNumber(number) {
+    if (isEmpty(number)) {
+        return 'Не указан номер автомобиля';
+    }
+    else if (containsIllegalSymbols(number)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkTrailerNumber(number) {
+    if (containsIllegalSymbols(number)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkProducts(products) {
+    if (products.length < 1) {
+        return 'Не указан ни один товар';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkTransportType(type) {
+    if (!type) {
+        return 'Не указан тип транспорта';
+    }
+    else {
+        return '';
+    }
 }

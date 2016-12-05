@@ -64,7 +64,7 @@ const initialState = {
     },
     transportTypes: [
         {
-            value: 'AUTO', label: 'Автомобиль'
+            value: 'CAR', label: 'Автомобиль'
         },
         {
             value: 'TRAIN', label: 'Поезд'
@@ -84,7 +84,9 @@ const initialState = {
         descriptionError: '',
         productsError: '',
         carrierError: '',
-        transportTypeError: ''
+        transportTypeError: '',
+        driverError: '',
+        numbersError: ''
     },
     isFormCorrect: true
 };
@@ -594,7 +596,7 @@ export default function waybillRegistrationForm(state = initialState, action) {
                     ...state.transportNumbers,
                     validationErrors: {
                         ...state.transportNumbers.validationErrors,
-                        carNumberError: action.number
+                        carNumberError: action.error
                     }
                 }
             };
@@ -606,7 +608,7 @@ export default function waybillRegistrationForm(state = initialState, action) {
                     ...state.transportNumbers,
                     validationErrors: {
                         ...state.transportNumbers.validationErrors,
-                        trailerNumberError: action.number
+                        trailerNumberError: action.error
                     }
                 }
             };
@@ -637,6 +639,34 @@ export default function waybillRegistrationForm(state = initialState, action) {
                     transportTypeError: action.error
                 }
             };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_DRIVER_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    driverError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_PRODUCTS_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    productsError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_NUMBERS_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    numbersError: action.error
+                }
+            };
+
 
         default:
             return state;

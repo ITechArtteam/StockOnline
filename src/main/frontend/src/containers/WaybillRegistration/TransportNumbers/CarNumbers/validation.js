@@ -1,7 +1,25 @@
+import {
+    isEmpty,
+    containsIllegalSymbols
+} from '../../ValidationUtils/ValidationUtils'
+
 export function checkCarNumber(number) {
-    return 'car-number-error';
+    if (isEmpty(number)) {
+        return 'Значение номера пусто';
+    }
+    else if (containsIllegalSymbols(number)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
 }
 
 export function checkTrailerNumber(number) {
-    return 'trailer-number-error';
+    if (containsIllegalSymbols(number)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
 }
