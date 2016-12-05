@@ -14,14 +14,38 @@ import {
 
 import TextInput from '../../../../../components/TextInput/TextInput'
 
+import {
+    checkNumber
+} from './validation'
+
 class AddNumberModalForm extends React.Component {
 
     handleSaveNumber() {
-        this.props.addNumber({
-            number: this.props.number
-        });
-        this.props.hideAddNumberModalForm();
-        this.props.changeBeingCreatedNumber('');
+        const errors = this.validateForm();
+        if (errors.length < 1) {
+            this.props.addNumber({
+                number: this.props.number
+            });
+            this.props.hideAddNumberModalForm();
+            this.props.changeBeingCreatedNumber('');
+        }
+    }
+
+    validateForm() {
+        let errors = [];
+        let error;
+
+        if ((error = this.validateNumber()) != '') {
+            errors.push(error);
+        }
+
+        return errors;
+    }
+
+    validateNumber() {
+        const error = checkNumber(this.props.number, this.props.numbers);
+        this.props.setTransportNumberError(error);
+        return error;
     }
 
     render() {
@@ -35,7 +59,9 @@ class AddNumberModalForm extends React.Component {
                     <TextInput
                         label="Номер"
                         value={this.props.number}
-                        onChange={this.props.changeBeingCreatedNumber} />
+                        error={this.props.numberError}
+                        onChange={this.props.changeBeingCreatedNumber}
+                        onBlur={() => {this.props.setTransportNumberError(checkNumber(this.props.number, this.props.numbers))}}/>
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideAddNumberModalForm} value="Отмена" />
@@ -49,7 +75,9 @@ class AddNumberModalForm extends React.Component {
 function mapStateToProps(state) {
     return {
         isOpen: state.waybillRegistrationForm.transportNumbers.addNumberModalForm.isOpen,
-        number: state.waybillRegistrationForm.transportNumbers.addNumberModalForm.number
+        number: state.waybillRegistrationForm.transportNumbers.addNumberModalForm.number,
+        numberError: state.waybillRegistrationForm.transportNumbers.addNumberModalForm.validationError,
+        numbers: state.waybillRegistrationForm.transportNumbers.numbers
     }
 }
 

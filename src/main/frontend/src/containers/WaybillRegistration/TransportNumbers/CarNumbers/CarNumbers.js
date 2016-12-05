@@ -5,6 +5,11 @@ import * as Actions from '../../actions'
 
 import TextInput from '../../../../components/TextInput/TextInput'
 
+import {
+    checkCarNumber,
+    checkTrailerNumber
+} from './validation'
+
 class CarNumbers extends React.Component {
 
     render() {
@@ -13,11 +18,15 @@ class CarNumbers extends React.Component {
                 <TextInput
                     label="Номер автомобиля"
                     value={this.props.carNumber}
-                    onChange={this.props.changeCarNumber} />
+                    error={this.props.carNumberError}
+                    onChange={this.props.changeCarNumber}
+                    onBlur={() => {this.props.setCarNumberError(checkCarNumber(this.props.carNumber))}} />
                 <TextInput
                     label="Номер прицепа"
                     value={this.props.trailerNumber}
-                    onChange={this.props.changeTrailerNumber} />
+                    error={this.props.trailerNumberError}
+                    onChange={this.props.changeTrailerNumber}
+                    onBlur={() => {this.props.setTrailerNumberError(checkTrailerNumber(this.props.trailerNumber))}} />
             </div>
         )
     }
@@ -26,7 +35,9 @@ class CarNumbers extends React.Component {
 function mapStateToProps(state) {
     return {
         carNumber: state.waybillRegistrationForm.transportNumbers.car,
-        trailerNumber: state.waybillRegistrationForm.transportNumbers.trailer
+        trailerNumber: state.waybillRegistrationForm.transportNumbers.trailer,
+        carNumberError: state.waybillRegistrationForm.transportNumbers.validationErrors.carNumberError,
+        trailerNumberError: state.waybillRegistrationForm.transportNumbers.validationErrors.trailerNumberError
     }
 }
 
