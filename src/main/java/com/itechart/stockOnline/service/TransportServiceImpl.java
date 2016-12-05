@@ -15,4 +15,9 @@ public class TransportServiceImpl implements TransportService {
     public Transport save(Transport transport) {
         return transportDao.save(transport);
     }
+
+    @Override
+    public Transport getByNumber(String number) {
+        return transportDao.findByNumber(number);
+    }
 }
