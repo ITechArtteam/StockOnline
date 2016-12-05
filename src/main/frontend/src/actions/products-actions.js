@@ -7,3 +7,11 @@ export function getProductsSuccess(products) {
         products:products
     };
 }
+
+
+export function getProductsUnsuccess(response) {
+    return {
+        type: types.GET_PRODUCTS_UNSUCCESS ,
+        response:response
+    };
+}

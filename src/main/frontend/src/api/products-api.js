@@ -15,3 +15,9 @@ export function getProducts(thenRedirectPath, errorRedirectPath) {
             redirect(errorRedirectPath);
         });
 }
+
+function redirect(path) {
+    if (path !== null && path !== undefined) {
+        browserHistory.push(path);
+    }
+}

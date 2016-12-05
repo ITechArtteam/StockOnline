@@ -9,6 +9,7 @@ import {stockListReducer} from '../containers/stocks/index';
 import {checkGoodsReducer} from '../containers/checkGoods/index'
 import AuthReducer from './auth'
 import WaybillRegistrationFormReducer from './../containers/WaybillRegistration/reducer'
+import productsReducer from "./products-reducer";
 import workerReducer from "./worker-reducer";
 import workersReducer from "./workers-reducer";
 import actReducer from "./act-reducer";
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
     workersState:workersReducer,
     actState:actReducer,
     actsState:actsReducer,
+    productsState:productsReducer,
     form: FormReducer,
     roleState:roleReducer,
     client,

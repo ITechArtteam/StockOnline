@@ -36,6 +36,11 @@ class SearchTransportCompanyForTrain extends React.Component {
         this.props.getCompany(this.props.train.data.transferCompanyName);
     }
 
+    onConfirmOkBtnClick() {
+        this.props.closeDialog();
+       this.props.onConfirmOkBtnClick(this.props.train.data.transferCompanyName);
+    }
+
     render() {
         return (
             <div>
@@ -98,6 +103,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         getCompany: (transferCompanyName) => {
             dispatch(searchTransportCompanyForTrainActionCreator.getTrain(transferCompanyName))
+        },
+        addTransferCompany: (transferCompanyName) => {
+            dispatch(searchTransportCompanyForTrainActionCreator.addTransferCompany(transferCompanyName))
+        },
+        onConfirmOkBtnClick: (transferCompanyName) => {
+            dispatch(searchTransportCompanyForTrainActionCreator.onConfirmOkBtnClick(transferCompanyName))
         }
     }
 };

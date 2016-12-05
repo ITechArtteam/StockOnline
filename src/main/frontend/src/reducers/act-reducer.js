@@ -10,7 +10,8 @@ const initialState = {
             status: "",
             product: {
                 id:"",
-                name:""
+                name:"",
+                unit:""
             }
         }
     }
