@@ -7,6 +7,7 @@ import "./EditWorker.less";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import $ from "jquery";
 
 
 class EditWorker extends React.Component {
@@ -21,9 +22,7 @@ class EditWorker extends React.Component {
     }
 
     getDate = ()=>{
-        console.log(this.state.worker.date)
         if (this.state.worker.date!=''&&this.state.worker.date!=undefined) {
-            console.log( moment(this.state.worker.date, 'DD/MM/YYYY'))
             return moment(this.state.worker.date, 'DD/MM/YYYY')
         }
         return null;
@@ -45,11 +44,8 @@ class EditWorker extends React.Component {
     }
 
     handleChange = (date)=>{
-        console.log(date);
         var newWorker = _.extend({}, this.state.worker);
-        console.log(date.format('DD/MM/YYYY'));
         newWorker.date= date.format('DD/MM/YYYY');
-        console.log(newWorker.date);
         this.setState({ worker: newWorker });
 
     }
