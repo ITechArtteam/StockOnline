@@ -3,15 +3,17 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as Actions from '../actions';
 
+import '../global.css'
+
 const validate = values => {
     const errors = {};
 
     if (!values.username) {
-        errors.username = "Please enter an username.";
+        errors.username = "Введите имя пользователя";
     }
 
     if (!values.password) {
-        errors.password = "Please enter a password.";
+        errors.password = "Введите пароль";
     }
 
     return errors;
@@ -41,18 +43,22 @@ class Login extends React.Component {
 
     render() {
         return(
-            <div className="container">
-                <div className="col-md-6 col-md-offset-3">
-                    <h2 className="text-center">Log In</h2>
+            <div className="vertical-center">
+                <div className="container">
+                    <div className="col-md-6 col-md-offset-3">
+                        <h2 className="text-center">Вход</h2>
 
-                    { this.renderAuthenticationError() }
+                        { this.renderAuthenticationError() }
 
-                    <form onSubmit={this.props.handleSubmit(this.handleFormSubmit)}>
-                        <Field name="username" component={this.renderField} className="form-control" type="text" label="Username"/>
-                        <Field name="password" component={this.renderField} className="form-control" type="password" label="Password"/>
+                        <form onSubmit={this.props.handleSubmit(this.handleFormSubmit)}>
+                            <Field name="username" component={this.renderField} className="form-control" type="text" label="Имя пользователя"/>
+                            <Field name="password" component={this.renderField} className="form-control" type="password" label="Пароль"/>
 
-                        <button action="submit" className="btn btn-primary">Sign In</button>
-                    </form>
+                            <div className="text-center">
+                                <button action="submit" className="btn btn-primary cente-block">Войти</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         );
