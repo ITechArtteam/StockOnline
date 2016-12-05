@@ -36,6 +36,9 @@ public class WaybillServiceImpl implements WaybillService {
     private ProductService productService;
 
     @Autowired
+    private WaybillProductService waybillProductService;
+
+    @Autowired
     public WaybillServiceImpl(WaybillDao waybillDao) {
         this.waybillDao = waybillDao;
     }
@@ -93,7 +96,17 @@ public class WaybillServiceImpl implements WaybillService {
     }
 
     public Waybill save(Waybill waybill) {
-        transportService.save(waybill.getTransport());
-        return waybillDao.save(waybill);
+        waybill.setTransport(transportService.save(waybill.getTransport()));
+
+        Set<ProductInWaybill> waybillProducts = waybill.getProductInWaybills();
+        waybill.setProductInWaybills(null);
+        Waybill storedWaybill = waybillDao.save(waybill);
+
+        for (ProductInWaybill waybillProduct : waybillProducts) {
+            waybillProduct.setWaybill(storedWaybill);
+            waybillProductService.save(waybillProduct);
+        }
+
+        return storedWaybill;
     }
 }

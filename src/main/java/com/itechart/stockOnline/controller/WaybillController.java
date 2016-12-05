@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -31,6 +32,7 @@ public class WaybillController {
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
+    @Transactional
     public void register(@RequestBody WaybillRegistrationDto registrationDto)
             throws ParseException {
 
@@ -43,6 +45,6 @@ public class WaybillController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void handleException(Exception exception) {
-        logger.error("Error occurred: {}", exception.getMessage());
+        logger.error("Error occurred: {}", exception);
     }
 }
