@@ -20,7 +20,9 @@ public class TransferCompanyServiceImpl implements TransferCompanyService {
 
     @Override
     public TransferCompany save(TransferCompany company) {
-        return null;
+        company.setId(null);
+        logger.debug("SAVE_TRANSFER_COMPANY: company - {}", company);
+        return transferCompanyDao.save(company);
     }
 
     @Override
