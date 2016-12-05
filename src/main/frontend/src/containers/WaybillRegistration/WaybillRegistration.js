@@ -17,13 +17,34 @@ import WaybillProducts from './WaybillProducts/WaybillProducts'
 
 import * as Actions from './actions'
 
+import {
+    checkDescription,
+    checkWaybillNumber,
+    checkSenderName,
+    checkIssuanceDate
+} from './validation'
+
 
 class WaybillRegistration extends React.Component {
 
+    handleWaybillNumberOnBlur() {
+        this.props.setWaybillNumberError(checkWaybillNumber(this.props.waybillNumber));
+    }
+
     handleSenderNameOnBlur() {
-        if (!this.props.chooseCarrierModalFormIsOpen
-            && (getFilteredItems(this.props.senders, this.props.senderName).length > 0)) {
-            this.props.showChooseSenderModal();
+        let error = checkSenderName(this.props.waybillNumber);
+
+        this.props.setSenderNameError(error);
+
+        if (!this.props.chooseCarrierModalFormIsOpen) {
+            if (error == '') {
+                if (getFilteredItems(this.props.senders, this.props.senderName).length > 0) {
+                    this.props.showChooseSenderModal();
+                }
+                else {
+                    this.props.setSenderNameError('Не найдено ни одной компании');
+                }
+            }
         }
     }
 
@@ -54,7 +75,8 @@ class WaybillRegistration extends React.Component {
     }
 
     handleFormSubmit() {
-        let type =  this.props.transportType;
+        this.validateForm();
+        /*let type =  this.props.transportType;
         let numbers = [];
         if (type === 'TRAIN') {
             type = 'Поезд';
@@ -90,8 +112,20 @@ class WaybillRegistration extends React.Component {
             data: JSON.stringify(waybill),
             dataType: 'json',
             url: '/waybills/register'
-        });
+        });*/
     }
+
+    validateForm() {
+        let errors = [];
+        let error;
+        if ((error = checkDescription(this.props.description)) != '') {
+            errors.push(error);
+        }
+        if (errors.length > 0) {
+            alert(errors);
+        }
+    }
+
 
     render() {
         return (
@@ -102,12 +136,17 @@ class WaybillRegistration extends React.Component {
                         name="waybill-number"
                         label="Номер накладной"
                         value={this.props.waybillNumber}
-                        onChange={this.props.changeWaybillNumber} />
+                        onChange={this.props.changeWaybillNumber}
+                        onBlur={() => {this.props.setWaybillNumberError(checkWaybillNumber(this.props.waybillNumber))}}
+                        error={this.props.waybillNumberError} />
                     <DateInput
                         value={this.props.registrationDate}
                         onChange={this.props.changeRegistrationDate}
-                        label="Дата выписки накладной" />
+                        label="Дата выписки накладной"
+                        onBlur={() => {this.props.setIssuanceDateError(checkIssuanceDate(this.props.registrationDate))}}
+                        error={this.props.issuanceDateError} />
                     <TextInput
+                        error={this.props.senderNameError}
                         name="sender"
                         label="Отправитель"
                         value={this.props.senderName}
@@ -134,7 +173,9 @@ class WaybillRegistration extends React.Component {
                     <TextAreaInput
                         label="Дополнительное описание товарной партии"
                         value={this.props.description}
-                        onChange={this.props.changeWaybillDescription} />
+                        onChange={this.props.changeWaybillDescription}
+                        onBlur={() => {this.props.setDescriptionError(checkDescription(this.props.description))}}
+                        error={this.props.descriptionError} />
                     <DisabledInput
                         label="Сумма товаров по накладной"
                         value={this.getTotalProductsSum()} />
@@ -214,7 +255,11 @@ function mapStateToProps(state) {
         driver: state.waybillRegistrationForm.driver,
         dispatcher: state.auth.username,
         products: state.waybillRegistrationForm.waybillProducts.products,
-        description: state.waybillRegistrationForm.description
+        description: state.waybillRegistrationForm.description,
+        waybillNumberError: state.waybillRegistrationForm.validationErrors.numberError,
+        senderNameError: state.waybillRegistrationForm.validationErrors.senderNameError,
+        descriptionError: state.waybillRegistrationForm.validationErrors.descriptionError,
+        issuanceDateError: state.waybillRegistrationForm.validationErrors.issuanceDateError
     }
 }
 
