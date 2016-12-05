@@ -65,7 +65,13 @@ class Login extends React.Component {
     }
 }
 
-export default connect(null, Actions)(reduxForm({
+function mapStateToProps(state) {
+    return {
+        authenticationError: state.auth.error
+    }
+}
+
+export default connect(mapStateToProps, Actions)(reduxForm({
     form: 'login',
     validate
 })(Login));
