@@ -56,7 +56,7 @@ function getTrainDataSuccess(json) {
     }
 }
 
-function getTrainDataFail(error) {
+function getTrainDataFail(error, transferCompany) {
     return {
         type: event.GET_TRAIN_FAIL,
         data: {
@@ -65,6 +65,7 @@ function getTrainDataFail(error) {
             messageAlertPop: error.response.data,
             buttons: [
                 {
+                    transferCompanyName: transferCompany,
                     btnStyle: "btn btn-success",
                     text: "Создать",
                     onclick: onConfirmOkBtnClick
@@ -74,8 +75,58 @@ function getTrainDataFail(error) {
     }
 }
 
-function onConfirmOkBtnClick() {
-    //TODO Регистрация компании перевозчика
+function onConfirmOkBtnClick(transferCompanyName) {
+    return dispatch => {
+        dispatch(addTransferCompanyRequest(transferCompanyName));
+    }
+}
+
+function addTransferCompanyRequest () {
+    return {
+        type: event.ADD_TRANSFER_COMPANY_REQUEST
+    }
+};
+function addTransferCompanySuccess(json) {
+
+    return {
+        type: event.ADD_TRANSFER_COMPANY_SUCCESS,
+        data: {
+            json
+        }
+    }
+}
+
+function addTransferCompanyFail(error) {
+    return {
+        type: event.ADD_TRANSFER_COMPANY_FAIL,
+        data: {
+            showAlertPopup: true,
+            typeAlertPopup: "danger",
+            messageAlertPop: "Компания не создана."
+        }
+    }
+}
+function addTransferCompany (transferCompanyName) {
+    return function (dispatch) {
+        dispatch(addTransferCompanyRequest());
+        return axios
+            .get(`/registrationOfGoods/train/add/${transferCompanyName}`)
+            .then(json => {
+                    dispatch(addTransferCompanySuccess(json.data));
+                    dispatch(changeTransferCompany(json.data.transferCompanyName));
+                    browserHistory.push('/registerwaybill/train');
+                }
+            ).catch((error) => {
+                dispatch(addTransferCompanyFail(error))
+            });
+    }
+};
+
+function changeTransferCompany(transferCompanyName) {
+    return {
+        type: event.EDIT_TRANSFER_COMPANY,
+        transferCompanyName: transferCompanyName
+    }
 }
 
 function getTrain(transferCompanyName) {
@@ -95,7 +146,7 @@ function getTrain(transferCompanyName) {
                     browserHistory.push('/registerwaybill');
                 }
             ).catch((error) => {
-                dispatch(getTrainDataFail(error))
+                dispatch(getTrainDataFail(error,transferCompanyName))
             });
     }
 }
@@ -107,6 +158,8 @@ function setDefaultValue() {
 }
 
 export default {
+    onConfirmOkBtnClick,
+    addTransferCompany,
     setInputErrorMessage,
     setFieldData,
     showAlertPopup,

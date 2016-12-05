@@ -8,6 +8,7 @@ const initUserState = {
         transferCompanyName: ""
     },
     frontend: {
+        transferCompanyName: "",
         showAlertPopup: false,
         typeAlertPopup: "danger",
         messageAlertPop: "ошибка",
@@ -44,7 +45,7 @@ export default function (state = initUserState, action) {
                 }
             };
         case event.GET_TRAIN_REQUEST:
-            return state;
+        return state;
         case event.GET_TRAIN_SUCCESS:
             return {
                 ...state,
@@ -57,6 +58,27 @@ export default function (state = initUserState, action) {
                 ...state, frontend: action.data,
                 inputErrors: action.data
             };
+
+        case event.ADD_TRANSFER_COMPANY_REQUEST:
+            return state;
+        case event.ADD_TRANSFER_COMPANY_SUCCESS:
+            return {
+                ...state,
+                data: {
+                    ...state.data, ...action.data
+                }
+            };
+        case event.ADD_TRANSFER_COMPANY_FAIL:
+            return {
+                ...state, frontend: action.data,
+                inputErrors: action.data
+        };
+        case event.EDIT_TRANSFER_COMPANY:
+            return {
+                ...state,
+                transferCompany: action.transferCompany
+            };
+
         case event.SET_DEFAULT_VALUE:
             return initUserState;
         default:
