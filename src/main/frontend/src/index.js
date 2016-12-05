@@ -28,8 +28,8 @@ import DepartureGoods from "./containers/DepartureGoods";
 import CheckOutputGoods from "./components/checkGoods/CheckOutputGoods";
 import CheckInputGoods from "./components/checkGoods/CheckInputGoods"
 import DispatcherFinishOutput from "./components/finishOutput/DispatcherFinishOutput"
-import Acts from "./containers/Acts";
-import EditAct from "./containers/EditAct";
+import ActsContainer from "./containers/ActsContainer";
+import EditActContainer from "./containers/EditActContainer";
 import RequireRole from "./containers/RequireRole"
 import "bootstrap-webpack";
 import "bootstrap-select/dist/js/bootstrap-select.min";
@@ -67,8 +67,8 @@ ReactDOM.render(
                 <Route path="/goods/checkInput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckInputGoods)}/>
                 <Route path="/goods/checkOutput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckOutputGoods)}/>
                 <Route path="/finishOutput" requiredRole={["DISPATCHER"]} component={RequireRole(DispatcherFinishOutput)}/>
-                <Route path="/acts" requiredRole={["BOSS_STOCK"]} component={RequireRole(Acts)}/>
-                <Route path="/act(/:id)" requiredRole={["CONTROLLER"]} component={RequireRole(EditAct)}/>
+                <Route path="/acts" requiredRole={["BOSS_STOCK"]} component={RequireRole(ActsContainer)}/>
+                <Route path="/act(/:id)" requiredRole={["CONTROLLER"]} component={RequireRole(EditActContainer)}/>
                 <Route path="*" component={RequireRole(NotFound)}/>
             </Route>
         </Router>

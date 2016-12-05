@@ -11,6 +11,8 @@ import AuthReducer from './auth'
 import WaybillRegistrationFormReducer from './../containers/WaybillRegistration/reducer'
 import workerReducer from "./worker-reducer";
 import workersReducer from "./workers-reducer";
+import actReducer from "./act-reducer";
+import actsReducer from "./acts-reducer";
 import {stock} from "../containers/editStock";
 import Driver from './../containers/editDriver/reducer';
 import roleReducer from "./role-reducer"
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
     auth: AuthReducer,
     workerState:workerReducer,
     workersState:workersReducer,
+    actState:actReducer,
+    actsState:actsReducer,
     form: FormReducer,
     roleState:roleReducer,
     client,

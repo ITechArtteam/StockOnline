@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getWorkerSuccess, saveWorkerUnsuccess, deleteWorkerUnsuccess, closeWorkerResponse } from '../actions/worker-actions';
-import { getWorkersSuccess, getWorkersUnsuccess, deleteWorkerSuccess, saveWorkerSuccess, closeWorkersResponse } from '../actions/workers-actions';
+import { getWorkersUnsuccess, deleteWorkerSuccess, saveWorkerSuccess} from '../actions/workers-actions';
 import store from '../store/configureStore'
 import {browserHistory} from 'react-router';
 

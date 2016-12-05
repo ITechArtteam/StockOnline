@@ -17,14 +17,12 @@ const workersReducer = function (state = initialState, action) {
             return Object.assign({}, state, {workers: newWorkers, response: action.response});
 
         case types.GET_WORKERS_UNSUCCESS:
-            return Object.assign({}, state, {response: action.response});
+            return Object.assign({}, state, {response: action.response, workers:[]});
 
         case types.DELETE_WORKERS_UNSUCCESS:
             return Object.assign({}, state, {response: action.response});
 
         case types.DELETE_WORKERS_SUCCESS:
-            console.log(state.workers);
-            console.log(action.ids);
             var newWorkers = _.differenceWith(state.workers, action.ids, (worker, id)=>{return worker.id==id});
             console.log(newWorkers);
             return Object.assign({}, state, {workers: newWorkers, response: action.response});

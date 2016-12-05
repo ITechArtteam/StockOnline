@@ -11,7 +11,7 @@ export function getWorkersSuccess(workers) {
 export function getWorkersUnsuccess(response) {
     return {
         type: types.GET_WORKERS_UNSUCCESS ,
-        response:response
+        response:response,
     };
 }
 
