@@ -1,6 +1,5 @@
 package com.itechart.stockOnline.service;
 
-import com.itechart.stockOnline.model.Act;
 import com.itechart.stockOnline.model.Product;
 
 import java.util.List;
@@ -11,6 +10,8 @@ public interface ProductService {
     List<Product> getAll();
 
     Product get(Long id);
+
+    Product get(String name);
 
     void delete(Long id);
 

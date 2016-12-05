@@ -1,5 +1,6 @@
 package com.itechart.stockOnline.model.dto.waybillregistration;
 
+import com.itechart.stockOnline.model.ProductInWaybill;
 import com.itechart.stockOnline.model.Transport;
 import com.itechart.stockOnline.model.Waybill;
 import com.itechart.stockOnline.model.enums.TransportType;
@@ -15,6 +16,7 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
+import java.util.HashSet;
 
 @Component
 public class WaybillBuilder {
@@ -27,6 +29,9 @@ public class WaybillBuilder {
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private WaybillProductBuilder waybillProductBuilder;
 
     public Waybill buildFromDto(WaybillRegistrationDto dto) throws ParseException {
         Waybill waybill = new Waybill();
@@ -48,6 +53,15 @@ public class WaybillBuilder {
         waybill.setDescription(dto.getDescription());
         waybill.setResponsiblePerson(userService.findByLogin(dto.getDispatcherLogin()));
 
+        HashSet<ProductInWaybill> waybillProducts = new HashSet<>();
+        for (WaybillProductDto productDto : dto.getProducts()) {
+            ProductInWaybill waybillProduct = waybillProductBuilder.buildFromDto(productDto);
+            waybillProduct.setWaybill(waybill);
+            waybillProducts.add(waybillProduct);
+        }
+
+        waybill.setProductInWaybills(waybillProducts);
+
         return waybill;
     }
 
@@ -63,7 +77,6 @@ public class WaybillBuilder {
     }
 
     private Date parseDate(String date, String pattern) throws ParseException {
-        System.out.println(date);
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.parse(date);
     }
