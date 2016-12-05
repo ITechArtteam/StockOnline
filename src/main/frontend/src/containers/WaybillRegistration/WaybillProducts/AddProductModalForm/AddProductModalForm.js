@@ -13,18 +13,34 @@ import {
 } from 'react-modal-bootstrap'
 
 import TextInput from '../../../../components/TextInput/TextInput'
+import SelectInput from '../../../../components/SelectInput/SelectInput'
 
 class AddNumberModalForm extends React.Component {
+
+    componentWillMount() {
+        this.props.loadUnits();
+    }
 
     handleSaveProduct() {
         this.props.addProduct({
             name: this.props.name,
             price: this.props.price,
             count: this.props.count,
-            storage: this.props.storage
+            storage: this.props.storage,
+            unit: this.props.unit
         });
         this.props.hideAddProductModalForm();
         this.props.clearAddProductModalFormFields();
+    }
+
+    createUnitOptions() {
+        return this.props.units.reduce(function(options, unit) {
+            options.push({
+                value: unit,
+                label: unit
+            });
+            return options;
+        }, []);
     }
 
     render() {
@@ -43,6 +59,11 @@ class AddNumberModalForm extends React.Component {
                         label="Количество"
                         value={this.props.count}
                         onChange={this.props.changeProductCount} />
+                    <SelectInput
+                        label="Единицы"
+                        value={this.props.unit}
+                        options={this.createUnitOptions()}
+                        onChange={this.props.selectProductUnit} />
                     <TextInput
                         label="Цена"
                         value={this.props.price}
@@ -67,6 +88,8 @@ function mapStateToProps(state) {
         name: state.waybillRegistrationForm.waybillProducts.addProductModalForm.name,
         count: state.waybillRegistrationForm.waybillProducts.addProductModalForm.count,
         price: state.waybillRegistrationForm.waybillProducts.addProductModalForm.price,
+        unit: state.waybillRegistrationForm.waybillProducts.addProductModalForm.unit,
+        units: state.waybillRegistrationForm.waybillProducts.addProductModalForm.units,
         storage: state.waybillRegistrationForm.waybillProducts.addProductModalForm.storage
     }
 }

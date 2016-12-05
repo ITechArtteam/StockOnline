@@ -3,9 +3,8 @@ package com.itechart.stockOnline.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.itechart.stockOnline.exception.ValidationError;
-import com.itechart.stockOnline.model.Act;
 import com.itechart.stockOnline.model.Product;
-import com.itechart.stockOnline.service.ActService;
+import com.itechart.stockOnline.model.enums.ProductUnit;
 import com.itechart.stockOnline.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +54,11 @@ public class ProductController {
         LOGGER.debug("REST request. Path:/product  method: POST Request body {product}", product);
         Product saveProduct = productService.save(product);
         response.addHeader("result", "Product has saved.");
+    }
+
+    @RequestMapping(path = "/products/units", method = RequestMethod.GET)
+    public ProductUnit[] getProductUnits() {
+        return ProductUnit.values();
     }
 
     @ExceptionHandler(ValidationError.class)

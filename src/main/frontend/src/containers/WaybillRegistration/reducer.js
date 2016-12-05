@@ -40,9 +40,11 @@ const initialState = {
         products: [],
         addProductModalForm: {
             isOpen: false,
+            units: [],
             name: '',
             price: '',
             count: '',
+            unit: null,
             storage: ''
         }
     },
@@ -411,6 +413,32 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 ...state,
                 carrier: action.carrier
             };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNITS: {
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        units: action.units
+                    }
+                }
+            }
+        }
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SELECT_UNIT: {
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        unit: action.unit
+                    }
+                }
+            }
+        }
 
 
         default:

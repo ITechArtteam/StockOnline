@@ -29,6 +29,16 @@ class WaybillProducts extends React.Component {
         }
     }
 
+    handleAddProductButtonClick() {
+        this.props.changeProductName('');
+        this.props.changeProductPrice('');
+        this.props.selectProductUnit(null);
+        this.props.changeProductCount('');
+        this.props.changeProductStorage('');
+
+        this.props.showAddProductModalForm();
+    }
+
     render() {
         const selectRow = {
             mode: 'radio',
@@ -53,7 +63,7 @@ class WaybillProducts extends React.Component {
                         type="button"
                         className="btn btn-primary action-button"
                         value="Добавить"
-                        onClick={this.props.showAddProductModalForm}/>
+                        onClick={() => { this.handleAddProductButtonClick() }}/>
                     <AddProductModalForm />
                     <input
                         type="button"
@@ -67,9 +77,13 @@ class WaybillProducts extends React.Component {
                     options={options}
                     striped
                     hover>
-                    <TableHeaderColumn isKey dataField="name">Наименование</TableHeaderColumn>
-                    <TableHeaderColumn dataField="count">Количество</TableHeaderColumn>
-                    <TableHeaderColumn dataField="price">Стоимость</TableHeaderColumn>
+                    <TableHeaderColumn isKey dataSort dataField="name" width="150">Наименование</TableHeaderColumn>
+                    <TableHeaderColumn dataField="price" width="100">Стоимость</TableHeaderColumn>
+                    <TableHeaderColumn
+                        dataField="count"
+                        width="120"
+                        dataFormat={(cell, row) => {return cell + ' ' + row.unit}}>Количество
+                    </TableHeaderColumn>
                     <TableHeaderColumn dataField="storage">Способ хранения</TableHeaderColumn>
                 </BootstrapTable>
             </div>
