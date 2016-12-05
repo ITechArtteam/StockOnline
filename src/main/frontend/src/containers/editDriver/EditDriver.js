@@ -34,6 +34,12 @@ class EditDriver extends React.Component {
 
                 break;
             }
+            case "driver": {
+                if (value.length < 1){
+                    this.props.setInputError(nameField, "Минимум 1 символа.");
+                }
+                break;
+            }
             case "Integer": {
                 if (!new RegExp("^[0-9]*$", "iu").test(value)) {
                     this.props.setInputError(nameField, "Только числа");
@@ -56,12 +62,6 @@ class EditDriver extends React.Component {
                     }
                     break;
             }
-            case "data": {
-                if (value.length < 1){
-                    this.props.setInputError(nameField, "Минимум 1 символа.");
-                }
-                break;
-            }
         }
     }
 
@@ -83,34 +83,50 @@ class EditDriver extends React.Component {
         if (this.props.driver.data.firstName < 3){
             this.props.setInputError("firstName", "Введите имя.");
             return;
+        }else{
+            this.props.setInputError("firstName", "");
         }
         if (this.props.driver.data.lastName < 3){
             this.props.setInputError("lastName", "Введите фамилию.");
             return;
+        }else{
+            this.props.setInputError("lastName", "");
         }
         if (this.props.driver.data.fatherName < 3){
-            this.props.setInputError("patronymic", "Введите отчество.");
+            this.props.setInputError("fatherName", "Введите отчество.");
             return;
+        }else{
+            this.props.setInputError("fatherName", "");
         }
         if (this.props.driver.data.transferCompany < 3){
             this.props.setInputError("transferCompany", "Введите компанию.");
             return;
+        }else{
+            this.props.setInputError("transferCompany", "");
         }
         if (this.props.driver.data.birthDate < 6){
-           this.props.setInputError("birthDate", "Введите компанию.");
-           return;
-        }
-        if (this.props.driver.data.passportNumber < 8){
-            this.props.setInputError("passportNumber", "Введите серию и номер паспорта.");
+            this.props.showAlertPopup("danger", "Введите дату рождения.");
             return;
+        }else{
+            this.props.setInputError("birthDate", "");
+        }
+        if (!new RegExp("^[a-z]{2,4}[0-9]{3,10}$", "iu").test(this.props.driver.data.passportNumber)) {
+            this.props.setInputError("passportNumber", "Только английские буквы и цифры. Формат:  буквы{2-4}цифры{3-10}");
+            return;
+        }else{
+            this.props.setInputError("passportNumber", "");
         }
         if (this.props.driver.data.passportIssuedBy < 3){
             this.props.setInputError("passportIssuedBy", "Введите кем выдан паспорт.");
             return;
+        }else{
+            this.props.setInputError("passportIssuedBy", "");
         }
         if (this.props.driver.data.passportIssuedDate < 6){
-            this.props.setInputError("passportIssuedDate", "Введите дату выдачи паспорта.");
+            this.props.showAlertPopup("danger", "Введите дату выдачи.");
             return;
+        } else{
+            this.props.setInputError("passportIssuedDate", "");
         }
 
         this.props.addDriver(this.props.driver.data);
@@ -131,8 +147,7 @@ class EditDriver extends React.Component {
                                 label="Перевозчик*"
                                 onChange={this.validateOnChange}
                                 value={this.props.driver.data.transferCompany}
-                                onBlur={this.validateOnBlur}
-                                patternType="driver"
+                                patternType="isRequired"
                                 errorValue={this.props.driver.inputErrors.transferCompany}
                             />
 
@@ -140,8 +155,7 @@ class EditDriver extends React.Component {
                                 label="Номер паспорта*"
                                 onChange={this.validateOnChange}
                                 value={this.props.driver.data.passportNumber}
-                                onBlur={this.validateOnBlur}
-                                patternType="driver"
+                                patternType="isRequired"
                                 errorValue={this.props.driver.inputErrors.passportNumber}
                             />
 
@@ -149,8 +163,7 @@ class EditDriver extends React.Component {
                                 label="Кем выдан*"
                                 onChange={this.validateOnChange}
                                 value={this.props.driver.data.passportIssuedBy}
-                                onBlur={this.validateOnBlur}
-                                patternType="driver"
+                                patternType="isRequired"
                                 errorValue={this.props.driver.inputErrors.passportIssuedBy}
                             />
 
@@ -167,16 +180,14 @@ class EditDriver extends React.Component {
                                  label="Имя*"
                                  onChange={this.validateOnChange}
                                  value={this.props.driver.data.firstName}
-                                 onBlur={this.validateOnBlur}
-                                 patternType="driver"
+                                 patternType="isRequired"
                                  errorValue={this.props.driver.inputErrors.firstName}/>
 
                             <SimpleInput id="lastName"
                                  label="Фамилия*"
                                  onChange={this.validateOnChange}
                                  value={this.props.driver.data.lastName}
-                                 onBlur={this.validateOnBlur}
-                                 patternType="driver"
+                                 patternType="isRequired"
                                  errorValue={this.props.driver.inputErrors.lastName}
                                  />
 
@@ -184,9 +195,8 @@ class EditDriver extends React.Component {
                                  label="Отчество*"
                                  onChange={this.validateOnChange}
                                  value={this.props.driver.data.fatherName}
-                                 onBlur={this.validateOnBlur}
                                  errorValue={this.props.driver.inputErrors.fatherName}
-                                 patternType="driver"/>
+                                 patternType="isRequired"/>
 
 
 
