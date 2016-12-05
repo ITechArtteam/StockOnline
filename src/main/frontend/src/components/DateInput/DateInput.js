@@ -8,7 +8,7 @@ class DateInput extends React.Component {
             return (<div className="control-label">{this.props.error}</div>);
         }
         else {
-            return '';
+            return (<div>&nbsp;</div>);
         }
     }
 
