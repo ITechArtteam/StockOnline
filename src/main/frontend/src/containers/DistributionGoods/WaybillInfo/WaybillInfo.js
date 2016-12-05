@@ -54,7 +54,7 @@ class WaybillInfo extends React.Component {
                     <div className="panel panel-default">
                         <div className="panel-heading">Накладная</div>
                         <div className="panel-body">
-                            <b>Номер:</b> <span className="pull-right">{this.props.data.id}</span> <br/>
+                            <b>Номер:</b> <span className="pull-right">{this.props.data.number}</span> <br/>
                             <b>Статус:</b> <span className="pull-right">{this.props.data.status}</span> <br/>
                             <b>Дата регистрации:</b> <span className="pull-right">{this.props.data.registrationDate}</span> <br/>
                         </div>
@@ -92,7 +92,7 @@ class WaybillInfo extends React.Component {
 WaybillInfo.PropTypes = {
     visible: React.PropTypes.bool.isRequired,
     data: React.PropTypes.objectOf(React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
+        number: React.PropTypes.number.isRequired,
         status: React.PropTypes.string.isRequired,
         registrationDate: React.PropTypes.string.isRequired,
         registeredBy: React.PropTypes.objectOf(React.PropTypes.shape({
