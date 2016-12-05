@@ -19,15 +19,18 @@ let setWaybillVisibility = visibility => {
 };
 
 let setShelfModalVisibility = (visibility, rowIndex) => {
-    return {
-        type: event.SET_SELECT_SHELF_MODAL_VISIBILITY,
-        payload: {
-            isVisible: visibility,
-            rowIndex: rowIndex
-        }
+    return dispatch => {
+        dispatch(
+            {
+                type: event.SET_SELECT_SHELF_MODAL_VISIBILITY,
+                payload: {
+                    isVisible: visibility,
+                    rowIndex: rowIndex
+                }
+            });
+        dispatch(selectStockValueChanged(0));
     }
 };
-
 
 let showDialog = (text, type, buttons) => {
     return {
@@ -89,12 +92,13 @@ let findWaybillByNumber = (number, status) => {
     }
 };
 
-let addProductOnPlace = (rowIndex, shelfId) => {
+let addProductOnPlace = (rowIndex, shelfId, shelfNumber) => {
     return {
         type: event.ADD_PRODUCT_ON_PLACE,
         payload: {
             rowIndex: rowIndex,
-            shelfId: shelfId
+            shelfId: shelfId,
+            number: shelfNumber
         }
     }
 };
@@ -110,15 +114,21 @@ let removeProductFromShelf = (rowIndex, shelfId) => {
 };
 
 let findStocksByUserCompanySuccess = json => {
-    let stocks = json.map((elem, index) => {
+    let stockOptions = json.map((elem, index) => {
         return {
-            value: elem.id,
+            value: index,
             label: elem.name,
         }
+    }).sort((a, b) => {
+        return a.label.localeCompare(b.label);
     });
+
     return {
         type: event.FIND_STOCK_BY_USER_COMPANY_SUCCESS,
-        payload: stocks
+        payload: {
+            stocks: json,
+            stockOptions: stockOptions
+        }
     }
 };
 
@@ -134,10 +144,103 @@ let findStocksByUserCompany = ()=> {
     }
 };
 
-let selectStockValueChanged = (stockValue) => {
+let selectStockValueChangedSuccess = (stockValue) => {
     return {
         type: event.SELECT_STOCK_VALUE_CHANGED,
         payload: stockValue
+    }
+};
+
+let selectStockValueChanged = (stockValue) => {
+    return (dispatch, getState) => {
+        dispatch(selectStockValueChangedSuccess(stockValue));
+        let roomOptions = getState().distributionGoodsReducer.stocks[stockValue].rooms.map((elem, index) => {
+            return {
+                value: index,
+                label: elem.number
+            }
+        }).sort((a, b) => {
+            return a.label.localeCompare(b.label);
+        });
+        dispatch(setRoomOptions(roomOptions));
+        if(roomOptions.length !== 0) {
+            dispatch(selectRoomValueChanged(roomOptions[0].value));
+        } else {
+            dispatch(selectRoomValueChanged(-1))
+        }
+    }
+};
+
+let setRoomOptions = options => {
+    return {
+        type: event.SET_ROOM_OPTIONS,
+        payload: options
+    }
+};
+
+let selectRoomValueChangedSuccess = (roomValue) => {
+    return {
+        type: event.SELECT_ROOM_VALUE_CHANGED,
+        payload: roomValue
+    }
+};
+
+let getSelectedShelves = productInWaybills => {
+    let resultArray = productInWaybills.map((elem, index) => {
+        return elem.product.places.map((elem, index) => {
+            return elem.shelfId;
+        })
+    });
+    let tmp = resultArray[0];
+    for(let i = 1; i < resultArray.length; ++i) {
+        tmp = tmp.concat(resultArray[i]);
+    }
+    return tmp;
+};
+
+let selectRoomValueChanged = (roomValue) => {
+    return (dispatch, getState) => {
+        dispatch(selectRoomValueChangedSuccess(roomValue));
+        let stockValue = getState().distributionGoodsReducer.selectShelfModal.selectedStockValue;
+        let selectedShelves = getSelectedShelves(getState().distributionGoodsReducer.waybill.productInWaybills);
+        let shelfOptions = getState().distributionGoodsReducer.stocks[stockValue].rooms[roomValue].shelves
+            .map((elem, index) => {
+                return {
+                    index: index,
+                    elem: elem
+                }
+            })
+            .filter(elem => {
+                return elem.elem.free && !selectedShelves.includes(elem.elem.id);
+            })
+            .map((elem, index) => {
+                return {
+                    value: elem.index,
+                    label: elem.elem.number
+                }
+            }).sort((a, b) => {
+                return a.label.localeCompare(b.label);
+            });
+        dispatch(setShelfOptions(shelfOptions));
+        if(shelfOptions.length !== 0) {
+            dispatch(selectShelfValueChanged(shelfOptions[0].value));
+        } else {
+            dispatch(selectShelfValueChanged(-1))
+        }
+    }
+};
+
+let setShelfOptions = options => {
+    return {
+        type: event.SET_SHELF_OPTIONS,
+        payload: options
+    }
+};
+
+let selectShelfValueChanged = (shelfValue) => {
+    return {
+        type: event.SELECT_SHELF_VALUE_CHANGED,
+        payload: shelfValue
     }
 };
 
@@ -151,5 +254,7 @@ export default {
     addProductOnPlace,
     removeProductFromShelf,
     findStocksByUserCompany,
-    selectStockValueChanged
+    selectStockValueChanged,
+    selectRoomValueChanged,
+    selectShelfValueChanged
 }

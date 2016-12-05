@@ -21,7 +21,8 @@ class WaybillInfo extends React.Component {
 
     placesFormatter(cell, rowUpper) {
         let shelfFormatter = (cell, row) => {
-            return <span>{cell} <a href="#" className="pull-right" onClick={() => this.props.removeProductFromShelf(rowUpper.index, cell)}>X</a></span>
+            console.log(row);
+            return <span>{cell}<a href="#" className="pull-right" onClick={() => this.props.removeProductFromShelf(rowUpper.index, row.shelfId)}>X</a></span>
         };
         shelfFormatter.bind(this);
         return <div>
@@ -29,7 +30,8 @@ class WaybillInfo extends React.Component {
                 <button type="button" className="btn btn-default btn-xs btn-block" onClick={() => this.props.showAddModal(rowUpper.index)}>Добавить</button>
             </div>
             <BootstrapTable data={rowUpper.places} striped={true}>
-                <TableHeaderColumn dataField="shelfId" isKey={true} dataFormat={shelfFormatter}>Номер</TableHeaderColumn>
+                <TableHeaderColumn dataField="shelfId" isKey={true} hidden={true}>id</TableHeaderColumn>
+                <TableHeaderColumn dataField="number" dataFormat={shelfFormatter}>Номер</TableHeaderColumn>
             </BootstrapTable>
         </div>
     }

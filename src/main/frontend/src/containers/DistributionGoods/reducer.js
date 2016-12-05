@@ -19,7 +19,12 @@ let initDistributionGoodsState = {
                     storage: {
                         type: 'Нет требований'
                     },
-                    places: []
+                    places: [
+                        {
+                            shelfId: 0,
+                            number: 0
+                        }
+                    ]
                 }
             },
             {
@@ -43,6 +48,9 @@ let initDistributionGoodsState = {
         }
     },
     stocks: [],
+    stockOptions: [],
+    roomOptions: [],
+    shelfOptions: [],
     alert: {
         isVisible: false,
         text: '',
@@ -56,7 +64,9 @@ let initDistributionGoodsState = {
     selectShelfModal: {
         isVisible: false,
         rowIndex: 0,
-        selectedStockValue: 0
+        selectedStockValue: -1,
+        selectedRoomValue: -1,
+        selectedShelfValue: -1
     }
 };
 
@@ -85,7 +95,11 @@ export default (state = initDistributionGoodsState, action) => {
 
         case event.ADD_PRODUCT_ON_PLACE:
             let newProductInWaybill = state.waybill.productInWaybills;
-            newProductInWaybill[action.payload.rowIndex].product.places.push({shelfId: action.payload.shelfId});
+            newProductInWaybill[action.payload.rowIndex].product.places.push(
+                {
+                    shelfId: action.payload.shelfId,
+                    number: action.payload.number
+                });
             return {...state, waybill: {...state.waybill, productInWaybills: newProductInWaybill}};
 
         case event.REMOVE_PRODUCT_FROM_PLACE:
@@ -98,9 +112,19 @@ export default (state = initDistributionGoodsState, action) => {
             return {...state, waybill: {...state.waybill, productInWaybills: newProductInWaybill}};
 
         case event.FIND_STOCK_BY_USER_COMPANY_SUCCESS:
-            return {...state, stocks: action.payload};
+            return {...state, stocks: action.payload.stocks, stockOptions: action.payload.stockOptions};
+
         case event.SELECT_STOCK_VALUE_CHANGED:
             return {...state, selectShelfModal: {...state.selectShelfModal, selectedStockValue: action.payload}};
+        case event.SELECT_ROOM_VALUE_CHANGED:
+            return {...state, selectShelfModal: {...state.selectShelfModal, selectedRoomValue: action.payload}};
+        case event.SELECT_SHELF_VALUE_CHANGED:
+            return {...state, selectShelfModal: {...state.selectShelfModal, selectedShelfValue: action.payload}};
+
+        case event.SET_ROOM_OPTIONS:
+            return {...state, roomOptions: action.payload };
+        case event.SET_SHELF_OPTIONS:
+            return {...state, shelfOptions: action.payload };
         default:
             return state;
     }

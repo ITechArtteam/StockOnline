@@ -12,3 +12,8 @@ export const REMOVE_PRODUCT_FROM_PLACE = 'distributionGoods/REMOVE_PRODUCT_FROM_
 export const FIND_STOCK_BY_USER_COMPANY_SUCCESS = 'distributionGoods/FIND_STOCK_BY_USER_COMPANY_SUCCESS';
 
 export const SELECT_STOCK_VALUE_CHANGED = 'distributionGoods/SELECT_STOCK_VALUE_CHANGED';
+export const SELECT_ROOM_VALUE_CHANGED = 'distributionGoods/SELECT_ROOM_VALUE_CHANGED';
+export const SELECT_SHELF_VALUE_CHANGED = 'distributionGoods/SELECT_SHELF_VALUE_CHANGED';
+
+export const SET_ROOM_OPTIONS = 'distributionGoods/SET_ROOM_OPTIONS';
+export const SET_SHELF_OPTIONS = 'distributionGoods/SET_SHELF_OPTIONS';

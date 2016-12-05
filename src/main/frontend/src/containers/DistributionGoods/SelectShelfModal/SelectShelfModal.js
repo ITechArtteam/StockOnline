@@ -24,8 +24,14 @@ class SelectShelfModal extends React.Component {
     }
 
     handleSubmit() {
-        //todo: change random to real shelfId
-        this.props.addProductOnPlace(this.props.selectShelfModal.rowIndex, Math.floor(Math.random() * 1000));
+        let stockValue = this.props.selectShelfModal.selectedStockValue;
+        let roomValue = this.props.selectShelfModal.selectedRoomValue;
+        let shelfValue = this.props.selectShelfModal.selectedShelfValue;
+        if(stockValue === -1 || roomValue === -1 || shelfValue === -1) {
+            return
+        }
+        let shelfObject = this.props.stocks[stockValue].rooms[roomValue].shelves[shelfValue];
+        this.props.addProductOnPlace(this.props.selectShelfModal.rowIndex, shelfObject.id, shelfObject.number);
         this.props.closeModal();
     }
 
@@ -42,10 +48,22 @@ class SelectShelfModal extends React.Component {
                 </ModalHeader>
                 <ModalBody>
                     <SelectInput
-                        options={this.props.stocks}
+                        options={this.props.stockOptions}
                         value={this.props.selectShelfModal.selectedStockValue}
                         onChange={this.props.selectStockValueChanged}
                         label="Склад"/>
+
+                    <SelectInput
+                        options={this.props.roomOptions}
+                        value={this.props.selectShelfModal.selectedRoomValue}
+                        onChange={this.props.selectRoomValueChanged}
+                        label="Помещение"/>
+
+                    <SelectInput
+                        options={this.props.shelfOptions}
+                        value={this.props.selectShelfModal.selectedShelfValue}
+                        onChange={this.props.selectShelfValueChanged}
+                        label="Место хранение"/>
                 </ModalBody>
                 <ModalFooter>
                     <div className="btn-group pull-right">
@@ -62,7 +80,10 @@ function mapStateToProps(state) {
     return {
         selectShelfModal: state.distributionGoodsReducer.selectShelfModal,
         waybill: state.distributionGoodsReducer.waybill,
-        stocks: state.distributionGoodsReducer.stocks
+        stocks: state.distributionGoodsReducer.stocks,
+        stockOptions: state.distributionGoodsReducer.stockOptions,
+        roomOptions: state.distributionGoodsReducer.roomOptions,
+        shelfOptions: state.distributionGoodsReducer.shelfOptions,
     }
 }
 
@@ -71,14 +92,20 @@ const mapDispatchToProps = (dispatch) => {
         closeModal: () => {
             dispatch(distributionGoodsActionCreator.setShelfModalVisibility(false))
         },
-        addProductOnPlace: (rowIndex, shelfId) => {
-            dispatch(distributionGoodsActionCreator.addProductOnPlace(rowIndex, shelfId))
+        addProductOnPlace: (rowIndex, shelfId, number) => {
+            dispatch(distributionGoodsActionCreator.addProductOnPlace(rowIndex, shelfId, number))
         },
         findStocksByUserCompany: () => {
             dispatch(distributionGoodsActionCreator.findStocksByUserCompany());
         },
         selectStockValueChanged: (stockValue) => {
             dispatch(distributionGoodsActionCreator.selectStockValueChanged(stockValue))
+        },
+        selectRoomValueChanged: (roomValue) => {
+            dispatch(distributionGoodsActionCreator.selectRoomValueChanged(roomValue))
+        },
+        selectShelfValueChanged: (shelfValue) => {
+            dispatch(distributionGoodsActionCreator.selectShelfValueChanged(shelfValue))
         }
     }
 };
