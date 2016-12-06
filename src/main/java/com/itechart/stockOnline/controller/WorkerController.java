@@ -30,6 +30,15 @@ public class WorkerController {
         return workerService.getAll();
     }
 
+
+    @RequestMapping(value = "/workers_by_company", method = RequestMethod.GET)
+    public List<User> getWorkersByCompany(@RequestParam(value = "idCompany") Long idCompany) {
+        LOGGER.debug("REST request. Path:/workers?idCompany=  method: GET", idCompany);
+        return workerService.getByCompany(idCompany);
+    }
+
+
+    //это затычка
     @RequestMapping(value = "/controllers", method = RequestMethod.GET)
     public List<User> getControllers() {
         LOGGER.debug("REST request. Path:/workers  method: GET");

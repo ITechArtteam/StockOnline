@@ -8,7 +8,7 @@ import {browserHistory} from 'react-router';
 class WorkersContainer extends React.Component {
     constructor(props) {
         super(props);
-        workersApi.getWorkers()
+        workersApi.getWorkersByCompany(this.props.idCompany)
     }
 
     onCreateClick = ()=> {
@@ -42,6 +42,7 @@ const mapStateToProps = (store) => {
     return {
         workers: store.workersState.workers,
         response: store.workersState.response,
+        idCompany:store.auth.idCompany,
     }
 };
 
