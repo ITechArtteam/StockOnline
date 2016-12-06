@@ -30,6 +30,12 @@ public class WorkerController {
         return workerService.getAll();
     }
 
+    @RequestMapping(value = "/controllers", method = RequestMethod.GET)
+    public List<User> getControllers() {
+        LOGGER.debug("REST request. Path:/workers  method: GET");
+        return workerService.getAll();
+    }
+
     @RequestMapping(value = "/worker/{id}", method = RequestMethod.GET)
     public User getWorker(@PathVariable Long id) {
         LOGGER.debug("REST request. Path:/worker/{id}  method: GET", id);

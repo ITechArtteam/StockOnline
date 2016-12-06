@@ -2,12 +2,12 @@ import React from "react";
 import {Button, FormGroup, Row, Col, Form, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
 import linkState from "react-link-state";
 import moment from "moment";
-import Combobox from "react-widgets/lib/Combobox";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
 import _ from "lodash";
 class EditAct extends React.Component {
     constructor(props) {
+        console.log(props)
         super(props);
     }
 
@@ -15,22 +15,31 @@ class EditAct extends React.Component {
         act: this.props.act,
         products: this.props.products,
         act_status: this.props.act_status,
-        controller: this.props.controller
+        controller_username: this.props.controller_username,
+        controller_id: this.props.controller_id
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({act: nextProps.act, products: nextProps.products, act_status: nextProps.act_status, controller: nextProps.controller});
+        this.setState({
+            act: nextProps.act,
+            products: nextProps.products,
+            act_status: nextProps.act_status,
+            controller_username: nextProps.controller_username,
+            controller_id: nextProps.controller_id
+        });
         var newAct = _.extend({}, this.state.act);
         newAct.report_date = moment().format('llll');
+        newAct.user.id = this.state.controller_id;
+        newAct.user.login = this.state.controller_username;
         this.setState({act: newAct});
     }
 
     componentWillMount() {
         var newAct = _.extend({}, this.state.act);
         newAct.report_date = moment().format('llll');
-        newAct.
+        newAct.user.id = this.state.controller_id;
+        newAct.user.login = this.state.controller_username;
         this.setState({act: newAct});
-
     }
 
 
@@ -60,7 +69,7 @@ class EditAct extends React.Component {
                             </Col>
                             <Col sm={5}>
                                 <FormControl placeholder="Контролер"
-                                             valueLink={linkState(this, 'controller')} readOnly/>
+                                             valueLink={linkState(this, 'act.user.login')} readOnly/>
                                 <FormControl.Feedback />
                             </Col>
                         </FormGroup>

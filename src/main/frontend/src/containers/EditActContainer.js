@@ -32,7 +32,7 @@ class EditActContainer extends React.Component {
 
     render() {
         return (
-            <EditAct act={this.props.act} controller={this.props.controller} act_status={this.props.act_status}
+            <EditAct act={this.props.act} controller_username={this.props.controller_username} controller_id={this.props.controller_id} act_status={this.props.act_status}
                      products={this.props.products} onSaveClick={this.saveAct}/>
         )
     }
@@ -45,7 +45,8 @@ const mapStateToProps = (store) => {
         products: store.productsState.products,
         response: store.actState.response,
         act_status: store.productsState.act_status,
-        controller: store.auth.username
+        controller_username: store.auth.username,
+        controller_id: store.auth.id,
     }
 };
 

@@ -11,6 +11,10 @@ const initialState = {
                 id: "",
                 name: "",
                 unit: ""
+            },
+            user:{
+                id:"",
+                login:""
             }
         }
     }
