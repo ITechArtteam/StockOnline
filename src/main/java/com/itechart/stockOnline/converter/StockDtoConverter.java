@@ -1,22 +1,27 @@
 package com.itechart.stockOnline.converter;
 
-import com.itechart.stockOnline.model.Address;
-import com.itechart.stockOnline.model.Stock;
-import com.itechart.stockOnline.model.StockOwnerCompany;
-import com.itechart.stockOnline.model.dto.StockDto;
-import com.itechart.stockOnline.model.dto.StockPage;
+import com.itechart.stockOnline.model.*;
+import com.itechart.stockOnline.model.dto.stock.RoomDto;
+import com.itechart.stockOnline.model.dto.stock.StockDto;
+import com.itechart.stockOnline.model.dto.stock.StockPage;
+import com.itechart.stockOnline.model.dto.stock.StockRoomsDto;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.domain.Page;
-import com.itechart.stockOnline.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component
 public class StockDtoConverter {
+
     private final static Logger LOGGER = LoggerFactory.getLogger(StockDtoConverter.class);
+
     public Stock toStock(StockDto stockDto){
 
         Stock stock = new Stock();
@@ -47,6 +52,39 @@ public class StockDtoConverter {
         return dto;
     }
 
+    public Set<Room> toRooms(StockDto stockDto){
+
+        Set<Room> rooms = new HashSet<Room>();
+        for (RoomDto roomDto: stockDto.getStockRooms().getRooms()){
+            Room room = new Room();
+            room.setId(roomDto.getId());
+            room.setCost(roomDto.getCost());
+            room.setNumber(roomDto.getNumber());
+            room.setStorage(new StorageRequirement(roomDto.getStorage()));
+            rooms.add(room);
+        }
+        LOGGER.info("toRooms:  rooms:{}",rooms);
+        return rooms;
+    }
+
+    public Set<RoomDto> toRoomsDto(Stock stock){
+
+        Set<RoomDto> roomsDto = new HashSet<RoomDto>();
+        if (CollectionUtils.isNotEmpty(stock.getRooms())){
+            for (Room room: stock.getRooms()){
+                RoomDto roomDto = new RoomDto();
+                roomDto.setId(room.getId());
+                roomDto.setCost(room.getCost());
+                roomDto.setNumber(room.getNumber());
+                roomDto.setStorage(room.getStorage().getType());
+                roomsDto.add(roomDto);
+            }
+        }
+
+        LOGGER.info("toRoomsDto:  roomsDto:{}",roomsDto);
+        return roomsDto;
+    }
+
     public StockDto toStockDto(Stock stock) {
         StockDto dto = new StockDto();
         dto.setId(stock.getId());
@@ -57,6 +95,7 @@ public class StockDtoConverter {
         dto.setHome(address.getHome());
         dto.setName(stock.getName());
         dto.setNameCompany(stock.getCompany().getName());
+        dto.setStockRooms(new StockRoomsDto(toRoomsDto(stock)));
         LOGGER.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);
         return dto;
     }

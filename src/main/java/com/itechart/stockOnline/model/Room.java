@@ -21,7 +21,7 @@ public class Room {
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "storage_requirement_id")
     private StorageRequirement storage;
 
