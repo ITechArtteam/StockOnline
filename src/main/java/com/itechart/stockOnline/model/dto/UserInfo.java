@@ -1,16 +1,28 @@
 package com.itechart.stockOnline.model.dto;
 
+import com.itechart.stockOnline.model.StockOwnerCompany;
+
 import java.util.Set;
 
 public class UserInfo {
     private Long id;
     private String username;
     private Set<String> roles;
+    private Long idCompany;
 
-    public UserInfo(Long id, String username, Set<String> roles) {
+    public UserInfo(Long id, String username, Set<String> roles, Long idCompany) {
         this.username = username;
         this.roles = roles;
         this.id=id;
+        this.idCompany=idCompany;
+    }
+
+    public Long getIdCompany() {
+        return idCompany;
+    }
+
+    public void setIdCompany(Long idStockOwnerCompany) {
+        this.idCompany = idCompany;
     }
 
     public UserInfo() {}

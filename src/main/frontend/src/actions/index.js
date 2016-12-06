@@ -55,7 +55,8 @@ export function authUser(userInfo) {
         type: AUTH_USER,
         username: userInfo.username,
         roles: userInfo.roles,
-        id: userInfo.id
+        id: userInfo.id,
+        idCompany:userInfo.idCompany
     }
 }
 

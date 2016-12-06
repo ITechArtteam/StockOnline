@@ -5,6 +5,7 @@ const initialState = {
     id:"",
     username: "GUEST",
     roles: ["ROLE_GUEST"],
+    idCompany:"",
     error: null
 };
 
@@ -17,7 +18,8 @@ export default function auth(state = initialState, action) {
                 username: action.username,
                 roles: action.roles,
                 id: action.id,
-                error: null
+                error: null,
+                idCompany:action.idCompany
             };
         case AUTH_ERROR:
             return {
