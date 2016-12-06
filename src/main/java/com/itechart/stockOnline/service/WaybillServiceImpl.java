@@ -52,6 +52,14 @@ public class WaybillServiceImpl implements WaybillService {
     }
 
     @Override
+    public Waybill getByNumber(String number) {
+        Logger.info("getByNumber({})", number);
+        Waybill waybill = waybillDao.findByNumber(number).orElseThrow(DataNotFoundError::new);
+        Logger.info("getByNumber({}): found waybill - {}", number, waybill);
+        return waybill;
+    }
+
+    @Override
     @Transactional
     public Waybill update(Waybill waybill) {
         Logger.info("update({})", waybill);
@@ -60,9 +68,9 @@ public class WaybillServiceImpl implements WaybillService {
 
     @Override
     @Transactional
-    public void completeWayBillChecking(Long waybillId, WaybillStatus waybillStatus, ProductStatus productStatus, String userName) {
+    public void completeWayBillChecking(String waybillNumber, WaybillStatus waybillStatus, ProductStatus productStatus, String userName) {
         User checkedBy = userService.findByLogin(userName);
-        Waybill waybill = getById(waybillId);
+        Waybill waybill = getByNumber(waybillNumber);
         waybill.setCheckedBy(checkedBy);
         Logger.info("completeWayBillChecking(): set checkedBy user {}", checkedBy);
         waybill.setCheckDate(new Date());
@@ -73,9 +81,9 @@ public class WaybillServiceImpl implements WaybillService {
 
     @Override
     @Transactional
-    public void setWaybillAndProductsStatus(Long waybillId, WaybillStatus waybillStatus, ProductStatus productStatus) {
-        Waybill waybill = getById(waybillId);
-        Logger.info("setWaybillAndProductsStatus(): waybillStatus - {}, productStatus - {} by waybillID {}", waybillStatus, productStatus, waybillId);
+    public void setWaybillAndProductsStatus(String waybillNumber, WaybillStatus waybillStatus, ProductStatus productStatus) {
+        Waybill waybill = getByNumber(waybillNumber);
+        Logger.info("setWaybillAndProductsStatus(): waybillStatus - {}, productStatus - {} by waybillNumber {}", waybillStatus, productStatus, waybillNumber);
         setWaybillAndProductsStatus(waybill, waybillStatus, productStatus);
     }
 

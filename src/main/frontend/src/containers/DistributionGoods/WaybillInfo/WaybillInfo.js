@@ -1,8 +1,15 @@
 import React from 'react'
+import {connect} from 'react-redux';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {distributionGoodsActionCreator} from "../index";
+import SelectShelfModal from "../SelectShelfModal/SelectShelfModal"
 
 class WaybillInfo extends React.Component {
-    fullNameToShortName = (firstName, lastName, patronymic) => {
+    constructor(props) {
+        super(props);
+        this.placesFormatter = this.placesFormatter.bind(this);
+    }
+    fullNameToShortName(firstName, lastName, patronymic) {
         let fn = firstName === null ? '' : `${firstName.charAt(0).toUpperCase()}.`;
         let ln = lastName === null ? '' : lastName;
         let pt = patronymic === null ? '' : `${patronymic.charAt(0).toUpperCase()}.`;
@@ -10,16 +17,35 @@ class WaybillInfo extends React.Component {
         let result = `${ln} ${fn} ${pt}`;
         result = result === "  " ? "Не указано" : result;
         return result;
-    };
+    }
+
+    placesFormatter(cell, rowUpper) {
+        let shelfFormatter = (cell, row) => {
+            console.log(row);
+            return <span>{cell}<a href="#" className="pull-right" onClick={() => this.props.removeProductFromShelf(rowUpper.index, row.shelfId)}>X</a></span>
+        };
+        shelfFormatter.bind(this);
+        return <div>
+            <div className="before-table">
+                <button type="button" className="btn btn-default btn-xs btn-block" onClick={() => this.props.showAddModal(rowUpper.index)}>Добавить</button>
+            </div>
+            <BootstrapTable data={rowUpper.places} striped={true}>
+                <TableHeaderColumn dataField="shelfId" isKey={true} hidden={true}>id</TableHeaderColumn>
+                <TableHeaderColumn dataField="number" dataFormat={shelfFormatter}>Номер</TableHeaderColumn>
+            </BootstrapTable>
+        </div>
+    }
 
     render(){
         let products = [];
         if(!!this.props.data.productInWaybills) {
             products = this.props.data.productInWaybills.map((item, index) => {
                 return {
+                    index: index,
                     name: item.product.name,
                     storage: item.product.storage.type,
-                    count: item.count + ' ' + item.product.unit
+                    count: item.count + ' ' + item.product.unit,
+                    places: item.product.places
                 }
             });
         }
@@ -38,8 +64,8 @@ class WaybillInfo extends React.Component {
                         <div className="panel-body">
                             <b>Пользователь:</b> <span className="pull-right">{this.props.data.registeredBy.login}</span> <br/>
                             <b>ФИО:</b>  <span className="pull-right">{this.fullNameToShortName(this.props.data.registeredBy.name,
-                                                        this.props.data.registeredBy.surname,
-                                                        this.props.data.registeredBy.patronymic)}</span>
+                            this.props.data.registeredBy.surname,
+                            this.props.data.registeredBy.patronymic)}</span>
                         </div>
                     </div>
                     <div className="panel panel-default">
@@ -56,8 +82,10 @@ class WaybillInfo extends React.Component {
                         <TableHeaderColumn headerAlign="center" dataField="name" isKey={true}>Наименование</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataField="storage">Требование к хранению</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataField="count">Количество</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataFormat={this.placesFormatter}>Список мест</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
+                <SelectShelfModal/>
             </div>
         )
     }
@@ -78,6 +106,7 @@ WaybillInfo.PropTypes = {
         productInWaybills: React.PropTypes.arrayOf(React.PropTypes.shape({
             count: React.PropTypes.number.isRequired,
             product: React.PropTypes.objectOf(React.PropTypes.shape({
+                id: React.PropTypes.number.isRequired,
                 name: React.PropTypes.string.isRequired,
                 unit: React.PropTypes.string.isRequired,
                 storage: React.PropTypes.objectOf(React.PropTypes.shape({
@@ -95,7 +124,33 @@ WaybillInfo.PropTypes = {
     })).isRequired
 };
 
-export default WaybillInfo;
+
+const mapStateToProps = (state) => {
+    return {
+        frontend: state.distributionGoodsReducer.frontend,
+        alert: state.distributionGoodsReducer.alert,
+        waybill: state.distributionGoodsReducer.waybill,
+        selectShelfModal: state.distributionGoodsReducer.selectShelfModal
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showAddModal: (rowIndex) => {
+            dispatch(distributionGoodsActionCreator.setShelfModalVisibility(true, rowIndex))
+        },
+        removeProductFromShelf: (rowIndex, shelfId) => {
+            dispatch(distributionGoodsActionCreator.removeProductFromShelf(rowIndex, shelfId))
+        }
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(WaybillInfo);
+
+
 
 
 

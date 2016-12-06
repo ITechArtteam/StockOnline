@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface WaybillDao extends JpaRepository<Waybill, Long>, JpaSpecificationExecutor {
     Optional<Waybill> findById(Long id);
+    Optional<Waybill> findByNumber(String number);
 }

@@ -29,30 +29,30 @@ public class CheckGoodsController {
         this.waybillService = waybillService;
     }
 
-    @RequestMapping(value = "/waybills/{id}", method = RequestMethod.GET)
-    public WaybillForControllerDto getById(@PathVariable Long id) {
-        Logger.info("REST request. Path:/checkgoods/waybills/{}  method: GET", id);
-        return new WaybillForControllerDto(waybillService.getById(id));
+    @RequestMapping(value = "/waybills/{number}", method = RequestMethod.GET)
+    public WaybillForControllerDto getByNumber(@PathVariable String number) {
+        Logger.info("REST request. Path:/checkgoods/waybills/{}  method: GET", number);
+        return new WaybillForControllerDto(waybillService.getByNumber(number));
     }
 
-    @RequestMapping(value = "/controller/waybills/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Object> confirmWaybill(@PathVariable Long id,
+    @RequestMapping(value = "/controller/waybills/{number}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> confirmWaybill(@PathVariable String number,
                                                       @RequestBody AcceptWaybillDto acceptWaybillDto,
                                                       Principal user) {
-        Logger.info("REST request. Path:/checkgoods/controller/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", id, acceptWaybillDto.getWaybillStatus(), acceptWaybillDto.getWaybillStatus());
+        Logger.info("REST request. Path:/checkgoods/controller/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, acceptWaybillDto.getWaybillStatus(), acceptWaybillDto.getWaybillStatus());
         WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(acceptWaybillDto.getWaybillStatus());
         ProductStatus productStatusEnum = ProductStatus.getByAlias(acceptWaybillDto.getProductStatus());
-        waybillService.completeWayBillChecking(id, waybillStatusEnum, productStatusEnum, user.getName());
+        waybillService.completeWayBillChecking(number, waybillStatusEnum, productStatusEnum, user.getName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/dispatcher/waybills/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Object> resolveOutput(@PathVariable Long id,
+    @RequestMapping(value = "/dispatcher/waybills/{number}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> resolveOutput(@PathVariable String number,
                                                       @RequestBody AcceptWaybillDto acceptWaybillDto) {
-        Logger.info("REST request. Path:/checkgoods/dispatcher/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", id, acceptWaybillDto.getWaybillStatus(), acceptWaybillDto.getWaybillStatus());
+        Logger.info("REST request. Path:/checkgoods/dispatcher/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, acceptWaybillDto.getWaybillStatus(), acceptWaybillDto.getWaybillStatus());
         WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(acceptWaybillDto.getWaybillStatus());
         ProductStatus productStatusEnum = ProductStatus.getByAlias(acceptWaybillDto.getProductStatus());
-        waybillService.setWaybillAndProductsStatus(id, waybillStatusEnum, productStatusEnum);
+        waybillService.setWaybillAndProductsStatus(number, waybillStatusEnum, productStatusEnum);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

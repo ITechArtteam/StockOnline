@@ -77,7 +77,7 @@ public class StockOwnerCompany {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", isActive=" + isActive +
-                ", stocks=" + stocks +
+//                ", stocks=" + stocks +
                 ", address=" + address +
                 '}';
     }
