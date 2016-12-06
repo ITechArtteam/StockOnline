@@ -42,6 +42,9 @@ const workerReducer = function (state = initialState, action) {
 
         case types.CLOSE_WORKER_RESPONSE:
             return Object.assign({}, state, {response: null});
+
+        case types.INITIAL_STATE_WORKER:
+            return Object.assign({}, state, initialState);
     }
     return state;
 }

@@ -6,11 +6,13 @@ import * as actApi from "../api/act-api";
 import * as productsApi from "../api/products-api";
 import CleverPanel from "../views/CleverPanel";
 import {Row, Col} from "react-bootstrap";
+import {browserHistory} from 'react-router';
 class EditActContainer extends React.Component {
 
     constructor(props) {
         super(props);
         var id = this.props.params.id;
+        actApi.clearReducer();
         if ($.isNumeric(id)) {
             actApi.getAct(id);
         }
@@ -22,6 +24,10 @@ class EditActContainer extends React.Component {
     saveAct = (act) => {
         window.scrollTo(0, 0);
         return actApi.saveAct(act, '/acts');
+    }
+
+    redirectToActs = ()=>{
+        this.redirect('/acts');
     }
 
 
@@ -42,7 +48,7 @@ class EditActContainer extends React.Component {
                 </Row>
                 <EditAct act={this.props.act} controller_username={this.props.controller_username}
                          controller_id={this.props.controller_id} act_status={this.props.act_status}
-                         products={this.props.products} onSaveClick={this.saveAct}/>
+                         products={this.props.products} onSaveClick={this.saveAct} onCloseClick={this.redirectToActs}/>
             </div>
         )
     }

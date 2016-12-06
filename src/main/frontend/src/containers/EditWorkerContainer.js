@@ -13,6 +13,7 @@ class EditWorkerContainer extends React.Component {
         super(props);
         roleApi.getRoles();
         workerApi.closeResponse();
+        workerApi.clearReducer();
         var id = this.props.params.id;
         if ($.isNumeric(id)) {
             workerApi.getWorker(id);

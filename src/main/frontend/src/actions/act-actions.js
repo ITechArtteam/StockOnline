@@ -1,10 +1,10 @@
 import * as types from '../actions/action-types';
 
-export function getActSuccess(worker, response) {
+export function getActSuccess(act, response) {
     return {
         type: types.GET_ACT_SUCCESS ,
         response: response,
-        act: act
+        act:act
     };
 }
 
@@ -31,10 +31,14 @@ export function saveActUnsuccess(response) {
 }
 
 
-
-
 export function closeActResponse() {
     return {
         type: types.CLOSE_ACT_RESPONSE,
+    }
+}
+
+export function clearActReducer(){
+    return {
+        type: types.INITIAL_STATE_ACT,
     }
 }

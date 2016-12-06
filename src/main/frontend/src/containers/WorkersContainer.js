@@ -2,6 +2,7 @@ import React from "react";
 import Workers from "../views/workers/Workers";
 import {connect} from "react-redux";
 import * as workersApi from "../api/workers-api";
+import * as workerApi from "../api/worker-api";
 import CleverPanel from "../views/CleverPanel";
 import {browserHistory} from 'react-router';
 class WorkersContainer extends React.Component {
@@ -19,7 +20,6 @@ class WorkersContainer extends React.Component {
     }
 
     onDeleteClick = (ids)=> {
-        console.log(ids);
         workersApi.deleteWorkers(ids)
     }
 

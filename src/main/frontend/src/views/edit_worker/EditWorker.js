@@ -5,9 +5,8 @@ import Multiselect from "react-widgets/lib/Multiselect";
 import "react-widgets/dist/css/react-widgets.css";
 import "./EditWorker.less";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
 import moment from "moment";
-import $ from "jquery";
+import DatePicker from "react-bootstrap-date-picker";
 
 
 class EditWorker extends React.Component {
@@ -21,13 +20,6 @@ class EditWorker extends React.Component {
         disabledSaveButton: false
     }
 
-    getDate = ()=>{
-        if (this.state.worker.date!=''&&this.state.worker.date!=undefined) {
-            return moment(this.state.worker.date, 'DD/MM/YYYY')
-        }
-        return null;
-
-    }
 
     componentWillReceiveProps(nextProps) {
         this.setState({worker: nextProps.worker, roles: nextProps.roles});
@@ -43,10 +35,10 @@ class EditWorker extends React.Component {
         this.props.onCloseClick();
     }
 
-    handleChange = (date)=>{
+    handleChange = (date)=> {
         var newWorker = _.extend({}, this.state.worker);
-        newWorker.date= date.format('DD/MM/YYYY');
-        this.setState({ worker: newWorker });
+        newWorker.date = date.format('DD/MM/YYYY');
+        this.setState({worker: newWorker});
 
     }
 
@@ -94,9 +86,13 @@ class EditWorker extends React.Component {
                                 Дата рождения
                             </Col>
                             <Col sm={5}>
-                                <DatePicker className="form-control"
-                                            selected={this.getDate()}
-                                            onChange={this.handleChange}
+                                <DatePicker
+                                    value={this.state.worker.birthday}
+                                    onChange={(date) => {
+                                        var newWorker = _.extend({}, this.state.worker);
+                                        newWorker.birthday=date;
+                                        this.setState({worker:newWorker});
+                                    }}
                                 />
                                 <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>

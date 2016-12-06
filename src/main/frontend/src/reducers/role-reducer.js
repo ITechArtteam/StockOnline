@@ -11,6 +11,8 @@ const roleReducer = function (state = initialState, action) {
             return Object.assign({}, state, {roles: action.roles});
         case types.GET_ROLES_UNSUCCESS:
             return Object.assign({}, state, {responce: action.responce, roles:[]});
+        case types.INITIAL_STATE_ROLES:
+            return Object.assign({}, state, initialState);
     }
     return state;
 }

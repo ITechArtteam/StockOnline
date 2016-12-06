@@ -31,6 +31,10 @@ const actsReducer = function (state = initialState, action) {
 
         case types.CLOSE_ACTS_RESPONSE:
             return Object.assign({}, state, {response: null});
+
+
+        case types.INITIAL_STATE_ACTS:
+            return Object.assign({}, state, initialState);
     }
     return state;
 }

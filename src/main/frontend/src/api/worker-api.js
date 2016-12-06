@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getWorkerSuccess, saveWorkerUnsuccess, deleteWorkerUnsuccess, closeWorkerResponse } from '../actions/worker-actions';
+import { getWorkerSuccess, saveWorkerUnsuccess, deleteWorkerUnsuccess, closeWorkerResponse, clearWorkerReducer } from '../actions/worker-actions';
 import { getWorkersUnsuccess, deleteWorkerSuccess, saveWorkerSuccess} from '../actions/workers-actions';
 import store from '../store/configureStore'
 import {browserHistory} from 'react-router';
@@ -44,6 +44,11 @@ export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
 
 export function closeResponse(){
     store.dispatch(closeWorkerResponse());
+}
+
+
+export function clearReducer(){
+    store.dispatch(clearWorkerReducer())
 }
 
 function redirect(path){

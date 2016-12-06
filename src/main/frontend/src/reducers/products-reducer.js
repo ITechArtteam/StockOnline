@@ -20,6 +20,9 @@ const productsReducer = function (state = initialState, action) {
 
         case types.GET_ACT_STATUS_UNSUCCESS:
             return Object.assign({}, state, {response: action.response, act_status:[]});
+
+        case types.INITIAL_STATE_PRODUCTS:
+            return Object.assign({}, state, initialState);
     }
     return state;
 }

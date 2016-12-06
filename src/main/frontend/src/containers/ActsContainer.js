@@ -1,6 +1,7 @@
 import React from "react";
 import Acts from "../views/acts/Acts";
 import {connect} from "react-redux";
+import * as actApi from "../api/act-api";
 import * as actsApi from "../api/acts-api";
 import * as workersApi from "../api/workers-api";
 import CleverPanel from "../views/CleverPanel";
@@ -13,7 +14,7 @@ class ActsContainer extends React.Component {
     }
 
     onCreateClick = ()=> {
-        this.redirect('/acts');
+        this.redirect('/act');
     }
 
     onEditClick = (id) =>{

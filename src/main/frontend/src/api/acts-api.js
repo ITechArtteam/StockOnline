@@ -21,7 +21,7 @@ export function getActs(thenRedirectPath, errorRedirectPath) {
 }
 
 export function deleteActs(ids, thenRedirectPath, errorRedirectPath) {
-    axios.delete('/apiacts?ids='+ids).then(response => {
+    axios.delete('/api/acts?ids='+ids).then(response => {
         store.dispatch(deleteActsSuccess(ids, response));
         redirect(thenRedirectPath);
     }).catch(error=> {

@@ -7,7 +7,6 @@ import "react-widgets/dist/css/react-widgets.css";
 import _ from "lodash";
 class EditAct extends React.Component {
     constructor(props) {
-        console.log(props)
         super(props);
     }
 
@@ -27,24 +26,30 @@ class EditAct extends React.Component {
             controller_username: nextProps.controller_username,
             controller_id: nextProps.controller_id
         });
-        var newAct = _.extend({}, this.state.act);
-        newAct.report_date = moment().format('llll');
-        newAct.user.id = this.state.controller_id;
-        newAct.user.login = this.state.controller_username;
-        this.setState({act: newAct});
+        this.updateProps(nextProps);
     }
 
     componentWillMount() {
-        var newAct = _.extend({}, this.state.act);
-        newAct.report_date = moment().format('llll');
-        newAct.user.id = this.state.controller_id;
-        newAct.user.login = this.state.controller_username;
+        this.updateProps(this.props);
+    }
+
+    updateProps =(props) =>{
+        var newAct = _.extend({}, props.act);
+        if (newAct.id==""){
+            newAct.reportDate = moment().format('llll');
+        } else {
+            newAct.reportDate = moment(newAct.reportDate).format('llll');
+        }
+        newAct.user.id = props.controller_id;
+        newAct.user.login = props.controller_username;
         this.setState({act: newAct});
     }
 
 
     onSaveClick = () => {
+        this.state.act.reportDate = moment(this.state.act.reportDate);
         this.props.onSaveClick(this.state.act);
+        console.log(this.state.act);
     }
 
     onCloseClick = () => {
@@ -54,7 +59,6 @@ class EditAct extends React.Component {
     onCalculateClick = () => {
         var newAct = _.extend({}, this.state.act);
         newAct.cost = this.state.act.product.cost * this.state.act.count / this.state.act.product.count;
-        console.log(newAct)
         this.setState({act: newAct});
     }
 
@@ -79,7 +83,7 @@ class EditAct extends React.Component {
                             </Col>
                             <Col sm={5}>
                                 <FormControl placeholder="Дата"
-                                             valueLink={linkState(this, 'act.report_date')} readOnly/>
+                                             valueLink={linkState(this, 'act.reportDate')} readOnly/>
                                 <FormControl.Feedback />
                             </Col>
                         </FormGroup>
@@ -148,7 +152,7 @@ class EditAct extends React.Component {
                                 <DropdownList
                                     valueField='id' textField='name'
                                     data={this.state.act_status}
-                                    value={this.state.act.status.id}
+                                    value={this.state.act.status}
                                     onChange={selectStatus => {
                                         var newAct = _.extend({}, this.state.act);
                                         newAct.status = _.find(this.state.act_status, status => {

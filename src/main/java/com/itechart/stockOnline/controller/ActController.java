@@ -51,7 +51,7 @@ public class ActController {
     }
 
     @RequestMapping(value = "/act", method = RequestMethod.POST)
-    public void saveWorker(@RequestBody Act act, HttpServletResponse response) {
+    public void saveAct(@RequestBody Act act, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/act  method: POST Request body {act}", act);
         act.setReportDate(new Date());
         Act saveAct = actService.save(act);

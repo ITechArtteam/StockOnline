@@ -3,7 +3,7 @@ const initialState = {
         response: null,
         act: {
             id: "",
-            report_date: "",
+            reportDate: "",
             count: "",
             cost: "",
             status:"",
@@ -37,6 +37,9 @@ const actReducer = function (state = initialState, action) {
 
         case types.CLOSE_ACT_RESPONSE:
             return Object.assign({}, state, {response: null});
+
+        case types.INITIAL_STATE_ACT:
+            return Object.assign({}, state, initialState);
     }
     return state;
 }
