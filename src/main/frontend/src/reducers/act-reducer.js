@@ -1,5 +1,4 @@
 import * as types from "../actions/action-types";
-import _ from "lodash";
 const initialState = {
         response: null,
         act: {
@@ -7,11 +6,11 @@ const initialState = {
             report_date: "",
             count: "",
             cost: "",
-            status: "",
+            status:"",
             product: {
-                id:"",
-                name:"",
-                unit:""
+                id: "",
+                name: "",
+                unit: ""
             }
         }
     }

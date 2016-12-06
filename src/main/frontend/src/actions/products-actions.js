@@ -15,3 +15,18 @@ export function getProductsUnsuccess(response) {
         response:response
     };
 }
+
+
+export function getActStatusSuccess(act_status) {
+    return {
+        type: types.GET_ACT_STATUS_SUCCESS,
+        act_status:act_status
+    };
+}
+
+export function getActStatusUnsuccess(response) {
+    return {
+        type: types.GET_ACT_STATUS_UNSUCCESS,
+        response:response
+    };
+}

@@ -2,6 +2,7 @@ import React from "react";
 import {Button, FormGroup, Row, Col, Form, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
 import linkState from "react-link-state";
 import moment from "moment";
+import Combobox from "react-widgets/lib/Combobox";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
 import _ from "lodash";
@@ -13,11 +14,12 @@ class EditAct extends React.Component {
     state = {
         act: this.props.act,
         products: this.props.products,
-
+        act_status: this.props.act_status,
+        controller: this.props.controller
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({act: nextProps.act, products: nextProps.products});
+        this.setState({act: nextProps.act, products: nextProps.products, act_status: nextProps.act_status, controller: nextProps.controller});
         var newAct = _.extend({}, this.state.act);
         newAct.report_date = moment().format('llll');
         this.setState({act: newAct});
@@ -26,7 +28,9 @@ class EditAct extends React.Component {
     componentWillMount() {
         var newAct = _.extend({}, this.state.act);
         newAct.report_date = moment().format('llll');
+        newAct.
         this.setState({act: newAct});
+
     }
 
 
@@ -52,6 +56,16 @@ class EditAct extends React.Component {
                     <Form horizontal id="worker_form">
                         <FormGroup >
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                                Контролер
+                            </Col>
+                            <Col sm={5}>
+                                <FormControl placeholder="Контролер"
+                                             valueLink={linkState(this, 'controller')} readOnly/>
+                                <FormControl.Feedback />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup >
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Дата
                             </Col>
                             <Col sm={5}>
@@ -66,7 +80,6 @@ class EditAct extends React.Component {
                             </Col>
                             <Col sm={5}>
                                 <DropdownList
-                                    defaultValue={this.state.act.product.id}
                                     valueField='id' textField='name'
                                     data={this.state.products}
                                     value={this.state.act.product.id}
@@ -75,8 +88,11 @@ class EditAct extends React.Component {
                                         newAct.product = _.find(this.state.products, product => {
                                             return product.id == selectProduct.id;
                                         });
-                                        newAct.count = newAct.product.count;
                                         this.setState({act: newAct});
+                                        if (newAct.product != undefined) {
+                                            newAct.count = newAct.product.count;
+                                        }
+
                                     }}/>
                                 <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
@@ -120,9 +136,17 @@ class EditAct extends React.Component {
                                 Статус
                             </Col>
                             <Col sm={5}>
-                                <FormControl placeholder="Статус"
-                                             valueLink={linkState(this, 'act.status')}/>
-                                <FormControl.Feedback />
+                                <DropdownList
+                                    valueField='id' textField='name'
+                                    data={this.state.act_status}
+                                    value={this.state.act.status.id}
+                                    onChange={selectStatus => {
+                                        var newAct = _.extend({}, this.state.act);
+                                        newAct.status = _.find(this.state.act_status, status => {
+                                            return status == selectStatus;
+                                        });
+                                        this.setState({act: newAct});
+                                    }}/>
                                 <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
@@ -154,7 +178,7 @@ class CalculateButton extends React.Component {
     componentWillReceiveProps(nextProps) {
         if ($.isNumeric(nextProps.act.product.cost) && $.isNumeric(nextProps.act.count)) {
             this.setState({disabledCalculateButton: false});
-        } else{
+        } else {
             this.setState({disabledCalculateButton: true});
         }
     }
