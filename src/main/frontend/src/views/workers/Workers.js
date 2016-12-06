@@ -64,29 +64,6 @@ class Workers extends React.Component {
                         <Button block={true} onClick={this.onDeleteClick}
                                 disabled={this.state.buttonDisabled}>Удалить</Button>
                     </Well>
-                    <Well bsSize="small">
-                        <Form >
-                            <FormGroup>
-                                <ControlLabel>Поиск</ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    valueLink={linkState(this, 'serch')}
-                                    placeholder="Поиск"
-                                />
-                            </FormGroup>
-                        </Form>
-                    </Well>
-                    <Well bsSize="small">
-                        <Form>
-                            <FormGroup controlId="formControlsSelect">
-                                <ControlLabel>Записей на странице:</ControlLabel>
-                                <FormControl componentClass="select">
-                                    <option value="select">5</option>
-                                    <option value="other">10</option>
-                                </FormControl>
-                            </FormGroup>
-                        </Form>
-                    </Well>
                 </Col>
                 <Col xs={9}>
                     <WorkerTable workers={this.state.workers} selected={this.state.selected} serch={this.state.serch} onSelectAll={this.onSelectAll} onRowSelect={this.onRowSelect}/>

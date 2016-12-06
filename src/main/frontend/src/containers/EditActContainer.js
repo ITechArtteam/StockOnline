@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import $ from "jquery";
 import * as actApi from "../api/act-api";
 import * as productsApi from "../api/products-api";
+import CleverPanel from "../views/CleverPanel";
+import {Row, Col} from "react-bootstrap";
 class EditActContainer extends React.Component {
 
     constructor(props) {
@@ -32,8 +34,16 @@ class EditActContainer extends React.Component {
 
     render() {
         return (
-            <EditAct act={this.props.act} controller_username={this.props.controller_username} controller_id={this.props.controller_id} act_status={this.props.act_status}
-                     products={this.props.products} onSaveClick={this.saveAct}/>
+            <div>
+                <Row>
+                    <Col sm={6} smOffset={3}>
+                        <CleverPanel response={this.props.response}/>
+                    </Col>
+                </Row>
+                <EditAct act={this.props.act} controller_username={this.props.controller_username}
+                         controller_id={this.props.controller_id} act_status={this.props.act_status}
+                         products={this.props.products} onSaveClick={this.saveAct}/>
+            </div>
         )
     }
 }
