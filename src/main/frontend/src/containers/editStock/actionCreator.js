@@ -124,7 +124,106 @@ function setDefaultValue() {
     }
 }
 
+function changeRoomNumber(number) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_NUMBER,
+        number
+    }
+}
+
+function changeRoomCost(cost) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_COST,
+        cost
+    }
+}
+
+function changeRoomStorage(storage) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_STORAGE,
+        storage
+    }
+}
+
+function selectRoom(number) {
+    return {
+        type: event.EDIT_STOCK_FORM_SELECT_ROOM,
+        number
+    }
+}
+
+function deleteRoom(number) {
+    return {
+        type: event.EDIT_STOCK_FORM_DELETE_ROOM,
+        number
+    }
+}
+
+function selectRoomUnit(unit) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SELECT_UNIT,
+        unit
+    }
+}
+
+function loadUnits() {
+    return function(dispatch) {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: 'api/rooms/units',
+            success: function (response) {
+                dispatch(setUnits(response));
+            }
+        });
+    }
+}
+
+function setUnits(units) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_UNITS,
+        units
+    }
+}
+
+function addRoom(room) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM,
+        room
+    }
+}
+
+function hideAddRoomModalForm() {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_HIDE
+    }
+}
+
+function clearAddRoomModalFormFields() {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CLEAR_FIELDS
+    }
+}
+
+function showAddRoomModalForm() {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SHOW
+    }
+}
+
 export default {
+    showAddRoomModalForm,
+    clearAddRoomModalFormFields,
+    hideAddRoomModalForm,
+    changeRoomNumber,
+    changeRoomCost,
+    changeRoomStorage,
+    selectRoom,
+    deleteRoom,
+    selectRoomUnit,
+    loadUnits,
+    setUnits,
+    addRoom,
     getStock,
     setFieldData,
     addStock,

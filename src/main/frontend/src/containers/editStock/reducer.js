@@ -1,10 +1,18 @@
 import * as event from "./constants";
 
 const initUserState = {
-    room:{
-        name: "",
-        type: "",
-        count: ""
+    stockRooms: {
+        selectedRoomName: null,
+        rooms: [],
+        addRoomModalForm: {
+            isOpen: false,
+            units: [],
+            number: '',
+            cost: '',
+            shelfs: [],
+            unit: null,
+            storage: ''
+        }
     },
     data: {
         name: "",
@@ -12,7 +20,6 @@ const initUserState = {
         city: "",
         street: "",
         home: "",
-        rooms:[],
         id: -1
     },
 
@@ -21,8 +28,7 @@ const initUserState = {
         country: "",
         city: "",
         street: "",
-        home: "",
-        rooms:[]
+        home: ""
     },
     frontend: {
         showAlertPopup: false,
@@ -98,6 +104,139 @@ export default function (state = initUserState, action) {
             };
         case event.SET_DEFAULT_VALUE:
             return initUserState;
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_NUMBER:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    addRoomModalForm: {
+                        ...state.stockRooms.addRoomModalForm,
+                        number: action.number
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_COST:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    addRoomModalForm: {
+                        ...state.stockRooms.addRoomModalForm,
+                        cost: action.cost
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_STORAGE:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    addRoomModalForm: {
+                        ...state.stockRooms.addRoomModalForm,
+                        storage: action.storage
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CLEAR_FIELDS:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    addRoomModalForm: {
+                        ...state.stockRooms.addRoomModalForm,
+                        number: '',
+                        cost: '',
+                        storage: ''
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_UNITS: {
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    addRoomModalForm: {
+                        ...state.stockRooms.addRoomModalForm,
+                        units: action.units
+                    }
+                }
+            }
+        };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SELECT_UNIT: {
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    addRoomModalForm: {
+                        ...state.stockRooms.addRoomModalForm,
+                        unit: action.unit
+                    }
+                }
+            }
+        };
+
+        case event.EDIT_STOCK_FORM_DELETE_ROOM:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    rooms: state.stockRooms.rooms.filter(function(room) {
+                        return room.number !== action.number
+                    })
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    rooms: [
+                        ...state.stockRooms.rooms,
+                        action.room
+                    ]
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_SELECT_ROOM:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    selectedRoomName: action.number
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_HIDE:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    addRoomModalForm: {
+                        ...state.stockRooms.addRoomModalForm,
+                        isOpen: false
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SHOW:
+            return {
+                ...state,
+                stockRooms: {
+                    ...state.stockRooms,
+                    addRoomModalForm: {
+                        ...state.stockRooms.addRoomModalForm,
+                        isOpen: true
+                    }
+                }
+            };
+
         default:
             return state;
     }

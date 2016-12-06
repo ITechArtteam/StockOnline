@@ -6,6 +6,7 @@ import './style.css';
 import {AlertPopup} from '../../components/AlertPopup';
 import {Link, browserHistory} from "react-router";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import Rooms from './rooms/Rooms'
 
 class EditStock extends React.Component {
 
@@ -154,12 +155,7 @@ class EditStock extends React.Component {
                     </div>
                 </div>{/*dib.col-xs-3 end*/}
                 <div className="col-xs-9">
-
-                    <BootstrapTable data={rooms} cellEdit={cellEditProp} insertRow={true}>
-                        <TableHeaderColumn headerAlign="center" dataField="name" isKey={true}>Помещение</TableHeaderColumn>
-                        <TableHeaderColumn headerAlign="center" dataField="type">Тип хранения</TableHeaderColumn>
-                        <TableHeaderColumn headerAlign="center" dataField="count" editable={false}>Количество свободных мест</TableHeaderColumn>
-                    </BootstrapTable>
+                <Rooms />
                 </div>{/*div.col-xs-9 end*/}
                 <AlertPopup isVisible={this.props.stock.frontend.showAlertPopup}
                             message={this.props.stock.frontend.messageAlertPop}
@@ -199,6 +195,39 @@ const mapDispatchToProps = (dispatch) => {
         },
         setDefaultValue: () => {
             dispatch(stockActionCreator.setDefaultValue())
+        },
+        addRoom:(room) => {
+            dispatch(stockActionCreator.addRoom(room))
+        },
+        loadUnits: () => {
+            dispatch(stockActionCreator.loadUnits())
+        },
+        clearAddRoomModalFormFields:() => {
+            dispatch(stockActionCreator.clearAddRoomModalFormFields())
+        },
+        hideAddRoomModalForm:() => {
+            dispatch(stockActionCreator.hideAddRoomModalForm())
+        },
+        changeRoomNumber:(number) => {
+            dispatch(stockActionCreator.changeRoomNumber(number))
+        },
+        changeRoomCost:(cost) => {
+            dispatch(stockActionCreator.changeRoomCost(cost))
+        },
+        changeRoomStorage:(storage) => {
+            dispatch(stockActionCreator.changeRoomStorage(storage))
+        },
+        selectRoom:(number) => {
+            dispatch(stockActionCreator.selectRoom(number))
+        },
+        deleteRoom:(number) => {
+            dispatch(stockActionCreator.deleteRoom(number))
+        },
+        selectRoomUnit:(unit) => {
+            dispatch(stockActionCreator.selectRoomUnit(unit))
+        },
+        setUnits:(units) => {
+            dispatch(stockActionCreator.setUnits(units))
         }
     }
 };
