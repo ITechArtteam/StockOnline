@@ -11,6 +11,9 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "number")
+    private String number;
+
     @Column(name = "cost")
     private Double cost;
 
@@ -22,7 +25,7 @@ public class Room {
     @JoinColumn(name = "storage_requirement_id")
     private StorageRequirement storage;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     private Set<Shelf> shelfs;
 
     public Room() {
@@ -30,6 +33,9 @@ public class Room {
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
+
+    public String getNumber() { return number; }
+    public void setNumber(String number) { this.number = number; }
 
     public Double getCost() { return cost; }
     public void setCost(Double cost) { this.cost = cost; }
@@ -45,12 +51,13 @@ public class Room {
 
     @Override
     public String toString() {
-        return "RoomDao{" +
+        return "Room{" +
                 "id=" + id +
+                "number=" + number +
                 ", cost=" + cost +
                 ", stock=" + stock +
                 ", storageRequirement=" + storage +
-                ", shelfs=" + shelfs +
+//                ", shelfs=" + shelfs +
                 '}';
     }
 }

@@ -25,7 +25,7 @@ class CheckGoods extends React.Component {
     };
 
     onFindClick() {
-        this.props.findWaybillById(this.props.frontend.waybillId, this.props.expectedWaybillStatus);
+        this.props.findWaybillByNumber(this.props.frontend.waybillId, this.props.expectedWaybillStatus);
     };
 
     onClearClick() {
@@ -34,7 +34,7 @@ class CheckGoods extends React.Component {
     }
 
     onAcceptClick() {
-        this.props.acceptWaybill(this.props.waybill.id,
+        this.props.acceptWaybill(this.props.waybill.number,
             this.props.finalWaybillStatus,
             this.props.finalProductStatus,
             this.props.senderRole);
@@ -101,11 +101,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        findWaybillById: (id, waybillStatus) => {
-            dispatch(checkGoodsActionCreator.findWaybillById(id, waybillStatus))
+        findWaybillByNumber: (number, waybillStatus) => {
+            dispatch(checkGoodsActionCreator.findWaybillByNumber(number, waybillStatus))
         },
-        acceptWaybill: (id, waybillStatus, productStatus, senderRole) => {
-            dispatch(checkGoodsActionCreator.acceptWaybill(id, waybillStatus, productStatus, senderRole))
+        acceptWaybill: (number, waybillStatus, productStatus, senderRole) => {
+            dispatch(checkGoodsActionCreator.acceptWaybill(number, waybillStatus, productStatus, senderRole))
         },
         showDialog: (text, type, buttons) => {
             dispatch(checkGoodsActionCreator.showDialog(text, type, buttons))

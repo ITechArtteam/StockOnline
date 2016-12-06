@@ -11,6 +11,9 @@ public class Shelf {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "number")
+    private String number;
+
     @Column(name = "capacity")
     private Integer capacity;
 
@@ -30,6 +33,9 @@ public class Shelf {
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
+    public String getNumber() { return number; }
+    public void setNumber(String number) { this.number = number; }
+
     public Integer getCapacity() { return capacity; }
     public void setCapacity(Integer capacity) { this.capacity = capacity; }
 
@@ -46,10 +52,11 @@ public class Shelf {
     public String toString() {
         return "Shelf{" +
                 "id=" + id +
+                "number=" + number +
                 ", capacity=" + capacity +
                 ", isFree=" + isFree +
                 ", room=" + room +
-                ", productOnShelfs=" + productOnShelfs +
+//                ", productOnShelfs=" + productOnShelfs +
                 '}';
     }
 }
