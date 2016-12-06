@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class RoomForDistributionGoodsDto {
-    private Integer id;
+    private Long id;
     private String number;
     private StorageRequirementForControllerDto storage;
     private Set<ShelfForDistributionGoodsDto> shelves;
@@ -26,11 +26,11 @@ public class RoomForDistributionGoodsDto {
         }
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
