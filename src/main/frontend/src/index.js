@@ -42,9 +42,10 @@ import {stock} from "./actions";
 ReactDOM.render(
     <Provider store={store}>
         <Router path="/" history={browserHistory}>
+            <Route path="/login" component={Login}/>
+            <IndexRedirect to="/login" />
             <Route path="/" component={App}>
-                <IndexRedirect to="login" />
-                <Route path="/login" component={Login}/>
+                <IndexRedirect to="/login" />
                 <Route path="/clients" requiredRole={["SUPER_ADMIN"]} component={RequireRole(Clients)}/>
                 <Route path="/client(/:name)" requiredRole={["SUPER_ADMIN"]} component={RequireRole(EditClient)}/>
                 <Route path="/reports" requiredRole={["BOSS_STOCK"]} component={RequireRole(Reports)}/>

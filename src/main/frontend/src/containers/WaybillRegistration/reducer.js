@@ -8,24 +8,31 @@ const initialState = {
     selectSenderModalForm: {
         isOpen: false,
         selectedSenderName: null,
-        senders: []
+        senders: [],
+        validationError: ''
     },
     carrierName: '',
     carrier: null,
     selectCarrierModalForm: {
         isOpen: false,
         selectedCarrierName: null,
-        carriers: []
+        carriers: [],
+        validationError: ''
     },
     transportNumbers: {
         addNumberModalForm: {
             isOpen: false,
-            number: ''
+            number: '',
+            validationError: ''
         },
         numbers: [],
         car: '',
         trailer: '',
-        selectedNumber: null
+        selectedNumber: null,
+        validationErrors: {
+            carNumberError: '',
+            trailerNumberError: ''
+        }
     },
     driver: {
         id: 1,
@@ -45,12 +52,19 @@ const initialState = {
             price: '',
             count: '',
             unit: null,
-            storage: ''
+            storage: '',
+            validationErrors: {
+                nameError: '',
+                priceError: '',
+                countError: '',
+                unitError: '',
+                storageError: ''
+            }
         }
     },
     transportTypes: [
         {
-            value: 'AUTO', label: 'Автомобиль'
+            value: 'CAR', label: 'Автомобиль'
         },
         {
             value: 'TRAIN', label: 'Поезд'
@@ -60,7 +74,21 @@ const initialState = {
     selectSenderModal: {
         senders: [],
         selectedSender: null
-    }
+    },
+    validationErrors: {
+        numberError: '',
+        issuanceDateError: '',
+        senderError: '',
+        senderNameError: '',
+        transportNumbersError: '',
+        descriptionError: '',
+        productsError: '',
+        carrierError: '',
+        transportTypeError: '',
+        driverError: '',
+        numbersError: ''
+    },
+    isFormCorrect: true
 };
 
 export default function waybillRegistrationForm(state = initialState, action) {
@@ -414,7 +442,7 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 carrier: action.carrier
             };
 
-        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNITS: {
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNITS:
             return {
                 ...state,
                 waybillProducts: {
@@ -424,10 +452,9 @@ export default function waybillRegistrationForm(state = initialState, action) {
                         units: action.units
                     }
                 }
-            }
-        }
+            };
 
-        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SELECT_UNIT: {
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SELECT_UNIT:
             return {
                 ...state,
                 waybillProducts: {
@@ -437,8 +464,208 @@ export default function waybillRegistrationForm(state = initialState, action) {
                         unit: action.unit
                     }
                 }
-            }
-        }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_WAYBILL_NUMBER_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    numberError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_ISSUANCE_DATE_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    issuanceDateError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_DESCRIPTION_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    descriptionError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_SENDER_NAME_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    senderNameError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_SET_NUMBER_ERROR:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    addNumberModalForm: {
+                        ...state.transportNumbers.addNumberModalForm,
+                        validationError: action.error
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_NAME_ERROR:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        validationErrors: {
+                            ...state.waybillProducts.addProductModalForm.validationErrors,
+                            nameError: action.error
+                        }
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_COUNT_ERROR:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        validationErrors: {
+                            ...state.waybillProducts.addProductModalForm.validationErrors,
+                            countError: action.error
+                        }
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_PRICE_ERROR:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        validationErrors: {
+                            ...state.waybillProducts.addProductModalForm.validationErrors,
+                            priceError: action.error
+                        }
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_STORAGE_ERROR:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        validationErrors: {
+                            ...state.waybillProducts.addProductModalForm.validationErrors,
+                            storageError: action.error
+                        }
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNIT_ERROR:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    addProductModalForm: {
+                        ...state.waybillProducts.addProductModalForm,
+                        validationErrors: {
+                            ...state.waybillProducts.addProductModalForm.validationErrors,
+                            unitError: action.error
+                        }
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_CAR_NUMBER_ERROR:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    validationErrors: {
+                        ...state.transportNumbers.validationErrors,
+                        carNumberError: action.error
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_TRAILER_NUMBER_ERROR:
+            return {
+                ...state,
+                transportNumbers: {
+                    ...state.transportNumbers,
+                    validationErrors: {
+                        ...state.transportNumbers.validationErrors,
+                        trailerNumberError: action.error
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_SENDER_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    senderError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_CARRIER_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    carrierError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_TRANSPORT_TYPE_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    transportTypeError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_DRIVER_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    driverError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_PRODUCTS_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    productsError: action.error
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_NUMBERS_ERROR:
+            return {
+                ...state,
+                validationErrors: {
+                    ...state.validationErrors,
+                    numbersError: action.error
+                }
+            };
 
 
         default:

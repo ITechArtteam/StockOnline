@@ -2,17 +2,36 @@ import React from 'react'
 
 import './style.css'
 
-const TextAreaInput = (props) => {
-    return (
-        <div className="form-group">
-            <label className="control-label">{props.label}</label>
+class TextAreaInput extends React.Component {
+
+    renderError() {
+        if (this.props.error && (this.props.error != '')) {
+            return (<div className="control-label">{this.props.error}</div>);
+        }
+        else {
+            return (<div>&nbsp;</div>);
+        }
+    }
+
+    renderFormGroupClassName() {
+        return 'form-group' + ((this.props.error && (this.props.error != '') ? ' has-error' : ''));
+    }
+
+    render() {
+        return (
+            <div className={this.renderFormGroupClassName()}>
+                <label className="control-label">{this.props.label}</label>
                 <textarea
                     className="form-control disabled-resizing"
-                    onChange={(event) => props.onChange(event.target.value)}
-                    value={props.value}
+                    onChange={(event) => this.props.onChange(event.target.value)}
+                    value={this.props.value}
+                    onBlur={this.props.onBlur}
                 />
-        </div>
-    )
-};
+                {this.renderError()}
+            </div>
+        )
+
+    }
+}
 
 export default TextAreaInput;

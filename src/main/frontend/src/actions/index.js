@@ -42,7 +42,7 @@ export function signInUser(credentials) {
                         }
                     },
                     error: function () {
-                        dispatch(authError())
+                        dispatch(authError('Указанная комбинация логина и пароля не найдена'));
                     }
                 })
             }
@@ -59,8 +59,9 @@ export function authUser(userInfo) {
     }
 }
 
-export function authError() {
+export function authError(error) {
     return {
-        type: AUTH_ERROR
+        type: AUTH_ERROR,
+        error
     }
 }

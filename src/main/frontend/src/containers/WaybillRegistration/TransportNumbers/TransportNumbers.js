@@ -6,6 +6,27 @@ import DefaultTransportNumber from './DefaultTransportNumber/DefaultTransportNum
 
 class TransportNumbers extends React.Component {
 
+    renderError() {
+        if (this.props.error && (this.props.error != '')) {
+            return (<div className="control-label text-danger">{this.props.error}</div>);
+        }
+        else {
+            return (<div>&nbsp;</div>);
+        }
+    }
+
+    renderFormGroupClassName() {
+        if (this.props.error && (this.props.error != '')) {
+            return 'form-group has-error';
+        }
+        else if (this.props.resultType && (this.props.resultType != '')) {
+            return 'form-group has-' + this.props.resultType;
+        }
+        else {
+            return 'form-group';
+        }
+    }
+
     renderTransportNumbersLayout() {
         switch (this.props.transportType) {
             case 'TRAIN':
@@ -23,8 +44,9 @@ class TransportNumbers extends React.Component {
 
     render() {
         return (
-            <div className="form-group">
+            <div className='form-group'>
                 {this.renderTransportNumbersLayout()}
+                {this.renderError()}
             </div>
         )
     }

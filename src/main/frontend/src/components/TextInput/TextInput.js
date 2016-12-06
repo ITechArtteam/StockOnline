@@ -1,18 +1,43 @@
 import React from 'react'
 
-const TextInput = (props) => {
-    return (
-        <div className={'form-group' + (props.resultType ? ' has-' + props.resultType : '')}>
-            <label className="control-label">{props.label}</label>
-            <input
-                type="text"
-                name={props.name}
-                value={props.value}
-                className={'form-control' + (props.resultType ? ' form-control-' + props.resultType : '')}
-                onChange={(event) => props.onChange(event.target.value)}
-                onBlur={props.onBlur} />
-        </div>
-    )
-};
+class TextInput extends React.Component {
+
+    renderError() {
+        if (this.props.error && (this.props.error != '')) {
+            return (<div className="control-label">{this.props.error}</div>);
+        }
+        else {
+            return (<div>&nbsp;</div>);
+        }
+    }
+
+    renderFormGroupClassName() {
+        if (this.props.error && (this.props.error != '')) {
+            return 'form-group has-error';
+        }
+        else if (this.props.resultType && (this.props.resultType != '')) {
+            return 'form-group has-' + this.props.resultType;
+        }
+        else {
+            return 'form-group';
+        }
+    }
+
+    render() {
+        return (
+            <div className={this.renderFormGroupClassName()}>
+                <label className="control-label">{this.props.label}</label>
+                <input
+                    type="text"
+                    name={this.props.name}
+                    value={this.props.value}
+                    className={'form-control'}
+                    onChange={(event) => this.props.onChange(event.target.value)}
+                    onBlur={this.props.onBlur} />
+                {this.renderError()}
+            </div>
+        )
+    }
+}
 
 export default TextInput;
