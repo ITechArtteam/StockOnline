@@ -28,6 +28,10 @@ public class StorageRequirement {
     public StorageRequirement() {
     }
 
+    public StorageRequirement(String type) {
+        this.type = type;
+    }
+
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }

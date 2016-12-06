@@ -4,12 +4,13 @@ import com.itechart.stockOnline.converter.StockDtoConverter;
 import com.itechart.stockOnline.dao.StockDao;
 import com.itechart.stockOnline.dao.UserDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
+import com.itechart.stockOnline.model.Room;
 import com.itechart.stockOnline.model.Stock;
-import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.Address;
-import com.itechart.stockOnline.model.dto.StockDto;
-import com.itechart.stockOnline.model.dto.StockPage;
+import com.itechart.stockOnline.model.dto.stock.StockDto;
+import com.itechart.stockOnline.model.dto.stock.StockPage;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +21,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
+
+import java.util.Set;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 import static com.itechart.stockOnline.dao.specification.StockSpecifications.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -42,8 +43,13 @@ public class StockServiceImpl implements StockService {
     private final UserService userService;
 
     private final AddressService addressService;
+
     @Autowired
     private StockOwnerCompanyService stockOwnerCompanyService;
+
+    @Autowired
+    private RoomService roomService;
+
     @Autowired
     public StockServiceImpl(StockDao stockDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter, AddressService addressService) {
         this.stockDao = stockDao;
@@ -136,7 +142,7 @@ public class StockServiceImpl implements StockService {
         if (stock.getId() > -1){
             stock = update(stock);
         } else {
-            stock = saveStock(stock);
+            stock = saveStock(stock, stockDto);
         }
         return stock;
     }
@@ -158,9 +164,18 @@ public class StockServiceImpl implements StockService {
 
     @Override
     @Transactional
-    public Stock saveStock(Stock stock) {
+    public Stock saveStock(Stock stock, StockDto stockDto) {
         stock.setId(null);
-        return stockDao.save(stock);
+        stock = stockDao.save(stock);
+        Set<Room> rooms = stockDtoConverter.toRooms(stockDto);
+        if (CollectionUtils.isNotEmpty(rooms)) {
+            for (Room room : rooms) {
+                room.setStock(stock);
+                room = roomService.saveRoom(room);
+            }
+        }
+
+        return stock;
     }
 
 

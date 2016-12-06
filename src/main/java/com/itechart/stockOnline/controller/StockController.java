@@ -1,15 +1,12 @@
 package com.itechart.stockOnline.controller;
 
+import com.itechart.stockOnline.model.Room;
 import com.itechart.stockOnline.model.Stock;
-import com.itechart.stockOnline.model.dto.StockDto;
-import com.itechart.stockOnline.converter.StockDtoConverter;
+import com.itechart.stockOnline.model.dto.stock.StockDto;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.ValidationError;
-import com.itechart.stockOnline.model.Role;
-import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.service.StockService;
-import com.itechart.stockOnline.service.UserService;
-import com.itechart.stockOnline.util.ControllerHelper;
+import com.itechart.stockOnline.service.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.Set;
 
 @RestController
@@ -29,10 +25,12 @@ public class StockController {
     private static final Logger logger = LoggerFactory.getLogger(StockController.class);
 
     private final StockService stockService;
+    private final RoomService roomService;
 
     @Autowired
-    public StockController(StockService stockService) {
+    public StockController(StockService stockService, RoomService roomService) {
         this.stockService = stockService;
+        this.roomService = roomService;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

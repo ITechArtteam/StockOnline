@@ -9,19 +9,19 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(name = "number")
-    private String number;
+    private Long id;
 
     @Column(name = "cost")
     private Double cost;
+
+    @Column(name = "number")
+    private String number;
 
     @ManyToOne
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "storage_requirement_id")
     private StorageRequirement storage;
 
@@ -31,8 +31,8 @@ public class Room {
     public Room() {
     }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getNumber() { return number; }
     public void setNumber(String number) { this.number = number; }
@@ -55,7 +55,10 @@ public class Room {
                 "id=" + id +
                 "number=" + number +
                 ", cost=" + cost +
+                ", number='" + number + '\'' +
                 ", stock=" + stock +
+                ", storage=" + storage +
+                ", shelfs=" + shelfs +
                 ", storageRequirement=" + storage +
 //                ", shelfs=" + shelfs +
                 '}';
