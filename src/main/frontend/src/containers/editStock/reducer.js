@@ -1,20 +1,21 @@
 import * as event from "./constants";
 
 const initUserState = {
-    stockRooms: {
-        selectedRoomName: null,
-        rooms: [],
-        addRoomModalForm: {
-            isOpen: false,
-            units: [],
-            number: '',
-            cost: '',
-            shelfs: [],
-            unit: null,
-            storage: ''
-        }
-    },
+
     data: {
+        stockRooms: {
+            selectedRoomName: null,
+            rooms: [],
+            addRoomModalForm: {
+                isOpen: false,
+                units: [],
+                number: '',
+                cost: '',
+                shelfs: [],
+                unit: null,
+                storage: ''
+            }
+        },
         name: "",
         country: "",
         city: "",
@@ -108,11 +109,14 @@ export default function (state = initUserState, action) {
         case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_NUMBER:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    addRoomModalForm: {
-                        ...state.stockRooms.addRoomModalForm,
-                        number: action.number
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            number: action.number
+                        }
                     }
                 }
             };
@@ -120,11 +124,13 @@ export default function (state = initUserState, action) {
         case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_COST:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    addRoomModalForm: {
-                        ...state.stockRooms.addRoomModalForm,
-                        cost: action.cost
+                data: {
+                    ...state.data, stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            cost: action.cost
+                        }
                     }
                 }
             };
@@ -132,11 +138,14 @@ export default function (state = initUserState, action) {
         case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CHANGE_STORAGE:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    addRoomModalForm: {
-                        ...state.stockRooms.addRoomModalForm,
-                        storage: action.storage
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            storage: action.storage
+                        }
                     }
                 }
             };
@@ -144,13 +153,16 @@ export default function (state = initUserState, action) {
         case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_CLEAR_FIELDS:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    addRoomModalForm: {
-                        ...state.stockRooms.addRoomModalForm,
-                        number: '',
-                        cost: '',
-                        storage: ''
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            number: '',
+                            cost: '',
+                            storage: ''
+                        }
                     }
                 }
             };
@@ -158,11 +170,14 @@ export default function (state = initUserState, action) {
         case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_UNITS: {
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    addRoomModalForm: {
-                        ...state.stockRooms.addRoomModalForm,
-                        units: action.units
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            units: action.units
+                        }
                     }
                 }
             }
@@ -171,11 +186,14 @@ export default function (state = initUserState, action) {
         case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SELECT_UNIT: {
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    addRoomModalForm: {
-                        ...state.stockRooms.addRoomModalForm,
-                        unit: action.unit
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            unit: action.unit
+                        }
                     }
                 }
             }
@@ -184,43 +202,55 @@ export default function (state = initUserState, action) {
         case event.EDIT_STOCK_FORM_DELETE_ROOM:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    rooms: state.stockRooms.rooms.filter(function(room) {
-                        return room.number !== action.number
-                    })
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        rooms: state.data.stockRooms.rooms.filter(function (room) {
+                            return room.number !== action.number
+                        })
+                    }
                 }
             };
 
         case event.EDIT_STOCK_FORM_ADD_ROOM:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    rooms: [
-                        ...state.stockRooms.rooms,
-                        action.room
-                    ]
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        rooms: [
+                            ...state.data.stockRooms.rooms,
+                            action.room
+                        ]
+                    }
                 }
             };
 
         case event.EDIT_STOCK_FORM_SELECT_ROOM:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    selectedRoomName: action.number
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        selectedRoomName: action.number
+                    }
                 }
             };
 
         case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_HIDE:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    addRoomModalForm: {
-                        ...state.stockRooms.addRoomModalForm,
-                        isOpen: false
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            isOpen: false
+                        }
                     }
                 }
             };
@@ -228,11 +258,14 @@ export default function (state = initUserState, action) {
         case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SHOW:
             return {
                 ...state,
-                stockRooms: {
-                    ...state.stockRooms,
-                    addRoomModalForm: {
-                        ...state.stockRooms.addRoomModalForm,
-                        isOpen: true
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            isOpen: true
+                        }
                     }
                 }
             };

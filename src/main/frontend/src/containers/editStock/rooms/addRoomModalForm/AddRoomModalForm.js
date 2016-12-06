@@ -74,12 +74,12 @@ class AddRoomModalForm extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        isOpen: state.stock.stockRooms.addRoomModalForm.isOpen,
-        number: state.stock.stockRooms.addRoomModalForm.number,
-        cost: state.stock.stockRooms.addRoomModalForm.cost,
-        unit: state.stock.stockRooms.addRoomModalForm.unit,
-        units: state.stock.stockRooms.addRoomModalForm.units,
-        storage: state.stock.stockRooms.addRoomModalForm.storage
+        isOpen: state.stock.data.stockRooms.addRoomModalForm.isOpen,
+        number: state.stock.data.stockRooms.addRoomModalForm.number,
+        cost: state.stock.data.stockRooms.addRoomModalForm.cost,
+        unit: state.stock.data.stockRooms.addRoomModalForm.unit,
+        units: state.stock.data.stockRooms.addRoomModalForm.units,
+        storage: state.stock.data.stockRooms.addRoomModalForm.storage
     }
 }
 const mapDispatchToProps = (dispatch) => {

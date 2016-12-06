@@ -102,7 +102,6 @@ class EditStock extends React.Component {
     }
 
     render() {
-        var rooms = [];
 
         const cellEditProp = {
             mode: 'click'

@@ -1,5 +1,7 @@
 package com.itechart.stockOnline.model.dto;
 
+import java.util.Set;
+
 public class StockDto {
     private Long id;
     private String name;
@@ -8,6 +10,7 @@ public class StockDto {
     private String city;
     private String street;
     private Integer home;
+    private Set<RoomDto> rooms;
 
 
     public Long getId() { return id;  }
@@ -51,6 +54,9 @@ public class StockDto {
         this.home = home;
     }
 
+    public Set<RoomDto> getRooms() { return rooms; }
+    public void setRooms(Set<RoomDto> rooms) { this.rooms = rooms; }
+
     @Override
     public String toString() {
         return "StockDto{" +
@@ -61,6 +67,7 @@ public class StockDto {
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 ", home=" + home +
+                ", rooms=" + rooms +
                 '}';
     }
 }

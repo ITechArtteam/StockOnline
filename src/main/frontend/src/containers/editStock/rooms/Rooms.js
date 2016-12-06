@@ -85,8 +85,8 @@ class Rooms extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        rooms: state.stock.stockRooms.rooms,
-        selectedRoomName: state.stock.stockRooms.selectedRoomName
+        rooms: state.stock.data.stockRooms.rooms,
+        selectedRoomName: state.stock.data.stockRooms.selectedRoomName
     }
 }
 const mapDispatchToProps = (dispatch) => {
