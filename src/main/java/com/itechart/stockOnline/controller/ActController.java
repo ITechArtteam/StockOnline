@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 @RestController
@@ -52,6 +53,7 @@ public class ActController {
     @RequestMapping(value = "/act", method = RequestMethod.POST)
     public void saveWorker(@RequestBody Act act, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/act  method: POST Request body {act}", act);
+        act.setReportDate(new Date());
         Act saveAct = actService.save(act);
         response.addHeader("result", "Act has saved.");
     }

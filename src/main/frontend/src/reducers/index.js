@@ -9,6 +9,7 @@ import {stockListReducer} from '../containers/stocks/index';
 import {checkGoodsReducer} from '../containers/checkGoods/index'
 import AuthReducer from './auth'
 import WaybillRegistrationFormReducer from './../containers/WaybillRegistration/reducer'
+import productsReducer from "./products-reducer";
 import workerReducer from "./worker-reducer";
 import workersReducer from "./workers-reducer";
 import actReducer from "./act-reducer";
@@ -16,6 +17,7 @@ import actsReducer from "./acts-reducer";
 import {stock} from "../containers/editStock";
 import Driver from './../containers/editDriver/reducer';
 import roleReducer from "./role-reducer"
+import {distributionGoodsReducer} from '../containers/DistributionGoods/index'
 
 const rootReducer = combineReducers({
     waybillRegistrationForm: WaybillRegistrationFormReducer,
@@ -24,6 +26,7 @@ const rootReducer = combineReducers({
     workersState:workersReducer,
     actState:actReducer,
     actsState:actsReducer,
+    productsState:productsReducer,
     form: FormReducer,
     roleState:roleReducer,
     client,
@@ -34,6 +37,7 @@ const rootReducer = combineReducers({
     navigation,
     checkGoodsReducer,
     stock,
+    distributionGoodsReducer,
     driver: Driver
 });
 

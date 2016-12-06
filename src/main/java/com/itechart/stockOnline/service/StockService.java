@@ -5,6 +5,7 @@ import com.itechart.stockOnline.model.dto.stock.StockDto;
 import com.itechart.stockOnline.model.dto.stock.StockPage;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface StockService {
 
@@ -12,6 +13,7 @@ public interface StockService {
     Stock saveStock(Stock stock, StockDto stockDto);
     Stock update(Stock stock);
     StockPage getStockPage(int pageNumber, int recordCount, String name, String address, String login);
+    List<Stock> getByCompanyId(Long companyId);
     void delete(Stock stock);
     int deleteByIds(Collection<Integer> ids);
     Stock saveOrUpdateStock(StockDto stockDto, String login);

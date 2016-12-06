@@ -17,13 +17,42 @@ import WaybillProducts from './WaybillProducts/WaybillProducts'
 
 import * as Actions from './actions'
 
+import {
+    checkDescription,
+    checkWaybillNumber,
+    checkSenderName,
+    checkIssuanceDate,
+    checkSender,
+    checkCarrier,
+    checkDriver,
+    checkNumbers,
+    checkCarNumber,
+    checkTrailerNumber,
+    checkProducts,
+    checkTransportType
+} from './validation'
+
 
 class WaybillRegistration extends React.Component {
 
+    handleWaybillNumberOnBlur() {
+        this.props.setWaybillNumberError(checkWaybillNumber(this.props.waybillNumber));
+    }
+
     handleSenderNameOnBlur() {
-        if (!this.props.chooseCarrierModalFormIsOpen
-            && (getFilteredItems(this.props.senders, this.props.senderName).length > 0)) {
-            this.props.showChooseSenderModal();
+        let error = checkSenderName(this.props.senderName);
+
+        this.props.setSenderNameError(error);
+
+        if (!this.props.chooseCarrierModalFormIsOpen) {
+            if (error == '') {
+                if (getFilteredItems(this.props.senders, this.props.senderName).length > 0) {
+                    this.props.showChooseSenderModal();
+                }
+                else {
+                    this.props.setSenderNameError('Не найдено ни одной компании');
+                }
+            }
         }
     }
 
@@ -54,6 +83,10 @@ class WaybillRegistration extends React.Component {
     }
 
     handleFormSubmit() {
+        const validationResult = this.validateForm();
+        if (!validationResult) {
+            return;
+        }
         let type =  this.props.transportType;
         let numbers = [];
         if (type === 'TRAIN') {
@@ -93,6 +126,123 @@ class WaybillRegistration extends React.Component {
         });
     }
 
+    validateForm() {
+        let errors = [];
+        let error;
+        if ((error = this.validateWaybillNumber()) != '') {
+            errors.push(error);
+        }
+        if ((error = this.validateIssuanceDate()) != '') {
+            errors.push(error);
+        }
+        if ((error = this.validateSender()) != '') {
+            errors.push(error);
+        }
+        if ((error = this.validateCarrier()) != '') {
+            errors.push(error);
+        }
+        if ((error = this.validateTransportType()) != '') {
+            errors.push(error);
+        }
+
+        if ((error = this.validateDriver()) != '') {
+            errors.push(error);
+        }
+        if ((error = this.validateDescription()) != '') {
+            errors.push(error);
+        }
+        if ((error = this.validateProducts()) != '') {
+            errors.push(error);
+        }
+
+        $.merge(errors, this.validateTransportNumbers());
+
+        return errors.length <= 0;
+    }
+
+    validateWaybillNumber() {
+        const error = checkWaybillNumber(this.props.waybillNumber);
+        this.props.setWaybillNumberError(error);
+        return error;
+    }
+
+    validateIssuanceDate() {
+        const error = checkIssuanceDate(this.props.registrationDate);
+        this.props.setIssuanceDateError(error);
+        return error;
+    }
+
+    validateSender() {
+        const error = checkSender(this.props.sender);
+        this.props.setSenderNameError(error);
+        return error;
+    }
+
+    validateCarrier() {
+        const error = checkCarrier(this.props.carrier);
+        this.props.setCarrierError(error);
+        return error;
+    }
+
+    validateTransportType() {
+        const error = checkTransportType(this.props.transportType);
+        this.props.setTransportTypeError(error);
+        return error;
+    }
+
+    validateDriver() {
+        const error = checkDriver(this.props.driver, this.props.transportType);
+        this.props.setDriverError(error);
+        return error;
+    }
+
+    validateTransportNumbers() {
+        let errors = [];
+        let error;
+        if (this.props.transportType) {
+            if (this.props.transportType == 'CAR') {
+                error = checkCarNumber(this.props.carNumber);
+                this.props.setCarNumberError(error);
+                if (error != '') {
+                    errors.push(error);
+                }
+
+                error = checkTrailerNumber(this.props.trailerNumber);
+                this.props.setTrailerNumberError(error);
+                if (error != '') {
+                    errors.push(error);
+                }
+            }
+            else {
+                error = checkNumbers(this.props.numbers);
+                this.props.setNumbersError(error);
+                if (error != '') {
+                    errors.push(error);
+                }
+            }
+        }
+
+        return errors;
+    }
+
+    validateDescription() {
+        const error = checkDescription(this.props.description);
+        this.props.setDescriptionError(error);
+        return error;
+    }
+
+    validateProducts() {
+        const error = checkProducts(this.props.products);
+        this.props.setProductsError(error);
+        return error;
+    }
+
+    handleChangeIssuanceDate(value) {
+        const error = checkIssuanceDate(value);
+        this.props.setIssuanceDateError(error);
+        this.props.changeRegistrationDate(value);
+    }
+
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
@@ -102,12 +252,17 @@ class WaybillRegistration extends React.Component {
                         name="waybill-number"
                         label="Номер накладной"
                         value={this.props.waybillNumber}
-                        onChange={this.props.changeWaybillNumber} />
+                        onChange={this.props.changeWaybillNumber}
+                        onBlur={() => {this.props.setWaybillNumberError(checkWaybillNumber(this.props.waybillNumber))}}
+                        error={this.props.waybillNumberError} />
                     <DateInput
                         value={this.props.registrationDate}
-                        onChange={this.props.changeRegistrationDate}
-                        label="Дата выписки накладной" />
+                        onChange={(value) => {this.handleChangeIssuanceDate(value)}}
+                        label="Дата выписки накладной"
+                        error={this.props.issuanceDateError}
+                        onBlur={() => {this.props.setIssuanceDateError(checkIssuanceDate(this.props.registrationDate))}}/>
                     <TextInput
+                        error={this.props.senderNameError}
                         name="sender"
                         label="Отправитель"
                         value={this.props.senderName}
@@ -121,6 +276,7 @@ class WaybillRegistration extends React.Component {
                         name="carrier"
                         label="Перевозчик"
                         value={this.props.carrierName}
+                        error={this.props.carrierError}
                         onChange={(value) => {this.handleChangeCarrierName(value)}}
                         onBlur={() => this.handleCarrierNameOnBlur()} />
                     <ChooseCarrierModalForm
@@ -128,13 +284,16 @@ class WaybillRegistration extends React.Component {
                         carriers={getFilteredItems(this.props.carriers, this.props.carrierName)} />
                     <DisabledInput
                         label="Тип транспортного средства"
+                        error={this.props.transportTypeError}
                         value={getTransportTypeLabel(this.props.transportTypes, this.props.transportType)} />
-                    <TransportNumbers transportType={this.props.transportType} />
+                    <TransportNumbers transportType={this.props.transportType} error={this.props.numbersError} />
                     <DriverInfo transportType={this.props.transportType} driver={this.props.driver} />
                     <TextAreaInput
                         label="Дополнительное описание товарной партии"
                         value={this.props.description}
-                        onChange={this.props.changeWaybillDescription} />
+                        onChange={this.props.changeWaybillDescription}
+                        onBlur={() => {this.props.setDescriptionError(checkDescription(this.props.description))}}
+                        error={this.props.descriptionError} />
                     <DisabledInput
                         label="Сумма товаров по накладной"
                         value={this.getTotalProductsSum()} />
@@ -147,7 +306,7 @@ class WaybillRegistration extends React.Component {
                     <DisabledInput
                         label="Дата и время регистрации накладной"
                         value={getCurrentDateTime()} />
-                    <WaybillProducts />
+                    <WaybillProducts error={this.props.productsError} />
                     <div className="col-lg-offset-5 vertical-offset">
                         <input
                             type="button"
@@ -214,7 +373,15 @@ function mapStateToProps(state) {
         driver: state.waybillRegistrationForm.driver,
         dispatcher: state.auth.username,
         products: state.waybillRegistrationForm.waybillProducts.products,
-        description: state.waybillRegistrationForm.description
+        description: state.waybillRegistrationForm.description,
+        waybillNumberError: state.waybillRegistrationForm.validationErrors.numberError,
+        carrierError: state.waybillRegistrationForm.validationErrors.carrierError,
+        transportTypeError: state.waybillRegistrationForm.validationErrors.transportTypeError,
+        senderNameError: state.waybillRegistrationForm.validationErrors.senderNameError,
+        descriptionError: state.waybillRegistrationForm.validationErrors.descriptionError,
+        issuanceDateError: state.waybillRegistrationForm.validationErrors.issuanceDateError,
+        productsError: state.waybillRegistrationForm.validationErrors.productsError,
+        numbersError: state.waybillRegistrationForm.validationErrors.numbersError
     }
 }
 

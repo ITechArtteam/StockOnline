@@ -41,7 +41,6 @@ public class WorkerServiceImpl implements WorkerService {
     @Transactional(readOnly = true)
     public User get(Long id) {
         User worker = workerRepository.findOne(id);
-        worker.setPassword(worker.getPassword());
         return  worker;
     }
 

@@ -29,6 +29,6 @@ public class UserInfoService {
             userRolesStrings.add(role.getName());
         }
 
-        return new UserInfo(user.getLogin(), userRolesStrings);
+        return new UserInfo(user.getId(), user.getLogin(), userRolesStrings);
     }
 }

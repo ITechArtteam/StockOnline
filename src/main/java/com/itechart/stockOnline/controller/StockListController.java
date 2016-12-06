@@ -1,9 +1,16 @@
 package com.itechart.stockOnline.controller;
 
+
 import com.itechart.stockOnline.model.dto.stock.StockPage;
+
+import com.itechart.stockOnline.model.Stock;
+import com.itechart.stockOnline.model.User;
+
 import com.itechart.stockOnline.exception.DataNotFoundError;
 
+import com.itechart.stockOnline.model.dto.forDistributionGoodsPage.StockForDistributionGoodsDto;
 import com.itechart.stockOnline.service.StockService;
+import com.itechart.stockOnline.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/stockList")
@@ -26,6 +34,9 @@ public class StockListController {
     private final static Logger Logger = LoggerFactory.getLogger(StockListController.class);
 
     private StockService stockService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     public StockListController(StockService stockService) {
@@ -43,6 +54,18 @@ public class StockListController {
         Logger.info("REST request. Path:/stockList/page/{}/limit/{}/?name={}&address={}  method: GET", pageNumber, recordCount, name, address);
         return stockService.getStockPage(pageNumber, recordCount, name, address, user.getName());
     }
+
+    @RequestMapping(value = "/byUserCompany", method = RequestMethod.GET)
+    public List<StockForDistributionGoodsDto> getStockList(Principal userInfo) {
+        Logger.info("REST request. Path:/stockList/byUserCompany  method: GET user {}", userInfo.getName());
+        User user = userService.findByLogin(userInfo.getName());
+        List<Stock> stockList = stockService.getByCompanyId(user.getStockOwnerCompany().getId());
+        return stockList
+                .stream()
+                .map(StockForDistributionGoodsDto::new)
+                .collect(Collectors.toList());
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteClients(@RequestParam(value = "idsToDelete") List<Integer> ids) {
         Logger.info("REST request. Path:/stockList/?idsToDelete={}  method: DELETE", ids);

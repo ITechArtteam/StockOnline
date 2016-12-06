@@ -2,6 +2,16 @@ import React from 'react'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class WaybillInfo extends React.Component {
+    fullNameToShortName = (firstName, lastName, patronymic) => {
+        let fn = firstName === null ? '' : `${firstName.charAt(0).toUpperCase()}.`;
+        let ln = lastName === null ? '' : lastName;
+        let pt = patronymic === null ? '' : `${patronymic.charAt(0).toUpperCase()}.`;
+
+        let result = `${ln} ${fn} ${pt}`;
+        result = result === "  " ? "Не указано" : result;
+        return result;
+    };
+
     render(){
         let products = [];
         if(!!this.props.data.productInWaybills) {
@@ -20,16 +30,24 @@ class WaybillInfo extends React.Component {
                     <div className="panel panel-default">
                         <div className="panel-heading">Накладная</div>
                         <div className="panel-body">
-                            Номер: {this.props.data.id} <br/>
-                            Статус: {this.props.data.status}
+                            <b>Номер:</b> <span className="pull-right">{this.props.data.number}</span> <br/>
+                            <b>Статус:</b> <span className="pull-right">{this.props.data.status}</span> <br/>
+                            <b>Дата регистрации:</b> <span className="pull-right">{this.props.data.registrationDate}</span> <br/>
+                        </div>
+                        <div className="panel-heading">Оформил:</div>
+                        <div className="panel-body">
+                            <b>Пользователь:</b> <span className="pull-right">{this.props.data.registeredBy.login}</span> <br/>
+                            <b>ФИО:</b>  <span className="pull-right">{this.fullNameToShortName(this.props.data.registeredBy.name,
+                                                        this.props.data.registeredBy.surname,
+                                                        this.props.data.registeredBy.patronymic)}</span>
                         </div>
                     </div>
                     <div className="panel panel-default">
                         <div className="panel-heading">Транспортное средство</div>
                         <div className="panel-body">
-                            Тип: {this.props.data.transport.type} <br/>
-                            Номер: {this.props.data.transport.number} <br/>
-                            Требования к хранению: {this.props.data.transport.storage.type}
+                            <b>Тип:</b> <span className="pull-right">{this.props.data.transport.type}</span> <br/>
+                            <b>Номер:</b> <span className="pull-right">{this.props.data.transport.number}</span>  <br/>
+                            <b>Требования к хранению:</b> <span className="pull-right">{this.props.data.transport.storage.type}</span>
                         </div>
                     </div>
                 </div>
@@ -48,8 +66,15 @@ class WaybillInfo extends React.Component {
 WaybillInfo.PropTypes = {
     visible: React.PropTypes.bool.isRequired,
     data: React.PropTypes.objectOf(React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
+        number: React.PropTypes.number.isRequired,
         status: React.PropTypes.string.isRequired,
+        registrationDate: React.PropTypes.string.isRequired,
+        registeredBy: React.PropTypes.objectOf(React.PropTypes.shape({
+            login: React.PropTypes.string.isRequired,
+            name: React.PropTypes.string.isRequired,
+            surname: React.PropTypes.string.isRequired,
+            patronymic: React.PropTypes.string.isRequired,
+        })),
         productInWaybills: React.PropTypes.arrayOf(React.PropTypes.shape({
             count: React.PropTypes.number.isRequired,
             product: React.PropTypes.objectOf(React.PropTypes.shape({

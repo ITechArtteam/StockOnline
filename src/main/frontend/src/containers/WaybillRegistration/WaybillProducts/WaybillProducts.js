@@ -11,6 +11,28 @@ import './style.css'
 
 class WaybillProducts extends React.Component {
 
+    renderError() {
+        if (this.props.error && (this.props.error != '')) {
+            return (<div className="control-label text-danger">{this.props.error}</div>);
+        }
+        else {
+            return (<div>&nbsp;</div>);
+        }
+    }
+
+    renderFormGroupClassName() {
+        if (this.props.error && (this.props.error != '')) {
+            return 'form-group has-error';
+        }
+        else if (this.props.resultType && (this.props.resultType != '')) {
+            return 'form-group has-' + this.props.resultType;
+        }
+        else {
+            return 'form-group';
+        }
+    }
+
+
     handleProductSelect(product, isSelected) {
         if (isSelected) {
             this.props.selectProduct(product.name);
@@ -56,7 +78,7 @@ class WaybillProducts extends React.Component {
         };
 
         return (
-            <div className="form-group">
+            <div className='form-group'>
                 <label className="control-label">Описание товаров</label>
                 <div className="button-container">
                     <input
@@ -86,6 +108,7 @@ class WaybillProducts extends React.Component {
                     </TableHeaderColumn>
                     <TableHeaderColumn dataField="storage">Способ хранения</TableHeaderColumn>
                 </BootstrapTable>
+                {this.renderError()}
             </div>
         )
     }

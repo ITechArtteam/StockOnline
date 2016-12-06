@@ -20,6 +20,17 @@ export function getWorkers(thenRedirectPath, errorRedirectPath) {
         });
 }
 
+export function getControllers(thenRedirectPath, errorRedirectPath) {
+    return axios.get('/api/controllers')
+        .then(response => {
+            store.dispatch(getWorkersSuccess(response.data));
+            redirect(thenRedirectPath);
+        }).catch(error=> {
+            store.dispatch(getWorkersUnsuccess(error.response));
+            redirect(errorRedirectPath);
+        });
+}
+
 export function deleteWorkers(ids, thenRedirectPath, errorRedirectPath) {
     axios.delete('/api/workers?ids='+ids).then(response => {
         store.dispatch(deleteWorkersSuccess(ids, response));

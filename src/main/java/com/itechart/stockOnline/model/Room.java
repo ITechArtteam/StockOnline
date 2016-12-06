@@ -25,7 +25,7 @@ public class Room {
     @JoinColumn(name = "storage_requirement_id")
     private StorageRequirement storage;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     private Set<Shelf> shelfs;
 
     public Room() {
@@ -33,6 +33,9 @@ public class Room {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public String getNumber() { return number; }
+    public void setNumber(String number) { this.number = number; }
 
     public Double getCost() { return cost; }
     public void setCost(Double cost) { this.cost = cost; }
@@ -46,18 +49,18 @@ public class Room {
     public Set<Shelf> getShelfs() { return shelfs; }
     public void setShelfs(Set<Shelf> shelfs) { this.shelfs = shelfs; }
 
-    public String getNumber() { return number; }
-    public void setNumber(String number) { this.number = number; }
-
     @Override
     public String toString() {
         return "Room{" +
                 "id=" + id +
+                "number=" + number +
                 ", cost=" + cost +
                 ", number='" + number + '\'' +
                 ", stock=" + stock +
                 ", storage=" + storage +
                 ", shelfs=" + shelfs +
+                ", storageRequirement=" + storage +
+//                ", shelfs=" + shelfs +
                 '}';
     }
 }

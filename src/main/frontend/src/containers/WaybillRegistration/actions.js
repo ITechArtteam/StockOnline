@@ -43,6 +43,158 @@ export const EDIT_WAYBILL_FORM_SET_SENDER = 'EDIT_WAYBILL_FROM_SET_SENDER';
 export const EDIT_WAYBILL_FORM_SET_CARRIER = 'EDIT_WAYBILL_FROM_SET_CARRIER';
 export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SELECT_UNIT = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SELECT_UNIT';
 export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNITS = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNITS';
+export const EDIT_WAYBILL_FORM_SET_WAYBILL_NUMBER_ERROR = 'EDIT_WAYBILL_FORM_SET_WAYBILL_NUMBER_ERROR';
+export const EDIT_WAYBILL_FORM_VALIDATE = 'EDIT_WAYBILL_FORM_VALIDATE';
+export const EDIT_WAYBILL_FORM_CHOOSE_SENDER_MODAL_FORM_VALIDATE = 'EDIT_WAYBILL_FORM_CHOOSE_SENDER_MODAL_FORM_VALIDATE';
+export const EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_VALIDATE = 'EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_VALIDATE';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_VALIDATE = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_VALIDATE';
+export const EDIT_WAYBILL_FORM_SET_SENDER_NAME_ERROR = 'EDIT_WAYBILL_FORM_SET_SENDER_NAME_ERROR';
+export const EDIT_WAYBILL_FORM_SET_SENDER_ERROR = 'EDIT_WAYBILL_FORM_SET_SENDER_ERROR';
+export const EDIT_WAYBILL_FORM_SET_CARRIER_ERROR = 'EDIT_WAYBILL_FORM_SET_CARRIER_ERROR';
+export const EDIT_WAYBILL_FORM_SET_DRIVER_ERROR = 'EDIT_WAYBILL_FORM_SET_DRIVER_ERROR';
+export const EDIT_WAYBILL_FORM_SET_PRODUCTS_ERROR = 'EDIT_WAYBILL_FORM_SET_PRODUCTS_ERROR';
+export const EDIT_WAYBILL_FORM_SET_NUMBERS_ERROR = 'EDIT_WAYBILL_FORM_SET_NUMBERS_ERROR';
+export const EDIT_WAYBILL_FORM_SET_TRANSPORT_TYPE_ERROR = 'EDIT_WAYBILL_FORM_SET_TRANSPORT_TYPE_ERROR';
+export const EDIT_WAYBILL_FORM_SET_DESCRIPTION_ERROR = 'EDIT_WAYBILL_FORM_SET_DESCRIPTION_ERROR';
+export const EDIT_WAYBILL_FORM_SET_ISSUANCE_DATE_ERROR = 'EDIT_WAYBILL_FORM_SET_ISSUANCE_DATE_ERROR';
+export const EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_SET_NUMBER_ERROR = 'EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_SET_NUMBER_ERROR';
+export const EDIT_WAYBILL_FORM_SET_CAR_NUMBER_ERROR = 'EDIT_WAYBILL_FORM_SET_CAR_NUMBER_ERROR';
+export const EDIT_WAYBILL_FORM_SET_TRAILER_NUMBER_ERROR = 'EDIT_WAYBILL_FORM_SET_TRAILER_NUMBER_ERROR';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_NAME_ERROR = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_NAME_ERROR';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_PRICE_ERROR = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_PRICE_ERROR';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_COUNT_ERROR = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_COUNT_ERROR';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNIT_ERROR = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNIT_ERROR';
+export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_STORAGE_ERROR = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_STORAGE_ERROR';
+
+export function setProductsError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_PRODUCTS_ERROR,
+        error
+    }
+}
+
+export function setNumbersError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_NUMBERS_ERROR,
+        error
+    }
+}
+
+export function setDriverError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_DRIVER_ERROR,
+        error
+    }
+}
+
+export function setSenderError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_SENDER_ERROR,
+        error
+    }
+}
+
+export function setCarrierError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_CARRIER_ERROR,
+        error
+    }
+}
+
+export function setTransportTypeError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_TRANSPORT_TYPE_ERROR,
+        error
+    }
+}
+
+export function setCarNumberError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_CAR_NUMBER_ERROR,
+        error
+    }
+}
+
+export function setTrailerNumberError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_TRAILER_NUMBER_ERROR,
+        error
+    }
+}
+
+export function setProductStorageError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_STORAGE_ERROR,
+        error
+    }
+}
+
+export function setProductUnitError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNIT_ERROR,
+        error
+    }
+}
+
+export function setProductCountError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_COUNT_ERROR,
+        error
+    }
+}
+
+export function setProductPriceError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_PRICE_ERROR,
+        error
+    }
+}
+
+export function setProductNameError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_NAME_ERROR,
+        error
+    }
+}
+
+export function setTransportNumberError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_ADD_NUMBER_MODAL_FORM_SET_NUMBER_ERROR,
+        error
+    }
+}
+
+export function setSenderNameError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_SENDER_NAME_ERROR,
+        error
+    }
+}
+
+export function setDescriptionError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_DESCRIPTION_ERROR,
+        error
+    }
+}
+
+export function setIssuanceDateError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_ISSUANCE_DATE_ERROR,
+        error
+    }
+}
+
+export function setWaybillNumberError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_WAYBILL_NUMBER_ERROR,
+        error
+    }
+}
+
+export function validateWaybillForm() {
+    return {s}
+}
 
 export function selectProductUnit(unit) {
     return {
