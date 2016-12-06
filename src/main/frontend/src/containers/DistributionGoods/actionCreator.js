@@ -1,5 +1,6 @@
 import * as event from './constants'
 import * as $ from "jquery";
+import * as axios from "axios";
 
 let setInputValue = (nameField, value) => {
     return {
@@ -92,13 +93,12 @@ let findWaybillByNumber = (number, status) => {
     }
 };
 
-let addProductOnPlace = (rowIndex, shelfId, shelfNumber) => {
+let addProductOnPlace = (rowIndex, info) => {
     return {
         type: event.ADD_PRODUCT_ON_PLACE,
         payload: {
             rowIndex: rowIndex,
-            shelfId: shelfId,
-            number: shelfNumber
+            info: info
         }
     }
 };
@@ -244,6 +244,27 @@ let selectShelfValueChanged = (shelfValue) => {
     }
 };
 
+let finishDistribution = () => {
+    return (dispatch, getState)=> {
+        let products = getState().distributionGoodsReducer.waybill.productInWaybills.map((elem, index) => {
+            return {
+                waybillNumber: getState().distributionGoodsReducer.waybill.number,
+                productId: elem.product.id,
+                shelves: elem.product.places.map((elem, index) => { return elem.shelfId; })
+            }
+        });
+        console.log("products - ", products);
+        axios.post('/distributionGoods/finish', products)
+            .then(response => {
+                dispatch(showDialog('Размещение выполнено успешно','', []));
+                dispatch(setWaybillVisibility(false));
+            })
+            .catch(error => {
+                dispatch(showDialog('Произошла ошибка при размещении продукции','danger', []));
+            });
+    }
+};
+
 export default {
     setInputValue,
     showDialog,
@@ -256,5 +277,6 @@ export default {
     findStocksByUserCompany,
     selectStockValueChanged,
     selectRoomValueChanged,
-    selectShelfValueChanged
+    selectShelfValueChanged,
+    finishDistribution
 }

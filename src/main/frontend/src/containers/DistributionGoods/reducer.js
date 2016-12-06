@@ -95,11 +95,7 @@ export default (state = initDistributionGoodsState, action) => {
 
         case event.ADD_PRODUCT_ON_PLACE:
             let newProductInWaybill = state.waybill.productInWaybills;
-            newProductInWaybill[action.payload.rowIndex].product.places.push(
-                {
-                    shelfId: action.payload.shelfId,
-                    number: action.payload.number
-                });
+            newProductInWaybill[action.payload.rowIndex].product.places.push(action.payload.info);
             return {...state, waybill: {...state.waybill, productInWaybills: newProductInWaybill}};
 
         case event.REMOVE_PRODUCT_FROM_PLACE:

@@ -106,6 +106,7 @@ WaybillInfo.PropTypes = {
         productInWaybills: React.PropTypes.arrayOf(React.PropTypes.shape({
             count: React.PropTypes.number.isRequired,
             product: React.PropTypes.objectOf(React.PropTypes.shape({
+                id: React.PropTypes.number.isRequired,
                 name: React.PropTypes.string.isRequired,
                 unit: React.PropTypes.string.isRequired,
                 storage: React.PropTypes.objectOf(React.PropTypes.shape({

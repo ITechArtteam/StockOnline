@@ -31,7 +31,14 @@ class SelectShelfModal extends React.Component {
             return
         }
         let shelfObject = this.props.stocks[stockValue].rooms[roomValue].shelves[shelfValue];
-        this.props.addProductOnPlace(this.props.selectShelfModal.rowIndex, shelfObject.id, shelfObject.number);
+        //todo pass whole object
+        console.log("wholeObject ", shelfObject);
+        this.props.addProductOnPlace(this.props.selectShelfModal.rowIndex,
+            {
+                shelfId: shelfObject.id,
+                number: shelfObject.number,
+                count: shelfObject.count
+            });
         this.props.closeModal();
     }
 
@@ -92,8 +99,8 @@ const mapDispatchToProps = (dispatch) => {
         closeModal: () => {
             dispatch(distributionGoodsActionCreator.setShelfModalVisibility(false))
         },
-        addProductOnPlace: (rowIndex, shelfId, number) => {
-            dispatch(distributionGoodsActionCreator.addProductOnPlace(rowIndex, shelfId, number))
+        addProductOnPlace: (rowIndex, info) => {
+            dispatch(distributionGoodsActionCreator.addProductOnPlace(rowIndex, info))
         },
         findStocksByUserCompany: () => {
             dispatch(distributionGoodsActionCreator.findStocksByUserCompany());

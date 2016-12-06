@@ -50,8 +50,8 @@ public class ClientCompany {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address=" + address +
-                ", senderCompanies=" + senderCompanies +
-                ", receiverCompanies=" + receiverCompanies +
+//                ", senderCompanies=" + senderCompanies +
+//                ", receiverCompanies=" + receiverCompanies +
                 '}';
     }
 }

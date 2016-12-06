@@ -47,6 +47,14 @@ class DistributionGoods extends React.Component {
                         <label className="control-label">&nbsp;</label> <br/>
                         <button type="button" className="btn btn-default btn-block" onClick={this.onFindClick}>Поиск</button>
                     </div>
+                    <div className="col-xs-8">
+                        <div className="before-table">
+                            <label className="control-label">&nbsp;</label> <br/>
+                            <button type="button" className="btn btn-success"
+                                    onClick={this.props.finishDistribution}
+                                    disabled={this.props.frontend.waybillVisible ? "" : "disabled"}>Завершить размешение</button>
+                        </div>
+                    </div>
                 </div>
                 <AlertPopup close={this.props.closeDialog}
                             isVisible={this.props.alert.isVisible}
@@ -83,6 +91,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setWaybillVisibility: visibility => {
             dispatch(distributionGoodsActionCreator.setWaybillVisibility(visibility))
+        },
+        finishDistribution: () => {
+            dispatch(distributionGoodsActionCreator.finishDistribution())
         }
     }
 };
