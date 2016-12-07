@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <changeSet author="MaximMaltsev94" id="drop_fk_act_product">
+        <dropForeignKeyConstraint baseTableName="act" constraintName="fk_act_product"/>
+        <rollback>
+            <addForeignKeyConstraint baseColumnNames="product_id"
+                                     baseTableName="act"
+                                     constraintName="fk_act_product"
+                                     referencedColumnNames="id"
+                                     referencedTableName="product"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="MaximMaltsev94" id="drop_productId_column">
+        <dropColumn columnName="product_id"
+                    tableName="act"/>
+        <dropColumn columnName="count"
+                    tableName="act"/>
+        <dropColumn columnName="cost"
+                    tableName="act"/>
+    </changeSet>
+
+    <changeSet author="MaximMaltsev94" id="create_product_in_act_table">
+        <createTable tableName="product_in_act">
+            <column name="id" type="INT(10) UNSIGNED" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_id" type="INT(10) UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="act_id" type="INT(10) UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count" type="INT(10) UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="product_in_act"
+                                 baseColumnNames="act_id"
+                                 constraintName="fk_product_in_act_act"
+                                 referencedTableName="act"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="product_in_act"
+                                 baseColumnNames="product_id"
+                                 constraintName="fk_product_in_act_product"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

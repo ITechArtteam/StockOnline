@@ -24,6 +24,7 @@
         <class>com.itechart.stockOnline.model.TransferCompany</class>
         <class>com.itechart.stockOnline.model.Transport</class>
         <class>com.itechart.stockOnline.model.Waybill</class>
+        <class>com.itechart.stockOnline.model.ProductInAct</class>
 
     </persistence-unit>
 

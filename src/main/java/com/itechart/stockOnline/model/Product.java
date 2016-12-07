@@ -44,10 +44,10 @@ public class Product {
     private Set<ProductOnShelf> productOnShelfs;
 
     @OneToMany(mappedBy = "product")
-    private Set<Act> acts;
+    private Set<ProductInWaybill> productInWaybills;
 
     @OneToMany(mappedBy = "product")
-    private Set<ProductInWaybill> productInWaybills;
+    private Set<ProductInAct> productInActs;
 
     public Product() {    }
 
@@ -72,11 +72,11 @@ public class Product {
     public Set<ProductOnShelf> getProductOnShelfs() { return productOnShelfs; }
     public void setProductOnShelfs(Set<ProductOnShelf> productOnShelfs) { this.productOnShelfs = productOnShelfs; }
 
-    public Set<Act> getActs() { return acts; }
-    public void setActs(Set<Act> acts) { this.acts = acts; }
-
     public Set<ProductInWaybill> getProductInWaybills() { return productInWaybills; }
     public void setProductInWaybills(Set<ProductInWaybill> productInWaybills) { this.productInWaybills = productInWaybills; }
+
+    public Set<ProductInAct> getProductInActs() { return productInActs; }
+    public void setProductInActs(Set<ProductInAct> productInActs) { this.productInActs = productInActs; }
 
     public Integer getCount() { return count; }
     public void setCount(Integer count) { this.count = count; }
@@ -96,7 +96,6 @@ public class Product {
                 ", unit=" + unit +
                 ", storage=" + storage +
                 ", productOnShelfs=" + productOnShelfs +
-                ", acts=" + acts +
                 ", productInWaybills=" + productInWaybills +
                 '}';
     }

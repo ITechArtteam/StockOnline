@@ -30,4 +30,5 @@
     <include file="2016-12-05--01-product-table-changes.xml" relativeToChangelogFile="true" />
     <include file="2016-12-05--02-product-table-changes.xml" relativeToChangelogFile="true" />
     <include file="2016-12-06--01-drop_notnull_endDate.xml" relativeToChangelogFile="true" />
+    <include file="2016-12-07--01-act_table_changes.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>
