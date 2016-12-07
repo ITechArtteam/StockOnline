@@ -45,6 +45,11 @@ export function saveWorkerSuccess(worker, response) {
         response:response
     };
 }
+export function clearWorkersReducer(){
+    return{
+        type: types.INITIAL_STATE_WORKERS,
+    };
+}
 
 
 

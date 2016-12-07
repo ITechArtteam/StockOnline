@@ -12,6 +12,7 @@ import WaybillRegistrationFormReducer from './../containers/WaybillRegistration/
 import productsReducer from "./products-reducer";
 import workerReducer from "./worker-reducer";
 import workersReducer from "./workers-reducer";
+import companyReducer from "./company-reducer";
 import actReducer from "./act-reducer";
 import actsReducer from "./acts-reducer";
 import {stock} from "../containers/editStock";
@@ -22,6 +23,7 @@ import {distributionGoodsReducer} from '../containers/DistributionGoods/index'
 const rootReducer = combineReducers({
     waybillRegistrationForm: WaybillRegistrationFormReducer,
     auth: AuthReducer,
+    companyState:companyReducer,
     workerState:workerReducer,
     workersState:workersReducer,
     actState:actReducer,

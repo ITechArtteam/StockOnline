@@ -23,6 +23,10 @@ class WorkersContainer extends React.Component {
         workersApi.deleteWorkers(ids)
     }
 
+    componentWillUnmount(){
+        workersApi.clearReducer();
+    }
+
     redirect = (path) => {
         if (path != null) {
             browserHistory.push(path);

@@ -58,7 +58,7 @@ class EditAct extends React.Component {
 
     onCalculateClick = () => {
         var newAct = _.extend({}, this.state.act);
-        newAct.cost = this.state.act.product.cost * this.state.act.count / this.state.act.product.count;
+        newAct.cost = this.state.act.product.cost * this.state.act.count;
         this.setState({act: newAct});
     }
 

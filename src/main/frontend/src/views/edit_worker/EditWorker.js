@@ -5,12 +5,12 @@ import Multiselect from "react-widgets/lib/Multiselect";
 import "react-widgets/dist/css/react-widgets.css";
 import "./EditWorker.less";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
 import DatePicker from "react-bootstrap-date-picker";
 
 
 class EditWorker extends React.Component {
     constructor(props) {
+        console.log(props)
         super(props);
     }
 
@@ -23,6 +23,20 @@ class EditWorker extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({worker: nextProps.worker, roles: nextProps.roles});
+        this.updateProps(nextProps);
+    }
+
+    componentWillMount() {
+        this.updateProps(this.props);
+    }
+
+    updateProps = (props)=> {
+        console.log(props)
+        var newWorker = _.extend({}, this.state.worker);
+        newWorker.stockOwnerCompany.id = this.props.company.id;
+        newWorker.stockOwnerCompany.name = this.props.company.name;
+        this.setState({worker: newWorker});
+        console.log(this.state.worker.stockOwnerCompany.name);
     }
 
     onSaveClick = () => {
@@ -44,10 +58,20 @@ class EditWorker extends React.Component {
 
 
     render() {
+        console.log(this.state.worker.stockOwnerCompany.name);
         return (
             <div>
                 <Row className="show-grid">
                     <Form horizontal id="worker_form">
+                        <FormGroup >
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                                Компания
+                            </Col>
+                            <Col sm={5}>
+                                <FormControl placeholder="Компания" readOnly
+                                             valueLink={linkState(this, 'worker.stockOwnerCompany.name')}/>
+                            </Col>
+                        </FormGroup>
                         <FormGroup >
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Имя
@@ -90,8 +114,8 @@ class EditWorker extends React.Component {
                                     value={this.state.worker.birthday}
                                     onChange={(date) => {
                                         var newWorker = _.extend({}, this.state.worker);
-                                        newWorker.birthday=date;
-                                        this.setState({worker:newWorker});
+                                        newWorker.birthday = date;
+                                        this.setState({worker: newWorker});
                                     }}
                                 />
                                 <HelpBlock>Это поле должно быть заполнено.</HelpBlock>

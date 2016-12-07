@@ -11,8 +11,8 @@ class EditActContainer extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props)
         var id = this.props.params.id;
-        actApi.clearReducer();
         if ($.isNumeric(id)) {
             actApi.getAct(id);
         }
@@ -28,6 +28,10 @@ class EditActContainer extends React.Component {
 
     redirectToActs = ()=>{
         this.redirect('/acts');
+    }
+
+    componentWillUnmount(){
+        actApi.clearReducer();
     }
 
 
@@ -63,6 +67,7 @@ const mapStateToProps = (store) => {
         act_status: store.productsState.act_status,
         controller_username: store.auth.username,
         controller_id: store.auth.id,
+        waybill_products:store.WaybillRegistrationFormReducer.waybillProducts.products
     }
 };
 

@@ -4,7 +4,8 @@ import {
     getWorkersUnsuccess,
     deleteWorkersSuccess,
     deleteWorkersUnsuccess,
-    closeWorkersResponse
+    closeWorkersResponse,
+    clearWorkersReducer
 } from "../actions/workers-actions";
 import store from "../store/configureStore";
 import {browserHistory} from "react-router";
@@ -50,6 +51,10 @@ export function deleteWorkers(ids, thenRedirectPath, errorRedirectPath) {
         store.dispatch(deleteWorkersUnsuccess(error.response));
         redirect(errorRedirectPath);
     });
+}
+
+export function clearReducer(){
+    store.dispatch(clearWorkersReducer())
 }
 
 export function closeResponse() {

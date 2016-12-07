@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getWorkerSuccess, saveWorkerUnsuccess, deleteWorkerUnsuccess, closeWorkerResponse, clearWorkerReducer } from '../actions/worker-actions';
+import {getStockOwnerCompanySuccess, getStockOwnerCompanyUnsuccess, getWorkerSuccess, saveWorkerUnsuccess, deleteWorkerUnsuccess, closeWorkerResponse, clearWorkerReducer } from '../actions/worker-actions';
 import { getWorkersUnsuccess, deleteWorkerSuccess, saveWorkerSuccess} from '../actions/workers-actions';
 import store from '../store/configureStore'
 import {browserHistory} from 'react-router';
@@ -17,6 +17,7 @@ export function getWorker(id, thenRedirectPath, errorRedirectPath) {
         });
 }
 
+
 export function deleteWorker(id, thenRedirectPath, errorRedirectPath) {
     return axios.delete('/api/worker/' + id)
         .then(response => {
@@ -32,11 +33,9 @@ export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
     console.log(worker)
     return axios.post('/api/worker/', worker)
         .then(response => {
-            console.log(response)
             store.dispatch(saveWorkerSuccess(response.data,response))
             redirect(thenRedirectPath);
         }).catch(error=>{
-            console.log(error)
             store.dispatch(saveWorkerUnsuccess(error.response))
             redirect(errorRedirectPath);
         });

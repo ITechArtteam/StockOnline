@@ -41,3 +41,4 @@ export function clearWorkerReducer() {
         type: types.INITIAL_STATE_WORKER,
     }
 }
+

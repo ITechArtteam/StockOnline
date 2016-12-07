@@ -25,6 +25,10 @@ class ActsContainer extends React.Component {
         actsApi.deleteActs(ids)
     }
 
+    componentWillUnmount(){
+        actApi.clearReducer();
+    }
+
     redirect = (path) => {
         if (path != null) {
             browserHistory.push(path);

@@ -20,6 +20,10 @@ const initialState = {
             password: "",
             patronymic: "",
             roles: [],
+            stockOwnerCompany:{
+                id:"",
+                name:""
+            }
         }
 
     }

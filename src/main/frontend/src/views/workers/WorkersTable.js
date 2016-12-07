@@ -24,8 +24,6 @@ class WorkersTable extends React.Component {
     render() {
         const onRowSelect = ({id}, isSelected) => {
             var selected;
-            console.log(this.state.selected)
-            console.log(this.state.selected.filter(it => it !== id))
             if (isSelected) {
                 selected = [...this.state.selected, id].sort();
             } else {
