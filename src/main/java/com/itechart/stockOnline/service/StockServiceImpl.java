@@ -1,5 +1,6 @@
 package com.itechart.stockOnline.service;
 
+import com.itechart.stockOnline.converter.OwnerCompanyDtoConverter;
 import com.itechart.stockOnline.converter.StockDtoConverter;
 import com.itechart.stockOnline.dao.StockDao;
 import com.itechart.stockOnline.dao.UserDao;
@@ -38,6 +39,7 @@ public class StockServiceImpl implements StockService {
 
     private final StockDao stockDao;
     private final UserDao userDao;
+    private final OwnerCompanyDtoConverter ownerCompanyDtoConverter;
     private final StockDtoConverter stockDtoConverter;
 
     private final UserService userService;
@@ -51,11 +53,12 @@ public class StockServiceImpl implements StockService {
     private RoomService roomService;
 
     @Autowired
-    public StockServiceImpl(StockDao stockDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter, AddressService addressService) {
+    public StockServiceImpl(StockDao stockDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter,OwnerCompanyDtoConverter ownerCompanyDtoConverter, AddressService addressService) {
         this.stockDao = stockDao;
         this.userDao = userDao;
         this.userService = userService;
         this.stockDtoConverter = stockDtoConverter;
+        this.ownerCompanyDtoConverter = ownerCompanyDtoConverter;
         this.addressService = addressService;
     }
 
@@ -85,10 +88,6 @@ public class StockServiceImpl implements StockService {
             throw new DataNotFoundError();
         }
 
-        User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
-
-        String company = user.getStockOwnerCompany().getName();
-        logger.info("Stock service: getStockPage company - {}.", login);
         Specification<Stock> specification = null;
         if(StringUtils.isNotEmpty(name)) {
             specification = where(nameLike(name));
@@ -102,11 +101,11 @@ public class StockServiceImpl implements StockService {
             }
         }
 
-        if(StringUtils.isNotEmpty(company)) {
+        if(StringUtils.isNotEmpty(login)) {
             if(specification != null) {
-                specification = where(specification).and(companyLike(company));
+                specification = where(specification).and(companyLike(login));
             } else {
-                specification = where(companyLike(company));
+                specification = where(companyLike(login));
             }
         }
 
@@ -114,6 +113,7 @@ public class StockServiceImpl implements StockService {
         if(stockPage.getTotalPages() > 0 && stockPage.getTotalPages() < pageNumber) {
             throw new DataNotFoundError();
         }
+        logger.info("Stock service: getStockPage stockPage - {}.", stockPage);
         return stockDtoConverter.toStockPage(stockPage);
     }
 

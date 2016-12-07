@@ -51,7 +51,7 @@ public class StockListController {
                                   Principal user) {
         name = ControllerHelper.convertToUtf(name);
         address = ControllerHelper.convertToUtf(address);
-        Logger.info("REST request. Path:/stockList/page/{}/limit/{}/?name={}&address={}  method: GET", pageNumber, recordCount, name, address);
+        Logger.info("REST request. Path:/stockList/page/{}/limit/{}/?name={}&address={}&user={}  method: GET", pageNumber, recordCount, name, address, user.getName());
         return stockService.getStockPage(pageNumber, recordCount, name, address, user.getName());
     }
 
