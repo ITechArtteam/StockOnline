@@ -61,7 +61,8 @@ public class RoomServiceImpl implements RoomService{
         if (CollectionUtils.isNotEmpty(rooms)) {
             for (Room room : rooms) {
                 room.setStock(stockDao.findOne(id));
-                if (StringUtils.isNotEmpty(room.getId()+"")) {
+                Long idRoom = room.getId();
+                if (idRoom instanceof Long) {
                     room = update(room);
                 } else {
                     room = saveRoom(room);

@@ -141,27 +141,13 @@ public class StockServiceImpl implements StockService {
         Stock stock = stockDtoConverter.toStock(stockDto);
         User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
         stock.setCompany(user.getStockOwnerCompany());
+        logger.debug("saveOrUpdateStock:  stock: {}", stock);
         if (stock.getId() > -1){
             stock = update(stock);
         } else {
             stock = saveStock(stock, stockDto);
         }
         return stock;
-    }
-
-    @Override
-    @Transactional
-    public Stock update(Stock stock) {
-
-        Stock stockInDB =
-                stockDao.findOne(stock.getId());
-        if (stockInDB == null){
-            throw new DataNotFoundError("Stock with id: " + stock.getId());
-        }
-        logger.debug("update: \n{} -> \n{}", stockInDB, stock);
-        updateData(stock, stockInDB);
-
-        return stockInDB;
     }
 
     @Override
@@ -180,9 +166,35 @@ public class StockServiceImpl implements StockService {
         return stock;
     }
 
+    @Override
+    @Transactional
+    public Stock update(Stock stock) {
 
+        Stock stockInDB =
+                stockDao.findOne(stock.getId());
+        if (stockInDB == null){
+            throw new DataNotFoundError("Stock with id: " + stock.getId());
+        }
+        logger.debug("update:  stockInDB: {}; stock: {}", stockInDB, stock);
+        updateData(stock, stockInDB);
+
+        return stockInDB;
+    }
 
     private void updateData(Stock stock, Stock InDB) {
+        Set<Room> rooms = stock.getRooms();
+        if (CollectionUtils.isNotEmpty(rooms)) {
+            for (Room room : rooms) {
+                room.setStock(stock);
+                Long id = room.getId();
+                if (id instanceof Long){
+                    room = roomService.update(room);
+                }else{
+                    room = roomService.saveRoom(room);
+                }
+
+            }
+        }
         InDB.setName(stock.getName());
         Address address = stock.getAddress();
         address.setId(InDB.getAddress().getId());

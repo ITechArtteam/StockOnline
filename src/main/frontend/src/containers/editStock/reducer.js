@@ -12,7 +12,8 @@ const initUserState = {
                 number: '',
                 cost: '',
                 unit: null,
-                storage: ''
+                storage: '',
+                id: -1
             }
         },
         name: "",

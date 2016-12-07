@@ -34,6 +34,10 @@ public class StockDtoConverter {
         stock.setId(stockDto.getId());
         stock.setName(stockDto.getName());
         stock.setCompany(new StockOwnerCompany(stockDto.getNameCompany()));
+        Set<Room> rooms = toRooms(stockDto);
+        if(CollectionUtils.isNotEmpty(rooms)){
+            stock.setRooms(rooms);
+        }
         LOGGER.info("toStock: stockDto:{}, address:{}, stock:{}",stockDto,address,stock);
         return stock;
     }
@@ -72,14 +76,18 @@ public class StockDtoConverter {
     public Set<Room> toRooms(StockDto stockDto){
 
         Set<Room> rooms = new HashSet<Room>();
-        for (RoomDto roomDto: stockDto.getStockRooms().getRooms()){
-            Room room = new Room();
-            room.setId(roomDto.getId());
-            room.setCost(roomDto.getCost());
-            room.setNumber(roomDto.getNumber());
-            room.setStorage(new StorageRequirement(roomDto.getStorage()));
-            rooms.add(room);
+        Set<RoomDto> roomsDto = stockDto.getStockRooms().getRooms();
+        if(CollectionUtils.isNotEmpty(roomsDto)){
+            for (RoomDto roomDto: roomsDto){
+                Room room = new Room();
+                room.setId(roomDto.getId());
+                room.setCost(roomDto.getCost());
+                room.setNumber(roomDto.getNumber());
+                room.setStorage(new StorageRequirement(roomDto.getStorage()));
+                rooms.add(room);
+            }
         }
+
         LOGGER.info("toRooms:  rooms:{}",rooms);
         return rooms;
     }

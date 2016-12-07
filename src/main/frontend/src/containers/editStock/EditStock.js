@@ -147,10 +147,10 @@ class EditStock extends React.Component {
                                  patternType="isRequired"/>
 
                     <div className="btn-group" role="group">
-                        <button type="button" className="btn btn-primary"
+                        <button type="button" className="btn btn-primary action-button"
                                 onClick={this.submit}>Сохранить
                         </button>
-                        <Link to="/stocks" className="btn btn-default">Отменить</Link>
+                        <Link to="/stocks" className="btn btn-default action-button">Отменить</Link>
                     </div>
                 </div>{/*dib.col-xs-3 end*/}
                 <div className="col-xs-9">

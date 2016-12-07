@@ -24,7 +24,8 @@ class AddRoomModalForm extends React.Component {
         this.props.addRoom({
             number:  this.props.number,
             cost:    this.props.cost,
-            storage: this.props.storage
+            storage: this.props.storage,
+            id:      this.props.id
         });
         this.props.hideAddRoomModalForm();
         this.props.clearAddRoomModalFormFields();
@@ -68,6 +69,7 @@ function mapStateToProps(state) {
         number:  (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.number  : state.stock.data.stockRooms.rooms.number,
         cost:    (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.cost    : state.stock.data.stockRooms.rooms.cost,
         storage: (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.storage : state.stock.data.stockRooms.rooms.storage,
+        id:      (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.id      : state.stock.data.stockRooms.rooms.id,
     }
 }
 const mapDispatchToProps = (dispatch) => {
