@@ -67,7 +67,6 @@ const mapStateToProps = (store) => {
         act_status: store.productsState.act_status,
         controller_username: store.auth.username,
         controller_id: store.auth.id,
-        waybill_products:store.WaybillRegistrationFormReducer.waybillProducts.products
     }
 };
 
