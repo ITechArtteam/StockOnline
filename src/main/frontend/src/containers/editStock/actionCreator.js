@@ -29,7 +29,7 @@ function getStock(stockName) {
             .then(json =>
                 dispatch(getStockDataSuccess(json.data))
             ).catch(error => {
-                dispatch(getStockDataFail(error.response))
+                dispatch(getStockDataFail("error"))
             });
     }
 }

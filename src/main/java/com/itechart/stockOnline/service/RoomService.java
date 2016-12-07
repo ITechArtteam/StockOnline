@@ -11,6 +11,7 @@ public interface RoomService {
     Room saveRoom(Room room);
     Room update(Room room);
     void delete(Room room);
-    int deleteByIds(Collection<Integer> ids);
+    int deleteByIds(Collection<Long> ids);
     Set<Room> saveOrUpdateRoom(StockDto stockDto, Long id);
+    Set<Room> getRooms(Long stockId);
 }

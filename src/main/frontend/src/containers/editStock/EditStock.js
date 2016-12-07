@@ -60,8 +60,8 @@ class EditStock extends React.Component {
 
 
     componentWillMount() {
-        if (!!this.props.params.name) {
-            this.props.getStock(this.props.params.name);
+        if (!!this.props.params.id) {
+            this.props.getStock(this.props.params.id);
         }
     }
 
@@ -174,7 +174,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getStock: (stocktName) => {
+        getStock: (stockName) => {
             dispatch(stockActionCreator.getStock(stockName))
         },
         setStockData: (nameField, fieldValue) => {

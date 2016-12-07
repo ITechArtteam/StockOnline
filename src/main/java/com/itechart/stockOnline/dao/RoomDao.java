@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public interface RoomDao extends JpaRepository<Room, Long>, JpaSpecificationExecutor{
@@ -17,8 +18,14 @@ public interface RoomDao extends JpaRepository<Room, Long>, JpaSpecificationExec
 
     @Modifying
     @Query("delete from Room s where s.id in ?1")
-    int deleteByIdIn(Collection<Integer> ids);
+    int deleteByIdIn(Collection<Long> ids);
 
     @Query("select s from Room s where s.id in ?1")
-    Stream<Room> findAllByIdIn(Collection<Integer> ids);
+    Stream<Room> findAllByIdIn(Collection<Long> ids);
+
+
+    Set<Room> findAllByStockId(Long stockId);
+
+
+
 }

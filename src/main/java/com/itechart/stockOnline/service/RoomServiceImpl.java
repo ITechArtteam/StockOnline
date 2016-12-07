@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.itechart.stockOnline.exception.DataNotFoundError;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -46,7 +48,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     @Transactional
-    public int deleteByIds(Collection<Integer> ids) {
+    public int deleteByIds(Collection<Long> ids) {
         roomDao.findAllByIdIn(ids).forEach(this::delete);
         logger.info("Room service: delete by ids list - {}. Deleted {} records", ids, ids.size());
         return ids.size();
@@ -66,6 +68,14 @@ public class RoomServiceImpl implements RoomService{
                 }
             }
         }
+        return rooms;
+    }
+
+    @Override
+    @Transactional
+    public Set<Room> getRooms(Long stockId) {
+        Set<Room> rooms = roomDao.findAllByStockId(stockId);
+        logger.info("Room service: getRooms() | stockId:{}. Rooms: {} records", stockId, rooms);
         return rooms;
     }
 

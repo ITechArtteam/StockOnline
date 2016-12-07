@@ -46,7 +46,7 @@ class Rooms extends React.Component {
         };
 
         const options = {
-            noDataText: "Помещение не указано",
+            noDataText: "Помещение не найден",
             handleConfirmDeleteRow(next, dropRowKeys) {
                 next();
             }

@@ -11,7 +11,6 @@ const initUserState = {
                 units: [],
                 number: '',
                 cost: '',
-                shelfs: [],
                 unit: null,
                 storage: ''
             }
