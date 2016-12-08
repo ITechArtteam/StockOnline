@@ -43,7 +43,7 @@ public class RoomServiceImpl implements RoomService{
     @Override
     @Transactional
     public void delete(Room room) {
-
+        roomDao.delete(room);
     }
 
     @Override
@@ -52,6 +52,13 @@ public class RoomServiceImpl implements RoomService{
         roomDao.findAllByIdIn(ids).forEach(this::delete);
         logger.info("Room service: delete by ids list - {}. Deleted {} records", ids, ids.size());
         return ids.size();
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        roomDao.findAllByStockId(id).forEach(this::delete);
+        logger.info("Room service: delete by id - {}. Deleted {} records", id);
     }
 
     @Override

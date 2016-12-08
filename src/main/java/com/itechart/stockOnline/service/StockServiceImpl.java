@@ -3,6 +3,7 @@ package com.itechart.stockOnline.service;
 import com.itechart.stockOnline.converter.OwnerCompanyDtoConverter;
 import com.itechart.stockOnline.converter.StockDtoConverter;
 import com.itechart.stockOnline.dao.StockDao;
+import com.itechart.stockOnline.dao.RoomDao;
 import com.itechart.stockOnline.dao.UserDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Room;
@@ -38,6 +39,7 @@ public class StockServiceImpl implements StockService {
     private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
     private final StockDao stockDao;
+    private final RoomDao roomDao;
     private final UserDao userDao;
     private final OwnerCompanyDtoConverter ownerCompanyDtoConverter;
     private final StockDtoConverter stockDtoConverter;
@@ -53,8 +55,9 @@ public class StockServiceImpl implements StockService {
     private RoomService roomService;
 
     @Autowired
-    public StockServiceImpl(StockDao stockDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter,OwnerCompanyDtoConverter ownerCompanyDtoConverter, AddressService addressService) {
+    public StockServiceImpl(StockDao stockDao, RoomDao roomDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter,OwnerCompanyDtoConverter ownerCompanyDtoConverter, AddressService addressService) {
         this.stockDao = stockDao;
+        this.roomDao = roomDao;
         this.userDao = userDao;
         this.userService = userService;
         this.stockDtoConverter = stockDtoConverter;
@@ -123,13 +126,14 @@ public class StockServiceImpl implements StockService {
     @Transactional
     public void delete(Stock stock) {
         Address address = stock.getAddress();
+        roomService.deleteById(stock.getId());
         stockDao.delete(stock);
         addressService.delete(address);
     }
 
     @Override
     @Transactional
-    public int deleteByIds(Collection<Integer> ids) {
+    public int deleteByIds(Collection<Long> ids) {
         stockDao.findAllByIdIn(ids).forEach(this::delete);
         logger.info("Stock service: delete by ids list - {}. Deleted {} records", ids, ids.size());
         return ids.size();

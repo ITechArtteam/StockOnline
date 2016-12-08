@@ -23,7 +23,6 @@ public interface RoomDao extends JpaRepository<Room, Long>, JpaSpecificationExec
     @Query("select s from Room s where s.id in ?1")
     Stream<Room> findAllByIdIn(Collection<Long> ids);
 
-
     Set<Room> findAllByStockId(Long stockId);
 
 

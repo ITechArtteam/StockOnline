@@ -19,10 +19,10 @@ public interface StockDao extends JpaRepository<Stock, Long>, JpaSpecificationEx
 
     @Modifying
     @Query("delete from Stock s where s.id in ?1")
-    int deleteByIdIn(Collection<Integer> ids);
+    int deleteByIdIn(Collection<Long> ids);
 
     @Query("select s from Stock s where s.id in ?1")
-    Stream<Stock> findAllByIdIn(Collection<Integer> ids);
+    Stream<Stock> findAllByIdIn(Collection<Long> ids);
 
     List<Stock> findAllByCompanyId(Long companyId);
 }
