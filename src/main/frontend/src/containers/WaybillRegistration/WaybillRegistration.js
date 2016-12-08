@@ -1,8 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 import { Button } from 'react-bootstrap'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
+
+import AlertPopup from '../../components/AlertPopup/AlertPopup'
 
 import TextInput from '../../components/TextInput/TextInput'
 import DateInput from '../../components/DateInput/DateInput'
@@ -34,6 +37,10 @@ import {
 
 
 class WaybillRegistration extends React.Component {
+
+    componentWillUnmount() {
+        this.props.clearInput();
+    }
 
     handleWaybillNumberOnBlur() {
         this.props.setWaybillNumberError(checkWaybillNumber(this.props.waybillNumber));
@@ -82,6 +89,13 @@ class WaybillRegistration extends React.Component {
         this.props.setCarrier(null);
     }
 
+    handleCloseAlert() {
+        this.props.hideSubmitAlert();
+        if (this.props.alert.type === 'success') {
+            browserHistory.push('/registrationOfGoods');
+        }
+    }
+
     handleFormSubmit() {
         const validationResult = this.validateForm();
         if (!validationResult) {
@@ -117,13 +131,8 @@ class WaybillRegistration extends React.Component {
             registrationDatetime: getCurrentDateTime(),
             products: this.props.products
         };
-        $.ajax({
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(waybill),
-            dataType: 'json',
-            url: '/waybills/register'
-        });
+
+        this.props.submitForm(waybill);
     }
 
     validateForm() {
@@ -307,6 +316,11 @@ class WaybillRegistration extends React.Component {
                         label="Дата и время регистрации накладной"
                         value={getCurrentDateTime()} />
                     <WaybillProducts error={this.props.productsError} />
+                    <AlertPopup
+                        type={this.props.alert.type}
+                        close={() => {this.handleCloseAlert()}}
+                        isVisible={this.props.alert.isVisible}
+                        message={this.props.alert.message} />
                     <div className="col-lg-offset-5 vertical-offset">
                         <input
                             type="button"
@@ -381,7 +395,8 @@ function mapStateToProps(state) {
         descriptionError: state.waybillRegistrationForm.validationErrors.descriptionError,
         issuanceDateError: state.waybillRegistrationForm.validationErrors.issuanceDateError,
         productsError: state.waybillRegistrationForm.validationErrors.productsError,
-        numbersError: state.waybillRegistrationForm.validationErrors.numbersError
+        numbersError: state.waybillRegistrationForm.validationErrors.numbersError,
+        alert: state.waybillRegistrationForm.submitAlert
     }
 }
 

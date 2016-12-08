@@ -88,7 +88,12 @@ const initialState = {
         driverError: '',
         numbersError: ''
     },
-    isFormCorrect: true
+    isFormCorrect: true,
+    submitAlert: {
+        type: null,
+        message: '',
+        isVisible: false
+    }
 };
 
 export default function waybillRegistrationForm(state = initialState, action) {
@@ -667,6 +672,68 @@ export default function waybillRegistrationForm(state = initialState, action) {
                 }
             };
 
+        case Actions.EDIT_WAYBILL_FORM_CLEAR_INPUT:
+            return {
+                ...initialState
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SUBMIT_ALERT_SHOW:
+            return {
+                ...state,
+                submitAlert: {
+                    ...state.submitAlert,
+                    isVisible: true
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SUBMIT_ALERT_HIDE:
+            return {
+                ...state,
+                submitAlert: {
+                    ...state.submitAlert,
+                    isVisible: false
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_MESSAGE:
+            return {
+                ...state,
+                submitAlert: {
+                    ...state.submitAlert,
+                    message: action.message
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_TYPE:
+            return {
+                ...state,
+                submitAlert: {
+                    ...state.submitAlert,
+                    type: action.type
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_SUCCESS_MESSAGE_AND_SHOW:
+            return {
+                ...state,
+                submitAlert: {
+                    ...state.submitAlert,
+                    type: 'success',
+                    message: action.message,
+                    isVisible: true
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_FAILURE_MESSAGE_AND_SHOW:
+            return {
+                ...state,
+                submitAlert: {
+                    ...state.submitAlert,
+                    type: 'failure',
+                    message: action.message,
+                    isVisible: true
+                }
+            };
 
         default:
             return state;
