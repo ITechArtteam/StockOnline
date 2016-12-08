@@ -52,6 +52,7 @@ public class WaybillBuilder {
         waybill.setRegistrationDate(getDateTimeFromString(dto.getRegistrationDatetime()));
         waybill.setDescription(dto.getDescription());
         waybill.setResponsiblePerson(userService.findByLogin(dto.getDispatcherLogin()));
+        waybill.setRegisteredBy(userService.findByLogin(dto.getDispatcherLogin()));
 
         HashSet<ProductInWaybill> waybillProducts = new HashSet<>();
         for (WaybillProductDto productDto : dto.getProducts()) {
