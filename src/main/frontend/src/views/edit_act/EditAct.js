@@ -5,6 +5,7 @@ import moment from "moment";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
 import _ from "lodash";
+import ProductsTable from "./ProductsTable"
 class EditAct extends React.Component {
     constructor(props) {
         super(props);
@@ -49,17 +50,19 @@ class EditAct extends React.Component {
     onSaveClick = () => {
         this.state.act.reportDate = moment(this.state.act.reportDate);
         this.props.onSaveClick(this.state.act);
-        console.log(this.state.act);
     }
 
     onCloseClick = () => {
         this.props.onCloseClick();
     }
 
-    onCalculateClick = () => {
+
+
+    onUpdate = (products_in_act) =>{
+
         var newAct = _.extend({}, this.state.act);
-        newAct.cost = this.state.act.product.cost * this.state.act.count;
-        this.setState({act: newAct});
+        newAct.products_in_act = [...products_in_act];
+        this.setState({act:newAct});
     }
 
     render() {
@@ -87,63 +90,7 @@ class EditAct extends React.Component {
                                 <FormControl.Feedback />
                             </Col>
                         </FormGroup>
-                        <FormGroup>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
-                                Продукт
-                            </Col>
-                            <Col sm={5}>
-                                <DropdownList
-                                    valueField='id' textField='name'
-                                    data={this.state.products}
-                                    value={this.state.act.product.id}
-                                    onChange={selectProduct => {
-                                        var newAct = _.extend({}, this.state.act);
-                                        newAct.product = _.find(this.state.products, product => {
-                                            return product.id == selectProduct.id;
-                                        });
-                                        this.setState({act: newAct});
-                                        if (newAct.product != undefined) {
-                                            newAct.count = newAct.product.count;
-                                        }
-
-                                    }}/>
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
-                                Единицы
-                            </Col>
-                            <Col sm={5}>
-                                <FormControl readOnly placeholder="Единицы"
-                                             valueLink={linkState(this, 'act.product.unit')}/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
-                                Количество
-                            </Col>
-                            <Col sm={3}>
-                                <FormControl placeholder="Количество"
-                                             valueLink={linkState(this, 'act.count')} type="number"/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
-                            </Col>
-                            <Col sm={2}>
-                                <CalculateButton onClick={this.onCalculateClick} act={this.state.act} block={true}/>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
-                                Стоимость
-                            </Col>
-                            <Col sm={5}>
-                                <FormControl placeholder="Стоимость"
-                                             valueLink={linkState(this, 'act.cost')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
-                            </Col>
-                        </FormGroup>
+                        <ProductsTable waybill_produts = {this.state.products} products_in_act={this.state.act.products_in_act} onUpdate={this.onUpdate}/>
                         <FormGroup>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Статус
@@ -179,29 +126,6 @@ class EditAct extends React.Component {
     }
 }
 
-class CalculateButton extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
-    state = {
-        disabledCalculateButton: true
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if ($.isNumeric(nextProps.act.product.cost) && $.isNumeric(nextProps.act.count)) {
-            this.setState({disabledCalculateButton: false});
-        } else {
-            this.setState({disabledCalculateButton: true});
-        }
-    }
-
-    render() {
-        return (
-            <Button disabled={this.state.disabledCalculateButton}
-                    onClick={this.props.onClick} {...this.props}>Рассчитать</Button>
-        )
-    }
-}
 
 export default EditAct;

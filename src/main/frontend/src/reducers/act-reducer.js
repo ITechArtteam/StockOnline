@@ -4,14 +4,8 @@ const initialState = {
         act: {
             id: "",
             reportDate: "",
-            count: "",
-            cost: "",
+            products_in_act:[],
             status:"",
-            product: {
-                id: "",
-                name: "",
-                unit: ""
-            },
             user:{
                 id:"",
                 login:""
@@ -33,7 +27,7 @@ const actReducer = function (state = initialState, action) {
             return Object.assign({}, state, {response: action.response});
 
         case types.POST_ACT_UNSUCCESS:
-            return Object.assign({}, state, {response: action.response});
+            return Object.assign({}, state, {response: action.response, act: action.act});
 
         case types.CLOSE_ACT_RESPONSE:
             return Object.assign({}, state, {response: null});

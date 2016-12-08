@@ -17,17 +17,15 @@ class EditActContainer extends React.Component {
             actApi.getAct(id);
         }
         productsApi.getActStatus();
-        productsApi.getProducts();
-
     }
 
     saveAct = (act) => {
         window.scrollTo(0, 0);
-        return actApi.saveAct(act, '/acts');
+        return actApi.saveAct(act, this.props.redirectAfteSave());
     }
 
-    redirectToActs = ()=>{
-        this.redirect('/acts');
+    redirectAfteClose = ()=>{
+        this.redirect(this.props.redirectAfteClose);
     }
 
     componentWillUnmount(){
@@ -62,11 +60,11 @@ class EditActContainer extends React.Component {
 const mapStateToProps = (store) => {
     return {
         act: store.actState.act,
-        products: store.productsState.products,
         response: store.actState.response,
         act_status: store.productsState.act_status,
         controller_username: store.auth.username,
         controller_id: store.auth.id,
+        products:store.checkGoodsReducer.waybill.productInWaybills,
     }
 };
 
