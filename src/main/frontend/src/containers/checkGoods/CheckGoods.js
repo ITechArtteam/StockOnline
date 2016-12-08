@@ -7,6 +7,7 @@ import SimpleInput from '../../components/SimpleInput/SimpleInput'
 
 class CheckGoods extends React.Component {
     constructor(props) {
+        console.log(props)
         super(props);
         this.onFindClick = this.onFindClick.bind(this);
         this.onAcceptClick = this.onAcceptClick.bind(this);
@@ -14,7 +15,7 @@ class CheckGoods extends React.Component {
     }
 
     componentWillMount() {
-        this.onClearClick();
+        //this.onClearClick();
     }
 
     onInputValueChange = e => {

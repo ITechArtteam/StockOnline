@@ -27,8 +27,8 @@ export function deleteAct(id, thenRedirectPath, errorRedirectPath) {
         });
 }
 
-export function saveAct(worker, thenRedirectPath, errorRedirectPath) {
-    return axios.post('/api/act/', worker)
+export function saveAct(act, thenRedirectPath, errorRedirectPath) {
+    return axios.post('/api/act/', act)
         .then(response => {
             store.dispatch(saveActSuccess(response.data,response))
             redirect(thenRedirectPath);
@@ -36,6 +36,10 @@ export function saveAct(worker, thenRedirectPath, errorRedirectPath) {
             store.dispatch(saveActUnsuccess(error.response))
             redirect(errorRedirectPath);
         });
+}
+
+export function saveActinStore(act, thenRedirectPath, errorRedirectPath) {
+    store.dispatch(saveActSuccess(act))
 }
 
 export function clearReducer(){

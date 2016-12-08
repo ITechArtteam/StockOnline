@@ -42,6 +42,7 @@ export function deleteActsSuccess(ids, response) {
 export function saveActSuccess(act, response) {
     return {
         type: types.POST_ACT_SUCCESS ,
+        act:act,
         response:response
     };
 }
