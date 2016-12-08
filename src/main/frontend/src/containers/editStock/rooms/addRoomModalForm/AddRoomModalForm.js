@@ -22,23 +22,13 @@ class AddRoomModalForm extends React.Component {
 
     handleSaveRoom() {
         this.props.addRoom({
-            number: this.props.number,
-            cost: this.props.cost,
+            number:  this.props.number,
+            cost:    this.props.cost,
             storage: this.props.storage,
-            unit: this.props.unit
+            id:      this.props.id
         });
         this.props.hideAddRoomModalForm();
         this.props.clearAddRoomModalFormFields();
-    }
-
-    createUnitOptions() {
-        return this.props.units.reduce(function(options, unit) {
-            options.push({
-                value: unit,
-                label: unit
-            });
-            return options;
-        }, []);
     }
 
     render() {
@@ -74,12 +64,12 @@ class AddRoomModalForm extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        isOpen: state.stock.data.stockRooms.addRoomModalForm.isOpen,
-        number: state.stock.data.stockRooms.addRoomModalForm.number,
-        cost: state.stock.data.stockRooms.addRoomModalForm.cost,
-        unit: state.stock.data.stockRooms.addRoomModalForm.unit,
-        units: state.stock.data.stockRooms.addRoomModalForm.units,
-        storage: state.stock.data.stockRooms.addRoomModalForm.storage
+        //если существует элемент addRoomModalForm, значит дейстивие добавление помещения в таблицу иначе редактирование склада
+        isOpen:  (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.isOpen  : state.stock.data.stockRooms.rooms.isOpen,
+        number:  (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.number  : state.stock.data.stockRooms.rooms.number,
+        cost:    (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.cost    : state.stock.data.stockRooms.rooms.cost,
+        storage: (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.storage : state.stock.data.stockRooms.rooms.storage,
+        id:      (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.id      : state.stock.data.stockRooms.rooms.id,
     }
 }
 const mapDispatchToProps = (dispatch) => {

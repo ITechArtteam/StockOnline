@@ -11,9 +11,9 @@ const initUserState = {
                 units: [],
                 number: '',
                 cost: '',
-                shelfs: [],
                 unit: null,
-                storage: ''
+                storage: '',
+                id: -1
             }
         },
         name: "",

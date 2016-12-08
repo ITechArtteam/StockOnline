@@ -1,7 +1,9 @@
 package com.itechart.stockOnline.service;
 
+import com.itechart.stockOnline.converter.OwnerCompanyDtoConverter;
 import com.itechart.stockOnline.converter.StockDtoConverter;
 import com.itechart.stockOnline.dao.StockDao;
+import com.itechart.stockOnline.dao.RoomDao;
 import com.itechart.stockOnline.dao.UserDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Room;
@@ -37,7 +39,9 @@ public class StockServiceImpl implements StockService {
     private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
     private final StockDao stockDao;
+    private final RoomDao roomDao;
     private final UserDao userDao;
+    private final OwnerCompanyDtoConverter ownerCompanyDtoConverter;
     private final StockDtoConverter stockDtoConverter;
 
     private final UserService userService;
@@ -51,11 +55,13 @@ public class StockServiceImpl implements StockService {
     private RoomService roomService;
 
     @Autowired
-    public StockServiceImpl(StockDao stockDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter, AddressService addressService) {
+    public StockServiceImpl(StockDao stockDao, RoomDao roomDao, UserDao userDao, UserService userService, StockDtoConverter stockDtoConverter,OwnerCompanyDtoConverter ownerCompanyDtoConverter, AddressService addressService) {
         this.stockDao = stockDao;
+        this.roomDao = roomDao;
         this.userDao = userDao;
         this.userService = userService;
         this.stockDtoConverter = stockDtoConverter;
+        this.ownerCompanyDtoConverter = ownerCompanyDtoConverter;
         this.addressService = addressService;
     }
 
@@ -65,8 +71,10 @@ public class StockServiceImpl implements StockService {
     public StockDto getStockDtoForStock(Long id) {
         Stock stock =
                 stockDao.findById(id).orElseThrow(DataNotFoundError::new);
-        logger.debug("getStockDtoForStock({}): {}", id, stock);
         User admin = userService.findByCompany(stock.getCompany());
+        Set<Room> rooms = roomService.getRooms(stock.getId());
+        stock.setRooms(rooms);
+        logger.debug("getStockDtoForStock({}): {}", id, stock);
         return stockDtoConverter.toStockDto(stock, admin);
     }
 
@@ -85,10 +93,6 @@ public class StockServiceImpl implements StockService {
             throw new DataNotFoundError();
         }
 
-        User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
-
-        String company = user.getStockOwnerCompany().getName();
-        logger.info("Stock service: getStockPage company - {}.", login);
         Specification<Stock> specification = null;
         if(StringUtils.isNotEmpty(name)) {
             specification = where(nameLike(name));
@@ -102,11 +106,11 @@ public class StockServiceImpl implements StockService {
             }
         }
 
-        if(StringUtils.isNotEmpty(company)) {
+        if(StringUtils.isNotEmpty(login)) {
             if(specification != null) {
-                specification = where(specification).and(companyLike(company));
+                specification = where(specification).and(companyLike(login));
             } else {
-                specification = where(companyLike(company));
+                specification = where(companyLike(login));
             }
         }
 
@@ -114,6 +118,7 @@ public class StockServiceImpl implements StockService {
         if(stockPage.getTotalPages() > 0 && stockPage.getTotalPages() < pageNumber) {
             throw new DataNotFoundError();
         }
+        logger.info("Stock service: getStockPage stockPage - {}.", stockPage);
         return stockDtoConverter.toStockPage(stockPage);
     }
 
@@ -121,13 +126,14 @@ public class StockServiceImpl implements StockService {
     @Transactional
     public void delete(Stock stock) {
         Address address = stock.getAddress();
+        roomService.deleteById(stock.getId());
         stockDao.delete(stock);
         addressService.delete(address);
     }
 
     @Override
     @Transactional
-    public int deleteByIds(Collection<Integer> ids) {
+    public int deleteByIds(Collection<Long> ids) {
         stockDao.findAllByIdIn(ids).forEach(this::delete);
         logger.info("Stock service: delete by ids list - {}. Deleted {} records", ids, ids.size());
         return ids.size();
@@ -139,27 +145,13 @@ public class StockServiceImpl implements StockService {
         Stock stock = stockDtoConverter.toStock(stockDto);
         User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
         stock.setCompany(user.getStockOwnerCompany());
+        logger.debug("saveOrUpdateStock:  stock: {}", stock);
         if (stock.getId() > -1){
             stock = update(stock);
         } else {
             stock = saveStock(stock, stockDto);
         }
         return stock;
-    }
-
-    @Override
-    @Transactional
-    public Stock update(Stock stock) {
-
-        Stock stockInDB =
-                stockDao.findOne(stock.getId());
-        if (stockInDB == null){
-            throw new DataNotFoundError("Stock with id: " + stock.getId());
-        }
-        logger.debug("update: \n{} -> \n{}", stockInDB, stock);
-        updateData(stock, stockInDB);
-
-        return stockInDB;
     }
 
     @Override
@@ -178,9 +170,35 @@ public class StockServiceImpl implements StockService {
         return stock;
     }
 
+    @Override
+    @Transactional
+    public Stock update(Stock stock) {
 
+        Stock stockInDB =
+                stockDao.findOne(stock.getId());
+        if (stockInDB == null){
+            throw new DataNotFoundError("Stock with id: " + stock.getId());
+        }
+        logger.debug("update:  stockInDB: {}; stock: {}", stockInDB, stock);
+        updateData(stock, stockInDB);
+
+        return stockInDB;
+    }
 
     private void updateData(Stock stock, Stock InDB) {
+        Set<Room> rooms = stock.getRooms();
+        if (CollectionUtils.isNotEmpty(rooms)) {
+            for (Room room : rooms) {
+                room.setStock(stock);
+                Long id = room.getId();
+                if (id instanceof Long){
+                    room = roomService.update(room);
+                }else{
+                    room = roomService.saveRoom(room);
+                }
+
+            }
+        }
         InDB.setName(stock.getName());
         Address address = stock.getAddress();
         address.setId(InDB.getAddress().getId());

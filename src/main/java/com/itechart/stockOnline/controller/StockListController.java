@@ -51,7 +51,7 @@ public class StockListController {
                                   Principal user) {
         name = ControllerHelper.convertToUtf(name);
         address = ControllerHelper.convertToUtf(address);
-        Logger.info("REST request. Path:/stockList/page/{}/limit/{}/?name={}&address={}  method: GET", pageNumber, recordCount, name, address);
+        Logger.info("REST request. Path:/stockList/page/{}/limit/{}/?name={}&address={}&user={}  method: GET", pageNumber, recordCount, name, address, user.getName());
         return stockService.getStockPage(pageNumber, recordCount, name, address, user.getName());
     }
 
@@ -67,7 +67,7 @@ public class StockListController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteClients(@RequestParam(value = "idsToDelete") List<Integer> ids) {
+    public ResponseEntity<Object> deleteStocks(@RequestParam(value = "idsToDelete") List<Long> ids) {
         Logger.info("REST request. Path:/stockList/?idsToDelete={}  method: DELETE", ids);
         long deletedCount = stockService.deleteByIds(ids);
         return new ResponseEntity<>("Успешно удалено " + deletedCount + " записей", HttpStatus.OK);

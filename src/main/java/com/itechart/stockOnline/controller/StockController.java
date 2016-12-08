@@ -36,7 +36,9 @@ public class StockController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public StockDto getStockData(@PathVariable Long id){
         logger.debug("REST request. Path:/stock/{}  method: GET", id);
-        return stockService.getStockDtoForStock(id);
+        StockDto stockDto = stockService.getStockDtoForStock(id);
+        logger.info("REST response. stockDto: {}  method: GET", stockDto);
+        return stockDto;
     }
 
     @RequestMapping(method = RequestMethod.POST)

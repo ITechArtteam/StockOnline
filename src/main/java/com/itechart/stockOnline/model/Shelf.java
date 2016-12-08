@@ -55,7 +55,7 @@ public class Shelf {
                 "number=" + number +
                 ", capacity=" + capacity +
                 ", isFree=" + isFree +
-                ", room=" + room +
+     //           ", room=" + room +
 //                ", productOnShelfs=" + productOnShelfs +
                 '}';
     }

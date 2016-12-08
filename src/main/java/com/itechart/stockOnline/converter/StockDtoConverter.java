@@ -34,6 +34,10 @@ public class StockDtoConverter {
         stock.setId(stockDto.getId());
         stock.setName(stockDto.getName());
         stock.setCompany(new StockOwnerCompany(stockDto.getNameCompany()));
+        Set<Room> rooms = toRooms(stockDto);
+        if(CollectionUtils.isNotEmpty(rooms)){
+            stock.setRooms(rooms);
+        }
         LOGGER.info("toStock: stockDto:{}, address:{}, stock:{}",stockDto,address,stock);
         return stock;
     }
@@ -48,21 +52,42 @@ public class StockDtoConverter {
         dto.setHome(address.getHome());
         dto.setName(stock.getName());
         dto.setNameCompany(stock.getCompany().getName());
+        Set<RoomDto> roomsDto = new HashSet<RoomDto>();
+        if(CollectionUtils.isNotEmpty(stock.getRooms())){
+            for( Room room: stock.getRooms()){
+                RoomDto roomDto = toRoomDto(room);
+                roomsDto.add(roomDto);
+            }
+            dto.setStockRooms(new StockRoomsDto(roomsDto));
+        }
         LOGGER.info("toStockDto: stock:{}, address:{}, stockDto:{}",stock,address,dto);
         return dto;
+    }
+
+    public RoomDto toRoomDto(Room room) {
+        RoomDto roomDto = new RoomDto();
+        roomDto.setId(room.getId());
+        roomDto.setCost(room.getCost());
+        roomDto.setNumber(room.getNumber());
+        roomDto.setStorage(room.getStorage().getType());
+        return roomDto;
     }
 
     public Set<Room> toRooms(StockDto stockDto){
 
         Set<Room> rooms = new HashSet<Room>();
-        for (RoomDto roomDto: stockDto.getStockRooms().getRooms()){
-            Room room = new Room();
-            room.setId(roomDto.getId());
-            room.setCost(roomDto.getCost());
-            room.setNumber(roomDto.getNumber());
-            room.setStorage(new StorageRequirement(roomDto.getStorage()));
-            rooms.add(room);
+        Set<RoomDto> roomsDto = stockDto.getStockRooms().getRooms();
+        if(CollectionUtils.isNotEmpty(roomsDto)){
+            for (RoomDto roomDto: roomsDto){
+                Room room = new Room();
+                room.setId(roomDto.getId());
+                room.setCost(roomDto.getCost());
+                room.setNumber(roomDto.getNumber());
+                room.setStorage(new StorageRequirement(roomDto.getStorage()));
+                rooms.add(room);
+            }
         }
+
         LOGGER.info("toRooms:  rooms:{}",rooms);
         return rooms;
     }

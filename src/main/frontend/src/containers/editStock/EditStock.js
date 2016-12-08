@@ -60,8 +60,8 @@ class EditStock extends React.Component {
 
 
     componentWillMount() {
-        if (!!this.props.params.name) {
-            this.props.getStock(this.props.params.name);
+        if (!!this.props.params.id) {
+            this.props.getStock(this.props.params.id);
         }
     }
 
@@ -147,10 +147,10 @@ class EditStock extends React.Component {
                                  patternType="isRequired"/>
 
                     <div className="btn-group" role="group">
-                        <button type="button" className="btn btn-primary"
+                        <button type="button" className="btn btn-primary action-button"
                                 onClick={this.submit}>Сохранить
                         </button>
-                        <Link to="/stocks" className="btn btn-default">Отменить</Link>
+                        <Link to="/stocks" className="btn btn-default action-button">Отменить</Link>
                     </div>
                 </div>{/*dib.col-xs-3 end*/}
                 <div className="col-xs-9">
@@ -174,7 +174,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getStock: (stocktName) => {
+        getStock: (stockName) => {
             dispatch(stockActionCreator.getStock(stockName))
         },
         setStockData: (nameField, fieldValue) => {

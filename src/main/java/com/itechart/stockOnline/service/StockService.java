@@ -15,6 +15,6 @@ public interface StockService {
     StockPage getStockPage(int pageNumber, int recordCount, String name, String address, String login);
     List<Stock> getByCompanyId(Long companyId);
     void delete(Stock stock);
-    int deleteByIds(Collection<Integer> ids);
+    int deleteByIds(Collection<Long> ids);
     Stock saveOrUpdateStock(StockDto stockDto, String login);
 }

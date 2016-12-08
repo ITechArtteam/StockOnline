@@ -1,6 +1,8 @@
 package com.itechart.stockOnline.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.collections.CollectionUtils;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -52,7 +54,7 @@ public class Stock {
                 ", name='" + name + '\'' +
                 ", address=" + address +
                 ", company=" + company +
-//                ", rooms=" + rooms +
+                ", rooms=" + ((CollectionUtils.isNotEmpty(rooms))?rooms:"null") +
                 '}';
     }
 }

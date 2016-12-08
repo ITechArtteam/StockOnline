@@ -1,5 +1,7 @@
 package com.itechart.stockOnline.model;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -56,11 +58,10 @@ public class Room {
                 "number=" + number +
                 ", cost=" + cost +
                 ", number='" + number + '\'' +
-                ", stock=" + stock +
+     //           ", stock=" + stock +
                 ", storage=" + storage +
-                ", shelfs=" + shelfs +
+                ", shelfs=" + ((CollectionUtils.isNotEmpty(shelfs))?shelfs:"null") +
                 ", storageRequirement=" + storage +
-//                ", shelfs=" + shelfs +
                 '}';
     }
 }
