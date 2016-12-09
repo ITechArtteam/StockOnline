@@ -11,7 +11,6 @@ class Acts extends React.Component {
 
     state = {
         acts: this.props.acts,
-        controllers: this.props.controllers,
         buttonDisabled: true,
         selected: [],
         serch:''
@@ -67,7 +66,7 @@ class Acts extends React.Component {
                     </Well>
                 </Col>
                 <Col xs={9}>
-                    <ActsTable acts={this.state.acts} controllers = {this.state.controllers} selected={this.state.selected} serch={this.state.serch} onSelectAll={this.onSelectAll} onRowSelect={this.onRowSelect}/>
+                    <ActsTable acts={this.state.acts} selected={this.state.selected} serch={this.state.serch} onSelectAll={this.onSelectAll} onRowSelect={this.onRowSelect}/>
                 </Col>
             </Row>
         )

@@ -11,21 +11,22 @@ class EditActContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
+        console.log(browserHistory)
         var id = this.props.params.id;
         if ($.isNumeric(id)) {
-            actApi.getAct(id);
+            actApi.getActFromStore(id);
         }
         productsApi.getActStatus();
     }
 
     saveAct = (act) => {
+        browserHistory.go(-1);
         window.scrollTo(0, 0);
-        return actApi.saveAct(act, this.props.redirectAfteSave());
+        actApi.saveActInStore(act);
     }
 
     redirectAfteClose = ()=>{
-        this.redirect(this.props.redirectAfteClose);
+        browserHistory.go(-1);
     }
 
     componentWillUnmount(){
@@ -50,7 +51,7 @@ class EditActContainer extends React.Component {
                 </Row>
                 <EditAct act={this.props.act} controller_username={this.props.controller_username}
                          controller_id={this.props.controller_id} act_status={this.props.act_status}
-                         products={this.props.products} onSaveClick={this.saveAct} onCloseClick={this.redirectToActs}/>
+                         products={this.props.products} onSaveClick={this.saveAct} onCloseClick={this.redirectAfteClose}/>
             </div>
         )
     }
@@ -59,8 +60,8 @@ class EditActContainer extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
-        act: store.actState.act,
-        response: store.actState.response,
+        act: store.actsState.act,
+        response: store.actsState.response,
         act_status: store.productsState.act_status,
         controller_username: store.auth.username,
         controller_id: store.auth.id,

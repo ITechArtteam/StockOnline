@@ -13,7 +13,6 @@ import productsReducer from "./products-reducer";
 import workerReducer from "./worker-reducer";
 import workersReducer from "./workers-reducer";
 import companyReducer from "./company-reducer";
-import actReducer from "./act-reducer";
 import actsReducer from "./acts-reducer";
 import Stock from '../containers/editStock/reducer';
 import Driver from './../containers/editDriver/reducer';
@@ -26,7 +25,6 @@ const rootReducer = combineReducers({
     companyState:companyReducer,
     workerState:workerReducer,
     workersState:workersReducer,
-    actState:actReducer,
     actsState:actsReducer,
     productsState:productsReducer,
     form: FormReducer,

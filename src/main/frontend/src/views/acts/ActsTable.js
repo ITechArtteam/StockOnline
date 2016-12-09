@@ -14,11 +14,10 @@ class ActsTable extends React.Component {
         acts: [],
         serch: this.props.serch,
         selected: this.props.selected,
-        controllers: {}
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({serch: nextProps.serch, selected: nextProps.selected});
+        this.setState({serch: nextProps.serch, selected: nextProps.selected, acts:nextProps.acts});
         this.updateProps(nextProps);
     }
 
@@ -27,23 +26,11 @@ class ActsTable extends React.Component {
     }
 
     updateProps=(props)=>{
-        var newActs = [];
-        _.forEach(props.acts, (act)=> {
-            var newAct = {};
-            newAct.id = act.id;
-            newAct.date = new Date(act.reportDate);
-            newAct.product_name = act.product.name;
-            newAct.cost = act.cost;
-            newAct.user_login = act.user.login;
-            newAct.status=act.status;
-            newActs.push(newAct);
+        var i =0;
+        _.forEach(props.acts,(act)=>{
+            act.id=i++;
+            this.state.acts.push(act);
         });
-        this.setState({acts: newActs});
-        var newControllers = {};
-        _.forEach(props.controllers, (controller)=> {
-            newControllers[controller.id]=controller.login;
-        });
-        this.setState({controllers: newControllers});
     }
 
 
@@ -86,6 +73,9 @@ class ActsTable extends React.Component {
             return moment(cell).format("llll");
         }
 
+        function userFormatter(cell, row){
+            return cell.login;
+        }
 
         return (
             <BootstrapTable data={this.state.acts}
@@ -100,21 +90,11 @@ class ActsTable extends React.Component {
                 <TableHeaderColumn dataField="id" hidden={true} isKey={true}>Идентификатор</TableHeaderColumn>
                 <TableHeaderColumn dataField="date" dataSort={true} dataFormat={ dateFormatter }
                                    filter={ {type: 'DateFilter'} }>Дата</TableHeaderColumn>
-                <TableHeaderColumn dataField="product_name" filter={ {type: 'TextFilter'} }
-                                   dataSort={true}>Продукт</TableHeaderColumn>
+                <TableHeaderColumn dataField="user" filter={ {type: 'TextFilter'} }
+                                   dataSort={true} dataFormat={userFormatter}>Контролер</TableHeaderColumn>
                 <TableHeaderColumn dataField="status" filter={ {type: 'TextFilter'} }
                                    dataSort={true}>Статус</TableHeaderColumn>
-                <TableHeaderColumn dataField="cost" filter={ {
-                    type: 'NumberFilter',
-                    numberComparators: ['=', '>', '<=']
-                } } dataSort={true}>Сумма</TableHeaderColumn>
-                <TableHeaderColumn dataField="user_login" dataSort={true}
-                                   filterFormatted
-                                   formatExtraData={  this.state.controllers }
-                                   filter={ {
-                                       type: 'SelectFilter',
-                                       options: this.state.controllers
-                                   } }>Контролёр</TableHeaderColumn>
+
             </BootstrapTable>
         )
     }

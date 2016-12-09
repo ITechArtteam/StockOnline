@@ -42,3 +42,10 @@ export function clearActReducer(){
         type: types.INITIAL_STATE_ACT,
     }
 }
+
+export function findActInStore(id){
+    return {
+        type: types.FIND_ACT_IN_STORE,
+        id:id
+    }
+}

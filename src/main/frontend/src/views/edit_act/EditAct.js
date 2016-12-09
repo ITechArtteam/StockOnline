@@ -8,6 +8,7 @@ import _ from "lodash";
 import ProductsTable from "./ProductsTable"
 class EditAct extends React.Component {
     constructor(props) {
+        console.log(props)
         super(props);
     }
 
@@ -90,7 +91,6 @@ class EditAct extends React.Component {
                                 <FormControl.Feedback />
                             </Col>
                         </FormGroup>
-                        <ProductsTable waybill_produts = {this.state.products} products_in_act={this.state.act.products_in_act} onUpdate={this.onUpdate}/>
                         <FormGroup>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Статус
@@ -110,6 +110,7 @@ class EditAct extends React.Component {
                                 <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
+                        <ProductsTable waybill_produts = {this.state.products} products_in_act={this.state.act.products_in_act} onUpdate={this.onUpdate}/>
                         <FormGroup>
                             <Col smOffset={3} sm={9}>
                                 <div className="btn-group" role="group">

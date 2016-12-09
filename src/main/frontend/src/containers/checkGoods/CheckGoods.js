@@ -1,10 +1,13 @@
-import React from 'react'
-import WaybillInfo from "../../components/WaybillInfo/WaybillInfo"
-import {connect} from 'react-redux';
-import {checkGoodsActionCreator} from './index'
-import AlertPopup from '../../components/AlertPopup/AlertPopup'
-import SimpleInput from '../../components/SimpleInput/SimpleInput'
-
+import React from "react";
+import WaybillInfo from "../../components/WaybillInfo/WaybillInfo";
+import Acts from "../../views/acts/Acts";
+import {connect} from "react-redux";
+import {checkGoodsActionCreator} from "./index";
+import AlertPopup from "../../components/AlertPopup/AlertPopup";
+import SimpleInput from "../../components/SimpleInput/SimpleInput";
+import {Row} from "react-bootstrap";
+import * as actsApi from "../../api/acts-api";
+import {browserHistory} from 'react-router';
 class CheckGoods extends React.Component {
     constructor(props) {
         console.log(props)
@@ -41,7 +44,25 @@ class CheckGoods extends React.Component {
             this.props.senderRole);
     }
 
-    render(){
+    onCreateClick = ()=> {
+        this.redirect('/act');
+    }
+
+    onEditClick = (id) =>{
+        this.redirect('/act/'+id);
+    }
+
+    onDeleteClick = (ids)=> {
+        actsApi.deleteActs(ids)
+    }
+
+    redirect = (path) => {
+        if (path != null) {
+            browserHistory.push(path);
+        }
+    }
+
+    render() {
         return (
             <div>
                 <div className="row">
@@ -56,10 +77,13 @@ class CheckGoods extends React.Component {
                             <label className="control-label">&nbsp;</label>
                             <div className="btn-group btn-group-justified">
                                 <div className="btn-group">
-                                    <button type="button" className="btn btn-default" onClick={this.onFindClick}>Поиск</button>
+                                    <button type="button" className="btn btn-default" onClick={this.onFindClick}>Поиск
+                                    </button>
                                 </div>
                                 <div className="btn-group">
-                                    <button type="button" className="btn btn-default" onClick={this.onClearClick}>Очистить поиск</button>
+                                    <button type="button" className="btn btn-default" onClick={this.onClearClick}>
+                                        Очистить поиск
+                                    </button>
                                 </div>
                                 <div className="btn-group">
                                     <button type="button" className="btn btn-success"
@@ -69,9 +93,11 @@ class CheckGoods extends React.Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <WaybillInfo data={this.props.waybill} visible={this.props.frontend.waybillVisible}/>
+                <Row>
+                    <Acts acts={this.props.acts}  onCreateClick={this.onCreateClick} onEditClick={this.onEditClick} onDeleteClick={this.onDeleteClick}/>
+                </Row>
                 <AlertPopup close={this.props.closeDialog}
                             isVisible={this.props.alert.isVisible}
                             message={this.props.alert.text}
@@ -96,7 +122,8 @@ const mapStateToProps = state => {
     return {
         waybill: state.checkGoodsReducer.waybill,
         alert: state.checkGoodsReducer.alert,
-        frontend: state.checkGoodsReducer.frontend
+        frontend: state.checkGoodsReducer.frontend,
+        acts: state.actsState.acts,
     }
 };
 
