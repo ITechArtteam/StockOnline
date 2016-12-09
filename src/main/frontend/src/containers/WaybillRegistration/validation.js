@@ -42,7 +42,18 @@ export function checkIssuanceDate(date) {
         return 'Не указана дата выписки накладной';
     }
     else {
-        return '';
+        let issuanceDate = new Date(date);
+        issuanceDate = new Date(issuanceDate.getYear(), issuanceDate.getDate(),
+            issuanceDate.getMonth());
+        let today = new Date();
+        today = new Date(today.getYear(), today.getDate(), today.getMonth());
+
+        if (issuanceDate.getTime() > today.getTime()) {
+            return 'Указана некорректная дата выписки накладной';
+        }
+        else {
+            return ''
+        }
     }
 }
 
