@@ -114,7 +114,7 @@ class AddNumberModalForm extends React.Component {
                 </ModalHeader>
                 <ModalBody>
                     <TextInput
-                        label="Название"
+                        label="Наименование"
                         error={this.props.nameError}
                         value={this.props.name}
                         onChange={this.props.changeProductName}
