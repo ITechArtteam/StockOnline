@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping(value="/api" )
 public class RoleController {
@@ -18,8 +20,16 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
     @RequestMapping(value="/roles", method = RequestMethod.GET )
-    public List<Role> geRoles(){
+    public List<Role> getRoles(){
         LOGGER.debug("REST request. Path:/roles  method: GET");
         return roleService.getAll();
     }
+
+    @RequestMapping(value="/roles_without_super_admin", method = RequestMethod.GET )
+    public List<Role> getRolesWithoutSuperAdmin(){
+        LOGGER.debug("REST request. Path:/roles  method: GET");
+        return roleService.getAll().stream().filter((role)->{return role.getId()!=1;}).collect(Collectors.toList());
+    }
+
+
 }

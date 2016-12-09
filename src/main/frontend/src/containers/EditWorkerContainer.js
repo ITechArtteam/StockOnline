@@ -13,7 +13,7 @@ class EditWorkerContainer extends React.Component {
     constructor(props) {
         super(props);
         console.log(props)
-        roleApi.getRoles();
+        roleApi.getRolesWithoutSuperAdmin();
         companyApi.getStockOwnerCompany(this.props.idCompany);
         var id = this.props.params.id;
         if ($.isNumeric(id)) {

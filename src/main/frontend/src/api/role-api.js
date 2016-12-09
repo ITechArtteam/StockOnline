@@ -10,3 +10,12 @@ export function getRoles() {
         }).catch(error=> {
         });
 }
+
+export function getRolesWithoutSuperAdmin() {
+    return axios.get('/api/roles_without_super_admin')
+        .then(response => {
+            store.dispatch(getRolesSuccess(response.data));
+            return response;
+        }).catch(error=> {
+        });
+}

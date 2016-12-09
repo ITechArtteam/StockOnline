@@ -45,7 +45,7 @@ const actsReducer = function (state = initialState, action) {
             var newActs= _.differenceWith(state.acts, action.ids, (act, id)=>{return act.id==id});
             return Object.assign({}, state, {acts: newActs, response: action.response});
 
-        
+
         case types.POST_ACT_SUCCESS:
             var newActs = _.concat(state.acts, action.act);
             return Object.assign({}, state, {acts: newActs, response: action.response});

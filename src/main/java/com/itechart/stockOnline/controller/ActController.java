@@ -29,6 +29,9 @@ public class ActController {
         return actService.getAll();
     }
 
+
+
+
     @RequestMapping(value = "/act/{id}", method = RequestMethod.GET)
     public Act getAct(@PathVariable Long id) {
         LOGGER.debug("REST request. Path:/act/{id}  method: GET", id);
