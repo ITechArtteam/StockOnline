@@ -65,6 +65,92 @@ export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_PRICE_ERROR = 'EDIT_WA
 export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_COUNT_ERROR = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_COUNT_ERROR';
 export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNIT_ERROR = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_UNIT_ERROR';
 export const EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_STORAGE_ERROR = 'EDIT_WAYBILL_FORM_ADD_PRODUCT_MODAL_FORM_SET_STORAGE_ERROR';
+export const EDIT_WAYBILL_FORM_SUBMIT_SUCCESS = 'EDIT_WAYBILL_FORM_SUBMIT_SUCCESS';
+export const EDIT_WAYBILL_FORM_SUBMIT_FAILURE = 'EDIT_WAYBILL_FORM_SUBMIT_FAILURE';
+export const EDIT_WAYBILL_FORM_CLEAR_INPUT = 'EDIT_WAYBILL_FORM_CLEAR_INPUT';
+export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SHOW = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_SHOW';
+export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_HIDE = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_HIDE';
+export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_MESSAGE = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_MESSAGE';
+export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_TYPE = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_TYPE';
+export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_SUCCESS_MESSAGE_AND_SHOW = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_SUCCESS_MESSAGE_AND_SHOW';
+export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_FAILURE_MESSAGE_AND_SHOW = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_FAILURE_MESSAGE_AND_SHOW';
+
+export function setSuccessMessageAndShowAlert(message) {
+    return {
+        type: EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_SUCCESS_MESSAGE_AND_SHOW,
+        message
+    }
+}
+
+export function setFailureMessageAndShowAlert(message) {
+    return {
+        type: EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_FAILURE_MESSAGE_AND_SHOW,
+        message
+    }
+}
+
+export function showSubmitAlert() {
+    return {
+        type: EDIT_WAYBILL_FORM_SUBMIT_ALERT_SHOW
+    }
+}
+
+export function hideSubmitAlert() {
+    return {
+        type: EDIT_WAYBILL_FORM_SUBMIT_ALERT_HIDE
+    }
+}
+
+export function setSubmitAlertType(alertType) {
+    return {
+        type: EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_TYPE,
+        alertType
+    }
+}
+
+export function clearInput() {
+    return {
+        type: EDIT_WAYBILL_FORM_CLEAR_INPUT
+    }
+}
+
+export function submitForm(waybill) {
+    return function(dispatch) {
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(waybill),
+            dataType: 'text',
+            url: '/waybills/register',
+            success: function() {
+                dispatch(setSuccessMessageAndShowAlert(`Накладная №${waybill.number} успешно зарегистрирована`));
+            },
+            error: function() {
+                dispatch(setFailureMessageAndShowAlert('Произошла ошибка. Накладная не была зарегистрирована'));
+            }
+        });
+    }
+}
+
+export function setSubmitAlertMessage(message) {
+    return {
+        type: EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_MESSAGE,
+        message
+    }
+}
+
+export function submitSuccess(waybillNumber) {
+    return {
+        type: EDIT_WAYBILL_FORM_SUBMIT_SUCCESS,
+        waybillNumber
+    }
+}
+
+export function submitFailure() {
+    return {
+        type: EDIT_WAYBILL_FORM_SUBMIT_FAILURE
+    }
+}
 
 export function setProductsError(error) {
     return {
@@ -190,10 +276,6 @@ export function setWaybillNumberError(error) {
         type: EDIT_WAYBILL_FORM_SET_WAYBILL_NUMBER_ERROR,
         error
     }
-}
-
-export function validateWaybillForm() {
-    return {s}
 }
 
 export function selectProductUnit(unit) {

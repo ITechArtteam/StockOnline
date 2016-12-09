@@ -45,13 +45,11 @@ public class WaybillBuilder {
             transport.setDriver(driverService.findByPassportNumber(
                     dto.getDriverPassportNumber()));
         }
-        transport.setType(dto.getTransportType());
-        transport.setNumber(String.join(", ", dto.getNumbers()));
-        waybill.setTransport(transport);
 
         waybill.setRegistrationDate(getDateTimeFromString(dto.getRegistrationDatetime()));
         waybill.setDescription(dto.getDescription());
         waybill.setResponsiblePerson(userService.findByLogin(dto.getDispatcherLogin()));
+        waybill.setRegisteredBy(userService.findByLogin(dto.getDispatcherLogin()));
 
         HashSet<ProductInWaybill> waybillProducts = new HashSet<>();
         for (WaybillProductDto productDto : dto.getProducts()) {
@@ -61,6 +59,11 @@ public class WaybillBuilder {
         }
 
         waybill.setProductInWaybills(waybillProducts);
+
+        transport.setStorage(waybillProducts.iterator().next().getProduct().getStorage());
+        transport.setType(dto.getTransportType());
+        transport.setNumber(String.join(", ", dto.getNumbers()));
+        waybill.setTransport(transport);
 
         return waybill;
     }

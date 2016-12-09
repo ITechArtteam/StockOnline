@@ -6,13 +6,13 @@ import {
 
 export function checkName(name, products) {
     if (isEmpty(name)) {
-        return 'Не введено название продукта';
+        return 'Не введено наименование продукта';
     }
     else if (containsIllegalSymbols(name)) {
         return 'Содержатся недопустимые символы';
     }
     else if (productExists(products, name)) {
-        return 'Товар с таким названием уже добавлен';
+        return 'Товар с таким наименованием уже добавлен';
     }
     else {
         return '';
