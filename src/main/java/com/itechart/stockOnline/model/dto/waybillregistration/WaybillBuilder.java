@@ -45,9 +45,6 @@ public class WaybillBuilder {
             transport.setDriver(driverService.findByPassportNumber(
                     dto.getDriverPassportNumber()));
         }
-        transport.setType(dto.getTransportType());
-        transport.setNumber(String.join(", ", dto.getNumbers()));
-        waybill.setTransport(transport);
 
         waybill.setRegistrationDate(getDateTimeFromString(dto.getRegistrationDatetime()));
         waybill.setDescription(dto.getDescription());
@@ -62,6 +59,11 @@ public class WaybillBuilder {
         }
 
         waybill.setProductInWaybills(waybillProducts);
+
+        transport.setStorage(waybillProducts.iterator().next().getProduct().getStorage());
+        transport.setType(dto.getTransportType());
+        transport.setNumber(String.join(", ", dto.getNumbers()));
+        waybill.setTransport(transport);
 
         return waybill;
     }
