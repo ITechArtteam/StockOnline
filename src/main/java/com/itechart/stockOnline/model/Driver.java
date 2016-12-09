@@ -84,16 +84,6 @@ public class Driver {
     @Override
     public String toString() {
         return "Driver{" +
-                "id=" + id +
-                ", passportNumber='" + passportNumber + '\'' +
-                ", passportIssuedBy='" + passportIssuedBy + '\'' +
-                ", passportIssuedDate=" + passportIssuedDate +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", birthDate=" + birthDate +
-                ", transferComany=" + company +
-                ", transports=" + transports +
-                '}';
+                "id=" + id +"}";
     }
 }

@@ -50,10 +50,6 @@ public class Act {
     @Override
     public String toString() {
         return "Act{" +
-                "id=" + id +
-                ", reportDate=" + reportDate +
-                ", status=" + status +
-                ", user=" + user +
-                '}';
+                "id=" + id + "}";
     }
 }

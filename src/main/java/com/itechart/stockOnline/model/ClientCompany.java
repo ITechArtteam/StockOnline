@@ -47,11 +47,6 @@ public class ClientCompany {
     @Override
     public String toString() {
         return "ClientCompany{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address=" + address +
-//                ", senderCompanies=" + senderCompanies +
-//                ", receiverCompanies=" + receiverCompanies +
-                '}';
+                "id=" + id +"}";
     }
 }

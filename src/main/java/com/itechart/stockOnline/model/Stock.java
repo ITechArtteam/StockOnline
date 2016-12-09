@@ -50,11 +50,6 @@ public class Stock {
     @Override
     public String toString() {
         return "Stock{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address=" + address +
-                ", company=" + company +
-                ", rooms=" + ((CollectionUtils.isNotEmpty(rooms))?rooms:"null") +
-                '}';
+                "id=" + id + "}";
     }
 }

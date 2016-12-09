@@ -162,17 +162,6 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", surname='" + surname + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", birthday=" + birthday +
-                ", email='" + email + '\'' +
-                ", login='" + login + '\'' +
-                ", stockOwnerCompany=" + stockOwnerCompany +
-                ", address=" + address +
-                ", roles=" + roles +
-                '}';
+                "id=" + id + "}";
     }
 }

@@ -74,12 +74,7 @@ public class StockOwnerCompany {
     @Override
     public String toString() {
         return "StockOwnerCompany{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", isActive=" + isActive +
-//                ", stocks=" + stocks +
-                ", address=" + address +
-                '}';
+                "id=" + id +"}";
     }
 }
 

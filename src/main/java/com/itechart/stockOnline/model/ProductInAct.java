@@ -42,4 +42,11 @@ public class ProductInAct {
 
     public Double getCost() { return cost; }
     public void setCost(Double cost) { this.cost = cost; }
+
+    @Override
+    public String toString() {
+        return "ProductInAct{" +
+                "id=" + id +
+                '}';
+    }
 }
