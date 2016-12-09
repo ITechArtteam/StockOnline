@@ -11,10 +11,9 @@ class EditActContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(browserHistory)
         var id = this.props.params.id;
         if ($.isNumeric(id)) {
-            actApi.getActFromStore(id);
+            actApi.getAct(id);
         }
         productsApi.getActStatus();
     }
@@ -22,7 +21,7 @@ class EditActContainer extends React.Component {
     saveAct = (act) => {
         browserHistory.go(-1);
         window.scrollTo(0, 0);
-        actApi.saveActInStore(act);
+        actApi.saveAct(act);
     }
 
     redirectAfteClose = ()=>{

@@ -6,6 +6,7 @@ import "react-widgets/dist/css/react-widgets.css";
 import "./EditWorker.less";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-bootstrap-date-picker";
+import validator from "validator";
 
 
 class EditWorker extends React.Component {
@@ -17,7 +18,8 @@ class EditWorker extends React.Component {
     state = {
         worker: this.props.worker,
         roles: this.props.roles,
-        disabledSaveButton: false
+        disabledSaveButton: false,
+        validationState: {email: {status: "success", message: ""}}
     }
 
 
@@ -28,6 +30,7 @@ class EditWorker extends React.Component {
 
     componentWillMount() {
         this.updateProps(this.props);
+
     }
 
     updateProps = (props)=> {
@@ -36,7 +39,6 @@ class EditWorker extends React.Component {
         newWorker.stockOwnerCompany.id = this.props.company.id;
         newWorker.stockOwnerCompany.name = this.props.company.name;
         this.setState({worker: newWorker});
-        console.log(this.state.worker.stockOwnerCompany.name);
     }
 
     onSaveClick = () => {
@@ -56,6 +58,27 @@ class EditWorker extends React.Component {
 
     }
 
+    validate(e) {
+        console.log(e)
+        var newValidationState = _.clone(this.state.validationState);
+        console.log(newValidationState)
+        newValidationState[field].status;
+        if (validator.isEmpty(value) && isRequired) {
+            newValidationState[field].status = 'error'
+        }
+        this.setState({validationState: newValidationState});
+        return;
+        var result = true;
+        for (var i = 2; i < arguments.length; i++) {
+            result = result && arguments[i](value);
+        }
+        if (result) {
+            newValidationState[field].status = 'success'
+        } else {
+            newValidationState[field].status = 'error'
+        }
+        this.setState({validationState: newValidationState});
+    }
 
     render() {
         console.log(this.state.worker.stockOwnerCompany.name);
@@ -121,15 +144,15 @@ class EditWorker extends React.Component {
                                 <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup validationState={this.state.validationState.email.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Электронная почта
                             </Col>
                             <Col sm={5}>
-                                <FormControl type="email" placeholder="Электронная почта"
-                                             valueLink={linkState(this, 'worker.email')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                <FormControl id=""type="email" placeholder="Электронная почта"
+                                             valueLink={linkState(this, 'worker.email')}
+                                             onBlur={this.validate}/>
+                                <HelpBlock>{this.state.validationState.email.message}</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>

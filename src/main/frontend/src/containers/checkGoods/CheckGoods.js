@@ -18,7 +18,7 @@ class CheckGoods extends React.Component {
     }
 
     componentWillMount() {
-        //this.onClearClick();
+        this.onClearClick();
     }
 
     onInputValueChange = e => {
@@ -44,16 +44,10 @@ class CheckGoods extends React.Component {
             this.props.senderRole);
     }
 
-    onCreateClick = ()=> {
+
+
+    onMakeActClick = () =>{
         this.redirect('/act');
-    }
-
-    onEditClick = (id) =>{
-        this.redirect('/act/'+id);
-    }
-
-    onDeleteClick = (ids)=> {
-        actsApi.deleteActs(ids)
     }
 
     redirect = (path) => {
@@ -88,6 +82,11 @@ class CheckGoods extends React.Component {
                                 <div className="btn-group">
                                     <button type="button" className="btn btn-success"
                                             disabled={this.props.frontend.waybillVisible ? "" : "disabled"}
+                                            onClick={this.onMakeActClick}>Создать акт</button>
+                                </div>
+                                <div className="btn-group">
+                                    <button type="button" className="btn btn-success"
+                                            disabled={this.props.frontend.waybillVisible ? "" : "disabled"}
                                             onClick={this.onAcceptClick}>{this.props.acceptButtonText}</button>
                                 </div>
                             </div>
@@ -95,9 +94,6 @@ class CheckGoods extends React.Component {
                     </div>
                 </div>
                 <WaybillInfo data={this.props.waybill} visible={this.props.frontend.waybillVisible}/>
-                <Row>
-                    <Acts acts={this.props.acts}  onCreateClick={this.onCreateClick} onEditClick={this.onEditClick} onDeleteClick={this.onDeleteClick}/>
-                </Row>
                 <AlertPopup close={this.props.closeDialog}
                             isVisible={this.props.alert.isVisible}
                             message={this.props.alert.text}
@@ -122,8 +118,7 @@ const mapStateToProps = state => {
     return {
         waybill: state.checkGoodsReducer.waybill,
         alert: state.checkGoodsReducer.alert,
-        frontend: state.checkGoodsReducer.frontend,
-        acts: state.actsState.acts,
+        frontend: state.checkGoodsReducer.frontend
     }
 };
 

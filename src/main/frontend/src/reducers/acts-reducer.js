@@ -8,7 +8,6 @@ const initialState = {
             id: "",
             reportDate: "",
             products_in_act:[],
-            status:"",
             user:{
                 id:"",
                 login:""
@@ -21,7 +20,6 @@ const initialAct ={
     id: "",
     reportDate: "",
     products_in_act:[],
-    status:"",
     user:{
         id:"",
         login:""

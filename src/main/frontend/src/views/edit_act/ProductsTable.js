@@ -15,6 +15,7 @@ class ProductsTable extends React.Component {
     }
 
     state = {
+        act_status: this.props.act_status,
         waybill_produts: [],
         selected: [],
         products_in_act: this.props.products_in_act,
@@ -29,6 +30,7 @@ class ProductsTable extends React.Component {
                 unit: "",
                 count: "",
             },
+            status:"",
             cost: "",
             count: "",
         }
@@ -37,7 +39,8 @@ class ProductsTable extends React.Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
             waybill_produts: nextProps.waybill_produts,
-            products_in_act: nextProps.products_in_act
+            products_in_act: nextProps.products_in_act,
+            act_status: nextProps.act_status
         });
         this.updateProps(nextProps);
     }
@@ -103,6 +106,7 @@ class ProductsTable extends React.Component {
         newProduct_in_act.product = newProduct;
         newProduct_in_act.count = "";
         newProduct_in_act.cost = "";
+        newProduct_in_act.status = "";
         this.setState({showModal: false, product_in_act: newProduct_in_act});
     }
 
@@ -121,8 +125,6 @@ class ProductsTable extends React.Component {
             if (this.state.products_in_act.length==0){
                 newProduct_in_act.id = 0;
             } else{
-
-                console.log(newProducts_in_act[newProducts_in_act.length-1])
                 newProduct_in_act.id = newProducts_in_act[newProducts_in_act.length-1].id+1;
             }
             newProducts_in_act = [...newProducts_in_act, newProduct_in_act];
@@ -208,7 +210,7 @@ class ProductsTable extends React.Component {
                         <TableHeaderColumn dataField="count" dataFormat={countFormatter}
                                            dataSort={true}>Количество</TableHeaderColumn>
                         <TableHeaderColumn dataField="cost" dataSort={true}>Стоимость</TableHeaderColumn>
-
+                        <TableHeaderColumn dataField="status" dataSort={true}>Статус</TableHeaderColumn>
                     </BootstrapTable>
                 </Row>
 
@@ -228,6 +230,7 @@ class ProductsTable extends React.Component {
                                         data={this.state.waybill_produts}
                                         value={this.state.product_in_act.product.id}
                                         onChange={selectProduct => {
+                                            console.log(selectProduct)
                                             var newProduct_in_act = _.extend({}, this.state.product_in_act);
                                             newProduct_in_act.product = selectProduct;
                                             newProduct_in_act.count = newProduct_in_act.product.count;
@@ -270,6 +273,25 @@ class ProductsTable extends React.Component {
                                     <FormControl placeholder="Стоимость"
                                                  valueLink={linkState(this, 'product_in_act.cost')}/>
                                     <FormControl.Feedback />
+                                    <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup>
+                                <Col sm={4} componentClass={ControlLabel}>
+                                    Статус
+                                </Col>
+                                <Col sm={8}>
+                                    <DropdownList
+                                        valueField='id' textField='name'
+                                        data={this.state.act_status}
+                                        value={this.state.product_in_act.status}
+                                        onChange={selectStatus => {
+                                            var newProductInAct = _.extend({}, this.state.product_in_act);
+                                            newProductInAct.status = _.find(this.state.act_status, status => {
+                                                return status == selectStatus;
+                                            });
+                                            this.setState({product_in_act: newProductInAct});
+                                        }}/>
                                     <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                                 </Col>
                             </FormGroup>
