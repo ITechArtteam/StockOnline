@@ -51,11 +51,6 @@ public class StorageRequirement {
     @Override
     public String toString() {
         return "StorageRequirement{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-//                ", rooms=" + rooms +
-//                ", products=" + products +
-//                ", transports=" + transports +
-                '}';
+                "id=" + id +"}";
     }
 }

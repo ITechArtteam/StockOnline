@@ -57,12 +57,6 @@ public class Transport {
     @Override
     public String toString() {
         return "Transport{" +
-                "id=" + id +
-                ", number='" + number + '\'' +
-                ", type=" + type +
-//                ", driver=" + driver +
-                ", storage=" + storage +
-//                ", waybills=" + waybills +
-                '}';
+                "id=" + id + "}";
     }
 }

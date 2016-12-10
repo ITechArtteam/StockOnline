@@ -113,14 +113,6 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                "id=" + id +
-                ", countryName='" + countryName + '\'' +
-                ", cityName='" + cityName + '\'' +
-                ", street='" + street + '\'' +
-                ", home=" + home +
-                ", room=" + room +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+                "id=" + id +"}";
     }
 }

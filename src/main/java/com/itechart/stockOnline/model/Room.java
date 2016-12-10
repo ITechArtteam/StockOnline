@@ -54,14 +54,6 @@ public class Room {
     @Override
     public String toString() {
         return "Room{" +
-                "id=" + id +
-                "number=" + number +
-                ", cost=" + cost +
-                ", number='" + number + '\'' +
-     //           ", stock=" + stock +
-                ", storage=" + storage +
-                ", shelfs=" + ((CollectionUtils.isNotEmpty(shelfs))?shelfs:"null") +
-                ", storageRequirement=" + storage +
-                '}';
+                "id=" + id + "}";
     }
 }

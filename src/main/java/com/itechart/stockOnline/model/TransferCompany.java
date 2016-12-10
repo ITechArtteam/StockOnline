@@ -38,8 +38,6 @@ public class TransferCompany {
     @Override
     public String toString() {
         return "TransferComany{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+                "id=" + id +"}";
     }
 }

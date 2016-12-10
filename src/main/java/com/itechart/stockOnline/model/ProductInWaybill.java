@@ -39,10 +39,6 @@ public class ProductInWaybill {
     @Override
     public String toString() {
         return "ProductInWaybill{" +
-                "id=" + id +
-                ", count=" + count +
-                ", waybill=" + waybill +
-                ", product=" + product +
-                '}';
+                "id=" + id + "}";
     }
 }

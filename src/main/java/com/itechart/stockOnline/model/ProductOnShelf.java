@@ -61,13 +61,6 @@ public class ProductOnShelf {
     @Override
     public String toString() {
         return "ProductOnShelf{" +
-                "id=" + id +
-                ", count=" + count +
-                ", beginDate=" + beginDate +
-                ", endDate=" + endDate +
-                ", shelf=" + shelf +
-                ", product=" + product +
-                ", user=" + user +
-                '}';
+                "id=" + id + "}";
     }
 }

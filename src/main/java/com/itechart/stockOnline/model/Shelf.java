@@ -51,12 +51,6 @@ public class Shelf {
     @Override
     public String toString() {
         return "Shelf{" +
-                "id=" + id +
-                "number=" + number +
-                ", capacity=" + capacity +
-                ", isFree=" + isFree +
-     //           ", room=" + room +
-//                ", productOnShelfs=" + productOnShelfs +
-                '}';
+                "id=" + id + "}";
     }
 }

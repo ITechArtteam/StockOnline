@@ -123,16 +123,6 @@ public class Waybill {
     @Override
     public String toString() {
         return "Waybill{" +
-                "id=" + id +
-                ", registrationDate=" + registrationDate +
-                ", status=" + status +
-//                ", productInWaybills=" + productInWaybills +
-                ", transport=" + transport +
-                ", sender=" + sender +
-                ", receiver=" + receiver +
-                ", responsiblePerson=" + responsiblePerson +
-                ", checkedBy=" + checkedBy +
-                ", registeredBy=" + registeredBy +
-                '}';
+                "id=" + id + "}";
     }
 }
