@@ -12,6 +12,7 @@ import {
 } from 'react-modal-bootstrap'
 
 import TextInput from '../../../../components/TextInput/TextInput'
+import Shelfs from './Shelfs'
 
 class AddRoomModalForm extends React.Component {
 
@@ -47,6 +48,7 @@ class AddRoomModalForm extends React.Component {
                         label="Способ хранения"
                         value={this.props.storage}
                         onChange={this.props.changeRoomStorage} />
+                    <Shelfs />
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideAddRoomModalForm} value="Отмена" />
@@ -88,6 +90,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         changeRoomStorage:(storage) => {
             dispatch(stockActionCreator.changeRoomStorage(storage))
+        },
+        selectRoomUnit:(unit) => {
+            dispatch(stockActionCreator.selectRoomUnit(unit))
         }
     }
 };

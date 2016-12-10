@@ -28,11 +28,14 @@ class Rooms extends React.Component {
     }
 
     handleAddRoomButtonClick() {
-        this.props.changeRoomNumber('');
-        this.props.changeRoomCost('');
-        this.props.selectRoomUnit(null);
-        this.props.changeRoomStorage('');
-
+        if (this.props.stockRooms !== null){
+            this.props.changeRoomNumber('');
+            this.props.changeRoomCost('');
+            this.props.selectRoomUnit(null);
+            this.props.changeRoomStorage('');
+        }else{
+            this.props.createAddRoomModalForm();
+        }
         this.props.showAddRoomModalForm();
     }
 
@@ -86,7 +89,7 @@ class Rooms extends React.Component {
 function mapStateToProps(state) {
     return {
         rooms: (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.rooms: [],
-        selectedRoomName: (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.selectedRoomName : null
+        selectedRoomName: (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.selectedRoomName : null,
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -109,11 +112,11 @@ const mapDispatchToProps = (dispatch) => {
         selectRoomUnit:(unit) => {
             dispatch(stockActionCreator.selectRoomUnit(unit))
         },
-        setUnits:(units) => {
-            dispatch(stockActionCreator.setUnits(units))
-        },
         showAddRoomModalForm:() => {
             dispatch(stockActionCreator.showAddRoomModalForm())
+        },
+        createAddRoomModalForm:() => {
+            dispatch(stockActionCreator.createAddRoomModalForm())
         }
     }
 };

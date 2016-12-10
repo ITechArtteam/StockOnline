@@ -11,7 +11,16 @@ const initUserState = {
                 number: '',
                 cost: '',
                 storage: '',
-                id: -1
+                id: -1,
+                selectedShelfName: null,
+                shelfs: [],
+                addShelfModalForm: {
+                    isOpen: false,
+                    number: '',
+                    capacity: '',
+                    isFree: true,
+                    id: -1
+                }
             }
         },
         name: "",
@@ -231,6 +240,196 @@ export default function (state = initUserState, action) {
                         addRoomModalForm: {
                             ...state.data.stockRooms.addRoomModalForm,
                             isOpen: true
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SELECT_UNIT: {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            unit: action.unit
+                        }
+                    }
+                }
+            }
+        };
+
+        case event.EDIT_STOCK_FORM_STOCK_ROOMS_CREATE_ADD_ROOM_MODAL_FORM:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: action.addRoomModalForm
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_CHANGE_NUMBER:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            addShelfModalForm: {
+                                ...state.data.stockRooms.addRoomModalForm.addShelfModalForm,
+                                number: action.number
+                            }
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_CHANGE_CAPACITY:
+            return {
+                ...state,
+                data: {
+                    ...state.data, stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            addShelfModalForm: {
+                                ...state.data.stockRooms.addRoomModalForm.addShelfModalForm,
+                                capacity: action.capacity
+                            }
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SHOW:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            isOpen: true,
+                            addShelfModalForm: {
+                                ...state.data.stockRooms.addRoomModalForm.addShelfModalForm,
+                                isOpen: true
+                            }
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SELECT_UNIT: {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            addShelfModalForm: {
+                                ...state.data.stockRooms.addRoomModalForm.addShelfModalForm,
+                                unit: action.unit
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        case event.EDIT_STOCK_FORM_SELECT_SHELF:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            selectedShelfName: action.number
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_HIDE:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            isOpen: true,
+                            addShelfModalForm: {
+                                ...state.data.stockRooms.addRoomModalForm.addShelfModalForm,
+                                isOpen: false
+                            }
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_CLEAR_FIELDS:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            addShelfModalForm: {
+                                ...state.data.stockRooms.addRoomModalForm.addShelfModalForm,
+                                number: '',
+                                capacity: '',
+                                isFree: false
+                            }
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_DELETE_SHELF:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            shelfs: state.data.stockRooms.addRoomModalForm.shelfs.filter(function (shelf) {
+                                return shelf.number !== action.number
+                            })
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            shelfs: [
+                                ...state.data.stockRooms.addRoomModalForm.shelfs,
+                                action.shelf
+                            ]
                         }
                     }
                 }
