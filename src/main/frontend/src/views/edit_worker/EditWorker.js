@@ -21,6 +21,12 @@ class EditWorker extends React.Component {
         roles: this.props.roles,
         disabledSaveButton: false,
         validationsState: {
+            company: {
+                status: null,
+                message: "",
+                isRequred: true,
+                requredMessage: "Работник обязательно должен относиться к компании.",
+            },
             birthday: {
                 status: null,
                 message: "",
@@ -81,16 +87,16 @@ class EditWorker extends React.Component {
                 status: null,
                 message: "",
                 isRequred: false,
-                warningRules: [{
-                    rule: validator.isNumeric, message: "Вы уверены, что ввели валидный номер дома?"
+                rules: [{
+                    rule: validator.isNumeric, message: "Номер дома должен состоять только из цифр."
                 }]
             },
             room: {
                 status: null,
                 message: "",
                 isRequred: false,
-                warningRules: [{
-                    rule: validator.isNumeric, message: "Вы уверены, что ввели валидный номер квартиры?"
+                rules: [{
+                    rule: validator.isNumeric, message: "Номер квартиры должен состоять только из цифр."
                 }]
             }
 
@@ -123,6 +129,7 @@ class EditWorker extends React.Component {
             this.setState({validationsState: newValidationsState});
             this.preliminaryValidation(newWorker);
         }
+        this.validateValue("company",newWorker.stockOwnerCompany.id);
 
     }
 
@@ -132,8 +139,6 @@ class EditWorker extends React.Component {
         this.validateValue("login",newWorker.login);
         this.validateValue("surname",newWorker.surname);
         this.validateValue("birthday",newWorker.birthday);
-        console.log(newWorker)
-        console.log(newWorker.address)
         this.validateValue("home",newWorker.address.home);
         this.validateValue("room",newWorker.address.room);
     }
@@ -169,6 +174,9 @@ class EditWorker extends React.Component {
         validationState.test = true;
         if (value==null){
             value="";
+        }
+        if ($.isNumeric(value)){
+            value=String(value);
         }
         if (value.length == 0 && validationState.isRequred) {
             validationState.status = 'error'
@@ -239,7 +247,7 @@ class EditWorker extends React.Component {
                 newValidationsState[id].status = 'error'
                 newValidationsState[id].message = newValidationsState[id].requredMessage;
             } else {
-                if (newValidationsState[id].message != "") {
+                if ((newValidationsState[id].status != "success")&&(newValidationsState[id].status != null)) {
                     result = false;
                 }
             }
@@ -253,13 +261,14 @@ class EditWorker extends React.Component {
             <div>
                 <Row className="show-grid">
                     <Form horizontal id="worker_form">
-                        <FormGroup >
+                        <FormGroup validationState={this.state.validationsState.company.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Компания
                             </Col>
                             <Col sm={5}>
                                 <FormControl placeholder="Компания" readOnly
                                              valueLink={linkState(this, 'worker.stockOwnerCompany.name')}/>
+                                <HelpBlock>{this.state.validationsState.company.message}</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup >

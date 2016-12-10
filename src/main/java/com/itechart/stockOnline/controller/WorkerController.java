@@ -55,7 +55,7 @@ public class WorkerController {
     public void deleteWorker(@PathVariable Long id, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/worker/{id}  method: DELETE", id);
         workerService.delete(id);
-        response.addHeader("result", "Worker have deleted.");
+        response.addHeader("result", "Работник удалён.");
     }
 
 
@@ -63,21 +63,21 @@ public class WorkerController {
     public void deleteWorkers(@RequestParam(value = "ids") List<Long> workersId, HttpServletResponse response ) {
         LOGGER.debug("REST request. Path:/workers?ids={}  method: DELETE Request body {workers}", workersId);
         workerService.delete(workersId.toArray(new Long[workersId.size()]));
-        response.addHeader("result", "Worker has deleted.");
+        response.addHeader("result", "Работник удалён.");
     }
 
     @RequestMapping(value = "/worker", method = RequestMethod.POST)
     public void saveWorker(@RequestBody User worker, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/worker  method: POST Request body {worker}", worker);
         User saveWorker = workerService.save(worker);
-        response.addHeader("result", "Worker has saved.");
+        response.addHeader("result", "Работник сохранен.");
     }
 
     @ExceptionHandler(ValidationError.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> fieldHasErrors(ValidationError error, HttpServletResponse response){
         LOGGER.error("fieldHasErrors({})", error.toString());
-        response.addHeader("result", "Fields is not valid.");
+        response.addHeader("result", "Поля не прошли валидацию.");
         return error.getErrors();
     }
 
@@ -85,7 +85,7 @@ public class WorkerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void exception(Exception exception, HttpServletResponse response){
         LOGGER.error("fieldHasErrors({})", exception.getMessage());
-        response.addHeader("result", "Server error.");
+        response.addHeader("result", "Ошибка на сервере.");
     }
 
 

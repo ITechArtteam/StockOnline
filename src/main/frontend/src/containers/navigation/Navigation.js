@@ -29,7 +29,6 @@ class Navigation extends React.Component {
                                           buttonText="Стандартные отчеты"/>
                         <NavigationButton mustHaveRoles={["ADMIN"]} to="/stocks" buttonText="Склады"/>
                         <NavigationButton mustHaveRoles={["ADMIN"]} to="/workers" buttonText="Сотрудники"/>
-                        <NavigationButton mustHaveRoles={["ADMIN"]} to="/worker" buttonText="Редактировать сотрудника"/>
                         <NavigationButton mustHaveRoles={["DISPATCHER"]} to="/registrationOfGoods" buttonText="Регистрация товаров"/>
                         <NavigationButton mustHaveRoles={["DISPATCHER"]} to="/waybills" buttonText="Накладные"/>
                         <NavigationButton mustHaveRoles={["DISPATCHER"]} to="/registerwaybill" buttonText="Регистрация накладной"/>

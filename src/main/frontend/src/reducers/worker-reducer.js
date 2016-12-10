@@ -42,7 +42,7 @@ const workerReducer = function (state = initialState, action) {
             return Object.assign({}, state, {response: action.response});
 
         case types.POST_WORKER_UNSUCCESS:
-            return Object.assign({}, state, {response: action.response});
+            return Object.assign({}, state, {response: action.response, worker: action.worker});
 
         case types.CLOSE_WORKER_RESPONSE:
             return Object.assign({}, state, {response: null});

@@ -36,7 +36,7 @@ export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
             store.dispatch(saveWorkerSuccess(response.data,response))
             redirect(thenRedirectPath);
         }).catch(error=>{
-            store.dispatch(saveWorkerUnsuccess(error.response))
+            store.dispatch(saveWorkerUnsuccess(worker, error.response))
             redirect(errorRedirectPath);
         });
 }

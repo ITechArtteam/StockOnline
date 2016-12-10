@@ -82,7 +82,7 @@ public class WorkerServiceImpl implements WorkerService {
                 bindingResult.addError("login", new LoginBusyException("Такой логин занят."));
             });
             if (StringUtils.isEmpty(worker.getPassword())){
-                bindingResult.addError("login", new Exception("Пароль не введен."));
+                bindingResult.addError("password", new Exception("Пароль не введен."));
             }
             worker.setPassword(bCryptPasswordEncoder.encode(worker.getPassword()));
         }

@@ -24,10 +24,11 @@ export function deleteWorkerUnsuccess(response) {
     };
 }
 
-export function saveWorkerUnsuccess(response) {
+export function saveWorkerUnsuccess(worker, response) {
     return {
         type: types.POST_WORKER_UNSUCCESS,
-        response: response
+        response: response,
+        worker:worker
     };
 }
 
