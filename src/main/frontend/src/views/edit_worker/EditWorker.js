@@ -7,11 +7,12 @@ import "./EditWorker.less";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-bootstrap-date-picker";
 import validator from "validator";
-
+import moment from "moment";
+import {connect} from "react-redux";
+import $ from "jquery";
 
 class EditWorker extends React.Component {
     constructor(props) {
-        console.log(props)
         super(props);
     }
 
@@ -19,69 +20,235 @@ class EditWorker extends React.Component {
         worker: this.props.worker,
         roles: this.props.roles,
         disabledSaveButton: false,
-        validationState: {email: {status: "success", message: ""}}
+        validationsState: {
+            birthday: {
+                status: null,
+                message: "",
+                isRequred: false,
+                rules: [{
+                    rule: (text)=> {
+                        return moment(text).isBefore(moment());
+                    }, message: "Введите реально возможную дату рождения."
+                }]
+            },
+            email: {
+                status: null,
+                message: "",
+                isRequred: true,
+                requredMessage: "Электронная почта должна быть заполнена обязательно",
+                rules: [{rule: validator.isEmail, message: "Введите валидный email"}]
+            },
+            login: {
+                status: null,
+                message: "",
+                isRequred: true,
+                requredMessage: "Логин должен быть заполнен обязательно",
+                rules: [{
+                    rule: (text)=> {
+                        return (text.length >= 3) && (text.length <= 20);
+                    }, message: "Длина логина должна быть от 3 до 20 символов."
+                }]
+            },
+            password: {
+                status: null,
+                message: "",
+                isRequred: true,
+                requredMessage: "Пароль должен быть заполнен обязательно",
+                rules: [{
+                    rule: (text)=> {
+                        return (text.length >= 3) && (text.length <= 20);
+                    }, message: "Длина пароля должна быть от 3 до 20 символов."
+                }]
+            },
+            surname: {
+                status: null,
+                message: "",
+                isRequred: true,
+                requredMessage: "Фамилия должна быть заполнена обязательно.",
+                rules: [{
+                    rule: (text)=> {
+                        return (text.length >= 2) && (text.length <= 20);
+                    }, message: "Длина Фамилии должна быть от 2 до 20 символов."
+                }]
+            },
+            roles: {
+                status: null,
+                message: "",
+                isRequred: true,
+                requredMessage: "Роль должна быть выбрана обязательно."
+            },
+            home: {
+                status: null,
+                message: "",
+                isRequred: false,
+                warningRules: [{
+                    rule: validator.isNumeric, message: "Вы уверены, что ввели валидный номер дома?"
+                }]
+            },
+            room: {
+                status: null,
+                message: "",
+                isRequred: false,
+                warningRules: [{
+                    rule: validator.isNumeric, message: "Вы уверены, что ввели валидный номер квартиры?"
+                }]
+            }
+
+        }
+
     }
 
 
     componentWillReceiveProps(nextProps) {
-        this.setState({worker: nextProps.worker, roles: nextProps.roles});
+        console.log(nextProps)
         this.updateProps(nextProps);
+        this.setState({roles: nextProps.roles, company: nextProps.company});
     }
 
     componentWillMount() {
         this.updateProps(this.props);
-
     }
 
     updateProps = (props)=> {
-        console.log(props)
-        var newWorker = _.extend({}, this.state.worker);
-        newWorker.stockOwnerCompany.id = this.props.company.id;
-        newWorker.stockOwnerCompany.name = this.props.company.name;
+        var newWorker = _.extend({}, props.worker);
+        if (newWorker.birthday) {
+            newWorker.birthday = moment(props.worker.birthday).format()
+        }
+        var stockOwnerCompany = {id: props.company.id, name: props.company.name};
+        newWorker.stockOwnerCompany = stockOwnerCompany;
         this.setState({worker: newWorker});
+        if ($.isNumeric(newWorker.id)){
+            var newValidationsState= _.extend({}, this.state.validationsState);
+            newValidationsState.password.isRequred=false;
+            this.setState({validationsState: newValidationsState});
+            this.preliminaryValidation(newWorker);
+        }
+
     }
 
+    preliminaryValidation = (newWorker) =>{
+        this.validateValue("email",newWorker.email);
+        this.validateValue("roles",newWorker.roles);
+        this.validateValue("login",newWorker.login);
+        this.validateValue("surname",newWorker.surname);
+        this.validateValue("birthday",newWorker.birthday);
+        console.log(newWorker)
+        console.log(newWorker.address)
+        this.validateValue("home",newWorker.address.home);
+        this.validateValue("room",newWorker.address.room);
+    }
+
+
     onSaveClick = () => {
-        this.setState({disabledSaveButton: true});
-        this.props.onSaveClick(this.state.worker);
-        this.setState({disabledSaveButton: false});
+        if (this.allValidate()) {
+            this.setState({disabledSaveButton: true});
+            this.props.onSaveClick(this.state.worker);
+            this.setState({disabledSaveButton: false});
+        }
+
     }
 
     onCloseClick = () => {
         this.props.onCloseClick();
     }
 
-    handleChange = (date)=> {
-        var newWorker = _.extend({}, this.state.worker);
-        newWorker.date = date.format('DD/MM/YYYY');
-        this.setState({worker: newWorker});
 
+    validateValue = (id, value) => {
+        this.validate(id, value);
     }
 
-    validate(e) {
-        console.log(e)
-        var newValidationState = _.clone(this.state.validationState);
-        console.log(newValidationState)
-        newValidationState[field].status;
-        if (validator.isEmpty(value) && isRequired) {
-            newValidationState[field].status = 'error'
+    validateComponent = (e) => {
+        var id = e.target.id;
+        var value = e.target.value;
+        this.validate(id, value);
+    }
+
+    validate = (id, value) => {
+        var newValidationsState = _.clone(this.state.validationsState);
+        var validationState = newValidationsState[id];
+        validationState.test = true;
+        if (value==null){
+            value="";
         }
-        this.setState({validationState: newValidationState});
-        return;
-        var result = true;
-        for (var i = 2; i < arguments.length; i++) {
-            result = result && arguments[i](value);
-        }
-        if (result) {
-            newValidationState[field].status = 'success'
+        if (value.length == 0 && validationState.isRequred) {
+            validationState.status = 'error'
+            validationState.message = validationState.requredMessage;
         } else {
-            newValidationState[field].status = 'error'
+            if (!(value.length == 0)) {
+                var result = true;
+                if (validationState.rules) {
+                    for (var i = 0; i < validationState.rules.length; i++) {
+                        result = result && validationState.rules[i].rule(value);
+                        if (!result) {
+                            validationState.status = 'error';
+                            validationState.message = validationState.rules[i].message;
+                            break;
+                        }
+                    }
+                }
+                if (validationState.warningRules) {
+
+                    for (var i = 0; i < validationState.warningRules.length; i++) {
+                        result = result && validationState.warningRules[i].rule(value);
+                        if (!result) {
+                            validationState.status = 'warning';
+                            validationState.message = validationState.warningRules[i].message;
+                            break;
+                        }
+                    }
+                }
+                if (result) {
+                    if (validationState.isRequred) {
+                        validationState.status = 'success'
+                        validationState.message = "";
+                    } else {
+                        validationState.status = null
+                        validationState.message = "";
+                    }
+                }
+            }
+
         }
-        this.setState({validationState: newValidationState});
+        this.setState({validationsState: newValidationsState});
+    }
+
+    clean = (e) => {
+        var id = e.target.id;
+        var newValidationsState = _.clone(this.state.validationsState);
+        var validationState = newValidationsState[id];
+        validationState.status = null
+        validationState.message = "";
+        this.setState({validationsState: newValidationsState});
+    }
+
+    cleanById(id) {
+        var newValidationsState = _.clone(this.state.validationsState);
+        var validationState = newValidationsState[id];
+        validationState.status = null
+        validationState.message = "";
+        this.setState({validationsState: newValidationsState});
+    }
+
+
+    allValidate = () => {
+        var result = true;
+        var newValidationsState = _.clone(this.state.validationsState);
+        for (var id in newValidationsState) {
+            if (newValidationsState[id].test != true && newValidationsState[id].isRequred) {
+                result = false;
+                newValidationsState[id].status = 'error'
+                newValidationsState[id].message = newValidationsState[id].requredMessage;
+            } else {
+                if (newValidationsState[id].message != "") {
+                    result = false;
+                }
+            }
+        }
+        this.setState({validationsState: newValidationsState});
+        return result;
     }
 
     render() {
-        console.log(this.state.worker.stockOwnerCompany.name);
         return (
             <div>
                 <Row className="show-grid">
@@ -102,20 +269,19 @@ class EditWorker extends React.Component {
                             <Col sm={5}>
                                 <FormControl placeholder="Имя"
                                              valueLink={linkState(this, 'worker.name')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup validationState={this.state.validationsState.surname.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Фамилия
                             </Col>
                             <Col sm={5}>
-                                <FormControl placeholder="Фамилия"
-                                             valueLink={linkState(this, 'worker.surname')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                <FormControl id="surname" placeholder="Фамилия"
+                                             valueLink={linkState(this, 'worker.surname')}
+                                             onBlur={this.validateComponent} onClick={this.clean}/>
+                                <HelpBlock>{this.state.validationsState.surname.message}</HelpBlock>
                             </Col>
+
                         </FormGroup>
                         <FormGroup>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
@@ -124,35 +290,34 @@ class EditWorker extends React.Component {
                             <Col sm={5}>
                                 <FormControl placeholder="Отчество"
                                              valueLink={linkState(this, 'worker.patronymic')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup validationState={this.state.validationsState.birthday.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Дата рождения
                             </Col>
                             <Col sm={5}>
-                                <DatePicker
-                                    value={this.state.worker.birthday}
-                                    onChange={(date) => {
-                                        var newWorker = _.extend({}, this.state.worker);
-                                        newWorker.birthday = date;
-                                        this.setState({worker: newWorker});
-                                    }}
+                                <DatePicker id="birthday"
+                                            value={this.state.worker.birthday}
+                                            onChange={(date) => {
+                                                var newWorker = _.extend({}, this.state.worker);
+                                                newWorker.birthday = date;
+                                                this.setState({worker: newWorker});
+                                                this.validateValue("birthday", date)
+                                            }} onFocus={this.clean}
                                 />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                <HelpBlock>{this.state.validationsState.birthday.message}</HelpBlock>
                             </Col>
                         </FormGroup>
-                        <FormGroup validationState={this.state.validationState.email.status}>
+                        <FormGroup validationState={this.state.validationsState.email.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Электронная почта
                             </Col>
                             <Col sm={5}>
-                                <FormControl id=""type="email" placeholder="Электронная почта"
+                                <FormControl id="email" placeholder="Электронная почта"
                                              valueLink={linkState(this, 'worker.email')}
-                                             onBlur={this.validate}/>
-                                <HelpBlock>{this.state.validationState.email.message}</HelpBlock>
+                                             onBlur={this.validateComponent} onClick={this.clean}/>
+                                <HelpBlock>{this.state.validationsState.email.message}</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>
@@ -162,8 +327,6 @@ class EditWorker extends React.Component {
                             <Col sm={5}>
                                 <FormControl placeholder="Страна"
                                              valueLink={linkState(this, 'worker.address.countryName')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>
@@ -173,64 +336,77 @@ class EditWorker extends React.Component {
                             <Col sm={5}>
                                 <FormControl placeholder="Город"
                                              valueLink={linkState(this, 'worker.address.cityName')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>
+                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                                Улица
+                            </Col>
+                            <Col sm={5}>
+                                <FormControl placeholder="Город"
+                                             valueLink={linkState(this, 'worker.address.street')}/>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup validationState={this.state.validationsState.home.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Дом
                             </Col>
                             <Col sm={5}>
-                                <FormControl placeholder="Дом"
-                                             valueLink={linkState(this, 'worker.address.home')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                <FormControl id="home" placeholder="Дом"
+                                             valueLink={linkState(this, 'worker.address.home')}
+                                             onBlur={this.validateComponent} onClick={this.clean}/>
+                                <HelpBlock>{this.state.validationsState.home.message}</HelpBlock>
                             </Col>
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup validationState={this.state.validationsState.room.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Квартира
                             </Col>
                             <Col sm={5}>
-                                <FormControl placeholder="Квартира"
-                                             valueLink={linkState(this, 'worker.address.room')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                <FormControl id="room" placeholder="Квартира"
+                                             valueLink={linkState(this, 'worker.address.room')}
+                                             onBlur={this.validateComponent} onClick={this.clean}/>
+                                <HelpBlock>{this.state.validationsState.room.message}</HelpBlock>
                             </Col>
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup validationState={this.state.validationsState.roles.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Роль
                             </Col>
                             <Col sm={5}>
-                                <Multiselect data={this.state.roles}
+                                <Multiselect id="roles" data={this.state.roles}
                                              valueLink={linkState(this, 'worker.roles')}
                                              textField='name'
-                                             valueField='id'/>
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                             placeholder="Роли"
+                                             valueField='id'
+                                             onBlur={()=> {
+                                                 this.validateValue("roles", this.state.worker.roles)
+                                             }} onSelect={()=> {
+                                    this.cleanById("roles")
+                                }}/>
+                                <HelpBlock>{this.state.validationsState.roles.message}</HelpBlock>
                             </Col>
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup validationState={this.state.validationsState.login.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Логин
                             </Col>
                             <Col sm={5}>
-                                <FormControl placeholder="Логин"
-                                             valueLink={linkState(this, 'worker.login')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                <FormControl id="login" placeholder="Логин"
+                                             valueLink={linkState(this, 'worker.login')}
+                                             onBlur={this.validateComponent} onClick={this.clean}/>
+                                <HelpBlock>{this.state.validationsState.login.message}</HelpBlock>
                             </Col>
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup validationState={this.state.validationsState.password.status}>
                             <Col smOffset={3} sm={1} componentClass={ControlLabel}>
                                 Пароль
                             </Col>
                             <Col sm={5}>
-                                <FormControl placeholder="Пароль"
-                                             valueLink={linkState(this, 'worker.password')}/>
-                                <FormControl.Feedback />
-                                <HelpBlock>Это поле должно быть заполнено.</HelpBlock>
+                                <FormControl id="password" placeholder="Пароль"
+                                             valueLink={linkState(this, 'worker.password')}
+                                             onBlur={this.validateComponent} onClick={this.clean}/>
+                                <HelpBlock>{this.state.validationsState.password.message}</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup>

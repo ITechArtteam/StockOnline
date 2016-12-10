@@ -24,7 +24,6 @@ public class User {
     @MaxSize(value = 20 , group = Worker.class,name="login", message = "Длина логина не должна превышать 20 символов.")
     @Column(length = 20, nullable = false)
     private String login;
-    @NotNull(group = User.class, name="password", message = "Пароль должен быть заполнен обязательно.")
     @MinSize(value = 3 , group = User.class, name="password", message = "Длина пароля должна быть от 3 символов.")
     @NotNull(group = Worker.class, name="password", message = "Пароль должен быть заполнен обязательно.")
     @MaxSize(value = 20 , group = Worker.class, name="password", message = "Длина пароля должна быть от 3 до 20 символов.")

@@ -20,14 +20,13 @@ class EditAct extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        this.updateProps(nextProps);
         this.setState({
-            act: nextProps.act,
             products: nextProps.products,
             act_status: nextProps.act_status,
             controller_username: nextProps.controller_username,
             controller_id: nextProps.controller_id
         });
-        this.updateProps(nextProps);
     }
 
     componentWillMount() {

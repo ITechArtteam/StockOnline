@@ -43,7 +43,6 @@ const actsReducer = function (state = initialState, action) {
             var newActs= _.differenceWith(state.acts, action.ids, (act, id)=>{return act.id==id});
             return Object.assign({}, state, {acts: newActs, response: action.response});
 
-
         case types.POST_ACT_SUCCESS:
             var newActs = _.concat(state.acts, action.act);
             return Object.assign({}, state, {acts: newActs, response: action.response});
@@ -52,14 +51,9 @@ const actsReducer = function (state = initialState, action) {
             var newActs = _.filter(state.acts, acts => act.id != action.id);
             return Object.assign({}, state, {acts: newActs, response: action.response});
 
-        case types.FIND_ACT_IN_STORE:
-            var newAct =  state.acts[id];
-            return Object.assign({}, state, {act: newAct});
-
-
-
         case types.CLOSE_ACTS_RESPONSE:
             return Object.assign({}, state, {response: null});
+
         case types.INITIAL_STATE_ACTS:
             return Object.assign({}, state, initialState);
 

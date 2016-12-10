@@ -9,6 +9,7 @@ import com.itechart.stockOnline.validation.EmailBusyException;
 import com.itechart.stockOnline.validation.LoginBusyException;
 import com.itechart.stockOnline.validation.Validator;
 import com.itechart.stockOnline.validator.Worker;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Transactional(readOnly = true)
     public User get(Long id) {
         User worker = workerRepository.findOne(id);
+        worker.setPassword(null);
         return worker;
     }
 
@@ -59,26 +61,34 @@ public class WorkerServiceImpl implements WorkerService {
             User one = workerRepository.findOne(worker.getId());
             if (!one.getEmail().equals(worker.getEmail())) {
                 workerRepository.findByEmail(worker.getEmail()).ifPresent((email) -> {
-                    bindingResult.addError("email", new EmailBusyException("email занят"));
+                    bindingResult.addError("email", new EmailBusyException("Такая электронная почта занята."));
                 });
             }
             if (!one.getLogin().equals(worker.getLogin())) {
                 workerRepository.findByLogin(worker.getLogin()).ifPresent((login) -> {
-                    bindingResult.addError("login", new LoginBusyException("login занят"));
+                    bindingResult.addError("login", new LoginBusyException("Такой логин занят."));
                 });
+            }
+            if (StringUtils.isEmpty(worker.getPassword())){
+                worker.setPassword(one.getPassword());
+            } else{
+                worker.setPassword(bCryptPasswordEncoder.encode(worker.getPassword()));
             }
         } else {
             workerRepository.findByEmail(worker.getEmail()).ifPresent((email) -> {
-                bindingResult.addError("email", new EmailBusyException("email занят"));
+                bindingResult.addError("email", new EmailBusyException("Такая электронная почта занята."));
             });
             workerRepository.findByLogin(worker.getLogin()).ifPresent((login) -> {
-                bindingResult.addError("login", new LoginBusyException("login занят"));
+                bindingResult.addError("login", new LoginBusyException("Такой логин занят."));
             });
+            if (StringUtils.isEmpty(worker.getPassword())){
+                bindingResult.addError("login", new Exception("Пароль не введен."));
+            }
+            worker.setPassword(bCryptPasswordEncoder.encode(worker.getPassword()));
         }
         if (bindingResult.hasErroe()) {
             throw new ValidationError(bindingResult.get());
         }
-        worker.setPassword(bCryptPasswordEncoder.encode(worker.getPassword()));
         return workerRepository.save(worker);
     }
 
