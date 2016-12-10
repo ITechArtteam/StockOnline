@@ -12,13 +12,8 @@ import {
 } from 'react-modal-bootstrap'
 
 import TextInput from '../../../../components/TextInput/TextInput'
-import SelectInput from '../../../../components/SelectInput/SelectInput'
 
 class AddRoomModalForm extends React.Component {
-
-    componentWillMount() {
-        //this.props.loadUnits();
-    }
 
     handleSaveRoom() {
         this.props.addRoom({
@@ -93,12 +88,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         changeRoomStorage:(storage) => {
             dispatch(stockActionCreator.changeRoomStorage(storage))
-        },
-        selectRoomUnit:(unit) => {
-            dispatch(stockActionCreator.selectRoomUnit(unit))
-        },
-        setUnits:(units) => {
-            dispatch(stockActionCreator.setUnits(units))
         }
     }
 };

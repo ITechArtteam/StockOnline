@@ -8,10 +8,8 @@ const initUserState = {
             rooms: [],
             addRoomModalForm: {
                 isOpen: false,
-                units: [],
                 number: '',
                 cost: '',
-                unit: null,
                 storage: '',
                 id: -1
             }
@@ -166,38 +164,6 @@ export default function (state = initUserState, action) {
                     }
                 }
             };
-
-        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_UNITS: {
-            return {
-                ...state,
-                data: {
-                    ...state.data,
-                    stockRooms: {
-                        ...state.data.stockRooms,
-                        addRoomModalForm: {
-                            ...state.data.stockRooms.addRoomModalForm,
-                            units: action.units
-                        }
-                    }
-                }
-            }
-        };
-
-        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SELECT_UNIT: {
-            return {
-                ...state,
-                data: {
-                    ...state.data,
-                    stockRooms: {
-                        ...state.data.stockRooms,
-                        addRoomModalForm: {
-                            ...state.data.stockRooms.addRoomModalForm,
-                            unit: action.unit
-                        }
-                    }
-                }
-            }
-        };
 
         case event.EDIT_STOCK_FORM_DELETE_ROOM:
             return {

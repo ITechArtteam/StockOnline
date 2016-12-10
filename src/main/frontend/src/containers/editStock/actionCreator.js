@@ -159,33 +159,6 @@ function deleteRoom(number) {
     }
 }
 
-function selectRoomUnit(unit) {
-    return {
-        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SELECT_UNIT,
-        unit
-    }
-}
-
-function loadUnits() {
-    return function(dispatch) {
-        $.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: 'api/rooms/units',
-            success: function (response) {
-                dispatch(setUnits(response));
-            }
-        });
-    }
-}
-
-function setUnits(units) {
-    return {
-        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_UNITS,
-        units
-    }
-}
-
 function addRoom(room) {
     return {
         type: event.EDIT_STOCK_FORM_ADD_ROOM,
@@ -220,9 +193,6 @@ export default {
     changeRoomStorage,
     selectRoom,
     deleteRoom,
-    selectRoomUnit,
-    loadUnits,
-    setUnits,
     addRoom,
     getStock,
     setFieldData,
