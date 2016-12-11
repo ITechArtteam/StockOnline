@@ -14,6 +14,7 @@ import $ from "jquery";
 class EditWorker extends React.Component {
     constructor(props) {
         super(props);
+
     }
 
     state = {
@@ -106,7 +107,6 @@ class EditWorker extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
         this.updateProps(nextProps);
         this.setState({roles: nextProps.roles, company: nextProps.company});
     }
@@ -116,6 +116,7 @@ class EditWorker extends React.Component {
     }
 
     updateProps = (props)=> {
+        console.log(props)
         var newWorker = _.extend({}, props.worker);
         if (newWorker.birthday) {
             newWorker.birthday = moment(props.worker.birthday).format()
@@ -130,7 +131,6 @@ class EditWorker extends React.Component {
             this.preliminaryValidation(newWorker);
         }
         this.validateValue("company",newWorker.stockOwnerCompany.id);
-
     }
 
     preliminaryValidation = (newWorker) =>{

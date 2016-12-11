@@ -15,4 +15,6 @@ public interface ActService {
     Act get(Long id);
 
     Act save(Act act);
+
+    List<Act> getByCompany(Long id);
 }

@@ -20,6 +20,17 @@ export function getActs(thenRedirectPath, errorRedirectPath) {
         });
 }
 
+export function getActsByCompany(id, thenRedirectPath, errorRedirectPath) {
+    return axios.get('/api/acts_by_company?id='+id)
+        .then(response => {
+            store.dispatch(getActsSuccess(response.data));
+            redirect(thenRedirectPath);
+        }).catch(error=> {
+            store.dispatch(getActsUnsuccess(error.response));
+            redirect(errorRedirectPath);
+        });
+}
+
 export function deleteActs(ids, thenRedirectPath, errorRedirectPath) {
     axios.delete('/api/acts?ids='+ids).then(response => {
         store.dispatch(deleteActsSuccess(ids, response));

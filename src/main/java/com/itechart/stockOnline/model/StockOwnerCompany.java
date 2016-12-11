@@ -25,7 +25,7 @@ public class StockOwnerCompany {
     @JoinColumn(name = "address")
     private Address address;
 
-    @OneToMany(mappedBy = "stockOwnerCompany")
+    @OneToMany(mappedBy = "stockOwnerCompany", cascade = CascadeType.PERSIST,  fetch = FetchType.LAZY)
     private Set<User> users;
 
     public StockOwnerCompany() {

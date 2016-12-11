@@ -9,21 +9,16 @@ import {browserHistory} from 'react-router';
 class ActsContainer extends React.Component {
     constructor(props) {
         super(props);
-        actsApi.getActs()
-        workersApi.getControllers();
+        actsApi.getActsByCompany(this.props.idCompany)
     }
 
-    onCreateClick = ()=> {
-        this.redirect('/act');
-    }
 
-    onEditClick = (id) =>{
+
+    onShowClick = (id) =>{
         this.redirect('/act/'+id);
     }
 
-    onDeleteClick = (ids)=> {
-        actsApi.deleteActs(ids)
-    }
+
 
     componentWillUnmount(){
         actApi.clearReducer();
@@ -39,7 +34,7 @@ class ActsContainer extends React.Component {
         return (
             <div>
                 <CleverPanel response={this.props.response}/>
-                <Acts acts={this.props.acts} controllers={this.props.controllers} onCreateClick={this.onCreateClick} onEditClick={this.onEditClick} onDeleteClick={this.onDeleteClick}/>
+                <Acts acts={this.props.acts} idCompany={this.props.idCompany} onShowClick={this.onShowClick}/>
             </div>
         );
     }
@@ -47,7 +42,7 @@ class ActsContainer extends React.Component {
 const mapStateToProps = (store) => {
     return {
         acts: store.actsState.acts,
-        controllers:store.workersState.workers,
+        idCompany:store.auth.idCompany,
         response: store.actsState.response,
     }
 };

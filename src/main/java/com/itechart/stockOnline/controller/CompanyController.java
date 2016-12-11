@@ -6,10 +6,10 @@ import com.itechart.stockOnline.service.CompanyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -22,5 +22,12 @@ public class CompanyController {
     StockOwnerCompany getCompany(@PathVariable Long id){
         LOGGER.debug("REST request. Path:/stock_owner_company/{id}  method: GET", id);
         return companyService.get(id);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void exception(Exception exception, HttpServletResponse response){
+        LOGGER.error("fieldHasErrors({})", exception.getMessage());
+        response.addHeader("result", "Server error.");
     }
 }

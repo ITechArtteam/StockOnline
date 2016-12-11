@@ -6,7 +6,7 @@ import {browserHistory} from 'react-router';
 export function getStockOwnerCompany(id, thenRedirectPath, errorRedirectPath) {
     return axios.get('/api/stock_owner_company/'+id)
         .then(response => {
-            store.dispatch(getStockOwnerCompanySuccess(response.data));
+            store.dispatch(getStockOwnerCompanySuccess(response.data, response));
             redirect(thenRedirectPath);
         }).catch(error=>{
             store.dispatch(getStockOwnerCompanyUnsuccess(error.response))

@@ -29,7 +29,12 @@ public class ActController {
         return actService.getAll();
     }
 
-
+    @RequestMapping(value = "/acts_by_company", method = RequestMethod.GET)
+    public List<Act> getActsByCompany(@RequestParam Long id) {
+        LOGGER.debug("REST request. Path:/acts_by_company?id=  method: GET", id);
+        List<Act> acts = actService.getByCompany(id);
+        return acts;
+    }
 
 
     @RequestMapping(value = "/act/{id}", method = RequestMethod.GET)

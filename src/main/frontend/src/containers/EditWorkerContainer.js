@@ -48,7 +48,17 @@ class EditWorkerContainer extends React.Component {
             <div>
                 <Row>
                     <Col sm={6} smOffset={3}>
-                        <CleverPanel response={this.props.response}/>
+                        <CleverPanel response={this.props.workerResponse}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={6} smOffset={3}>
+                        <CleverPanel response={this.props.companyResponse}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={6} smOffset={3}>
+                        <CleverPanel response={this.props.rolesResponse}/>
                     </Col>
                 </Row>
                 <EditWorker worker={this.props.worker} roles={this.props.roles} company={this.props.company} onSaveClick={this.saveWorker}
@@ -62,9 +72,11 @@ const mapStateToProps = (store) => {
     return {
         worker: store.workerState.worker,
         roles: store.roleState.roles,
-        response: store.workerState.response,
+        rolesResponse: store.roleState.response,
+        workerResponse: store.roleState.response,
         idCompany: store.auth.idCompany,
         company:store.companyState.stockOwnerCompany,
+        companyResponse:store.companyState.response,
     }
 };
 

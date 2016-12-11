@@ -26,7 +26,7 @@ public class Act {
     @JoinColumn(name = "responsible_person_id")
     private User user;
 
-    @OneToMany(mappedBy = "act")
+    @OneToMany(mappedBy = "act", cascade = CascadeType.PERSIST,  fetch = FetchType.EAGER)
     private Set<ProductInAct> productInActs;
 
     public Act() {

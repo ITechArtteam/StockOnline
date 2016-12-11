@@ -13,24 +13,15 @@ class Acts extends React.Component {
         acts: this.props.acts,
         buttonDisabled: true,
         selected: [],
-        serch:''
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({acts: nextProps.acts, controllers: nextProps.controllers});
     }
 
-    onCreateClick = ()=> {
-        this.props.onCreateClick();
-    }
 
-    onEditClick = () => {
-        this.props.onEditClick(this.state.selected[0]);
-        this.setState({selected: []});
-    }
-
-    onDeleteClick = ()=> {
-        this.props.onDeleteClick(this.state.selected);
+    onShowClick = () => {
+        this.props.onShowClick(this.state.selected[0]);
         this.setState({selected: []});
     }
 
@@ -59,10 +50,7 @@ class Acts extends React.Component {
             <Row>
                 <Col xs={3}>
                     <Well bsSize="small">
-                        <Button block={true} onClick={this.onCreateClick}>Создать</Button>
-                        <Button block={true} onClick={this.onEditClick} disabled={this.state.buttonDisabled}>Редактировать</Button>
-                        <Button block={true} onClick={this.onDeleteClick}
-                                disabled={this.state.buttonDisabled}>Удалить</Button>
+                        <Button block={true} onClick={this.onShowClick} disabled={this.state.buttonDisabled}>Посмотреть</Button>
                     </Well>
                 </Col>
                 <Col xs={9}>
