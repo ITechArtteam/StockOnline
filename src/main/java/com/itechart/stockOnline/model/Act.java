@@ -18,13 +18,13 @@ public class Act {
     @Temporal(TemporalType.TIMESTAMP)
     private Date reportDate;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private ActStatus status;
-
     @ManyToOne
     @JoinColumn(name = "responsible_person_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "waybill_id")
+    private Waybill waybill;
 
     @OneToMany(mappedBy = "act")
     private Set<ProductInAct> productInActs;
@@ -38,14 +38,14 @@ public class Act {
     public Date getReportDate() { return reportDate; }
     public void setReportDate(Date reportDate) { this.reportDate = reportDate; }
 
-    public ActStatus getStatus() { return status; }
-    public void setStatus(ActStatus status) { this.status = status; }
-
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
 
     public Set<ProductInAct> getProductInActs() { return productInActs; }
     public void setProductInActs(Set<ProductInAct> productInActs) { this.productInActs = productInActs; }
+
+    public Waybill getWaybill() { return waybill; }
+    public void setWaybill(Waybill waybill) { this.waybill = waybill; }
 
     @Override
     public String toString() {
