@@ -1,10 +1,7 @@
 package com.itechart.stockOnline.converter;
 
 import com.itechart.stockOnline.model.*;
-import com.itechart.stockOnline.model.dto.stock.RoomDto;
-import com.itechart.stockOnline.model.dto.stock.StockDto;
-import com.itechart.stockOnline.model.dto.stock.StockPage;
-import com.itechart.stockOnline.model.dto.stock.StockRoomsDto;
+import com.itechart.stockOnline.model.dto.stock.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -84,6 +81,18 @@ public class StockDtoConverter {
                 room.setCost(roomDto.getCost());
                 room.setNumber(roomDto.getNumber());
                 room.setStorage(new StorageRequirement(roomDto.getStorage()));
+                Set<ShelfDto> shelfsDto = roomDto.getShelfs();
+                if(CollectionUtils.isNotEmpty(shelfsDto)){
+                    Set<Shelf> shelfs = new HashSet<Shelf>();
+                    for (ShelfDto shelfDto: shelfsDto){
+                        Shelf shelf = new Shelf();
+                        shelf.setNumber(shelfDto.getNumber());
+                        shelf.setCapacity(shelfDto.getCapacity());
+                        shelf.setFree(shelfDto.getIsisFree());
+                        shelfs.add(shelf);
+                    }
+                    room.setShelfs(shelfs);
+                }
                 rooms.add(room);
             }
         }

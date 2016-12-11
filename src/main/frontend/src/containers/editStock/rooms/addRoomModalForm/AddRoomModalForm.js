@@ -12,13 +12,9 @@ import {
 } from 'react-modal-bootstrap'
 
 import TextInput from '../../../../components/TextInput/TextInput'
-import SelectInput from '../../../../components/SelectInput/SelectInput'
+import Shelfs from './Shelfs'
 
 class AddRoomModalForm extends React.Component {
-
-    componentWillMount() {
-        //this.props.loadUnits();
-    }
 
     handleSaveRoom() {
         this.props.addRoom({
@@ -45,13 +41,14 @@ class AddRoomModalForm extends React.Component {
                         onChange={this.props.changeRoomNumber} />
 
                     <TextInput
-                        label="Цена"
+                        label="Стоимость хранения"
                         value={this.props.cost}
                         onChange={this.props.changeRoomCost} />
                     <TextInput
                         label="Способ хранения"
                         value={this.props.storage}
                         onChange={this.props.changeRoomStorage} />
+                    //<Shelfs />
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideAddRoomModalForm} value="Отмена" />
@@ -64,12 +61,11 @@ class AddRoomModalForm extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        //если существует элемент addRoomModalForm, значит дейстивие добавление помещения в таблицу иначе редактирование склада
-        isOpen:  (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.isOpen  : state.stock.data.stockRooms.rooms.isOpen,
-        number:  (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.number  : state.stock.data.stockRooms.rooms.number,
-        cost:    (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.cost    : state.stock.data.stockRooms.rooms.cost,
-        storage: (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.storage : state.stock.data.stockRooms.rooms.storage,
-        id:      (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.id      : state.stock.data.stockRooms.rooms.id,
+        isOpen:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.isOpen  : state.stock.data.stockRooms.rooms.isOpen  : false,
+        number:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.number  : state.stock.data.stockRooms.rooms.number  : '',
+        cost:    (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.cost    : state.stock.data.stockRooms.rooms.cost    : '',
+        storage: (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.storage : state.stock.data.stockRooms.rooms.storage : '',
+        id:      (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.id      : state.stock.data.stockRooms.rooms.id      : ''
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -97,9 +93,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         selectRoomUnit:(unit) => {
             dispatch(stockActionCreator.selectRoomUnit(unit))
-        },
-        setUnits:(units) => {
-            dispatch(stockActionCreator.setUnits(units))
         }
     }
 };
