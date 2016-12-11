@@ -262,29 +262,29 @@ class EditWorker extends React.Component {
                 <Row className="show-grid">
                     <Form horizontal id="worker_form">
                         <FormGroup validationState={this.state.validationsState.company.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Компания
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl placeholder="Компания" readOnly
                                              valueLink={linkState(this, 'worker.stockOwnerCompany.name')}/>
                                 <HelpBlock>{this.state.validationsState.company.message}</HelpBlock>
                             </Col>
                         </FormGroup>
                         <FormGroup >
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Имя
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl placeholder="Имя"
                                              valueLink={linkState(this, 'worker.name')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.surname.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Фамилия
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl id="surname" placeholder="Фамилия"
                                              valueLink={linkState(this, 'worker.surname')}
                                              onBlur={this.validateComponent} onClick={this.clean}/>
@@ -293,19 +293,19 @@ class EditWorker extends React.Component {
 
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Отчество
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl placeholder="Отчество"
                                              valueLink={linkState(this, 'worker.patronymic')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.birthday.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Дата рождения
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <DatePicker id="birthday"
                                             value={this.state.worker.birthday}
                                             onChange={(date) => {
@@ -319,10 +319,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.email.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Электронная почта
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl id="email" placeholder="Электронная почта"
                                              valueLink={linkState(this, 'worker.email')}
                                              onBlur={this.validateComponent} onClick={this.clean}/>
@@ -330,37 +330,37 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Страна
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl placeholder="Страна"
                                              valueLink={linkState(this, 'worker.address.countryName')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Город
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl placeholder="Город"
                                              valueLink={linkState(this, 'worker.address.cityName')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Улица
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl placeholder="Город"
                                              valueLink={linkState(this, 'worker.address.street')}/>
                             </Col>
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.home.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Дом
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl id="home" placeholder="Дом"
                                              valueLink={linkState(this, 'worker.address.home')}
                                              onBlur={this.validateComponent} onClick={this.clean}/>
@@ -368,10 +368,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.room.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Квартира
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl id="room" placeholder="Квартира"
                                              valueLink={linkState(this, 'worker.address.room')}
                                              onBlur={this.validateComponent} onClick={this.clean}/>
@@ -379,10 +379,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.roles.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Роль
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <Multiselect id="roles" data={this.state.roles}
                                              valueLink={linkState(this, 'worker.roles')}
                                              textField='name'
@@ -397,10 +397,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.login.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Логин
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl id="login" placeholder="Логин"
                                              valueLink={linkState(this, 'worker.login')}
                                              onBlur={this.validateComponent} onClick={this.clean}/>
@@ -408,10 +408,10 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.password.status}>
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Пароль
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl id="password" placeholder="Пароль"
                                              valueLink={linkState(this, 'worker.password')}
                                              onBlur={this.validateComponent} onClick={this.clean}/>
@@ -419,7 +419,7 @@ class EditWorker extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Col smOffset={3} sm={9}>
+                            <Col smOffset={2} sm={9}>
                                 <div className="btn-group" role="group">
                                     <Button disabled={this.state.disabledSaveButton} bsStyle="primary"
                                             onClick={this.onSaveClick}>Сохранить</Button>

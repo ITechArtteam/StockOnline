@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '../store/configureStore'
 import {browserHistory} from 'react-router';
-import { getActSuccess, saveActUnsuccess, deleteActUnsuccess, closeActResponse, clearActReducer, findActInStore } from '../actions/act-actions';
+import { getActSuccess, saveActUnsuccess, deleteActUnsuccess, closeActResponse, clearActReducer } from '../actions/act-actions';
 import { getActsUnsuccess, deleteActSuccess, saveActSuccess} from '../actions/acts-actions';
 
 
@@ -15,12 +15,6 @@ export function getAct(id, thenRedirectPath, errorRedirectPath) {
             redirect(errorRedirectPath);
         });
 }
-
-
-export function getActFromStore(id, thenRedirectPath, errorRedirectPath) {
-    store.dispatch(findActInStore(id));
-}
-
 
 export function deleteAct(id, thenRedirectPath, errorRedirectPath) {
     return axios.delete('/api/act/' + id)
@@ -42,11 +36,6 @@ export function saveAct(act, thenRedirectPath, errorRedirectPath) {
             store.dispatch(saveActUnsuccess(error.response))
             redirect(errorRedirectPath);
         });
-}
-
-export function saveActInStore(act, thenRedirectPath, errorRedirectPath) {
-    store.dispatch(saveActSuccess(act))
-    redirect(thenRedirectPath);
 }
 
 export function saveActinStore(act, thenRedirectPath, errorRedirectPath) {
