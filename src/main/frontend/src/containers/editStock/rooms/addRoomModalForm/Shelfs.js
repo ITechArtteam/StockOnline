@@ -84,6 +84,7 @@ class Shelfs extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        rooms: (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.rooms: [],
         shelfs:            (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.shelfs           : [],
         selectedShelfName: (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.selectedRoomName : null,
     }

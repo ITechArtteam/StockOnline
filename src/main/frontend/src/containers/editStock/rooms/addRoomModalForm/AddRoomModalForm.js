@@ -48,7 +48,7 @@ class AddRoomModalForm extends React.Component {
                         label="Способ хранения"
                         value={this.props.storage}
                         onChange={this.props.changeRoomStorage} />
-                    <Shelfs />
+                    //<Shelfs />
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideAddRoomModalForm} value="Отмена" />

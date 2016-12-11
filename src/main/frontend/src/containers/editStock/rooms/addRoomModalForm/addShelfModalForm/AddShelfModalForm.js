@@ -41,7 +41,7 @@ class AddShelfModalForm extends React.Component {
 
                     <TextInput
                         label="Вместимость"
-                        value={this.props.cost}
+                        value={this.props.capacity}
                         onChange={this.props.changeShelfCapacity} />
                 </ModalBody>
                 <ModalFooter>
