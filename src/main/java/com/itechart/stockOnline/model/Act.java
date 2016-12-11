@@ -26,6 +26,10 @@ public class Act {
     @JoinColumn(name = "responsible_person_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "waybill_id")
+    private Waybill waybill;
+
     @OneToMany(mappedBy = "act", cascade = CascadeType.PERSIST,  fetch = FetchType.EAGER)
     private Set<ProductInAct> productInActs;
 
@@ -46,6 +50,9 @@ public class Act {
 
     public Set<ProductInAct> getProductInActs() { return productInActs; }
     public void setProductInActs(Set<ProductInAct> productInActs) { this.productInActs = productInActs; }
+
+    public Waybill getWaybill() { return waybill; }
+    public void setWaybill(Waybill waybill) { this.waybill = waybill; }
 
     @Override
     public String toString() {

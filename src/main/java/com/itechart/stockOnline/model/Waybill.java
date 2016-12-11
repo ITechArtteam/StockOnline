@@ -29,6 +29,9 @@ public class Waybill {
     @OneToMany(mappedBy = "waybill", fetch = FetchType.EAGER)
     private Set<ProductInWaybill> productInWaybills;
 
+    @OneToMany(mappedBy = "waybill", fetch = FetchType.EAGER)
+    private Set<Act> actInWaybills;
+
     @ManyToOne
     @JoinColumn(name = "transport_id")
     private Transport transport;
@@ -119,6 +122,9 @@ public class Waybill {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Set<Act> getActInWaybills() { return actInWaybills; }
+    public void setActInWaybills(Set<Act> actInWaybills) { this.actInWaybills = actInWaybills; }
 
     @Override
     public String toString() {

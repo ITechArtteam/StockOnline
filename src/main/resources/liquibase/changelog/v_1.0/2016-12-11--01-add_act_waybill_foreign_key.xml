@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <changeSet author="MaximMaltsev94" id="drop_act_status">
+        <dropColumn columnName="status"
+                    tableName="act"/>
+    </changeSet>
+
+    <changeSet author="MaximMaltsev94" id="add_act_waybill_fk">
+        <addColumn tableName="act">
+            <column name="waybill_id" type="INT(10) UNSIGNED"/>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="act"
+                                 baseColumnNames="waybill_id"
+                                 constraintName="fk_act_waybill"
+                                 referencedTableName="waybill"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet author="MaximMaltsev94" id="add_product_in_act_status">
+        <addColumn tableName="product_in_act">
+            <column name="status" type="ENUM('SHORTAGE_OF_THE_INVOICE', 'LOSS_FROM_STOCK', 'STEALING_FROM_THE_STOCK', 'CONFISCATED', 'RECOVER')"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

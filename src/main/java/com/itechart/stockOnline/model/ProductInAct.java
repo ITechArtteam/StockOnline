@@ -1,6 +1,8 @@
 package com.itechart.stockOnline.model;
 
 
+import com.itechart.stockOnline.model.enums.ActStatus;
+
 import javax.persistence.*;
 
 @Entity
@@ -25,6 +27,10 @@ public class ProductInAct {
     @Column(name = "cost")
     private Double cost;
 
+    @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
+    private ActStatus status;
+
     public ProductInAct() {
     }
 
@@ -42,6 +48,9 @@ public class ProductInAct {
 
     public Double getCost() { return cost; }
     public void setCost(Double cost) { this.cost = cost; }
+
+    public ActStatus getStatus() { return status; }
+    public void setStatus(ActStatus status) { this.status = status; }
 
     @Override
     public String toString() {
