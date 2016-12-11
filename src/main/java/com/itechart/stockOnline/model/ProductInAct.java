@@ -28,6 +28,7 @@ public class ProductInAct {
     private Double cost;
 
     @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
     private ActStatus status;
 
     public ProductInAct() {
