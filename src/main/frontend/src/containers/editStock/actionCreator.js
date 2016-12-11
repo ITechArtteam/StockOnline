@@ -159,33 +159,6 @@ function deleteRoom(number) {
     }
 }
 
-function selectRoomUnit(unit) {
-    return {
-        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SELECT_UNIT,
-        unit
-    }
-}
-
-function loadUnits() {
-    return function(dispatch) {
-        $.ajax({
-            type: 'GET',
-            dataType: 'json',
-            url: 'api/rooms/units',
-            success: function (response) {
-                dispatch(setUnits(response));
-            }
-        });
-    }
-}
-
-function setUnits(units) {
-    return {
-        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_UNITS,
-        units
-    }
-}
-
 function addRoom(room) {
     return {
         type: event.EDIT_STOCK_FORM_ADD_ROOM,
@@ -211,6 +184,82 @@ function showAddRoomModalForm() {
     }
 }
 
+function selectRoomUnit(unit) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SELECT_UNIT,
+        unit
+    }
+}
+
+function createAddRoomModalForm() {
+    return {
+        type: event.EDIT_STOCK_FORM_STOCK_ROOMS_CREATE_ADD_ROOM_MODAL_FORM
+    }
+}
+
+function addShelf(shelf) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF,
+        shelf
+    }
+}
+
+function hideAddShelfModalForm() {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_HIDE
+    }
+}
+
+function clearAddShelfModalFormFields() {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_CLEAR_FIELDS
+    }
+}
+
+function changeShelfNumber(number) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_CHANGE_NUMBER,
+        number
+    }
+}
+
+function changeShelfCapacity(capacity) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_CHANGE_CAPACITY,
+        capacity
+    }
+}
+
+function selectShelfUnit(unit) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SELECT_UNIT,
+        unit
+    }
+}
+
+function selectShelf(number) {
+    return {
+        type: event.EDIT_STOCK_FORM_SELECT_SHELF,
+        number
+    }
+}
+
+function deleteShelf(number) {
+    return {
+        type: event.EDIT_STOCK_FORM_DELETE_SHELF,
+        number
+    }
+}
+
+function showAddShelfModalForm() {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SHOW
+    }
+}
+
+
+
+
 export default {
     showAddRoomModalForm,
     clearAddRoomModalFormFields,
@@ -220,9 +269,6 @@ export default {
     changeRoomStorage,
     selectRoom,
     deleteRoom,
-    selectRoomUnit,
-    loadUnits,
-    setUnits,
     addRoom,
     getStock,
     setFieldData,
@@ -230,5 +276,16 @@ export default {
     setInputErrorMessage,
     showAlertPopup,
     closeAlertPopup,
-    setDefaultValue
+    setDefaultValue,
+    selectRoomUnit,
+    createAddRoomModalForm,
+    addShelf,
+    hideAddShelfModalForm,
+    clearAddShelfModalFormFields,
+    changeShelfNumber,
+    changeShelfCapacity,
+    selectShelfUnit,
+    selectShelf,
+    deleteShelf,
+    showAddShelfModalForm
 };
