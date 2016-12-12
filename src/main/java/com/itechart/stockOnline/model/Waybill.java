@@ -26,7 +26,7 @@ public class Waybill {
     @Enumerated(EnumType.STRING)
     private WaybillStatus status;
 
-    @OneToMany(mappedBy = "waybill", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "waybill", fetch = FetchType.EAGER)
     private Set<ProductInWaybill> productInWaybills;
 
     @OneToMany(mappedBy = "waybill")
