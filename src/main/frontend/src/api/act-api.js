@@ -1,8 +1,15 @@
-import axios from 'axios';
-import store from '../store/configureStore'
-import {browserHistory} from 'react-router';
-import { getActSuccess, saveActUnsuccess, deleteActUnsuccess, closeActResponse, clearActReducer } from '../actions/act-actions';
-import { getActsUnsuccess, deleteActSuccess, saveActSuccess} from '../actions/acts-actions';
+import axios from "axios";
+import store from "../store/configureStore";
+import {browserHistory} from "react-router";
+import {
+    getActSuccess,
+    saveActUnsuccess,
+    deleteActUnsuccess,
+    closeActResponse,
+    clearActReducer,
+    getActUnsuccess
+} from "../actions/act-actions";
+import {deleteActSuccess, saveActSuccess} from "../actions/acts-actions";
 
 
 export function getAct(id, thenRedirectPath, errorRedirectPath) {

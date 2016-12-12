@@ -52,3 +52,9 @@ export function closeActsResponse() {
         type: types.CLOSE_ACTS_RESPONSE
     };
 }
+
+export function clearActsReducer(){
+    return {
+        type: types.INITIAL_STATE_ACTS,
+    }
+}

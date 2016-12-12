@@ -9,7 +9,7 @@ export function getActSuccess(act, response) {
 }
 
 
-export function getQActUnsuccess(response) {
+export function getActUnsuccess(response) {
     return {
         type: types.GET_ACT_UNSUCCESS ,
         response:response

@@ -13,7 +13,7 @@ public class ProductInAct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST,  fetch = FetchType.LAZY)
     @JoinColumn(name = "act_id")
     private Act act;
 

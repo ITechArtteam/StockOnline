@@ -15,13 +15,13 @@ class ActsContainer extends React.Component {
 
 
     onShowClick = (id) =>{
-        this.redirect('/act/'+id);
+        this.redirect('/show_act/'+id);
     }
 
 
 
     componentWillUnmount(){
-        actApi.clearReducer();
+        actsApi.clearReducer();
     }
 
     redirect = (path) => {

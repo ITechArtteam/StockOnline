@@ -29,6 +29,7 @@ import CheckOutputGoods from "./components/checkGoods/CheckOutputGoods";
 import CheckInputGoods from "./components/checkGoods/CheckInputGoods"
 import DispatcherFinishOutput from "./components/finishOutput/DispatcherFinishOutput"
 import ActsContainer from "./containers/ActsContainer";
+import ShowActContainer from "./containers/ShowActContainer";
 import EditActContainer from "./containers/EditActContainer";
 import RequireRole from "./containers/RequireRole"
 import "bootstrap-webpack";
@@ -69,6 +70,7 @@ ReactDOM.render(
                 <Route path="/goods/checkOutput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckOutputGoods)}/>
                 <Route path="/finishOutput" requiredRole={["DISPATCHER"]} component={RequireRole(DispatcherFinishOutput)}/>
                 <Route path="/acts" requiredRole={["BOSS_STOCK"]} component={RequireRole(ActsContainer)}/>
+                <Route path="/show_act(/:id)" requiredRole={["BOSS_STOCK"]} component={RequireRole(ShowActContainer)}/>
                 <Route path="/act(/:id)" requiredRole={["CONTROLLER"]} component={RequireRole(EditActContainer)}/>
                 <Route path="*" component={RequireRole(NotFound)}/>
             </Route>

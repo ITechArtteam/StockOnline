@@ -5,6 +5,7 @@ import com.itechart.stockOnline.dao.ActRepository;
 import com.itechart.stockOnline.dao.CompanyRepository;
 import com.itechart.stockOnline.dao.WorkerRepository;
 import com.itechart.stockOnline.model.Act;
+import com.itechart.stockOnline.model.ProductInAct;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,9 +42,15 @@ public class ActServiceImpl implements ActService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Act get(Long id) {
-        return actRepository.findOne(id);
+        Act act = actRepository.findOne(id);
+        act.getProductInActs();
+        return act;
     }
+
+
+
 
     @Override
     public Act save(Act act) {
@@ -53,6 +61,8 @@ public class ActServiceImpl implements ActService{
     @Transactional(readOnly = true)
     public List<Act> getByCompany(Long id) {
         StockOwnerCompany one = companyRepository.getOne(id);
-        return actRepository.findByUserIdIn(one.getUsers().stream().map(User::getId).collect(Collectors.toList()));
+        List<Act> acts = actRepository.findByUserIdIn(one.getUsers().stream().map(User::getId).collect(Collectors.toList()));
+        acts.stream().forEach(act->{act.getWaybill();});
+        return acts;
     }
 }

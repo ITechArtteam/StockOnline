@@ -4,7 +4,7 @@ const initialState = {
         act: {
             id: "",
             reportDate: "",
-            products_in_act:[],
+            productInActs:[],
             status:"",
             user:{
                 id:"",

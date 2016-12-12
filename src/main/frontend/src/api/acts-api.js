@@ -6,7 +6,8 @@ import {
     getActsUnsuccess,
     deleteActsSuccess,
     deleteActsUnsuccess,
-    closeActsResponse
+    closeActsResponse,
+    clearActsReducer
 } from "../actions/acts-actions";
 
 export function getActs(thenRedirectPath, errorRedirectPath) {
@@ -23,6 +24,7 @@ export function getActs(thenRedirectPath, errorRedirectPath) {
 export function getActsByCompany(id, thenRedirectPath, errorRedirectPath) {
     return axios.get('/api/acts_by_company?id='+id)
         .then(response => {
+            console.log(response)
             store.dispatch(getActsSuccess(response.data));
             redirect(thenRedirectPath);
         }).catch(error=> {
@@ -39,6 +41,10 @@ export function deleteActs(ids, thenRedirectPath, errorRedirectPath) {
         store.dispatch(deleteActsUnsuccess(error.response));
         redirect(errorRedirectPath);
     });
+}
+export function clearReducer() {
+    store.dispatch(clearActsReducer());
+
 }
 
 export function closeResponse() {

@@ -26,11 +26,7 @@ class ActsTable extends React.Component {
     }
 
     updateProps=(props)=>{
-        var i =0;
-        _.forEach(props.acts,(act)=>{
-            act.id=i++;
-            this.state.acts.push(act);
-        });
+
     }
 
 
@@ -77,6 +73,10 @@ class ActsTable extends React.Component {
             return cell.login;
         }
 
+        function waybillFormatter(cell, row){
+            return cell.number;
+        }
+
         return (
             <BootstrapTable data={this.state.acts}
                             striped={true}
@@ -92,8 +92,8 @@ class ActsTable extends React.Component {
                                    filter={ {type: 'DateFilter'} }>Дата</TableHeaderColumn>
                 <TableHeaderColumn dataField="user" filter={ {type: 'TextFilter'} }
                                    dataSort={true} dataFormat={userFormatter}>Контролер</TableHeaderColumn>
-                <TableHeaderColumn dataField="status" filter={ {type: 'TextFilter'} }
-                                   dataSort={true}>Статус</TableHeaderColumn>
+                <TableHeaderColumn dataField="waybill" dataFormat={waybillFormatter} filter={ {type: 'TextFilter'} }
+                                   dataSort={true}>ТТН</TableHeaderColumn>
 
             </BootstrapTable>
         )

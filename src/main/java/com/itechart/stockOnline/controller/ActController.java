@@ -40,7 +40,9 @@ public class ActController {
     @RequestMapping(value = "/act/{id}", method = RequestMethod.GET)
     public Act getAct(@PathVariable Long id) {
         LOGGER.debug("REST request. Path:/act/{id}  method: GET", id);
-        return actService.get(id);
+        Act act = actService.get(id);
+        act.getProductInActs().stream().forEach((productInAct)->productInAct.setAct(null));
+        return act;
     }
 
     @RequestMapping(value = "/act/{id}", method = RequestMethod.DELETE)
