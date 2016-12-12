@@ -59,6 +59,10 @@ public class StockListController {
     public List<StockForDistributionGoodsDto> getStockList(Principal userInfo) {
         Logger.info("REST request. Path:/stockList/byUserCompany  method: GET user {}", userInfo.getName());
         User user = userService.findByLogin(userInfo.getName());
+        if(user.getStockOwnerCompany() == null) {
+            Logger.info("REST request handler for Path:/stockList/byUserCompany: stockOwnerCompany not found for user {}", user.getLogin());
+            throw new DataNotFoundError();
+        }
         List<Stock> stockList = stockService.getByCompanyId(user.getStockOwnerCompany().getId());
         return stockList
                 .stream()

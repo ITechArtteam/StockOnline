@@ -17,3 +17,5 @@ export const SELECT_SHELF_VALUE_CHANGED = 'distributionGoods/SELECT_SHELF_VALUE_
 
 export const SET_ROOM_OPTIONS = 'distributionGoods/SET_ROOM_OPTIONS';
 export const SET_SHELF_OPTIONS = 'distributionGoods/SET_SHELF_OPTIONS';
+
+export const SET_IS_STOCK_SELECTED = 'distributionGoods/SET_IS_STOCK_SELECTED';

@@ -47,7 +47,7 @@ public class User {
     @Email(group = Worker.class, name="email",  message = "Введенная электронная почта невалидна.")
     @Column(length = 50, nullable = false)
     private String email;
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "company")
     private StockOwnerCompany stockOwnerCompany;
 

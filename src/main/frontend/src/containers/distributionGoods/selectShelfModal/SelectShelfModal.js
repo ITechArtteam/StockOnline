@@ -10,6 +10,7 @@ import {
     ModalFooter
 } from 'react-modal-bootstrap'
 import SelectInput from '../../../components/SelectInput/SelectInput'
+import DisabledInput from '../../../components/DisabledInput/DisabledInput'
 
 class SelectShelfModal extends React.Component {
 
@@ -20,6 +21,7 @@ class SelectShelfModal extends React.Component {
     }
 
     componentWillMount() {
+        this.props.closeDialog();
         this.props.findStocksByUserCompany();
     }
 
@@ -54,11 +56,19 @@ class SelectShelfModal extends React.Component {
                     <ModalTitle>Выбор места хранения</ModalTitle>
                 </ModalHeader>
                 <ModalBody>
-                    <SelectInput
-                        options={this.props.stockOptions}
-                        value={this.props.selectShelfModal.selectedStockValue}
-                        onChange={this.props.selectStockValueChanged}
-                        label="Склад"/>
+                    <span className={this.props.selectShelfModal.isStockSelected ? "none" : ""}>
+                        <SelectInput
+                            options={this.props.stockOptions}
+                            value={this.props.selectShelfModal.selectedStockValue}
+                            onChange={this.props.selectStockValueChanged}
+                            label="Склад"/>
+                    </span>
+
+                    <span className={this.props.selectShelfModal.isStockSelected ? "" : "none"}>
+                        <DisabledInput
+                            label="Склад"
+                            value={this.props.stockOptions[this.props.selectShelfModal.selectedStockValue > 0 ? this.props.selectShelfModal.selectedStockValue : 0].label} />
+                    </span>
 
                     <SelectInput
                         options={this.props.roomOptions}
@@ -106,6 +116,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(distributionGoodsActionCreator.findStocksByUserCompany());
         },
         selectStockValueChanged: (stockValue) => {
+            dispatch(distributionGoodsActionCreator.setIsStockSelected(true));
             dispatch(distributionGoodsActionCreator.selectStockValueChanged(stockValue))
         },
         selectRoomValueChanged: (roomValue) => {
@@ -113,6 +124,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         selectShelfValueChanged: (shelfValue) => {
             dispatch(distributionGoodsActionCreator.selectShelfValueChanged(shelfValue))
+        },
+        closeDialog: () => {
+            dispatch(distributionGoodsActionCreator.closeDialog());
         }
     }
 };

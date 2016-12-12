@@ -139,6 +139,10 @@ let findStocksByUserCompany = ()=> {
             url: '/stockList/byUserCompany',
             success: response => {
                 dispatch(findStocksByUserCompanySuccess(response))
+            },
+            error: error => {
+                console.log(error);
+                dispatch(showDialog("Компания в которой вы работаете не найдена", "danger", []));
             }
         })
     }
@@ -265,6 +269,13 @@ let finishDistribution = () => {
     }
 };
 
+let setIsStockSelected = isSelected => {
+    return {
+        type: event.SET_IS_STOCK_SELECTED,
+        payload: isSelected
+    }
+};
+
 export default {
     setInputValue,
     showDialog,
@@ -278,5 +289,6 @@ export default {
     selectStockValueChanged,
     selectRoomValueChanged,
     selectShelfValueChanged,
-    finishDistribution
+    finishDistribution,
+    setIsStockSelected
 }

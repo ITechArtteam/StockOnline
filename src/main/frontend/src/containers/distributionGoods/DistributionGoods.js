@@ -3,7 +3,7 @@ import {distributionGoodsActionCreator} from "./index";
 import {connect} from 'react-redux';
 import SimpleInput from '../../components/SimpleInput/SimpleInput'
 import AlertPopup from '../../components/AlertPopup/AlertPopup'
-import WaybillInfo from "./WaybillInfo/WaybillInfo"
+import WaybillInfo from "./waybillInfo/WaybillInfo"
 
 class DistributionGoods extends React.Component {
     constructor (props) {
@@ -25,6 +25,7 @@ class DistributionGoods extends React.Component {
     };
 
     onFindClick() {
+        this.props.setIsStockSelected(false);
         this.props.findWaybillByNumber(this.props.frontend.waybillId);
     }
 
@@ -94,7 +95,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         finishDistribution: () => {
             dispatch(distributionGoodsActionCreator.finishDistribution())
-        }
+        },
+        setIsStockSelected: visibility => {
+        dispatch(distributionGoodsActionCreator.setIsStockSelected(visibility));
+    }
     }
 };
 

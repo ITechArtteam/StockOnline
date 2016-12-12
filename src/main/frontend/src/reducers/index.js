@@ -18,7 +18,7 @@ import actReducer from "./act-reducer";
 import Stock from '../containers/editStock/reducer';
 import Driver from './../containers/editDriver/reducer';
 import roleReducer from "./role-reducer"
-import {distributionGoodsReducer} from '../containers/DistributionGoods/index'
+import {distributionGoodsReducer} from '../containers/distributionGoods/index'
 
 const rootReducer = combineReducers({
     waybillRegistrationForm: WaybillRegistrationFormReducer,

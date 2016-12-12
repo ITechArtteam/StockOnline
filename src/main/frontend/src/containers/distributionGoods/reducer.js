@@ -3,7 +3,7 @@ import * as $ from "jquery";
 
 let initDistributionGoodsState = {
     waybill: {
-        number: 123,
+        number: 0,
         status: 0,
         registeredBy: {
             name: '',
@@ -14,10 +14,10 @@ let initDistributionGoodsState = {
             {
                 count: 10,
                 product: {
-                    name: 'Яблоко',
-                    unit: 1,
+                    name: '',
+                    unit: '',
                     storage: {
-                        type: 'Нет требований'
+                        type: ''
                     },
                     places: [
                         {
@@ -27,28 +27,17 @@ let initDistributionGoodsState = {
                     ]
                 }
             },
-            {
-                count: 20,
-                product: {
-                    name: 'Груша',
-                    unit: 2,
-                    storage: {
-                        type: 'Нет требований'
-                    },
-                    places: []
-                }
-            }
         ],
         transport: {
-            type: 1,
-                number: 'AC 2013',
-                storage: {
-                type: 'Нет требований'
+            type: 0,
+            number: '',
+            storage: {
+                type: ''
             }
         }
     },
     stocks: [],
-    stockOptions: [],
+    stockOptions: [{value: 0, label: ''}],
     roomOptions: [],
     shelfOptions: [],
     alert: {
@@ -62,6 +51,7 @@ let initDistributionGoodsState = {
         waybillVisible: false
     },
     selectShelfModal: {
+        isStockSelected: false,
         isVisible: false,
         rowIndex: 0,
         selectedStockValue: -1,
@@ -83,7 +73,7 @@ export default (state = initDistributionGoodsState, action) => {
         case event.SET_WAYBILL_VISIBILITY:
             return {...state, frontend: {...state.frontend, waybillVisible: action.payload}};
         case event.SET_SELECT_SHELF_MODAL_VISIBILITY:
-            return {...state, selectShelfModal: action.payload};
+            return {...state, selectShelfModal: {...state.selectShelfModal, isVisible: action.payload.isVisible, rowIndex: action.payload.rowIndex}};
 
         case event.SHOW_DIALOG:
             return {... state, alert: action.payload};
@@ -121,6 +111,8 @@ export default (state = initDistributionGoodsState, action) => {
             return {...state, roomOptions: action.payload };
         case event.SET_SHELF_OPTIONS:
             return {...state, shelfOptions: action.payload };
+        case event.SET_IS_STOCK_SELECTED:
+            return {...state, selectShelfModal: {...state.selectShelfModal, isStockSelected: action.payload}};
         default:
             return state;
     }
