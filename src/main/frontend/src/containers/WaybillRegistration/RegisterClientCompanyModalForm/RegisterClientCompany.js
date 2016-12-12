@@ -17,10 +17,11 @@ import SelectInput from '../../../components/SelectInput/SelectInput'
 
 import {
     checkName,
-    checkPrice,
-    checkCount,
-    checkUnit,
-    checkStorage
+    checkState,
+    checkCity,
+    checkStreet,
+    checkHouse,
+    checkFlat
 } from './validation'
 
 class RegisterClientCompanyModalForm extends React.Component {
@@ -66,43 +67,33 @@ class RegisterClientCompanyModalForm extends React.Component {
     }
 
     validateName() {
-        const error = checkName(this.props.name, this.props.products);
-        this.props.setProductNameError(error);
+        const error = checkName(this.props.name, this.props.companies);
+        this.props.setClientCompanyNameError(error);
         return error;
     }
 
-    validatePrice() {
-        const error = checkPrice(this.props.price);
-        this.props.setProductPriceError(error);
+    validateState() {
+        const error = checkState(this.props.state);
+        this.props.setClientCompanyStateError(error);
         return error;
     }
 
-    validateCount() {
-        const error = checkCount(this.props.count);
-        this.props.setProductCountError(error);
+    validateCity() {
+        const error = checkCity(this.props.city);
+        this.props.setClientCompanyCityError(error);
         return error;
     }
 
-    validateStorage() {
-        const error = checkStorage(this.props.storage);
-        this.props.setProductStorageError(error);
+    validateStreet() {
+        const error = checkStreet(this.props.street);
+        this.props.setClientCompanyStreetError(error);
         return error;
     }
 
-    validateUnit() {
-        const error = checkUnit(this.props.unit);
-        this.props.setProductUnitError(error);
+    validateHouse() {
+        const error = checkHouse(this.props.house);
+        this.props.setClientCompanyHouseError(error);
         return error;
-    }
-
-    createUnitOptions() {
-        return this.props.units.reduce(function(options, unit) {
-            options.push({
-                value: unit,
-                label: unit
-            });
-            return options;
-        }, []);
     }
 
     render() {
@@ -118,37 +109,37 @@ class RegisterClientCompanyModalForm extends React.Component {
                         error={this.props.nameError}
                         value={this.props.name}
                         onChange={this.props.changeClientCompanyName}
-                        onBlur={() => {}} />
+                        onBlur={() => {this.props.setClientCompanyNameError(checkName(this.props.name, this.props.companies))}} />
                     <TextInput
                         label="Страна"
                         error={this.props.stateError}
                         value={this.props.state}
                         onChange={this.props.changeClientCompanyState}
-                        onBlur={() => {}} />
+                        onBlur={() => {this.props.setClientCompanyStateError(checkState(this.props.state))}} />
                     <TextInput
                         label="Город"
                         value={this.props.city}
                         error={this.props.cityError}
                         onChange={this.props.changeClientCompanyCity}
-                        onBlur={() => {}}/>
+                        onBlur={() => {this.props.setClientCompanyCityError(checkCity(this.props.city))}} />
                     <TextInput
                         label="Улица"
                         value={this.props.street}
                         error={this.props.streetError}
                         onChange={this.props.changeClientCompanyStreet}
-                        onBlur={() => {}} />
+                        onBlur={() => {this.props.setClientCompanyStreetError(checkStreet(this.props.street))}} />
                     <TextInput
                         label="Дом"
                         value={this.props.house}
                         error={this.props.houseError}
                         onChange={this.props.changeClientCompanyHouse}
-                        onBlur={() => {}} />
+                        onBlur={() => {this.props.setClientCompanyHouseError(checkHouse(this.props.house))}} />
                     <TextInput
                         label="Квартира"
                         value={this.props.flat}
                         error={this.props.flatError}
                         onChange={this.props.changeClientCompanyFlat}
-                        onBlur={() => {}}/>
+                        onBlur={() => {this.props.setClientCompanyFlatError(checkFlat(this.props.flat))}} />
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideRegisterClientCompanyModalForm} value="Отмена" />
@@ -174,6 +165,7 @@ function mapStateToProps(state) {
         houseError: state.waybillRegistrationForm.registerClientCompanyModalForm.validationErrors.houseError,
         flat: state.waybillRegistrationForm.registerClientCompanyModalForm.flat,
         flatError: state.waybillRegistrationForm.registerClientCompanyModalForm.validationErrors.flatError,
+        companies: state.waybillRegistrationForm.selectSenderModalForm.senders
     }
 }
 

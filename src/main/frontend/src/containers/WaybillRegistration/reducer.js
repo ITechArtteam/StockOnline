@@ -753,7 +753,6 @@ export default function waybillRegistrationForm(state = initialState, action) {
             };
 
         case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SHOW:
-            alert('show reducer');
             return {
                 ...state,
                 registerClientCompanyModalForm: {

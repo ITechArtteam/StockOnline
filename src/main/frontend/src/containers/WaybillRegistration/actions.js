@@ -96,7 +96,6 @@ export function hideRegisterClientCompanyModalForm() {
 }
 
 export function showRegisterClientCompanyModalForm() {
-    alert('show action creator');
     return {
         type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SHOW
     }
@@ -109,7 +108,7 @@ export function changeClientCompanyFlat(flat) {
     }
 }
 
-export function setClientCompanyFlatError(flat) {
+export function setClientCompanyFlatError(error) {
     return {
         type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_FLAT_ERROR,
         error

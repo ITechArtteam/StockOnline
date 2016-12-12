@@ -4,50 +4,23 @@ import {
     containsOnlyNumbers
 } from '../ValidationUtils/ValidationUtils'
 
-export function checkName(name, products) {
+export function checkName(name, senders) {
     if (isEmpty(name)) {
         return 'Не введено наименование продукта';
     }
     else if (containsIllegalSymbols(name)) {
         return 'Содержатся недопустимые символы';
     }
-    else if (productExists(products, name)) {
-        return 'Товар с таким наименованием уже добавлен';
+    else if (productExists(senders, name)) {
+        return 'Такая компания уже зарегистрирована';
     }
     else {
         return '';
     }
 }
 
-export function checkPrice(price) {
-    if (isEmpty(price)) {
-        return 'Не указана цена';
-    }
-    else if (!containsOnlyNumbers(price)) {
-        return 'Цена может содержать только цифры';
-    }
-    else {
-        return '';
-    }
-}
-
-export function checkCount(count) {
-    if (isEmpty(count)) {
-        return 'Не указано количество';
-    }
-    else if (!containsOnlyNumbers(count)) {
-        return 'Количество может содержать только цифры';
-    }
-    else {
-        return '';
-    }
-}
-
-export function checkStorage(storage) {
-    if (isEmpty(storage)) {
-        return 'Не указан способ хранения';
-    }
-    else if (containsIllegalSymbols(storage)) {
+export function checkState(state) {
+    if (containsIllegalSymbols(state)) {
         return 'Содержатся недопустимые символы';
     }
     else {
@@ -55,9 +28,36 @@ export function checkStorage(storage) {
     }
 }
 
-export function checkUnit(unit) {
-    if (!unit) {
-        return 'Не выбрана единица измерения товара';
+export function checkCity(city) {
+    if (containsIllegalSymbols(city)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkStreet(street) {
+    if (containsIllegalSymbols(street)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkHouse(house) {
+    if (containsIllegalSymbols(house)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkFlat(flat) {
+    if (containsIllegalSymbols(flat)) {
+        return 'Содержатся недопустимые символы';
     }
     else {
         return '';
