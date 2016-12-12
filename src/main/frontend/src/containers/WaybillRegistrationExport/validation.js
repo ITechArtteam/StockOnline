@@ -26,10 +26,7 @@ export function checkWaybillNumber(number) {
 }
 
 export function checkSenderName(name) {
-    if (isEmpty(name)) {
-        return 'Не указано имя получателя';
-    }
-    else if (containsIllegalSymbols(name)) {
+    if (containsIllegalSymbols(name)) {
         return 'Содержатся недопустимые символы';
     }
     else {

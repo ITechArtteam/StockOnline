@@ -11,6 +11,23 @@ const initialState = {
         senders: [],
         validationError: ''
     },
+    registerClientCompanyModalForm: {
+        isOpen: false,
+        name: '',
+        state: '',
+        city: '',
+        street: '',
+        house: '',
+        flat: '',
+        validationErrors: {
+            nameError: '',
+            stateError: '',
+            cityError: '',
+            streetError: '',
+            houseError: '',
+            flatError: ''
+        }
+    },
     carrierName: '',
     carrier: null,
     selectCarrierModalForm: {
@@ -732,6 +749,151 @@ export default function waybillRegistrationForm(state = initialState, action) {
                     type: 'failure',
                     message: action.message,
                     isVisible: true
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SHOW:
+            alert('show reducer');
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    isOpen: true
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_HIDE:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    isOpen: false
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_NAME:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    name: action.name
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_STATE:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    state: action.state
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_CITY:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    city: action.city
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_STREET:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    street: action.street
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_HOUSE:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    house: action.house
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_FLAT:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    flat: action.flat
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_NAME_ERROR:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    validationErrors: {
+                        ...state.registerClientCompanyModalForm.validationErrors,
+                        nameError: action.error
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_STATE_ERROR:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    validationErrors: {
+                        ...state.registerClientCompanyModalForm.validationErrors,
+                        stateError: action.error
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_CITY_ERROR:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    validationErrors: {
+                        ...state.registerClientCompanyModalForm.validationErrors,
+                        cityError: action.error
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_STREET_ERROR:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    validationErrors: {
+                        ...state.registerClientCompanyModalForm.validationErrors,
+                        streetError: action.error
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_HOUSE_ERROR:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    validationErrors: {
+                        ...state.registerClientCompanyModalForm.validationErrors,
+                        houseError: action.error
+                    }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_FLAT_ERROR:
+            return {
+                ...state,
+                registerClientCompanyModalForm: {
+                    ...state.registerClientCompanyModalForm,
+                    validationErrors: {
+                        ...state.registerClientCompanyModalForm.validationErrors,
+                        flatError: action.error
+                    }
                 }
             };
 

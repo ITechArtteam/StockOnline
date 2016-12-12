@@ -17,6 +17,7 @@ import ChooseSenderModalForm from './ChooseSenderModalForm/ChooseSenderModalForm
 import ChooseCarrierModalForm from './ChooseCarrierModalForm/ChooseCarrierModalForm'
 import TransportNumbers from './TransportNumbers/TransportNumbers'
 import WaybillProducts from './WaybillProducts/WaybillProducts'
+import RegisterClientCompanyModalForm from './RegisterClientCompanyModalForm/RegisterClientCompany'
 
 import * as Actions from './actions'
 
@@ -252,6 +253,28 @@ class WaybillRegistration extends React.Component {
         this.props.changeRegistrationDate(value);
     }
 
+    renderCreateClientCompanyButton() {
+        if (getFilteredItems(this.props.senders, this.props.senderName).length == 0) {
+            this.props.setSenderNameError('Не найдено ни одной похдодящей компании');
+            return (
+                <div>
+                    <div>
+                        <input
+                            type="button"
+                            className="btn btn-primary"
+                            value="Зарегистрировать компанию-отправителя"
+                            onClick={() => {this.props.showRegisterClientCompanyModalForm()}} />
+                        <p>&nbsp;</p>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            this.props.setSenderNameError('');
+            return '';
+        }
+    }
+
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
@@ -278,6 +301,8 @@ class WaybillRegistration extends React.Component {
                         resultType={this.props.sender ? 'success' : 'warning'}
                         onChange={(value) => {this.handleChangeSenderName(value)}}
                         onBlur={() => this.handleSenderNameOnBlur()} />
+                    {this.renderCreateClientCompanyButton()}
+                    <RegisterClientCompanyModalForm />
                     <ChooseSenderModalForm
                         senders={getFilteredItems(this.props.senders, this.props.senderName)}
                         isOpen={this.props.chooseSenderModalIsOpen} />
