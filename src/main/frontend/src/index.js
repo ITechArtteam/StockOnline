@@ -31,6 +31,13 @@ import DispatcherFinishOutput from "./components/finishOutput/DispatcherFinishOu
 import ActsContainer from "./containers/ActsContainer";
 import ShowActContainer from "./containers/ShowActContainer";
 import EditActContainer from "./containers/EditActContainer";
+
+import GoodsDeparture from './containers/GoodsDeparture/GoodsDeparture'
+import GoodsDepartureSearchTransportCompanyForDriver from './containers/searchTransportCompanyForDriverExport/SearchTransportCompanyForDriver'
+import GoodsDepartureSearchTransportCompanyForTrain from './containers/searchTransportCompanyForTrainExport/SearchTransportCompanyForTrain'
+import GoodsDepartureEditDriver from './containers/editDriverExport/EditDriver'
+import GoodsDepartureWaybillRegistration from './containers/WaybillRegistrationExport/WaybillRegistration'
+
 import RequireRole from "./containers/RequireRole"
 import "bootstrap-webpack";
 import "bootstrap-select/dist/js/bootstrap-select.min";
@@ -65,7 +72,13 @@ ReactDOM.render(
                 <Route path="/goods" requiredRole={["BOSS_STOCK", "CONTROLLER"]} component={RequireRole(Goods)}/>
                 <Route path="/goods/receipt" requiredRole={["MANAGER"]} component={RequireRole(ReceiptGoods)}/>
                 <Route path="/goods/distribution" requiredRole={["MANAGER"]} component={RequireRole(DistributionGoods)}/>
-                <Route path="/goods/departure" requiredRole={["MANAGER"]} component={RequireRole(DepartureGoods)}/>
+
+                <Route path="/goods/departure" requiredRole={["MANAGER"]} component={RequireRole(GoodsDeparture)}/>
+                <Route path="/goods/departure/driver(/:passportNumber)" requiredRole={["MANAGER"]} component={RequireRole(GoodsDepartureSearchTransportCompanyForDriver)}/>
+                <Route path="/goods/departure/train" requiredRole={["MANAGER"]} component={RequireRole(GoodsDepartureSearchTransportCompanyForTrain)}/>
+                <Route path="/goods/departure/editDriver(/:id)" requiredRole={["MANAGER"]} component={RequireRole(GoodsDepartureEditDriver)}/>
+                <Route path="/waybill/export" requiredRole={["MANAGER"]} component={RequireRole(GoodsDepartureWaybillRegistration)}/>
+
                 <Route path="/goods/checkInput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckInputGoods)}/>
                 <Route path="/goods/checkOutput" requiredRole={["CONTROLLER"]} component={RequireRole(CheckOutputGoods)}/>
                 <Route path="/finishOutput" requiredRole={["DISPATCHER"]} component={RequireRole(DispatcherFinishOutput)}/>

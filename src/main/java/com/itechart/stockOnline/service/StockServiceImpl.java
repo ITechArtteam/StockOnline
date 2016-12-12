@@ -6,10 +6,7 @@ import com.itechart.stockOnline.dao.StockDao;
 import com.itechart.stockOnline.dao.RoomDao;
 import com.itechart.stockOnline.dao.UserDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
-import com.itechart.stockOnline.model.Room;
-import com.itechart.stockOnline.model.Stock;
-import com.itechart.stockOnline.model.User;
-import com.itechart.stockOnline.model.Address;
+import com.itechart.stockOnline.model.*;
 import com.itechart.stockOnline.model.dto.stock.StockDto;
 import com.itechart.stockOnline.model.dto.stock.StockPage;
 import org.apache.commons.collections.CollectionUtils;
@@ -87,6 +84,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional
     @Secured({"ROLE_ADMIN"})
     public StockPage getStockPage(int pageNumber, int recordCount, String name, String address, String login) {
         if(pageNumber <= 0 || recordCount <= 0) {
@@ -105,7 +103,12 @@ public class StockServiceImpl implements StockService {
                 specification = where(addressLike(address));
             }
         }
-
+        User user = userDao.findByLogin(login).orElseThrow(DataNotFoundError::new);
+        StockOwnerCompany stockOwnerCompany = user.getStockOwnerCompany();
+        logger.info("Stock service:  stockOwnerCompany - {}.", stockOwnerCompany);
+        Long id = stockOwnerCompany.getId();
+        logger.info("Stock service:  stockOwnerCompany id - {}.", id);
+        login = stockOwnerCompany.getName();
         if(StringUtils.isNotEmpty(login)) {
             if(specification != null) {
                 specification = where(specification).and(companyLike(login));
