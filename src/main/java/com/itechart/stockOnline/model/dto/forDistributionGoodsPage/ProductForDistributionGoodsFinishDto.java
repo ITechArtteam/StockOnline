@@ -5,8 +5,7 @@ import java.util.List;
 public class ProductForDistributionGoodsFinishDto {
     private String waybillNumber;
     private Integer productId;
-    private List<Integer> shelves;
-//    private Integer count;
+    private List<ShelfFinishDto> shelves;
 
     public Integer getProductId() {
         return productId;
@@ -16,11 +15,11 @@ public class ProductForDistributionGoodsFinishDto {
         this.productId = productId;
     }
 
-    public List<Integer> getShelves() {
+    public List<ShelfFinishDto> getShelves() {
         return shelves;
     }
 
-    public void setShelves(List<Integer> shelves) {
+    public void setShelves(List<ShelfFinishDto> shelves) {
         this.shelves = shelves;
     }
 
@@ -31,14 +30,6 @@ public class ProductForDistributionGoodsFinishDto {
     public void setWaybillNumber(String waybillNumber) {
         this.waybillNumber = waybillNumber;
     }
-
-//    public Integer getCount() {
-//        return count;
-//    }
-//
-//    public void setCount(Integer count) {
-//        this.count = count;
-//    }
 
     @Override
     public String toString() {

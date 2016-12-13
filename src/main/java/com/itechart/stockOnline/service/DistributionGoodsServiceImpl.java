@@ -45,20 +45,20 @@ public class DistributionGoodsServiceImpl implements DistributionGoodsService {
 
         productList.forEach(productDto -> {
             Product product = productService.get(productDto.getProductId().longValue());
-            productDto.getShelves().forEach(shelfId -> {
-                Shelf shelf = shelfService.find(shelfId);
+            productDto.getShelves().forEach(shelf -> {
+                Shelf shelf1 = shelfService.find(shelf.getShelfId());
                 ProductOnShelf productOnShelf = new ProductOnShelf();
                 productOnShelf.setProduct(product);
-                // TODO: 06.12.2016 fix capacity
-                productOnShelf.setCount(shelf.getCapacity());
+                productOnShelf.setCount(shelf.getCount());
                 productOnShelf.setBeginDate(new Date());
-                productOnShelf.setShelf(shelf);
+                productOnShelf.setShelf(shelf1);
                 productOnShelf.setUser(user);
 
                 productOnShelf = productOnShelfService.save(productOnShelf);
 
-                shelf.setFree(false);
-                shelfService.save(shelf);
+                //set free only if no more free space
+                shelf1.setFree(false);
+                shelfService.save(shelf1);
             });
             product.setStatus(ProductStatus.APPROVED_FOR_STORAGE);
             productService.save(product);
