@@ -8,6 +8,15 @@ export function getActSuccess(act, response) {
     };
 }
 
+export function saveActInStoreSuccess(act) {
+    return {
+        type: types.SAVE_ACT_SUCCESS ,
+        act:act
+    };
+}
+
+
+
 
 export function getActUnsuccess(response) {
     return {

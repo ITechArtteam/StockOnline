@@ -2,14 +2,14 @@ import React from 'react'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class WaybillInfo extends React.Component {
-    concatFullName = (firstName, lastName, patronymic) => {
-        let fn = firstName === null ? '' : firstName;
+    fullNameToShortName = (firstName, lastName, patronymic) => {
+        let fn = firstName === null ? '' : `${firstName.charAt(0).toUpperCase()}.`;
         let ln = lastName === null ? '' : lastName;
-        let pt = patronymic === null ? '' : patronymic;
+        let pt = patronymic === null ? '' : `${patronymic.charAt(0).toUpperCase()}.`;
 
         let result = `${ln} ${fn} ${pt}`;
-        result = result.trim();
-        return result.length === 0 ? "Не указано" : result;
+        result = result === "  " ? "Не указано" : result;
+        return result;
     };
 
     render(){
@@ -37,7 +37,7 @@ class WaybillInfo extends React.Component {
                         <div className="panel-heading">Оформил:</div>
                         <div className="panel-body">
                             <b>Пользователь:</b> <span className="pull-right">{this.props.data.registeredBy.login}</span> <br/>
-                            <b>ФИО:</b>  <span className="pull-right">{this.concatFullName(this.props.data.registeredBy.name,
+                            <b>ФИО:</b>  <span className="pull-right">{this.fullNameToShortName(this.props.data.registeredBy.name,
                                                         this.props.data.registeredBy.surname,
                                                         this.props.data.registeredBy.patronymic)}</span>
                         </div>

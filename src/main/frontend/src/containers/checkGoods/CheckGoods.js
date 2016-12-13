@@ -1,24 +1,33 @@
 import React from "react";
 import WaybillInfo from "../../components/WaybillInfo/WaybillInfo";
-import Acts from "../../views/acts/Acts";
+import ActCard from "../../views/edit_act/ActCard";
 import {connect} from "react-redux";
 import {checkGoodsActionCreator} from "./index";
 import AlertPopup from "../../components/AlertPopup/AlertPopup";
 import SimpleInput from "../../components/SimpleInput/SimpleInput";
-import {Row} from "react-bootstrap";
-import * as actsApi from "../../api/acts-api";
-import {browserHistory} from 'react-router';
+import * as actApi from "../../api/act-api";
+import {browserHistory} from "react-router";
 class CheckGoods extends React.Component {
     constructor(props) {
-        console.log(props)
         super(props);
         this.onFindClick = this.onFindClick.bind(this);
         this.onAcceptClick = this.onAcceptClick.bind(this);
         this.onClearClick = this.onClearClick.bind(this);
     }
 
+    state = {
+        act: this.props.act
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            act: nextProps.act,
+        });
+    }
+
+
     componentWillMount() {
-        this.onClearClick();
+        //this.onClearClick();
     }
 
     onInputValueChange = e => {
@@ -41,12 +50,20 @@ class CheckGoods extends React.Component {
         this.props.acceptWaybill(this.props.waybill.number,
             this.props.finalWaybillStatus,
             this.props.finalProductStatus,
-            this.props.senderRole);
+            this.props.senderRole,
+            this.state.act);
+    }
+
+    onChangeClick = () => {
+        this.redirect('/act');
+    }
+
+    onDeleteClick = () => {
+        actApi.clearReducer();
     }
 
 
-
-    onMakeActClick = () =>{
+    onMakeActClick = () => {
         this.redirect('/act');
     }
 
@@ -80,9 +97,10 @@ class CheckGoods extends React.Component {
                                     </button>
                                 </div>
                                 <div className="btn-group">
-                                    <button type="button" className="btn btn-success"
+                                    <button type="button" className="btn btn-info"
                                             disabled={this.props.frontend.waybillVisible ? "" : "disabled"}
-                                            onClick={this.onMakeActClick}>Создать акт</button>
+                                            onClick={this.onMakeActClick}>Создать акт
+                                    </button>
                                 </div>
                                 <div className="btn-group">
                                     <button type="button" className="btn btn-success"
@@ -93,6 +111,7 @@ class CheckGoods extends React.Component {
                         </div>
                     </div>
                 </div>
+                <ActCard act={this.state.act} onChangeClick={this.onChangeClick} onDeleteClick={this.onDeleteClick}/>
                 <WaybillInfo data={this.props.waybill} visible={this.props.frontend.waybillVisible}/>
                 <AlertPopup close={this.props.closeDialog}
                             isVisible={this.props.alert.isVisible}
@@ -118,7 +137,8 @@ const mapStateToProps = state => {
     return {
         waybill: state.checkGoodsReducer.waybill,
         alert: state.checkGoodsReducer.alert,
-        frontend: state.checkGoodsReducer.frontend
+        frontend: state.checkGoodsReducer.frontend,
+        act: state.actState.act
     }
 };
 
@@ -127,8 +147,8 @@ const mapDispatchToProps = dispatch => {
         findWaybillByNumber: (number, waybillStatus) => {
             dispatch(checkGoodsActionCreator.findWaybillByNumber(number, waybillStatus))
         },
-        acceptWaybill: (number, waybillStatus, productStatus, senderRole) => {
-            dispatch(checkGoodsActionCreator.acceptWaybill(number, waybillStatus, productStatus, senderRole))
+        acceptWaybill: (number, waybillStatus, productStatus, senderRole, act) => {
+            dispatch(checkGoodsActionCreator.acceptWaybill(number, waybillStatus, productStatus, senderRole, act))
         },
         showDialog: (text, type, buttons) => {
             dispatch(checkGoodsActionCreator.showDialog(text, type, buttons))

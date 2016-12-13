@@ -16,20 +16,22 @@ class EditActContainer extends React.Component {
             actApi.getAct(id);
         }
         productsApi.getActStatus();
+        //actApi.clearReducer();
     }
 
     saveAct = (act) => {
         browserHistory.go(-1);
         window.scrollTo(0, 0);
-        actApi.saveAct(act);
+        actApi.saveActInStore(act);
     }
 
     redirectAfteClose = ()=>{
         browserHistory.go(-1);
+        window.scrollTo(0, 0);
     }
 
     componentWillUnmount(){
-        actApi.clearReducer();
+
     }
 
 
@@ -59,8 +61,8 @@ class EditActContainer extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
-        act: store.actsState.act,
-        response: store.actsState.response,
+        act: store.actState.act,
+        response: store.actState.response,
         act_status: store.productsState.act_status,
         controller_username: store.auth.username,
         controller_id: store.auth.id,

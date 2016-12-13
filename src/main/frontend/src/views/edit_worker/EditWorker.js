@@ -118,9 +118,11 @@ class EditWorker extends React.Component {
     updateProps = (props)=> {
         console.log(props)
         var newWorker = _.extend({}, props.worker);
+        console.log(newWorker.birthday)
         if (newWorker.birthday) {
             newWorker.birthday = moment(props.worker.birthday).format()
         }
+        console.log(newWorker.birthday)
         var stockOwnerCompany = {id: props.company.id, name: props.company.name};
         newWorker.stockOwnerCompany = stockOwnerCompany;
         this.setState({worker: newWorker});
