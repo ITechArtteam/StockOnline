@@ -47,8 +47,8 @@ export function checkStreet(street) {
 }
 
 export function checkHouse(house) {
-    if (containsIllegalSymbols(house)) {
-        return 'Содержатся недопустимые символы';
+    if (!containsOnlyNumbers(house)) {
+        return 'Номер дома может содержать только цифры'
     }
     else {
         return '';
@@ -56,8 +56,8 @@ export function checkHouse(house) {
 }
 
 export function checkFlat(flat) {
-    if (containsIllegalSymbols(flat)) {
-        return 'Содержатся недопустимые символы';
+    if (!containsOnlyNumbers(flat)) {
+        return 'Номер квартиры может содержать только цифры'
     }
     else {
         return '';

@@ -29,8 +29,9 @@ public class ClientCompanyController {
     }
 
     @RequestMapping(path = "/register")
-    public void register(@RequestBody ClientCompanyDto dto) {
+    @ResponseBody
+    public ClientCompany register(@RequestBody ClientCompanyDto dto) {
         ClientCompany clientCompany = builder.buildFromDto(dto);
-        clientCompanyService.save(clientCompany);
+        return clientCompanyService.save(clientCompany);
     }
 }

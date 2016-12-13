@@ -253,6 +253,11 @@ class WaybillRegistration extends React.Component {
         this.props.changeRegistrationDate(value);
     }
 
+    handleRegisterClientCompanyButtonClick() {
+        this.props.changeClientCompanyName(this.props.senderName);
+        this.props.showRegisterClientCompanyModalForm();
+    }
+
     renderCreateClientCompanyButton() {
         if (getFilteredItems(this.props.senders, this.props.senderName).length == 0) {
             this.props.setSenderNameError('Не найдено ни одной похдодящей компании');
@@ -263,7 +268,7 @@ class WaybillRegistration extends React.Component {
                             type="button"
                             className="btn btn-primary"
                             value="Зарегистрировать компанию-отправителя"
-                            onClick={() => {this.props.showRegisterClientCompanyModalForm()}} />
+                            onClick={() => {this.handleRegisterClientCompanyButtonClick()}} />
                         <p>&nbsp;</p>
                     </div>
                 </div>

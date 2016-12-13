@@ -27,21 +27,33 @@ import {
 class RegisterClientCompanyModalForm extends React.Component {
 
     componentWillMount() {
-        this.props.loadUnits();
     }
 
-    handleSaveProduct() {
+    handleRegisterClientCompany() {
         const errors = this.validateForm();
         if (errors.length < 1) {
-            this.props.addProduct({
+            const company = {
                 name: this.props.name,
-                price: this.props.price,
-                count: this.props.count,
-                storage: this.props.storage,
-                unit: this.props.unit
+                state: this.props.state != '' ? this.props.state : null,
+                city: this.props.city != '' ? this.props.city : null,
+                street: this.props.street != '' ? this.props.street : null,
+                house: this.props.house != '' ? this.props.house : null,
+                flat: this.props.flat != '' ? this.props.flat : null
+            };
+
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(company),
+                dataType: 'json',
+                url: '/client-companies/register',
+                success: (response) => {
+                    this.props.changeSenderName(this.props.name);
+                    this.props.setSender(response);
+                    this.props.loadSenders();
+                    this.props.hideRegisterClientCompanyModalForm();
+                }
             });
-            this.props.hideAddProductModalForm();
-            this.props.clearAddProductModalFormFields();
         }
     }
 
@@ -51,16 +63,19 @@ class RegisterClientCompanyModalForm extends React.Component {
         if ((error = this.validateName())) {
             errors.push(error);
         }
-        if ((error = this.validateCount())) {
+        if ((error = this.validateState())) {
             errors.push(error);
         }
-        if ((error = this.validatePrice())) {
+        if ((error = this.validateCity())) {
             errors.push(error);
         }
-        if ((error = this.validateStorage())) {
+        if ((error = this.validateStreet())) {
             errors.push(error);
         }
-        if ((error = this.validateUnit())) {
+        if ((error = this.validateHouse())) {
+            errors.push(error);
+        }
+        if ((error = this.validateFlat())) {
             errors.push(error);
         }
         return errors;
@@ -93,6 +108,12 @@ class RegisterClientCompanyModalForm extends React.Component {
     validateHouse() {
         const error = checkHouse(this.props.house);
         this.props.setClientCompanyHouseError(error);
+        return error;
+    }
+
+    validateFlat() {
+        const error = checkFlat(this.props.flat);
+        this.props.setClientCompanyFlatError(error);
         return error;
     }
 
@@ -143,7 +164,7 @@ class RegisterClientCompanyModalForm extends React.Component {
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideRegisterClientCompanyModalForm} value="Отмена" />
-                    <input type="button" className='btn btn-primary' onClick={() => {}} value="Добавить" />
+                    <input type="button" className='btn btn-primary' onClick={() => {this.handleRegisterClientCompany()}} value="Зарегистрировать" />
                 </ModalFooter>
             </Modal>
         )
