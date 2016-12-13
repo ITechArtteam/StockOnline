@@ -5,6 +5,7 @@ import com.itechart.stockOnline.dao.RoomDao;
 import com.itechart.stockOnline.dao.StockDao;
 import com.itechart.stockOnline.model.Room;
 import com.itechart.stockOnline.model.Shelf;
+import com.itechart.stockOnline.model.StorageRequirement;
 import com.itechart.stockOnline.model.dto.stock.StockDto;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -33,7 +34,8 @@ public class RoomServiceImpl implements RoomService{
 
     @Autowired
     private ShelfService shelfService;
-
+    @Autowired
+    private StorageRequirementService storageRequirementService;
     @Autowired
     public RoomServiceImpl(RoomDao roomDao,  StockDtoConverter roomDtoConverter, StockDao stockDao) {
         this.roomDao = roomDao;
@@ -108,6 +110,11 @@ public class RoomServiceImpl implements RoomService{
     @Transactional
     public Room saveRoom(Room room) {
         room.setId(null);
+        StorageRequirement storageRequirement = storageRequirementService.get(room.getStorage().getType());
+
+        if (storageRequirement instanceof StorageRequirement){
+            room.setStorage(storageRequirement);
+        }
         room = roomDao.save(room);
         if(CollectionUtils.isNotEmpty(room.getShelfs())){
             for(Shelf shelf : room.getShelfs()){
