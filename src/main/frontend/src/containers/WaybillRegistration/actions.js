@@ -442,7 +442,7 @@ export function loadSenders() {
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/customer/',
+            url: '/client-companies/',
             success: function (response) {
                 dispatch(setSenders(response));
             }

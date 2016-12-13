@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientCompanyDao extends JpaRepository<ClientCompany, Long> {
     ClientCompany findById(Long id);
+    ClientCompany findByName(String name);
 }
