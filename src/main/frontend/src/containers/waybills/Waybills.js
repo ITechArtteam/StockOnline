@@ -7,6 +7,8 @@ import {Link, browserHistory} from 'react-router';
 import AlertPopup from '../../components/AlertPopup/AlertPopup'
 import SimpleInput from '../../components/SimpleInput/SimpleInput'
 import {RadioGroup, Radio} from 'react-radio-group'
+import WaybillInfoModal from "./waybillInfoModal/WaybillInfoModal"
+
 class Waybills extends React.Component {
     constructor(props) {
         super(props);
@@ -15,6 +17,7 @@ class Waybills extends React.Component {
         this.onBtnClearFilterClick = this.onBtnClearFilterClick.bind(this);
         this.onBtnSearchClick = this.onBtnSearchClick.bind(this);
         this.onInputValueChange = this.onInputValueChange.bind(this);
+        this.numberFormatter = this.numberFormatter.bind(this);
     }
 
     componentWillMount() {
@@ -44,6 +47,10 @@ class Waybills extends React.Component {
         const value = e.target.value;
 
         this.props.setFilterInputValue(nameField, value);
+    };
+
+    numberFormatter(cell, row) {
+        return <a href="#" onClick={() => this.props.showWaybillInfoModal(cell)}>{cell}</a>
     };
 
     render(){
@@ -92,7 +99,7 @@ class Waybills extends React.Component {
                             </span>
                     </div>
                     <BootstrapTable data={this.props.page.waybills} striped={true} hover={true} ref="table">
-                        <TableHeaderColumn headerAlign="center" dataField="number" isKey={true}>Номер</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataField="number" isKey={true} dataFormat={this.numberFormatter}>Номер</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataField="registrationDate">Дата регистрации</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataField="status">Статус</TableHeaderColumn>
                     </BootstrapTable>
@@ -108,8 +115,8 @@ class Waybills extends React.Component {
                             isVisible={this.props.alert.isVisible}
                             message={this.props.alert.text}
                             buttons={this.props.alert.buttons}
-                            type={this.props.alert.type}
-                />
+                            type={this.props.alert.type}/>
+                <WaybillInfoModal/>
             </div> /*div.row end*/
         )
     }
@@ -140,6 +147,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         getWaybills: (pageNumber, itemsCountPerPage) => {
             dispatch(waybillsActionCreator.getWaybills(pageNumber, itemsCountPerPage))
+        },
+        showWaybillInfoModal: waybillNumber => {
+            dispatch(waybillsActionCreator.setWaybillInfoModalData(waybillNumber));
+            dispatch(waybillsActionCreator.setWaybillInfoModalVisibility(true));
         }
     }
 };

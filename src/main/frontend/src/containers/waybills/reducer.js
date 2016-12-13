@@ -17,6 +17,45 @@ let initWaybillsState = {
         waybillTypeValue: '2',
         filterWaybillNumberValue: '',
         isFilterMessageVisible: false
+    },
+    waybillInfoModal: {
+        isVisible: false,
+        waybill: {
+            number: 0,
+            status: 0,
+            registeredBy: {
+                name: '',
+                surname: '',
+                patronymic: ''
+            },
+            productInWaybills: [
+                {
+                    count: 10,
+                    placedCount: 0,
+                    product: {
+                        name: '',
+                        unit: '',
+                        storage: {
+                            type: ''
+                        },
+                        places: [
+                            {
+                                shelfId: 0,
+                                number: 0,
+                                count: 0
+                            }
+                        ]
+                    }
+                },
+            ],
+            transport: {
+                type: 0,
+                number: '',
+                storage: {
+                    type: ''
+                }
+            }
+        }
     }
 };
 
@@ -37,6 +76,16 @@ export default (state = initWaybillsState, action) => {
 
         case event.SET_FILTER_MESSAGE_VISIBILITY:
             return {...state, frontend: {...state.frontend, isFilterMessageVisible: action.payload}};
+
+
+        case event.SET_WAYBILL_INFO_MODAL_VISIBILITY:
+            return {...state, waybillInfoModal: {...state.waybillInfoModal, isVisible: action.payload}};
+        case event.SET_WAYBILL_INFO_MODAL_DATA:
+            let waybills = state.page.waybills.filter(elem => {
+                return elem.number === action.payload
+            });
+            return {...state, waybillInfoModal: {...state.waybillInfoModal, waybill: waybills[0]}};
+
         default:
             return state;
     }

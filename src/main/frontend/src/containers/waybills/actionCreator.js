@@ -1,6 +1,19 @@
 import * as event from './constants'
 import * as axios from "axios";
 
+let setWaybillInfoModalVisibility = visibility => {
+    return {
+        type: event.SET_WAYBILL_INFO_MODAL_VISIBILITY,
+        payload: visibility
+    }
+};
+
+let setWaybillInfoModalData = waybillNumber => {
+    return {
+        type: event.SET_WAYBILL_INFO_MODAL_DATA,
+        payload: waybillNumber
+    }
+};
 
 let setFilterMessageVisibility = visibility => {
     return {
@@ -77,5 +90,7 @@ export default {
     closeDialog,
     setWaybillTypeRadioValue,
     setFilterInputValue,
-    getWaybills
+    getWaybills,
+    setWaybillInfoModalVisibility,
+    setWaybillInfoModalData
 }
