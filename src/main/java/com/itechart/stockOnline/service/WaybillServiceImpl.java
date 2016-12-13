@@ -77,13 +77,17 @@ public class WaybillServiceImpl implements WaybillService {
         waybill.setCheckDate(new Date());
         Logger.info("completeWayBillChecking(): set checkDate {}", waybill.getCheckDate());
         update(waybill);
+
         setWaybillAndProductsStatus(waybill, waybillStatus, productStatus);
-        act.setId(null);
-        act.getProductInActs().forEach((productInAct) -> {
-            productInAct.setId(null);
-            productInAct.setAct(act);
-        });
-        actRepository.save(act);
+        if (act.getId()!=null) {
+            act.setId(null);
+            act.setWaybill(waybill);
+            act.getProductInActs().forEach((productInAct) -> {
+                productInAct.setId(null);
+                productInAct.setAct(act);
+            });
+            actRepository.save(act);
+        }
     }
 
     @Override

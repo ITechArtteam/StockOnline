@@ -1,5 +1,8 @@
 import * as event from "./constants";
 import * as axios from "axios";
+import {
+    clearActReducer
+} from "../../actions/act-actions";
 
 
 let setWaybillVisibility = visibility => {
@@ -64,6 +67,7 @@ let acceptWaybill = (number, waybillStatus, productStatus, senderRole, act) => {
             .then(response => {
                 dispatch(showDialog(`Для накладной №${number} успешно установлен статус "${waybillStatus}"`));
                 dispatch(setWaybillVisibility(false));
+                dispatch(clearActReducer());
             })
             .catch(error => dispatch(showDialog(`Прозошла ошибка при установке статуса накладной. ${error}`, 'danger', [])));
     }

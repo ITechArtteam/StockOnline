@@ -44,7 +44,6 @@ class Navigation extends React.Component {
                                           buttonText="Проверка выданных товаров"/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK", "CONTROLLER"]} to="/goods" buttonText="Товары"/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK"]} to="/acts" buttonText="Акты"/>
-                        <NavigationButton mustHaveRoles={["CONTROLLER"]} to="/act" buttonText="Редактировать акт"/>
                     </ul>
                     <div className="userInfo col-sm-3 col-md-3 col-lg-3">
                         <UserInfo className="userInfo "/>

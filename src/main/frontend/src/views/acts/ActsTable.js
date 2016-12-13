@@ -66,7 +66,7 @@ class ActsTable extends React.Component {
 
 
         function dateFormatter(cell, row) {
-            return moment(cell).format("llll");
+            return moment(cell).format("lll");
         }
 
         function userFormatter(cell, row){
@@ -88,7 +88,7 @@ class ActsTable extends React.Component {
 
             >
                 <TableHeaderColumn dataField="id" hidden={true} isKey={true}>Идентификатор</TableHeaderColumn>
-                <TableHeaderColumn dataField="date" dataSort={true} dataFormat={ dateFormatter }
+                <TableHeaderColumn dataField="reportDate" dataSort={true} dataFormat={ dateFormatter }
                                    filter={ {type: 'DateFilter'} }>Дата</TableHeaderColumn>
                 <TableHeaderColumn dataField="user" filter={ {type: 'TextFilter'} }
                                    dataSort={true} dataFormat={userFormatter}>Контролер</TableHeaderColumn>

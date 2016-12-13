@@ -6,7 +6,6 @@ import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.Act;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.Waybill;
-import com.itechart.stockOnline.model.dto.AcceptWaybillDto;
 import com.itechart.stockOnline.service.ActService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,14 +37,18 @@ public class ActController {
         LOGGER.debug("REST request. Path:/acts_by_company?id=  method: GET", id);
         List<Act> acts = actService.getByCompany(id);
         acts.stream().forEach((act) -> {
-            act.setUser(new User() {{
-                setId(act.getUser().getId());
-                setLogin(act.getUser().getLogin());
-            }});
-            act.setWaybill(new Waybill() {{
-                setId(act.getWaybill().getId());
-                setNumber(act.getWaybill().getNumber());
-            }});
+            if (act.getUser() != null) {
+                act.setUser(new User() {{
+                    setId(act.getUser().getId());
+                    setLogin(act.getUser().getLogin());
+                }});
+            }
+            if (act.getWaybill() != null) {
+                act.setWaybill(new Waybill() {{
+                    setId(act.getWaybill().getId());
+                    setNumber(act.getWaybill().getNumber());
+                }});
+            }
         });
         return acts;
     }
@@ -58,7 +61,6 @@ public class ActController {
         act.getProductInActs().stream().forEach((productInAct) -> productInAct.setAct(null));
         return act;
     }
-
 
 
     @RequestMapping(value = "/act/{id}", method = RequestMethod.DELETE)
