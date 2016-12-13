@@ -74,7 +74,6 @@ class ProductsTable extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            waybill_produts: nextProps.waybill_produts,
             products_in_act: nextProps.products_in_act,
             act_status: nextProps.act_status
         });
@@ -88,14 +87,14 @@ class ProductsTable extends React.Component {
 
     updateProps = (props)=> {
         var newWaybill_produts = [];
-        _.forEach(this.props.waybill_produts, (product)=> {
-            var newProduct = {};
-            newProduct.id = newWaybill_produts.length;
-            newProduct.name = product.product.name;
-            newProduct.count = product.count;
-            newProduct.unit = product.product.unit;
-            newProduct.cost = product.product.cost;
-            newWaybill_produts.push(newProduct);
+        _.forEach(this.props.waybill_produts, (productInWaybill)=> {
+            var newProductInAct = {};
+            newProductInAct.id = productInWaybill.product.id;
+            newProductInAct.name = productInWaybill.product.name;
+            newProductInAct.count = productInWaybill.count;
+            newProductInAct.unit = productInWaybill.product.unit;
+            newProductInAct.cost = productInWaybill.product.cost;
+            newWaybill_produts.push(newProductInAct);
         });
         this.setState({waybill_produts: newWaybill_produts});
     }
