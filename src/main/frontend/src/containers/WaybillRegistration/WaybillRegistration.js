@@ -128,9 +128,10 @@ class WaybillRegistration extends React.Component {
             transportType: type,
             numbers: numbers,
             description: this.props.description,
-            dispatcherLogin: this.props.dispatcher,
+            registeredByLogin: this.props.dispatcher,
             registrationDatetime: getCurrentDateTime(),
-            products: this.props.products
+            products: this.props.products,
+            status: 'Зарегистрирована'
         };
 
         this.props.submitForm(waybill);

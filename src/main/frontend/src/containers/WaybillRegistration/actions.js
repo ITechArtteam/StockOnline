@@ -88,6 +88,8 @@ export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_FLAT = 
 export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_FLAT_ERROR = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_FLAT_ERROR';
 export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SHOW = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SHOW';
 export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_HIDE = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_HIDE';
+export const EDIT_WAYBILL_FORM_SET_AVAILABLE_PRODUCTS = 'EDIT_WAYBILL_FORM_SET_AVAILABLE_PRODUCTS';
+
 
 export function hideRegisterClientCompanyModalForm() {
     return {
@@ -183,6 +185,28 @@ export function setClientCompanyNameError(error) {
     return {
         type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_NAME_ERROR,
         error
+    }
+}
+
+export function loadAvailableProducts() {
+    return function(dispatch) {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/api/products',
+            success: function (response) {
+                dispatch(setAvailableProducts(response));
+            },
+            error: function (response) {
+            }
+        });
+    }
+}
+
+export function setAvailableProducts(products) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_AVAILABLE_PRODUCTS,
+        products
     }
 }
 

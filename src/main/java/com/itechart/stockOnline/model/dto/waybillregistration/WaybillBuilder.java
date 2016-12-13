@@ -38,7 +38,11 @@ public class WaybillBuilder {
 
         waybill.setNumber(dto.getNumber());
         waybill.setIssuanceDate(getDateFromIsoString(dto.getIssueDate()));
-        waybill.setSender(clientCompanyService.getById(dto.getSenderId()));
+        if (dto.getSenderId() != null) {
+            waybill.setSender(clientCompanyService.getById(dto.getSenderId()));
+        } else if (dto.getReceiverId() != null) {
+            waybill.setReceiver(clientCompanyService.getById(dto.getReceiverId()));
+        }
 
         Transport transport = new Transport();
         if (dto.getTransportType() == TransportType.CAR) {
@@ -48,8 +52,8 @@ public class WaybillBuilder {
 
         waybill.setRegistrationDate(getDateTimeFromString(dto.getRegistrationDatetime()));
         waybill.setDescription(dto.getDescription());
-        waybill.setResponsiblePerson(userService.findByLogin(dto.getDispatcherLogin()));
-        waybill.setRegisteredBy(userService.findByLogin(dto.getDispatcherLogin()));
+        waybill.setResponsiblePerson(userService.findByLogin(dto.getRegisteredByLogin()));
+        waybill.setRegisteredBy(userService.findByLogin(dto.getRegisteredByLogin()));
 
         HashSet<ProductInWaybill> waybillProducts = new HashSet<>();
         for (WaybillProductDto productDto : dto.getProducts()) {
@@ -64,6 +68,7 @@ public class WaybillBuilder {
         transport.setType(dto.getTransportType());
         transport.setNumber(String.join(", ", dto.getNumbers()));
         waybill.setTransport(transport);
+        waybill.setStatus(dto.getStatus());
 
         return waybill;
     }

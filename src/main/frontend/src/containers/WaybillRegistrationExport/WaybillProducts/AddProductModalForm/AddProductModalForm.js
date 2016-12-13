@@ -23,15 +23,17 @@ import {
 class AddNumberModalForm extends React.Component {
 
     componentWillMount() {
-        this.props.loadUnits();
+         this.props.loadAvailableProducts();
     }
 
     handleSaveProduct() {
         const errors = this.validateForm();
         if (errors.length < 1) {
+            const product = getProductByName(this.props.availableProducts, this.props.name);
             this.props.addProduct({
                 name: this.props.name,
-                count: this.props.count
+                count: this.props.count,
+                storage: product.storage.type
             });
             this.props.hideAddProductModalForm();
             this.props.clearAddProductModalFormFields();
@@ -52,14 +54,14 @@ class AddNumberModalForm extends React.Component {
     }
 
     validateName() {
-        const error = checkName(this.props.name, this.props.products);
+        const error = checkName(this.props.name, this.props.products, this.props.availableProducts);
         this.props.setProductNameError(error);
         return error;
     }
 
 
     validateCount() {
-        const error = checkCount(this.props.count);
+        const error = checkCount(this.props.count, this.props.name, this.props.availableProducts);
         this.props.setProductCountError(error);
         return error;
     }
@@ -77,13 +79,13 @@ class AddNumberModalForm extends React.Component {
                         error={this.props.nameError}
                         value={this.props.name}
                         onChange={this.props.changeProductName}
-                        onBlur={() => {this.props.setProductNameError(checkName(this.props.name, this.props.products))}} />
+                        onBlur={() => {this.props.setProductNameError(checkName(this.props.name, this.props.products, this.props.availableProducts))}} />
                     <TextInput
                         label="Количество"
                         error={this.props.countError}
                         value={this.props.count}
                         onChange={this.props.changeProductCount}
-                        onBlur={() => {this.props.setProductCountError(checkCount(this.props.count))}} />
+                        onBlur={() => {this.props.setProductCountError(checkCount(this.props.count, this.props.name, this.props.availableProducts))}} />
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideAddProductModalForm} value="Отмена" />
@@ -94,6 +96,12 @@ class AddNumberModalForm extends React.Component {
     }
 }
 
+function getProductByName(products, name) {
+    return products.filter(function(product) {
+        return product.name == name;
+    })[0];
+}
+
 function mapStateToProps(state) {
     return {
         isOpen: state.waybillRegistrationForm.waybillProducts.addProductModalForm.isOpen,
@@ -101,7 +109,8 @@ function mapStateToProps(state) {
         count: state.waybillRegistrationForm.waybillProducts.addProductModalForm.count,
         nameError: state.waybillRegistrationForm.waybillProducts.addProductModalForm.validationErrors.nameError,
         countError: state.waybillRegistrationForm.waybillProducts.addProductModalForm.validationErrors.countError,
-        products: state.waybillRegistrationForm.waybillProducts.products
+        products: state.waybillRegistrationForm.waybillProducts.products,
+        availableProducts: state.waybillRegistrationForm.waybillProducts.availableProducts
     }
 }
 

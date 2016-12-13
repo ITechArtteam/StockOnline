@@ -60,6 +60,7 @@ const initialState = {
     },
     description: '',
     waybillProducts: {
+        availableProducts: [],
         selectedProductName: null,
         products: [],
         addProductModalForm: {
@@ -893,6 +894,15 @@ export default function waybillRegistrationForm(state = initialState, action) {
                         ...state.registerClientCompanyModalForm.validationErrors,
                         flatError: action.error
                     }
+                }
+            };
+
+        case Actions.EDIT_WAYBILL_FORM_SET_AVAILABLE_PRODUCTS:
+            return {
+                ...state,
+                waybillProducts: {
+                    ...state.waybillProducts,
+                    availableProducts: action.products
                 }
             };
 

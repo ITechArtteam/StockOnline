@@ -21,13 +21,16 @@ public class WaybillProductServiceImpl implements WaybillProductService {
         Product product = waybillProduct.getProduct();
 
         Product storedProduct = productService.get(product.getName());
+
+        System.out.println(product.getName());
+
         if (storedProduct != null) {
-            storedProduct.setCost(product.getCost());
-            storedProduct.setCount(storedProduct.getCount() + waybillProduct.getCount());
             product = storedProduct;
+        } else {
+            product = productService.save(product);
         }
 
-        waybillProduct.setProduct(productService.save(product));
+        waybillProduct.setProduct(product);
 
         return waybillProductDao.save(waybillProduct);
     }

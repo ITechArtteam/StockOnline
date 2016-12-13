@@ -4,7 +4,7 @@ import {
     containsOnlyNumbers
 } from '../../ValidationUtils/ValidationUtils'
 
-export function checkName(name, products) {
+export function checkName(name, products, availableProducts) {
     if (isEmpty(name)) {
         return 'Не введено наименование продукта';
     }
@@ -13,6 +13,9 @@ export function checkName(name, products) {
     }
     else if (productExists(products, name)) {
         return 'Товар с таким наименованием уже добавлен';
+    }
+    else if (!productExists(availableProducts, name)) {
+        return 'Товар с таким наименованием отсутствует';
     }
     else {
         return '';
@@ -31,12 +34,15 @@ export function checkPrice(price) {
     }
 }
 
-export function checkCount(count) {
+export function checkCount(count, name, availableProducts) {
     if (isEmpty(count)) {
         return 'Не указано количество';
     }
     else if (!containsOnlyNumbers(count)) {
         return 'Количество может содержать только цифры';
+    }
+    else if (productExists(availableProducts, name) && (getProductByName(availableProducts, name).count < count)) {
+        return 'Такого количества данного товара нет на складе';
     }
     else {
         return '';
@@ -68,4 +74,10 @@ function productExists(products, name) {
     return products.filter(function(product) {
         return product.name == name;
     }).length > 0;
+}
+
+function getProductByName(products, name) {
+    return products.filter(function(product) {
+        return product.name == name;
+    })[0];
 }

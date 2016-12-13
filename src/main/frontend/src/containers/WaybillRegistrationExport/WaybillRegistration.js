@@ -17,6 +17,7 @@ import ChooseSenderModalForm from './ChooseSenderModalForm/ChooseSenderModalForm
 import ChooseCarrierModalForm from './ChooseCarrierModalForm/ChooseCarrierModalForm'
 import TransportNumbers from './TransportNumbers/TransportNumbers'
 import WaybillProducts from './WaybillProducts/WaybillProducts'
+import RegisterClientCompanyModalForm from './RegisterClientCompanyModalForm/RegisterClientCompany'
 
 import * as Actions from './actions'
 
@@ -121,15 +122,16 @@ class WaybillRegistration extends React.Component {
         const waybill = {
             number: this.props.waybillNumber,
             issueDate: this.props.registrationDate,
-            senderId: this.props.sender.id,
+            receiverId: this.props.sender.id,
             carrierId: this.props.carrier.id,
             driverPassportNumber: this.props.driver.passportNumber,
             transportType: type,
             numbers: numbers,
             description: this.props.description,
-            dispatcherLogin: this.props.dispatcher,
+            registeredByLogin: this.props.dispatcher,
             registrationDatetime: getCurrentDateTime(),
-            products: this.props.products
+            products: this.props.products,
+            status: 'Партия сформирована'
         };
 
         this.props.submitForm(waybill);
@@ -252,6 +254,33 @@ class WaybillRegistration extends React.Component {
         this.props.changeRegistrationDate(value);
     }
 
+    handleRegisterClientCompanyButtonClick() {
+        this.props.changeClientCompanyName(this.props.senderName);
+        this.props.showRegisterClientCompanyModalForm();
+    }
+
+    renderCreateClientCompanyButton() {
+        if (getFilteredItems(this.props.senders, this.props.senderName).length == 0) {
+            this.props.setSenderNameError('Не найдено ни одной похдодящей компании');
+            return (
+                <div>
+                    <div>
+                        <input
+                            type="button"
+                            className="btn btn-primary"
+                            value="Зарегистрировать компанию-отправителя"
+                            onClick={() => {this.handleRegisterClientCompanyButtonClick()}} />
+                        <p>&nbsp;</p>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            this.props.setSenderNameError('');
+            return '';
+        }
+    }
+
     render() {
         return (
             <div className="col-md-8 col-md-offset-2">
@@ -278,6 +307,8 @@ class WaybillRegistration extends React.Component {
                         resultType={this.props.sender ? 'success' : 'warning'}
                         onChange={(value) => {this.handleChangeSenderName(value)}}
                         onBlur={() => this.handleSenderNameOnBlur()} />
+                    {this.renderCreateClientCompanyButton()}
+                    <RegisterClientCompanyModalForm />
                     <ChooseSenderModalForm
                         senders={getFilteredItems(this.props.senders, this.props.senderName)}
                         isOpen={this.props.chooseSenderModalIsOpen} />
@@ -303,9 +334,6 @@ class WaybillRegistration extends React.Component {
                         onChange={this.props.changeWaybillDescription}
                         onBlur={() => {this.props.setDescriptionError(checkDescription(this.props.description))}}
                         error={this.props.descriptionError} />
-                    <DisabledInput
-                        label="Сумма товаров по накладной"
-                        value={this.getTotalProductsSum()} />
                     <DisabledInput
                         label="Количество товаров по накладной"
                         value={this.getTotalProductsAmount()} />

@@ -3,7 +3,6 @@ package com.itechart.stockOnline.controller;
 import com.itechart.stockOnline.model.Waybill;
 import com.itechart.stockOnline.model.dto.waybillregistration.WaybillBuilder;
 import com.itechart.stockOnline.model.dto.waybillregistration.WaybillRegistrationDto;
-import com.itechart.stockOnline.model.enums.WaybillStatus;
 import com.itechart.stockOnline.service.WaybillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,6 @@ public class WaybillController {
             throws ParseException {
 
         Waybill waybill = waybillBuilder.buildFromDto(registrationDto);
-        waybill.setStatus(WaybillStatus.JOINED);
 
         waybillService.save(waybill);
     }

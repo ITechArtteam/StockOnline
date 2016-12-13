@@ -74,6 +74,140 @@ export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_MESSAGE = 'EDIT_WAYBILL_FORM_SUB
 export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_TYPE = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_TYPE';
 export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_SUCCESS_MESSAGE_AND_SHOW = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_SUCCESS_MESSAGE_AND_SHOW';
 export const EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_FAILURE_MESSAGE_AND_SHOW = 'EDIT_WAYBILL_FORM_SUBMIT_ALERT_SET_FAILURE_MESSAGE_AND_SHOW';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_NAME = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_NAME';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_NAME_ERROR = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_NAME_ERROR';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_STATE = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_STATE';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_STATE_ERROR = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_STATE_ERROR';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_CITY = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_CITY';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_CITY_ERROR = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_CITY_ERROR';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_STREET = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_STREET';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_STREET_ERROR = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_STREET_ERROR';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_HOUSE = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_HOUSE';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_HOUSE_ERROR = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_HOUSE_ERROR';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_FLAT = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_FLAT';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_FLAT_ERROR = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_FLAT_ERROR';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SHOW = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SHOW';
+export const EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_HIDE = 'EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_HIDE';
+export const EDIT_WAYBILL_FORM_SET_AVAILABLE_PRODUCTS = 'EDIT_WAYBILL_FORM_SET_AVAILABLE_PRODUCTS';
+
+export function hideRegisterClientCompanyModalForm() {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_HIDE
+    }
+}
+
+export function showRegisterClientCompanyModalForm() {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SHOW
+    }
+}
+
+export function changeClientCompanyFlat(flat) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_FLAT,
+        flat
+    }
+}
+
+export function setClientCompanyFlatError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_FLAT_ERROR,
+        error
+    }
+}
+
+
+export function changeClientCompanyHouse(house) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_HOUSE,
+        house
+    }
+}
+
+export function setClientCompanyHouseError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_HOUSE_ERROR,
+        error
+    }
+}
+
+export function changeClientCompanyStreet(street) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_STREET,
+        street
+    }
+}
+
+export function setClientCompanyStreetError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_STREET_ERROR,
+        error
+    }
+}
+
+export function changeClientCompanyCity(city) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_CITY,
+        city
+    }
+}
+
+export function setClientCompanyCityError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_CITY_ERROR,
+        error
+    }
+}
+
+export function changeClientCompanyState(state) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_STATE,
+        state
+    }
+}
+
+export function setClientCompanyStateError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_STATE_ERROR,
+        error
+    }
+}
+
+export function changeClientCompanyName(name) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_CHANGE_NAME,
+        name
+    }
+}
+
+export function setClientCompanyNameError(error) {
+    return {
+        type: EDIT_WAYBILL_FORM_REGISTER_CLIENT_COMPANY_MODAL_FORM_SET_NAME_ERROR,
+        error
+    }
+}
+
+export function loadAvailableProducts() {
+    return function(dispatch) {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/api/products',
+            success: function (response) {
+                dispatch(setAvailableProducts(response));
+            },
+            error: function (response) {
+            }
+        });
+    }
+}
+
+export function setAvailableProducts(products) {
+    return {
+        type: EDIT_WAYBILL_FORM_SET_AVAILABLE_PRODUCTS,
+        products
+    }
+}
 
 export function setSuccessMessageAndShowAlert(message) {
     return {
@@ -290,7 +424,7 @@ export function loadUnits() {
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: 'api/products/units',
+            url: '/api/products/units',
             success: function (response) {
                 dispatch(setUnits(response));
             }
@@ -331,7 +465,7 @@ export function loadSenders() {
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/customer/',
+            url: '/client-companies/',
             success: function (response) {
                 dispatch(setSenders(response));
             }

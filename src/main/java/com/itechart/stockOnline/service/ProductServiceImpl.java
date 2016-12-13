@@ -52,8 +52,14 @@ public class ProductServiceImpl implements ProductService {
     public Product save(Product product) {
         StorageRequirement storageRequirement =
                 storageRequirementService.get(product.getStorage().getType());
+
+        System.out.println("-----------------------" + product.getStorage().getType());
+
         if (storageRequirement == null) {
+            System.out.println("SAVE");
             storageRequirement = storageRequirementService.save(product.getStorage());
+        } else {
+            System.out.println("NOT SAVE");
         }
 
         product.setStorage(storageRequirement);

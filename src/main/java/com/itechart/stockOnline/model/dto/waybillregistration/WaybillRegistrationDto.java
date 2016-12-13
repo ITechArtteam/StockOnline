@@ -1,6 +1,7 @@
 package com.itechart.stockOnline.model.dto.waybillregistration;
 
 import com.itechart.stockOnline.model.enums.TransportType;
+import com.itechart.stockOnline.model.enums.WaybillStatus;
 
 import java.util.List;
 
@@ -9,14 +10,16 @@ public class WaybillRegistrationDto {
     private String number;
     private String issueDate;
     private Long senderId;
+    private Long receiverId;
     private Long carrierId;
     private String driverPassportNumber;
     private TransportType transportType;
     private List<String> numbers;
     private String description;
-    private String dispatcherLogin;
+    private String registeredByLogin;
     private String registrationDatetime;
     private List<WaybillProductDto> products;
+    private WaybillStatus status;
 
     public String getNumber() {
         return number;
@@ -40,6 +43,14 @@ public class WaybillRegistrationDto {
 
     public void setSenderId(Long senderId) {
         this.senderId = senderId;
+    }
+
+    public Long getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
     }
 
     public Long getCarrierId() {
@@ -86,12 +97,12 @@ public class WaybillRegistrationDto {
         this.driverPassportNumber = driverPassportNumber;
     }
 
-    public String getDispatcherLogin() {
-        return dispatcherLogin;
+    public String getRegisteredByLogin() {
+        return registeredByLogin;
     }
 
-    public void setDispatcherLogin(String dispatcherLogin) {
-        this.dispatcherLogin = dispatcherLogin;
+    public void setRegisteredByLogin(String registeredByLogin) {
+        this.registeredByLogin = registeredByLogin;
     }
 
     public String getRegistrationDatetime() {
@@ -108,5 +119,13 @@ public class WaybillRegistrationDto {
 
     public void setProducts(List<WaybillProductDto> products) {
         this.products = products;
+    }
+
+    public WaybillStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(WaybillStatus status) {
+        this.status = status;
     }
 }
