@@ -7,17 +7,18 @@ import {
     deleteActUnsuccess,
     closeActResponse,
     clearActReducer,
-    getActUnsuccess
+    getActUnsuccess,
+    saveActInStoreSuccess
 } from "../actions/act-actions";
 import {deleteActSuccess, saveActSuccess} from "../actions/acts-actions";
 
 
 export function getAct(id, thenRedirectPath, errorRedirectPath) {
-    return axios.get('/api/act/'+id)
+    return axios.get('/api/act/' + id)
         .then(response => {
             store.dispatch(getActSuccess(response.data));
             redirect(thenRedirectPath);
-        }).catch(error=>{
+        }).catch(error=> {
             store.dispatch(getActUnsuccess(error.response))
             redirect(errorRedirectPath);
         });
@@ -28,7 +29,7 @@ export function deleteAct(id, thenRedirectPath, errorRedirectPath) {
         .then(response => {
             store.dispatch(deleteActSuccess(id, response));
             redirect(thenRedirectPath);
-        }).catch(error=>{
+        }).catch(error=> {
             store.dispatch(deleteActUnsuccess(error.response))
             redirect(errorRedirectPath);
         });
@@ -37,28 +38,33 @@ export function deleteAct(id, thenRedirectPath, errorRedirectPath) {
 export function saveAct(act, thenRedirectPath, errorRedirectPath) {
     return axios.post('/api/act/', act)
         .then(response => {
-            store.dispatch(saveActSuccess(response.data,response))
+            store.dispatch(saveActSuccess(response.data, response))
             redirect(thenRedirectPath);
-        }).catch(error=>{
+        }).catch(error=> {
             store.dispatch(saveActUnsuccess(error.response))
             redirect(errorRedirectPath);
         });
+}
+
+export function saveActInStore(act, thenRedirectPath) {
+    store.dispatch(saveActInStoreSuccess(act))
+    redirect(thenRedirectPath);
 }
 
 export function saveActinStore(act, thenRedirectPath, errorRedirectPath) {
     store.dispatch(saveActSuccess(act))
 }
 
-export function clearReducer(){
+export function clearReducer() {
     store.dispatch(clearActReducer())
 }
 
-export function closeResponse(){
+export function closeResponse() {
     store.dispatch(closeActResponse());
 }
 
-function redirect(path){
-    if (path!==null && path!==undefined){
+function redirect(path) {
+    if (path !== null && path !== undefined) {
         browserHistory.push(path);
     }
 }

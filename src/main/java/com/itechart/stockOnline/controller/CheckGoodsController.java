@@ -2,6 +2,7 @@ package com.itechart.stockOnline.controller;
 
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.exception.UnknownEnumAliasError;
+import com.itechart.stockOnline.model.Act;
 import com.itechart.stockOnline.model.dto.AcceptWaybillDto;
 import com.itechart.stockOnline.model.dto.forControllerPage.WaybillForControllerDto;
 import com.itechart.stockOnline.model.enums.ProductStatus;
@@ -37,13 +38,42 @@ public class CheckGoodsController {
 
     @RequestMapping(value = "/controller/waybills/{number}", method = RequestMethod.PUT)
     public ResponseEntity<Object> confirmWaybill(@PathVariable String number,
-                                                      @RequestBody AcceptWaybillDto acceptWaybillDto,
+                                                      @RequestBody Holder holder,
                                                       Principal user) {
-        Logger.info("REST request. Path:/checkgoods/controller/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, acceptWaybillDto.getWaybillStatus(), acceptWaybillDto.getWaybillStatus());
-        WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(acceptWaybillDto.getWaybillStatus());
-        ProductStatus productStatusEnum = ProductStatus.getByAlias(acceptWaybillDto.getProductStatus());
-        waybillService.completeWayBillChecking(number, waybillStatusEnum, productStatusEnum, user.getName());
+        Logger.info("REST request. Path:/checkgoods/controller/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, holder.getAcceptWaybillDto().getWaybillStatus(), holder.getAcceptWaybillDto().getWaybillStatus());
+        WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(holder.getAcceptWaybillDto().getWaybillStatus());
+        ProductStatus productStatusEnum = ProductStatus.getByAlias(holder.getAcceptWaybillDto().getProductStatus());
+        waybillService.completeWayBillChecking(number, waybillStatusEnum, productStatusEnum, user.getName(), holder.getAct());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public static class Holder{
+        private AcceptWaybillDto acceptWaybillDto;
+        private Act act;
+
+        public Holder(AcceptWaybillDto acceptWaybillDto, Act act) {
+            this.acceptWaybillDto = acceptWaybillDto;
+            this.act = act;
+        }
+
+        public Holder() {
+        }
+
+        public AcceptWaybillDto getAcceptWaybillDto() {
+            return acceptWaybillDto;
+        }
+
+        public void setAcceptWaybillDto(AcceptWaybillDto acceptWaybillDto) {
+            this.acceptWaybillDto = acceptWaybillDto;
+        }
+
+        public Act getAct() {
+            return act;
+        }
+
+        public void setAct(Act act) {
+            this.act = act;
+        }
     }
 
     @RequestMapping(value = "/dispatcher/waybills/{number}", method = RequestMethod.PUT)

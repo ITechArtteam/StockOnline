@@ -1,4 +1,4 @@
-import * as event from './constants'
+import * as event from "./constants";
 import * as axios from "axios";
 
 
@@ -28,7 +28,7 @@ let findWaybillByNumber = (number, status) => {
         axios.get(`/checkgoods/waybills/${number}`)
             .then(response => {
                 let message = `Накладная №${number} успешно найдена`;
-                if(response.data.status === status) {
+                if (response.data.status === status) {
                     dispatch(findWaybillSuccess(response.data));
                     dispatch(setWaybillVisibility(true));
                 } else {
@@ -44,18 +44,22 @@ let findWaybillByNumber = (number, status) => {
     }
 };
 
-let acceptWaybillRequest= () => {
+let acceptWaybillRequest = () => {
     return {
         type: event.ACCEPT_WAYBILL_REQUEST
     }
 };
 
-let acceptWaybill = (number, waybillStatus, productStatus, senderRole) => {
+let acceptWaybill = (number, waybillStatus, productStatus, senderRole, act) => {
     return dispatch => {
         dispatch(acceptWaybillRequest());
+        console.log(act)
         axios.put(`/checkgoods/${senderRole}/waybills/${number}`, {
+            acceptWaybillDto: {
                 waybillStatus: waybillStatus,
                 productStatus: productStatus
+            },
+            act: act
         })
             .then(response => {
                 dispatch(showDialog(`Для накладной №${number} успешно установлен статус "${waybillStatus}"`));

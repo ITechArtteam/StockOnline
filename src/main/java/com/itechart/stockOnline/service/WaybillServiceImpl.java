@@ -1,11 +1,9 @@
 package com.itechart.stockOnline.service;
 
+import com.itechart.stockOnline.dao.ActRepository;
 import com.itechart.stockOnline.dao.WaybillDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
-import com.itechart.stockOnline.model.Product;
-import com.itechart.stockOnline.model.ProductInWaybill;
-import com.itechart.stockOnline.model.User;
-import com.itechart.stockOnline.model.Waybill;
+import com.itechart.stockOnline.model.*;
 import com.itechart.stockOnline.model.enums.ProductStatus;
 import com.itechart.stockOnline.model.enums.WaybillStatus;
 import org.slf4j.LoggerFactory;
@@ -31,6 +29,9 @@ public class WaybillServiceImpl implements WaybillService {
 
     @Autowired
     private TransportService transportService;
+
+    @Autowired
+    private ActRepository actRepository;
 
     @Autowired
     private ProductService productService;
@@ -68,7 +69,7 @@ public class WaybillServiceImpl implements WaybillService {
 
     @Override
     @Transactional
-    public void completeWayBillChecking(String waybillNumber, WaybillStatus waybillStatus, ProductStatus productStatus, String userName) {
+    public void completeWayBillChecking(String waybillNumber, WaybillStatus waybillStatus, ProductStatus productStatus, String userName, Act act) {
         User checkedBy = userService.findByLogin(userName);
         Waybill waybill = getByNumber(waybillNumber);
         waybill.setCheckedBy(checkedBy);
@@ -77,6 +78,12 @@ public class WaybillServiceImpl implements WaybillService {
         Logger.info("completeWayBillChecking(): set checkDate {}", waybill.getCheckDate());
         update(waybill);
         setWaybillAndProductsStatus(waybill, waybillStatus, productStatus);
+        act.setId(null);
+        act.getProductInActs().forEach((productInAct) -> {
+            productInAct.setId(null);
+            productInAct.setAct(act);
+        });
+        actRepository.save(act);
     }
 
     @Override

@@ -5,7 +5,7 @@ const initialState = {
             id: "",
             reportDate: "",
             productInActs:[],
-            status:"",
+            waybill:null,
             user:{
                 id:"",
                 login:""
@@ -34,6 +34,9 @@ const actReducer = function (state = initialState, action) {
 
         case types.INITIAL_STATE_ACT:
             return Object.assign({}, state, initialState);
+
+        case types.SAVE_ACT_SUCCESS:
+            return Object.assign({}, state,  {act: action.act});
     }
     return state;
 }

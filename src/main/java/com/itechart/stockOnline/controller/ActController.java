@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.itechart.stockOnline.exception.ValidationError;
 import com.itechart.stockOnline.model.Act;
 import com.itechart.stockOnline.model.User;
+import com.itechart.stockOnline.model.Waybill;
+import com.itechart.stockOnline.model.dto.AcceptWaybillDto;
 import com.itechart.stockOnline.service.ActService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 @RestController
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @RequestMapping(value = "/api")
@@ -23,6 +26,7 @@ public class ActController {
     private final static Logger LOGGER = LoggerFactory.getLogger(ActController.class);
     @Autowired
     private ActService actService;
+
     @RequestMapping(value = "/acts", method = RequestMethod.GET)
     public List<Act> getActs() {
         LOGGER.debug("REST request. Path:/acts  method: GET");
@@ -33,6 +37,16 @@ public class ActController {
     public List<Act> getActsByCompany(@RequestParam Long id) {
         LOGGER.debug("REST request. Path:/acts_by_company?id=  method: GET", id);
         List<Act> acts = actService.getByCompany(id);
+        acts.stream().forEach((act) -> {
+            act.setUser(new User() {{
+                setId(act.getUser().getId());
+                setLogin(act.getUser().getLogin());
+            }});
+            act.setWaybill(new Waybill() {{
+                setId(act.getWaybill().getId());
+                setNumber(act.getWaybill().getNumber());
+            }});
+        });
         return acts;
     }
 
@@ -41,9 +55,11 @@ public class ActController {
     public Act getAct(@PathVariable Long id) {
         LOGGER.debug("REST request. Path:/act/{id}  method: GET", id);
         Act act = actService.get(id);
-        act.getProductInActs().stream().forEach((productInAct)->productInAct.setAct(null));
+        act.getProductInActs().stream().forEach((productInAct) -> productInAct.setAct(null));
         return act;
     }
+
+
 
     @RequestMapping(value = "/act/{id}", method = RequestMethod.DELETE)
     public void deleteAct(@PathVariable Long id, HttpServletResponse response) {
@@ -54,7 +70,7 @@ public class ActController {
 
 
     @RequestMapping(value = "/acts", method = RequestMethod.DELETE)
-    public void deleteActs(@RequestParam(value = "ids") List<Long> actsId, HttpServletResponse response ) {
+    public void deleteActs(@RequestParam(value = "ids") List<Long> actsId, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/acts?ids={}  method: DELETE Request body {acts}", actsId);
         actService.delete(actsId.toArray(new Long[actsId.size()]));
         response.addHeader("result", "Acts have deleted.");
@@ -70,7 +86,7 @@ public class ActController {
 
     @ExceptionHandler(ValidationError.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> fieldHasErrors(ValidationError error, HttpServletResponse response){
+    public Map<String, String> fieldHasErrors(ValidationError error, HttpServletResponse response) {
         LOGGER.error("fieldHasErrors({})", error.toString());
         response.addHeader("result", "Fields is not valid.");
         return error.getErrors();
@@ -78,7 +94,7 @@ public class ActController {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public void exception(Exception exception, HttpServletResponse response){
+    public void exception(Exception exception, HttpServletResponse response) {
         LOGGER.error("fieldHasErrors({})", exception.getMessage());
         response.addHeader("result", "Server error.");
     }

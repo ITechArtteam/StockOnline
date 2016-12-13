@@ -47,7 +47,8 @@ class EditAct extends React.Component {
 
 
     onSaveClick = () => {
-        this.state.act.reportDate = moment(this.state.act.reportDate);
+        this.state.act.reportDate = moment(this.state.act.reportDate).format();
+        this.state.act.id=1;
         this.props.onSaveClick(this.state.act);
     }
 
@@ -57,11 +58,11 @@ class EditAct extends React.Component {
 
 
     onUpdate = (products_in_act) => {
-
         var newAct = _.extend({}, this.state.act);
-        newAct.products_in_act = [...products_in_act];
+        newAct.productInActs = [...products_in_act];
         this.setState({act: newAct});
     }
+
 
     render() {
         return (
@@ -69,30 +70,31 @@ class EditAct extends React.Component {
                 <Row className="show-grid">
                     <Form horizontal id="worker_form">
                         <FormGroup >
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Контролер
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl placeholder="Контролер"
                                              valueLink={linkState(this, 'act.user.login')} readOnly/>
                                 <FormControl.Feedback />
                             </Col>
                         </FormGroup>
                         <FormGroup >
-                            <Col smOffset={3} sm={1} componentClass={ControlLabel}>
+                            <Col smOffset={2} sm={2} componentClass={ControlLabel}>
                                 Дата
                             </Col>
-                            <Col sm={5}>
+                            <Col sm={6}>
                                 <FormControl placeholder="Дата"
                                              valueLink={linkState(this, 'act.reportDate')} readOnly/>
                                 <FormControl.Feedback />
                             </Col>
                         </FormGroup>
-
-                        <ProductsTable act_status={this.state.act_status} waybill_produts={this.state.products}
-                                       products_in_act={this.state.act.products_in_act} onUpdate={this.onUpdate}/>
+                        <Col smOffset={2} sm={8}>
+                            <ProductsTable act_status={this.state.act_status} waybill_produts={this.state.products}
+                                           products_in_act={this.state.act.productInActs} onUpdate={this.onUpdate}/>
+                        </Col>
                         <FormGroup>
-                            <Col smOffset={3} sm={9}>
+                            <Col smOffset={2} sm={10}>
                                 <div className="btn-group" role="group">
                                     <Button disabled={this.state.disabledSaveButton} bsStyle="primary"
                                             onClick={this.onSaveClick}>Сохранить</Button>

@@ -26,7 +26,7 @@ public class Act {
     @JoinColumn(name = "waybill_id")
     private Waybill waybill;
 
-    @OneToMany(mappedBy = "act", cascade = CascadeType.PERSIST,  fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "act", cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
     private Set<ProductInAct> productInActs;
 
     public Act() {
