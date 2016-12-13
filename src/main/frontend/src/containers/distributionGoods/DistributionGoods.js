@@ -10,11 +10,10 @@ class DistributionGoods extends React.Component {
         super(props);
         this.onInputValueChange = this.onInputValueChange.bind(this);
         this.onFindClick = this.onFindClick.bind(this);
-        this.clearState = this.clearState.bind(this);
     }
 
     componentWillMount() {
-        this.clearState();
+        this.props.clearState();
     }
 
     onInputValueChange(e) {
@@ -25,13 +24,8 @@ class DistributionGoods extends React.Component {
     };
 
     onFindClick() {
-        this.props.setIsStockSelected(false);
+        this.props.clearState();
         this.props.findWaybillByNumber(this.props.frontend.waybillId);
-    }
-
-    clearState() {
-        this.props.setWaybillVisibility(false);
-        this.props.setInputValue('waybillId', '');
     }
 
     render(){
@@ -53,7 +47,7 @@ class DistributionGoods extends React.Component {
                             <label className="control-label">&nbsp;</label> <br/>
                             <button type="button" className="btn btn-success"
                                     onClick={this.props.finishDistribution}
-                                    disabled={this.props.frontend.waybillVisible ? "" : "disabled"}>Завершить размешение</button>
+                                    disabled={this.props.frontend.waybillVisible && this.props.frontend.isCheckCompleted ? "" : "disabled"}>Завершить размешение</button>
                         </div>
                     </div>
                 </div>
@@ -97,8 +91,11 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(distributionGoodsActionCreator.finishDistribution())
         },
         setIsStockSelected: visibility => {
-        dispatch(distributionGoodsActionCreator.setIsStockSelected(visibility));
-    }
+            dispatch(distributionGoodsActionCreator.setIsStockSelected(visibility));
+        },
+        clearState: () => {
+            dispatch(distributionGoodsActionCreator.clearState());
+        }
     }
 };
 

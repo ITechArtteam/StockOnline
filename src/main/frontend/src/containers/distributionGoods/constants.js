@@ -1,4 +1,5 @@
 export const SET_INPUT_VALUE = 'distributionGoods/SET_INPUT_VALUE';
+export const SET_INPUT_ERROR = 'distributionGoods/SET_INPUT_ERROR';
 export const SET_WAYBILL_VISIBILITY = 'distributionGoods/SET_WAYBILL_VISIBILITY';
 export const SHOW_DIALOG = 'distributionGoods/SHOW_DIALOG';
 export const CLOSE_DIALOG = 'distributionGoods/CLOSE_DIALOG';
@@ -19,3 +20,4 @@ export const SET_ROOM_OPTIONS = 'distributionGoods/SET_ROOM_OPTIONS';
 export const SET_SHELF_OPTIONS = 'distributionGoods/SET_SHELF_OPTIONS';
 
 export const SET_IS_STOCK_SELECTED = 'distributionGoods/SET_IS_STOCK_SELECTED';
+export const CLEAR_STATE = 'distributionGoods/CLEAR_STATE';

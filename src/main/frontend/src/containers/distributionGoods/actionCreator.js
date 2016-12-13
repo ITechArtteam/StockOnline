@@ -12,6 +12,16 @@ let setInputValue = (nameField, value) => {
     }
 };
 
+let setInputError = (nameField, value) => {
+    return {
+        type: event.SET_INPUT_ERROR,
+        payload: {
+            inputId: nameField,
+            value: value
+        }
+    }
+};
+
 let setWaybillVisibility = visibility => {
     return {
         type: event.SET_WAYBILL_VISIBILITY,
@@ -30,6 +40,7 @@ let setShelfModalVisibility = (visibility, rowIndex) => {
                 }
             });
         dispatch(selectStockValueChanged(0));
+        dispatch(setInputValue("itemCount", ''));
     }
 };
 
@@ -61,6 +72,7 @@ let findWaybillRequest = () => {
 let findWaybillSuccess = json => {
     for(let i = 0; i < json.productInWaybills.length; ++i) {
         json.productInWaybills[i].product.places = [];
+        json.productInWaybills[i].placedCount = 0;
     }
     return {
         type: event.FIND_WAYBILL_BY_NUMBER_SUCCESS,
@@ -122,6 +134,13 @@ let findStocksByUserCompanySuccess = json => {
     }).sort((a, b) => {
         return a.label.localeCompare(b.label);
     });
+    for(let i = 0; i < json.length; ++i) {
+        for(let j = 0; j < json[i].rooms.length; ++j) {
+            for(let k = 0; k < json[i].rooms[j].shelves.length; ++k) {
+                json[i].rooms[j].shelves[k].freeCount = json[i].rooms[j].shelves[k].capacity;
+            }
+        }
+    }
 
     return {
         type: event.FIND_STOCK_BY_USER_COMPANY_SUCCESS,
@@ -161,7 +180,7 @@ let selectStockValueChanged = (stockValue) => {
         let roomOptions = getState().distributionGoodsReducer.stocks[stockValue].rooms.map((elem, index) => {
             return {
                 value: index,
-                label: elem.number
+                label: `${elem.number}, требования к хранению: ${elem.storage.type}`
             }
         }).sort((a, b) => {
             return a.label.localeCompare(b.label);
@@ -215,12 +234,14 @@ let selectRoomValueChanged = (roomValue) => {
                 }
             })
             .filter(elem => {
-                return elem.elem.free && !selectedShelves.includes(elem.elem.id);
+                // return elem.elem.free && !selectedShelves.includes(elem.elem.id);
+                return elem.elem.free && (elem.elem.freeCount > 0)
             })
             .map((elem, index) => {
                 return {
                     value: elem.index,
-                    label: elem.elem.number
+                    label: `${elem.elem.number}, свободно: ${elem.elem.freeCount}/${elem.elem.capacity}`,
+                    freeCount: elem.elem.freeCount
                 }
             }).sort((a, b) => {
                 return a.label.localeCompare(b.label);
@@ -254,7 +275,7 @@ let finishDistribution = () => {
             return {
                 waybillNumber: getState().distributionGoodsReducer.waybill.number,
                 productId: elem.product.id,
-                shelves: elem.product.places.map((elem, index) => { return elem.shelfId; })
+                shelves: elem.product.places.map((elem, index) => { return{ shelfId: elem.shelfId, count: elem.count }})
             }
         });
         console.log("products - ", products);
@@ -276,8 +297,16 @@ let setIsStockSelected = isSelected => {
     }
 };
 
+let clearState = () => {
+    return dispatch => {
+        dispatch({ type: event.CLEAR_STATE });
+        dispatch(findStocksByUserCompany());
+    }
+};
+
 export default {
     setInputValue,
+    setInputError,
     showDialog,
     closeDialog,
     findWaybillByNumber,
@@ -290,5 +319,6 @@ export default {
     selectRoomValueChanged,
     selectShelfValueChanged,
     finishDistribution,
-    setIsStockSelected
+    setIsStockSelected,
+    clearState
 }
