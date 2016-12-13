@@ -127,6 +127,17 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Set<User> findAllByStockOwnerCompany(StockOwnerCompany stockOwnerCompany) {
+        Set<User> users = userDao.findAllByStockOwnerCompany(stockOwnerCompany);
+        if (users == null){
+            throw new DataNotFoundError(String.format("User not found for company %s", stockOwnerCompany));
+        }
+        logger.debug("findByStockOwnerCompany({}): {}", stockOwnerCompany, users);
+        return users;
+    }
+
     public void setRolesFromDB(User user) {
         Set<Role> rolesFromDB = new HashSet<>();
         for(Role role: user.getRoles()) {

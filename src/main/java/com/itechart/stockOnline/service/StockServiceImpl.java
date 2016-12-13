@@ -68,7 +68,15 @@ public class StockServiceImpl implements StockService {
     public StockDto getStockDtoForStock(Long id) {
         Stock stock =
                 stockDao.findById(id).orElseThrow(DataNotFoundError::new);
-        User admin = userService.findByCompany(stock.getCompany());
+        Set<User> users =userService.findAllByStockOwnerCompany(stock.getCompany());
+        User admin = new User();
+        if(CollectionUtils.isNotEmpty(users)){
+            for (User user : users){
+                if (user.getRoles().contains(new Role("ADMIN"))){
+                    admin = user;
+                }
+            }
+        }
         Set<Room> rooms = roomService.getRooms(stock.getId());
         stock.setRooms(rooms);
         logger.debug("getStockDtoForStock({}): {}", id, stock);
