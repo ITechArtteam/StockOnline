@@ -22,21 +22,21 @@ class Waybills extends React.Component {
     }
 
     onPaginationChange(pageNumber) {
-        // this.props.getWaybills(pageNumber, this.props.page.itemsCountPerPage)
+        this.props.getWaybills(pageNumber, this.props.page.itemsCountPerPage)
     }
 
     onPageLimitSelectChange() {
-        // this.props.getWaybills(1, parseInt(this.refs.pageLimitSelect.value));
+        this.props.getWaybills(1, parseInt(this.refs.pageLimitSelect.value));
     }
 
     onBtnClearFilterClick() {
         this.props.setWaybillTypeRadioValue('2');
         this.props.setFilterInputValue('filterWaybillNumberValue', '');
-        // this.props.getWaybills(1, this.props.page.itemsCountPerPage);
+        this.props.getWaybills(1, this.props.page.itemsCountPerPage);
     }
 
     onBtnSearchClick() {
-        // this.props.getWaybills(1, this.props.page.itemsCountPerPage);
+        this.props.getWaybills(1, this.props.page.itemsCountPerPage);
     }
 
     onInputValueChange(e) {
@@ -137,6 +137,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setFilterInputValue: (inputId, value) => {
             dispatch(waybillsActionCreator.setFilterInputValue(inputId, value));
+        },
+        getWaybills: (pageNumber, itemsCountPerPage) => {
+            dispatch(waybillsActionCreator.getWaybills(pageNumber, itemsCountPerPage))
         }
     }
 };

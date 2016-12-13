@@ -24,9 +24,12 @@ export default (state = initWaybillsState, action) => {
     switch (action.type) {
         case event.SHOW_DIALOG:
             return {... state, alert: action.payload};
-
         case event.CLOSE_DIALOG:
             return {... state, alert: {...state.alert, isVisible: false}};
+
+        case event.GET_WAYBILLS_SUCCESS:
+            return {...state, page: action.payload};
+
         case event.SET_WAYBILL_TYPE_RADIO:
             return {...state, frontend: {...state.frontend, waybillTypeValue: action.payload}};
         case event.SET_FILTER_INPUT_VALUE:

@@ -1,15 +1,21 @@
 package com.itechart.stockOnline.service;
 
+import com.itechart.stockOnline.converter.WaybillDtoConverter;
 import com.itechart.stockOnline.dao.WaybillDao;
 import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.Product;
 import com.itechart.stockOnline.model.ProductInWaybill;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.model.Waybill;
+import com.itechart.stockOnline.model.dto.WaybillPage;
 import com.itechart.stockOnline.model.enums.ProductStatus;
 import com.itechart.stockOnline.model.enums.WaybillStatus;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +23,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.itechart.stockOnline.dao.specification.WaybillSpecifications.*;
+import static org.springframework.data.jpa.domain.Specifications.where;
 
 
 @Service
@@ -37,6 +46,9 @@ public class WaybillServiceImpl implements WaybillService {
 
     @Autowired
     private WaybillProductService waybillProductService;
+
+    @Autowired
+    private WaybillDtoConverter waybillDtoConverter;
 
     @Autowired
     public WaybillServiceImpl(WaybillDao waybillDao) {
@@ -117,4 +129,50 @@ public class WaybillServiceImpl implements WaybillService {
 
         return storedWaybill;
     }
+
+    @Override
+    public WaybillPage getWaybillPage(int pageNumber, int recordCount, String number, String status, String login) {
+        if(pageNumber <= 0 || recordCount <= 0) {
+            throw new DataNotFoundError();
+        }
+        Specification<Waybill> specification = null;
+        if(StringUtils.isNotEmpty(number)) {
+            specification = where(numberLike(number));
+        }
+
+        if(specification != null) {
+            specification = where(specification).and(loginLike(login));
+        } else {
+            specification = where(loginLike(login));
+        }
+
+
+        if(StringUtils.isNotBlank(status) && !StringUtils.equals(status, "2")) {
+            switch (status) {
+                case "1":
+                    if(specification != null) {
+                        specification = where(specification).and(typeIncome());
+                    } else {
+                        specification = where(typeIncome());
+                    }
+                    break;
+                case "0":
+                    if(specification != null) {
+                        specification = where(specification).and(typeOutcome());
+                    } else {
+                        specification = where(typeOutcome());
+                    }
+                    break;
+            }
+        }
+
+
+        Page<Waybill> clientCompanyPage = waybillDao.findAll(specification, new PageRequest(pageNumber - 1, recordCount));
+        if(clientCompanyPage.getTotalPages() > 0 && clientCompanyPage.getTotalPages() < pageNumber) {
+            throw new DataNotFoundError();
+        }
+        return waybillDtoConverter.toWaybillPage(clientCompanyPage);
+    }
+
+
 }
