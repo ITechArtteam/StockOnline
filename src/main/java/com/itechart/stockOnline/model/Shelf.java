@@ -20,11 +20,11 @@ public class Shelf {
     @Column(name = "is_free")
     private Boolean isFree;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @OneToMany(mappedBy = "shelf", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "shelf")
     private Set<ProductOnShelf> productOnShelfs;
 
     public Shelf() {

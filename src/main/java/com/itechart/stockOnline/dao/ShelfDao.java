@@ -25,5 +25,5 @@ public interface ShelfDao extends JpaRepository<Shelf, Integer>, JpaSpecificatio
     @Query("select s from Shelf s where s.id in ?1")
     Stream<Shelf> findAllByIdIn(Collection<Long> ids);
 
-    Set<Shelf> findAllByRoomId(Long roomId);
+    Set<Shelf> findAllByRoomId(Integer roomId);
 }

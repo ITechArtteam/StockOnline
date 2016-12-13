@@ -71,7 +71,7 @@ public class ShelfServiceImpl implements ShelfService {
 
     @Override
     @Transactional
-    public Set<Shelf> getShelfs(Long roomId) {
+    public Set<Shelf> getShelfs(Integer roomId) {
         Set<Shelf> shelfs = shelfDao.findAllByRoomId(roomId);
         logger.info("Room service: getRooms() | stockId:{}. Rooms: {} records", roomId, shelfs);
         return shelfs;
@@ -87,7 +87,7 @@ public class ShelfServiceImpl implements ShelfService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         shelfDao.findAllByRoomId(id).forEach(this::delete);
         logger.info("Room service: delete by id - {}. Deleted {} records", id, 1);
     }

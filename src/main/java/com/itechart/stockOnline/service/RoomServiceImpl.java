@@ -47,6 +47,7 @@ public class RoomServiceImpl implements RoomService{
     @Override
     @Transactional
     public void delete(Room room) {
+        shelfService.deleteById(room.getId());
         roomDao.delete(room);
     }
 

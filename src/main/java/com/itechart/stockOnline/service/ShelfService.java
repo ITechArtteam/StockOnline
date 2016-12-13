@@ -12,8 +12,8 @@ public interface ShelfService {
     Shelf save(Shelf shelf);
     Shelf update(Shelf shelf);
     void delete(Shelf shelf);
-    void deleteById(Long id);
+    void deleteById(Integer id);
     int deleteByIds(Collection<Long> ids);
     Set<Shelf> saveOrUpdateShelf(Room room);
-    Set<Shelf> getShelfs(Long roomId);
+    Set<Shelf> getShelfs(Integer roomId);
 }
