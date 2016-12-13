@@ -73,7 +73,7 @@ const mapStateToProps = (store) => {
         worker: store.workerState.worker,
         roles: store.roleState.roles,
         rolesResponse: store.roleState.response,
-        workerResponse: store.roleState.response,
+        workerResponse: store.workerState.response,
         idCompany: store.auth.idCompany,
         company:store.companyState.stockOwnerCompany,
         companyResponse:store.companyState.response,
