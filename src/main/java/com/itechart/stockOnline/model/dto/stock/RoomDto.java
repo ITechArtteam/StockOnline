@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class RoomDto {
 
-    private Boolean isisOpen = false;
-    private Long id;
+    private Boolean isOpen = false;
+    private Integer idRoom;
     private Double cost;
     private String number;
     private String storage;
@@ -17,20 +17,17 @@ public class RoomDto {
     public RoomDto() {
     }
     @Deprecated
-    public Boolean getIsisOpen() { return isisOpen; }
+    public Boolean getIsOpen() { return isOpen; }
     @Deprecated
-    public void setIsisOpen(Boolean isisOpen) { this.isisOpen = isisOpen; }
+    public void setIsOpen(Boolean isOpen) { this.isOpen = isOpen; }
 
     @Deprecated
     public String getSelectedShelfName() { return selectedShelfName; }
     @Deprecated
     public void setSelectedShelfName(String selectedShelfName) { this.selectedShelfName = selectedShelfName; }
 
-    public Boolean getisOpen() { return isisOpen; }
-    public void setisOpen(Boolean open) { isisOpen = open; }
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getIdRoom() { return idRoom; }
+    public void setIdRoom(Integer idRoom) { this.idRoom = idRoom; }
 
     public Double getCost() {return cost; }
     public void setCost(Double cost) { this.cost = cost; }
@@ -47,8 +44,8 @@ public class RoomDto {
     @Override
     public String toString() {
         return "RoomDto{" +
-                "isisOpen=" + isisOpen +
-                ", id=" + id +
+                "isOpen=" + isOpen +
+                ", id=" + idRoom +
                 ", cost=" + cost +
                 ", number='" + number + '\'' +
                 ", storage='" + storage + '\'' +

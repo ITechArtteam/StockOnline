@@ -47,6 +47,7 @@ public class ShelfServiceImpl implements ShelfService {
 
     @Override
     public Shelf save(Shelf shelf) {
+        shelf.setId(null);
         logger.info("save({})", shelf);
         return shelfDao.save(shelf);
     }
@@ -58,7 +59,7 @@ public class ShelfServiceImpl implements ShelfService {
         if (CollectionUtils.isNotEmpty(shelfs)) {
             for (Shelf shelf : shelfs) {
                 shelf.setRoom(room);
-                if (shelf.getId() instanceof Integer) {
+                if ((shelf.getId() instanceof Integer)&&(shelf.getId()>-1)) {
                     shelf = update(shelf);
                 } else {
                     shelf = save(shelf);
@@ -88,7 +89,7 @@ public class ShelfServiceImpl implements ShelfService {
     @Transactional
     public void deleteById(Long id) {
         shelfDao.findAllByRoomId(id).forEach(this::delete);
-        logger.info("Room service: delete by id - {}. Deleted {} records", id);
+        logger.info("Room service: delete by id - {}. Deleted {} records", id, 1);
     }
 
     @Override

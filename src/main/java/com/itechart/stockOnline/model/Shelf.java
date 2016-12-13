@@ -24,7 +24,7 @@ public class Shelf {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @OneToMany(mappedBy = "shelf")
+    @OneToMany(mappedBy = "shelf", fetch = FetchType.EAGER)
     private Set<ProductOnShelf> productOnShelfs;
 
     public Shelf() {
@@ -51,6 +51,11 @@ public class Shelf {
     @Override
     public String toString() {
         return "Shelf{" +
-                "id=" + id + "}";
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", capacity=" + capacity +
+                ", isFree=" + isFree +
+                ", productOnShelfs=" + productOnShelfs +
+                '}';
     }
 }

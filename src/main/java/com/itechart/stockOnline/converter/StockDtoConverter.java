@@ -63,7 +63,7 @@ public class StockDtoConverter {
 
     public RoomDto toRoomDto(Room room) {
         RoomDto roomDto = new RoomDto();
-        roomDto.setId(room.getId());
+        roomDto.setIdRoom(room.getId());
         roomDto.setCost(room.getCost());
         roomDto.setNumber(room.getNumber());
         roomDto.setStorage(room.getStorage().getType());
@@ -77,7 +77,7 @@ public class StockDtoConverter {
         if(CollectionUtils.isNotEmpty(roomsDto)){
             for (RoomDto roomDto: roomsDto){
                 Room room = new Room();
-                room.setId(roomDto.getId());
+                room.setId(roomDto.getIdRoom());
                 room.setCost(roomDto.getCost());
                 room.setNumber(roomDto.getNumber());
                 room.setStorage(new StorageRequirement(roomDto.getStorage()));
@@ -86,9 +86,10 @@ public class StockDtoConverter {
                     Set<Shelf> shelfs = new HashSet<Shelf>();
                     for (ShelfDto shelfDto: shelfsDto){
                         Shelf shelf = new Shelf();
+                        shelf.setId(shelfDto.getIdShelf());
                         shelf.setNumber(shelfDto.getNumber());
                         shelf.setCapacity(shelfDto.getCapacity());
-                        shelf.setFree(shelfDto.getIsisFree());
+                        shelf.setFree(shelfDto.getIsFree());
                         shelfs.add(shelf);
                     }
                     room.setShelfs(shelfs);
@@ -107,7 +108,7 @@ public class StockDtoConverter {
         if (CollectionUtils.isNotEmpty(stock.getRooms())){
             for (Room room: stock.getRooms()){
                 RoomDto roomDto = new RoomDto();
-                roomDto.setId(room.getId());
+                roomDto.setIdRoom(room.getId());
                 roomDto.setCost(room.getCost());
                 roomDto.setNumber(room.getNumber());
                 roomDto.setStorage(room.getStorage().getType());

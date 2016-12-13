@@ -20,7 +20,7 @@ class AddShelfModalForm extends React.Component {
             number: this.props.number,
             capacity: this.props.capacity,
             isFree: this.props.isFree,
-            id: this.props.id
+            idShelf: this.props.idShelf
         });
         this.props.hideAddShelfModalForm();
         this.props.clearAddShelfModalFormFields();
@@ -58,8 +58,8 @@ function mapStateToProps(state) {
         isOpen:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.isOpen   : state.stock.data.stockRooms.addRoomModalForm.shelfs.isOpen   : false : false,
         number:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.number   : state.stock.data.stockRooms.addRoomModalForm.shelfs.number   : ''    : '',
         capacity: (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.capacity : state.stock.data.stockRooms.addRoomModalForm.shelfs.capacity : ''    : '',
-        isFree:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.isFree   : state.stock.data.stockRooms.addRoomModalForm.shelfs.isFree   : false : false,
-        id:       (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.id       : state.stock.data.stockRooms.addRoomModalForm.shelfs.id       : -1    : -1
+        isFree:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.isFree   : state.stock.data.stockRooms.addRoomModalForm.shelfs.isFree   : true : true,
+        idShelf:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.idShelf       : state.stock.data.stockRooms.addRoomModalForm.shelfs.idShelf       : -1    : -1
     }
 }
 const mapDispatchToProps = (dispatch) => {

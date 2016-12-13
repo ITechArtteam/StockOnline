@@ -65,7 +65,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     @Transactional(readOnly = true)
-    public StockDto getStockDtoForStock(Long id) {
+    public StockDto getStockDtoForStock(Integer id) {
         Stock stock =
                 stockDao.findById(id).orElseThrow(DataNotFoundError::new);
         Set<User> users =userService.findAllByStockOwnerCompany(stock.getCompany());
@@ -144,7 +144,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     @Transactional
-    public int deleteByIds(Collection<Long> ids) {
+    public int deleteByIds(Collection<Integer> ids) {
         stockDao.findAllByIdIn(ids).forEach(this::delete);
         logger.info("Stock service: delete by ids list - {}. Deleted {} records", ids, ids.size());
         return ids.size();
@@ -201,8 +201,8 @@ public class StockServiceImpl implements StockService {
         if (CollectionUtils.isNotEmpty(rooms)) {
             for (Room room : rooms) {
                 room.setStock(stock);
-                Long id = room.getId();
-                if (id instanceof Long){
+                Integer id = room.getId();
+                if (id instanceof Integer){
                     room = roomService.update(room);
                 }else{
                     room = roomService.saveRoom(room);

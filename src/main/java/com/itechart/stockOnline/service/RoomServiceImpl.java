@@ -52,7 +52,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     @Transactional
-    public int deleteByIds(Collection<Long> ids) {
+    public int deleteByIds(Collection<Integer> ids) {
         roomDao.findAllByIdIn(ids).forEach(this::delete);
         logger.info("Room service: delete by ids list - {}. Deleted {} records", ids, ids.size());
         return ids.size();
@@ -62,7 +62,7 @@ public class RoomServiceImpl implements RoomService{
     @Transactional
     public void deleteById(Long id) {
         roomDao.findAllByStockId(id).forEach(this::delete);
-        logger.info("Room service: delete by id - {}. Deleted {} records", id);
+        logger.info("Room service: delete by id - {}. Deleted {} records", id, 1);
     }
 
     @Override
@@ -72,8 +72,8 @@ public class RoomServiceImpl implements RoomService{
         if (CollectionUtils.isNotEmpty(rooms)) {
             for (Room room : rooms) {
                 room.setStock(stockDao.findOne(id));
-                Long idRoom = room.getId();
-                if (idRoom instanceof Long) {
+                Integer idRoom = room.getId();
+                if (idRoom instanceof Integer) {
                     room = update(room);
                 } else {
                     room = saveRoom(room);
@@ -115,11 +115,13 @@ public class RoomServiceImpl implements RoomService{
         if (storageRequirement instanceof StorageRequirement){
             room.setStorage(storageRequirement);
         }
+        logger.info("Room service: saveRoom() |room:{}. ", room);
         room = roomDao.save(room);
+        logger.info("Room service: after saveDao saveRoom() |room:{}. ", room);
         if(CollectionUtils.isNotEmpty(room.getShelfs())){
             for(Shelf shelf : room.getShelfs()){
                 shelf.setRoom(room);
-                shelfService.save(shelf);
+                shelf = shelfService.save(shelf);
             }
         }
         return room;

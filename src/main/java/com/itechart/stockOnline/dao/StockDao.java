@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface StockDao extends JpaRepository<Stock, Long>, JpaSpecificationExecutor {
-    Optional<Stock> findById(Long id);
+    Optional<Stock> findById(Integer id);
     Page<Stock> findAll(Pageable pageable);
 
     @Modifying
@@ -22,7 +22,7 @@ public interface StockDao extends JpaRepository<Stock, Long>, JpaSpecificationEx
     int deleteByIdIn(Collection<Long> ids);
 
     @Query("select s from Stock s where s.id in ?1")
-    Stream<Stock> findAllByIdIn(Collection<Long> ids);
+    Stream<Stock> findAllByIdIn(Collection<Integer> ids);
 
     List<Stock> findAllByCompanyId(Long companyId);
 }

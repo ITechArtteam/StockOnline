@@ -2,17 +2,17 @@ package com.itechart.stockOnline.model.dto.stock;
 
 
 public class ShelfDto {
-    private Boolean isisOpen = false;
+    private Boolean isOpen = false;
     private String number;
     private Integer capacity;
-    private Boolean isisFree;
-    private Long id;
+    private Boolean isFree;
+    private Integer idShelf;
 
     public ShelfDto() {
     }
 
-    public Boolean getIsisOpen() { return isisOpen; }
-    public void setIsisOpen(Boolean isisOpen) { this.isisOpen = isisOpen; }
+    public Boolean getIsOpen() { return isOpen; }
+    public void setIsOpen(Boolean isOpen) { this.isOpen = isOpen; }
 
     public String getNumber() { return number; }
     public void setNumber(String number) { this.number = number; }
@@ -20,20 +20,20 @@ public class ShelfDto {
     public Integer getCapacity() { return capacity; }
     public void setCapacity(Integer capacity) { this.capacity = capacity; }
 
-    public Boolean getIsisFree() { return isisFree; }
-    public void setIsisFree(Boolean isisFree) { this.isisFree = isisFree; }
+    public Boolean getIsFree() { return isFree; }
+    public void setIsFree(Boolean isFree) { this.isFree = isFree; }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getIdShelf() { return idShelf; }
+    public void setIdShelf(Integer idShelf) { this.idShelf = idShelf; }
 
     @Override
     public String toString() {
         return "ShelfDto{" +
-                "isisOpen=" + isisOpen +
+                "isOpen=" + isOpen +
                 ", number='" + number + '\'' +
                 ", capacity=" + capacity +
-                ", isisFree=" + isisFree +
-                ", id=" + id +
+                ", isFree=" + isFree +
+                ", id=" + idShelf +
                 '}';
     }
 }

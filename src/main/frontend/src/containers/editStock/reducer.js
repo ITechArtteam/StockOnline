@@ -11,7 +11,7 @@ const initUserState = {
                 number: '',
                 cost: '',
                 storage: '',
-                id: -1,
+                idRoom: -1,
                 selectedShelfName: null,
                 shelfs: [],
                 addShelfModalForm: {
@@ -19,7 +19,7 @@ const initUserState = {
                     number: '',
                     capacity: '',
                     isFree: true,
-                    id: -1
+                    idShelf: -1
                 }
             }
         },
@@ -168,7 +168,9 @@ export default function (state = initUserState, action) {
                             ...state.data.stockRooms.addRoomModalForm,
                             number: '',
                             cost: '',
-                            storage: ''
+                            storage: '',
+                            idRoom: -1,
+                            shelfs: []
                         }
                     }
                 }
@@ -393,7 +395,8 @@ export default function (state = initUserState, action) {
                                 ...state.data.stockRooms.addRoomModalForm.addShelfModalForm,
                                 number: '',
                                 capacity: '',
-                                isFree: false
+                                idShelf: -1,
+                                isFree: true
                             }
                         }
                     }

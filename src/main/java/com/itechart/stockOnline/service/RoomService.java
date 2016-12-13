@@ -12,7 +12,7 @@ public interface RoomService {
     Room update(Room room);
     void delete(Room room);
     void deleteById(Long id);
-    int deleteByIds(Collection<Long> ids);
+    int deleteByIds(Collection<Integer> ids);
     Set<Room> saveOrUpdateRoom(StockDto stockDto, Long id);
     Set<Room> getRooms(Long stockId);
 }

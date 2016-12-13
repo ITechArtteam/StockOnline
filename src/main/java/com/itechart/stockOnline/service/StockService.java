@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface StockService {
 
-    StockDto getStockDtoForStock(Long id);
+    StockDto getStockDtoForStock(Integer id);
     Stock saveStock(Stock stock, StockDto stockDto);
     Stock update(Stock stock);
     StockPage getStockPage(int pageNumber, int recordCount, String name, String address, String login);
     List<Stock> getByCompanyId(Long companyId);
     void delete(Stock stock);
-    int deleteByIds(Collection<Long> ids);
+    int deleteByIds(Collection<Integer> ids);
     Stock saveOrUpdateStock(StockDto stockDto, String login);
 }

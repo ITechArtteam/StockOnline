@@ -71,7 +71,7 @@ public class StockListController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteStocks(@RequestParam(value = "idsToDelete") List<Long> ids) {
+    public ResponseEntity<Object> deleteStocks(@RequestParam(value = "idsToDelete") List<Integer> ids) {
         Logger.info("REST request. Path:/stockList/?idsToDelete={}  method: DELETE", ids);
         long deletedCount = stockService.deleteByIds(ids);
         return new ResponseEntity<>("Успешно удалено " + deletedCount + " записей", HttpStatus.OK);

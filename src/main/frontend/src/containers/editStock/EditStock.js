@@ -51,7 +51,7 @@ class EditStock extends React.Component {
             case "isRequired":
             case "nameStock": {
                 if (value.length < 3){
-                    this.props.setInputError(nameField, "Минимум 1 символа.");
+                    this.props.setInputError(nameField, "Минимум 3 символа.");
                 }
                 break;
             }
