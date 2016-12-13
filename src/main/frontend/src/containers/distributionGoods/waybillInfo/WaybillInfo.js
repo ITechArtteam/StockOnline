@@ -22,17 +22,23 @@ class WaybillInfo extends React.Component {
 
     placesFormatter(cell, rowUpper) {
         let shelfFormatter = (cell, row) => {
-            console.log(row);
             return <span>{cell}<a href="#" className="pull-right" onClick={() => this.props.removeProductFromShelf(rowUpper.index, row.shelfId)}>X</a></span>
         };
         shelfFormatter.bind(this);
         return <div>
             <div className="before-table">
-                <button type="button" className="btn btn-default btn-xs btn-block" onClick={() => this.props.showAddModal(rowUpper.index)}>Добавить</button>
+                <button type="button"
+                        className="btn btn-default btn-xs btn-block"
+                        onClick={() => this.props.showAddModal(rowUpper.index)}
+                        disabled={this.props.waybill.productInWaybills[rowUpper.index].count !== this.props.waybill.productInWaybills[rowUpper.index].placedCount ? "" : "disabled"}
+                >
+                    Добавить
+                </button>
             </div>
             <BootstrapTable data={rowUpper.places} striped={true}>
                 <TableHeaderColumn dataField="shelfId" isKey={true} hidden={true}>id</TableHeaderColumn>
                 <TableHeaderColumn dataField="number" dataFormat={shelfFormatter}>Номер</TableHeaderColumn>
+                <TableHeaderColumn dataField="count">Кол-во</TableHeaderColumn>
             </BootstrapTable>
         </div>
     }
@@ -45,7 +51,8 @@ class WaybillInfo extends React.Component {
                     index: index,
                     name: item.product.name,
                     storage: item.product.storage.type,
-                    count: item.count + ' ' + item.product.unit,
+                    count: `${item.placedCount}/${item.count}`,
+                    unit: item.product.unit,
                     places: item.product.places
                 }
             });
@@ -82,7 +89,8 @@ class WaybillInfo extends React.Component {
                     <BootstrapTable data={products} striped={true}>
                         <TableHeaderColumn headerAlign="center" dataField="name" isKey={true}>Наименование</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataField="storage">Требование к хранению</TableHeaderColumn>
-                        <TableHeaderColumn headerAlign="center" dataField="count">Количество</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataField="count">Размещено/Количество</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataField="unit" width="50">Ед. измер.</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataFormat={this.placesFormatter}>Список мест</TableHeaderColumn>
                     </BootstrapTable>
                 </div>
