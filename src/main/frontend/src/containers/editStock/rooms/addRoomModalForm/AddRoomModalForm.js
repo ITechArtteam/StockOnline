@@ -21,7 +21,8 @@ class AddRoomModalForm extends React.Component {
             number:  this.props.number,
             cost:    this.props.cost,
             storage: this.props.storage,
-            id:      this.props.id
+            id:      this.props.id,
+            shelfs: this.props.shelfs
         });
         this.props.hideAddRoomModalForm();
         this.props.clearAddRoomModalFormFields();
@@ -48,7 +49,7 @@ class AddRoomModalForm extends React.Component {
                         label="Способ хранения"
                         value={this.props.storage}
                         onChange={this.props.changeRoomStorage} />
-                    //<Shelfs />
+                    <Shelfs />
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideAddRoomModalForm} value="Отмена" />
@@ -61,6 +62,7 @@ class AddRoomModalForm extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        shelfs:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.shelfs  : state.stock.data.stockRooms.rooms.shelfs  : [],
         isOpen:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.isOpen  : state.stock.data.stockRooms.rooms.isOpen  : false,
         number:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.number  : state.stock.data.stockRooms.rooms.number  : '',
         cost:    (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? state.stock.data.stockRooms.addRoomModalForm.cost    : state.stock.data.stockRooms.rooms.cost    : '',
