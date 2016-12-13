@@ -7,6 +7,7 @@ import {navigation} from "../containers/navigation";
 import {clientListReducer} from '../containers/systemClients/index';
 import {stockListReducer} from '../containers/stocks/index';
 import {checkGoodsReducer} from '../containers/checkGoods/index'
+import {waybillsReducer} from '../containers/waybills/index'
 import AuthReducer from './auth'
 import WaybillRegistrationFormReducer from './../containers/WaybillRegistration/reducer'
 import productsReducer from "./products-reducer";
@@ -40,7 +41,8 @@ const rootReducer = combineReducers({
     checkGoodsReducer,
     stock: Stock,
     distributionGoodsReducer,
-    driver: Driver
+    driver: Driver,
+    waybillsReducer
 });
 
 export default rootReducer
