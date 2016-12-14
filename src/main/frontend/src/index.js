@@ -71,7 +71,7 @@ ReactDOM.render(
                 <Route path="/goods" requiredRole={["BOSS_STOCK", "CONTROLLER"]} component={RequireRole(Goods)}/>
                 <Route path="/goods/receipt" requiredRole={["MANAGER"]} component={RequireRole(ReceiptGoods)}/>
                 <Route path="/goods/distribution" requiredRole={["MANAGER"]} component={RequireRole(DistributionGoods)}/>
-
+                <Route path="/manager/waybills" requiredRole={["MANAGER"]} component={RequireRole(Waybills)}/>
                 <Route path="/goods/departure" requiredRole={["MANAGER"]} component={RequireRole(GoodsDeparture)}/>
                 <Route path="/goods/departure/driver(/:passportNumber)" requiredRole={["MANAGER"]} component={RequireRole(GoodsDepartureSearchTransportCompanyForDriver)}/>
                 <Route path="/goods/departure/train" requiredRole={["MANAGER"]} component={RequireRole(GoodsDepartureSearchTransportCompanyForTrain)}/>

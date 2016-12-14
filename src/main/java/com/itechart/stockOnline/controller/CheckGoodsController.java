@@ -81,11 +81,11 @@ public class CheckGoodsController {
 
     @RequestMapping(value = "/dispatcher/waybills/{number}", method = RequestMethod.PUT)
     public ResponseEntity<Object> resolveOutput(@PathVariable String number,
-                                                      @RequestBody AcceptWaybillDto acceptWaybillDto) {
+                                                @RequestBody Holder holder) {
         number = ControllerHelper.convertToUtf(number);
-        Logger.info("REST request. Path:/checkgoods/dispatcher/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, acceptWaybillDto.getWaybillStatus(), acceptWaybillDto.getWaybillStatus());
-        WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(acceptWaybillDto.getWaybillStatus());
-        ProductStatus productStatusEnum = ProductStatus.getByAlias(acceptWaybillDto.getProductStatus());
+        Logger.info("REST request. Path:/checkgoods/dispatcher/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, holder.acceptWaybillDto.getWaybillStatus(), holder.acceptWaybillDto.getWaybillStatus());
+        WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(holder.acceptWaybillDto.getWaybillStatus());
+        ProductStatus productStatusEnum = ProductStatus.getByAlias(holder.acceptWaybillDto.getProductStatus());
         waybillService.setWaybillAndProductsStatus(number, waybillStatusEnum, productStatusEnum);
         return new ResponseEntity<>(HttpStatus.OK);
     }
