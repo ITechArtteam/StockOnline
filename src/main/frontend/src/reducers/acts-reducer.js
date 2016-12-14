@@ -35,6 +35,7 @@ const actsReducer = function (state = initialState, action) {
 
         case types.INITIAL_STATE_ACTS:
             return Object.assign({}, state, initialState);
+
     }
     return state;
 }

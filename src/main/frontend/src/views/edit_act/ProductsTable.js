@@ -1,6 +1,6 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from "react-bootstrap-table";
-import {Row, Button, Modal, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Form} from "react-bootstrap";
+import {Row, Button, Modal, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Form, ButtonGroup} from "react-bootstrap";
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
@@ -71,7 +71,6 @@ class ProductsTable extends React.Component {
     }
 
 
-
     componentWillReceiveProps(nextProps) {
         this.setState({
             products_in_act: nextProps.products_in_act,
@@ -119,11 +118,11 @@ class ProductsTable extends React.Component {
         this.onOpenModal();
     }
 
-    preliminaryValidation = (productInAct) =>{
-        this.validateValue("product",productInAct.product);
-        this.validateValue("count",productInAct.count);
-        this.validateValue("cost",productInAct.cost);
-        this.validateValue("status",productInAct.status);
+    preliminaryValidation = (productInAct) => {
+        this.validateValue("product", productInAct.product);
+        this.validateValue("count", productInAct.count);
+        this.validateValue("cost", productInAct.cost);
+        this.validateValue("status", productInAct.status);
     }
 
     onDeleteClick = ()=> {
@@ -151,18 +150,18 @@ class ProductsTable extends React.Component {
         newProduct_in_act.cost = "";
         newProduct_in_act.status = "";
         var newValidationsState = _.extend({}, this.state.validationsState);
-        newValidationsState.status.status=null;
-        newValidationsState.status.message=null;
-        newValidationsState.status.test=false;
-        newValidationsState.count.status=null;
-        newValidationsState.count.message=null;
-        newValidationsState.count.test=false;
-        newValidationsState.product.status=null;
-        newValidationsState.product.message=null;
-        newValidationsState.product.test=false;
-        newValidationsState.cost.status=null;
-        newValidationsState.cost.message=null;
-        newValidationsState.cost.test=false;
+        newValidationsState.status.status = null;
+        newValidationsState.status.message = null;
+        newValidationsState.status.test = false;
+        newValidationsState.count.status = null;
+        newValidationsState.count.message = null;
+        newValidationsState.count.test = false;
+        newValidationsState.product.status = null;
+        newValidationsState.product.message = null;
+        newValidationsState.product.test = false;
+        newValidationsState.cost.status = null;
+        newValidationsState.cost.message = null;
+        newValidationsState.cost.test = false;
         this.setState({showModal: false, product_in_act: newProduct_in_act, validationsState: newValidationsState});
 
     }
@@ -195,7 +194,7 @@ class ProductsTable extends React.Component {
     onCalculateClick = () => {
         var newProduct_in_act = _.extend({}, this.state.product_in_act);
         newProduct_in_act.cost = newProduct_in_act.product.cost * newProduct_in_act.count;
-        this.validateValue("cost",newProduct_in_act.cost);
+        this.validateValue("cost", newProduct_in_act.cost);
         this.setState({product_in_act: newProduct_in_act});
     }
 
@@ -346,9 +345,11 @@ class ProductsTable extends React.Component {
 
             <div>
                 <Row>
-                    <Button onClick={this.onCreateClick}>Создать</Button>
-                    <Button onClick={this.onEditClick} disabled={this.state.buttonDisabled}>Редактировать</Button>
-                    <Button onClick={this.onDeleteClick} disabled={this.state.buttonDisabled}>Удалить</Button>
+                    <ButtonGroup>
+                        <Button bsStyle="primary" onClick={this.onCreateClick}>Создать</Button>
+                        <Button bsStyle="warning" onClick={this.onEditClick} disabled={this.state.buttonDisabled}>Редактировать</Button>
+                        <Button bsStyle="danger" onClick={this.onDeleteClick} disabled={this.state.buttonDisabled}>Удалить</Button>
+                    </ButtonGroup>
                 </Row>
                 <Row>
                     <BootstrapTable data={this.state.products_in_act}
@@ -378,7 +379,7 @@ class ProductsTable extends React.Component {
                         <Form horizontal id="worker_form">
                             <FormGroup validationState={this.state.validationsState.product.status}>
                                 <Col sm={4} componentClass={ControlLabel}>
-                                    Продукт
+                                    Продукт<span className="required-star">*</span>
                                 </Col>
                                 <Col sm={8}>
                                     <DropdownList
@@ -387,13 +388,12 @@ class ProductsTable extends React.Component {
                                         value={this.state.product_in_act.product}
                                         onChange={selectProduct => {
                                             var newProduct_in_act = _.extend({}, this.state.product_in_act);
-                                            console.log(selectProduct)
                                             newProduct_in_act.product = selectProduct;
                                             newProduct_in_act.count = newProduct_in_act.product.count;
                                             newProduct_in_act.cost = newProduct_in_act.product.cost * newProduct_in_act.product.count;
                                             this.validateValue("product", selectProduct);
-                                            this.validateValue("count",newProduct_in_act.count);
-                                            this.validateValue("cost",newProduct_in_act.cost);
+                                            this.validateValue("count", newProduct_in_act.count);
+                                            this.validateValue("cost", newProduct_in_act.cost);
                                             this.setState({product_in_act: newProduct_in_act});
                                         }}
                                         onToggle={()=> {
@@ -405,7 +405,7 @@ class ProductsTable extends React.Component {
                             </FormGroup>
                             <FormGroup>
                                 <Col sm={4} componentClass={ControlLabel}>
-                                    Единицы
+                                    Единицы<span className="required-star">*</span>
                                 </Col>
                                 <Col sm={8}>
                                     <FormControl readOnly placeholder="Единицы"
@@ -414,7 +414,7 @@ class ProductsTable extends React.Component {
                             </FormGroup>
                             <FormGroup validationState={this.state.validationsState.count.status}>
                                 <Col sm={4} componentClass={ControlLabel}>
-                                    Количество
+                                    Количество<span className="required-star">*</span>
                                 </Col>
                                 <Col sm={5}>
                                     <FormControl id="count" placeholder="Количество"
@@ -431,7 +431,7 @@ class ProductsTable extends React.Component {
                             </FormGroup>
                             <FormGroup validationState={this.state.validationsState.cost.status}>
                                 <Col sm={4} componentClass={ControlLabel}>
-                                    Стоимость
+                                    Стоимость<span className="required-star">*</span>
                                 </Col>
                                 <Col sm={8}>
                                     <FormControl id="cost"
@@ -444,7 +444,7 @@ class ProductsTable extends React.Component {
                             </FormGroup>
                             <FormGroup validationState={this.state.validationsState.status.status}>
                                 <Col sm={4} componentClass={ControlLabel}>
-                                    Статус
+                                    Статус<span className="required-star">*</span>
                                 </Col>
                                 <Col sm={8}>
                                     <DropdownList
@@ -469,7 +469,7 @@ class ProductsTable extends React.Component {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={this.onSave}>Сохранить</Button>
+                        <Button bsStyle="primary" onClick={this.onSave}>Сохранить</Button>
                         <Button onClick={this.onCloseModal}>Закрыть</Button>
                     </Modal.Footer>
                 </Modal>

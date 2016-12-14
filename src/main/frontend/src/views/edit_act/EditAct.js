@@ -36,18 +36,24 @@ class EditAct extends React.Component {
     updateProps = (props) => {
         var newAct = _.extend({}, props.act);
         if (newAct.id == "") {
-            newAct.reportDate = moment().format('llll');
+            newAct.reportDate = moment().format('MM-DD-YYYY');
         } else {
-            newAct.reportDate = moment(newAct.reportDate).format('llll');
+            newAct.reportDate = moment(newAct.reportDate).format('MM-DD-YYYY');
         }
         newAct.user.id = props.controller_id;
         newAct.user.login = props.controller_username;
-        this.setState({act: newAct});
+        var newDisabledSaveButton = _.extend({}, this.state.disabledSaveButton);
+        if (this.state.act.productInActs.length>0){
+            newDisabledSaveButton=false;
+        }else{
+            newDisabledSaveButton=true;
+        }
+        this.setState({act: newAct, disabledSaveButton:newDisabledSaveButton});
     }
 
 
     onSaveClick = () => {
-        this.state.act.reportDate = moment(this.state.act.reportDate).format();
+        this.state.act.reportDate = +moment(this.state.act.reportDate);
         this.state.act.id=1;
         this.props.onSaveClick(this.state.act);
     }
@@ -60,7 +66,14 @@ class EditAct extends React.Component {
     onUpdate = (products_in_act) => {
         var newAct = _.extend({}, this.state.act);
         newAct.productInActs = [...products_in_act];
-        this.setState({act: newAct});
+        var newDisabledSaveButton = _.extend({}, this.state.disabledSaveButton);
+        console.log(newAct)
+        if (newAct.productInActs.length>0){
+            newDisabledSaveButton=false;
+        }else{
+            newDisabledSaveButton=true;
+        }
+        this.setState({act: newAct, disabledSaveButton:newDisabledSaveButton});
     }
 
 
@@ -111,6 +124,8 @@ class EditAct extends React.Component {
         )
     }
 }
+
+
 
 
 export default EditAct;

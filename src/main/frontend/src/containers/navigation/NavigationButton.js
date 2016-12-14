@@ -34,7 +34,7 @@ class NavigationButton extends React.Component {
 
     render() {
         return(
-            <li className={this.checkRoles() + this.checkActive(this.props.to)}>
+            <li className={this.checkRoles() + this.checkActive(this.props.to)} onClick={this.props.onClick}>
                 <Link to={this.props.to}>{this.props.buttonText}</Link>
             </li>
         )

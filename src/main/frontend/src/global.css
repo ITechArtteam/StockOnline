@@ -21,3 +21,8 @@
 .react-bs-table {
     margin: 0 10px;
 }
+
+.required-star
+{
+    color: #a94442;
+}
