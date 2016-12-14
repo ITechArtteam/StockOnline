@@ -286,6 +286,28 @@ function setRoomStorageError(error) {
     }
 }
 
+function setShelfsError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_SET_SHELFS_ERROR,
+        error
+    }
+}
+
+
+function setShelfCapacityError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SET_CAPACITY_ERROR,
+        error
+    }
+}
+
+function setShelfNumberError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SET_NUMBER_ERROR,
+        error
+    }
+}
+
 
 
 export default {
@@ -319,5 +341,8 @@ export default {
     setRoomsError,
     setRoomCostError,
     setRoomNumberError,
-    setRoomStorageError
+    setRoomStorageError,
+    setShelfsError,
+    setShelfCapacityError,
+    setShelfNumberError
 };
