@@ -19,10 +19,10 @@ public class StorageRequirement {
     @OneToMany(mappedBy = "storage")
     private Set<Room> rooms;
 
-    @OneToMany(mappedBy = "storage", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "storage")
     private Set<Product> products;
 
-    @OneToMany(mappedBy = "storage", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "storage")
     private Set<Transport> transports;
 
     public StorageRequirement() {
