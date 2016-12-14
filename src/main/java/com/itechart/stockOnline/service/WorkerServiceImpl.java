@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
@@ -113,14 +115,21 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public void delete(Long id) {
+        User worker = workerRepository.findOne(id);
+        worker.getRoles().forEach(role -> {
+            if ("ADMIN".equals(role.getName())){
+                Map<String, String> errors = new HashMap<>();
+                errors.put("roles", "Нельзя удалять администратора.");
+                throw new ValidationError(errors);
+            }
+        });
         workerRepository.delete(id);
-
     }
 
     @Override
     public void delete(Long... ids) {
         Arrays.stream(ids).forEach(id -> {
-            workerRepository.delete(id);
+            delete(id);
         });
     }
 
