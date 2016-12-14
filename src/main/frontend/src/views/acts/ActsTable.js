@@ -66,7 +66,7 @@ class ActsTable extends React.Component {
 
 
         function dateFormatter(cell, row) {
-            return moment(cell).format("lll");
+            return moment(cell).format("MM-DD-YYYY");
         }
 
         function userFormatter(cell, row){

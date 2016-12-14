@@ -36,9 +36,9 @@ class EditAct extends React.Component {
     updateProps = (props) => {
         var newAct = _.extend({}, props.act);
         if (newAct.id == "") {
-            newAct.reportDate = moment().format('llll');
+            newAct.reportDate = moment().format('MM-DD-YYYY');
         } else {
-            newAct.reportDate = moment(newAct.reportDate).format('llll');
+            newAct.reportDate = moment(newAct.reportDate).format('MM-DD-YYYY');
         }
         newAct.user.id = props.controller_id;
         newAct.user.login = props.controller_username;
@@ -47,7 +47,7 @@ class EditAct extends React.Component {
 
 
     onSaveClick = () => {
-        this.state.act.reportDate = moment(this.state.act.reportDate).format();
+        this.state.act.reportDate = +moment(this.state.act.reportDate);
         this.state.act.id=1;
         this.props.onSaveClick(this.state.act);
     }

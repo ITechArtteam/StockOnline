@@ -56,7 +56,7 @@ public class ActController {
 
     @RequestMapping(value = "/act/{id}", method = RequestMethod.GET)
     public Act getAct(@PathVariable Long id) {
-        LOGGER.debug("REST request. Path:/act/{id}  method: GET", id);
+        LOGGER.debug("REST request. Path:/act/{}  method: GET", id);
         Act act = actService.get(id);
         act.getProductInActs().stream().forEach((productInAct) -> productInAct.setAct(null));
         return act;
@@ -65,7 +65,7 @@ public class ActController {
 
     @RequestMapping(value = "/act/{id}", method = RequestMethod.DELETE)
     public void deleteAct(@PathVariable Long id, HttpServletResponse response) {
-        LOGGER.debug("REST request. Path:/act/{id}  method: DELETE", id);
+        LOGGER.debug("REST request. Path:/act/{}  method: DELETE", id);
         actService.delete(id);
         response.addHeader("result", "Act has deleted.");
     }
@@ -80,7 +80,7 @@ public class ActController {
 
     @RequestMapping(value = "/act", method = RequestMethod.POST)
     public void saveAct(@RequestBody Act act, HttpServletResponse response) {
-        LOGGER.debug("REST request. Path:/act  method: POST Request body {act}", act);
+        LOGGER.debug("REST request. Path:/act  method: POST Request body {}", act);
         act.setReportDate(new Date());
         Act saveAct = actService.save(act);
         response.addHeader("result", "Act has saved.");

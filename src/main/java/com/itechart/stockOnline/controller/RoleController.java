@@ -27,7 +27,7 @@ public class RoleController {
 
     @RequestMapping(value="/roles_without_super_admin", method = RequestMethod.GET )
     public List<Role> getRolesWithoutSuperAdmin(){
-        LOGGER.debug("REST request. Path:/roles  method: GET");
+        LOGGER.debug("REST request. Path:/roles_without_super_admin method: GET");
         return roleService.getAll().stream().filter((role)->{return role.getId()!=1;}).collect(Collectors.toList());
     }
 
