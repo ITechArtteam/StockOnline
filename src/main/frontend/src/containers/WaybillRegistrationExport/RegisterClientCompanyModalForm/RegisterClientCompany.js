@@ -126,7 +126,7 @@ class RegisterClientCompanyModalForm extends React.Component {
                 </ModalHeader>
                 <ModalBody>
                     <TextInput
-                        label="Название компании"
+                        label="Название компании*"
                         error={this.props.nameError}
                         value={this.props.name}
                         onChange={this.props.changeClientCompanyName}

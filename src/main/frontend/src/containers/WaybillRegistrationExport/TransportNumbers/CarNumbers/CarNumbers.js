@@ -16,7 +16,7 @@ class CarNumbers extends React.Component {
         return (
             <div>
                 <TextInput
-                    label="Номер автомобиля"
+                    label="Номер автомобиля*"
                     value={this.props.carNumber}
                     error={this.props.carNumberError}
                     onChange={this.props.changeCarNumber}

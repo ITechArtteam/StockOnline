@@ -114,32 +114,32 @@ class AddNumberModalForm extends React.Component {
                 </ModalHeader>
                 <ModalBody>
                     <TextInput
-                        label="Наименование"
+                        label="Наименование*"
                         error={this.props.nameError}
                         value={this.props.name}
                         onChange={this.props.changeProductName}
                         onBlur={() => {this.props.setProductNameError(checkName(this.props.name, this.props.products))}} />
                     <TextInput
-                        label="Количество"
+                        label="Количество*"
                         error={this.props.countError}
                         value={this.props.count}
                         onChange={this.props.changeProductCount}
                         onBlur={() => {this.props.setProductCountError(checkCount(this.props.count))}} />
                     <SelectInput
-                        label="Единицы"
+                        label="Единицы*"
                         value={this.props.unit}
                         error={this.props.unitError}
                         options={this.createUnitOptions()}
                         onChange={(value) => {this.props.selectProductUnit(value); this.props.setProductUnitError(checkUnit(value))}}
                         error={this.props.unitError} />
                     <TextInput
-                        label="Цена"
+                        label="Цена*"
                         value={this.props.price}
                         error={this.props.priceError}
                         onChange={this.props.changeProductPrice}
                         onBlur={() => {this.props.setProductPriceError(checkPrice(this.props.price))}} />
                     <TextInput
-                        label="Способ хранения"
+                        label="Способ хранения*"
                         value={this.props.storage}
                         error={this.props.storageError}
                         onChange={this.props.changeProductStorage}

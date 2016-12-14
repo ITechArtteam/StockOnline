@@ -288,7 +288,7 @@ class WaybillRegistration extends React.Component {
                 <form>
                     <TextInput
                         name="waybill-number"
-                        label="Номер накладной"
+                        label="Номер накладной*"
                         value={this.props.waybillNumber}
                         onChange={this.props.changeWaybillNumber}
                         onBlur={() => {this.props.setWaybillNumberError(checkWaybillNumber(this.props.waybillNumber))}}
@@ -296,13 +296,13 @@ class WaybillRegistration extends React.Component {
                     <DateInput
                         value={this.props.registrationDate}
                         onChange={(value) => {this.handleChangeIssuanceDate(value)}}
-                        label="Дата выписки накладной"
+                        label="Дата выписки накладной*"
                         error={this.props.issuanceDateError}
                         onBlur={() => {this.props.setIssuanceDateError(checkIssuanceDate(this.props.registrationDate))}}/>
                     <TextInput
                         error={this.props.senderNameError}
                         name="sender"
-                        label="Получатель"
+                        label="Получатель*"
                         value={this.props.senderName}
                         resultType={this.props.sender ? 'success' : 'warning'}
                         onChange={(value) => {this.handleChangeSenderName(value)}}
@@ -314,7 +314,7 @@ class WaybillRegistration extends React.Component {
                         isOpen={this.props.chooseSenderModalIsOpen} />
                     <DisabledInput
                         name="carrier"
-                        label="Перевозчик"
+                        label="Перевозчик*"
                         value={this.props.carrierName}
                         error={this.props.carrierError}
                         onChange={(value) => {this.handleChangeCarrierName(value)}}
@@ -323,7 +323,7 @@ class WaybillRegistration extends React.Component {
                         isOpen={this.props.chooseCarrierModalFormIsOpen}
                         carriers={getFilteredItems(this.props.carriers, this.props.carrierName)} />
                     <DisabledInput
-                        label="Тип транспортного средства"
+                        label="Тип транспортного средства*"
                         error={this.props.transportTypeError}
                         value={getTransportTypeLabel(this.props.transportTypes, this.props.transportType)} />
                     <TransportNumbers transportType={this.props.transportType} error={this.props.numbersError} />
