@@ -41,7 +41,7 @@ let findWaybillByNumber = (number, status) => {
                 dispatch(showDialog(message, '', []));
             })
             .catch(error => {
-                dispatch(showDialog(`Накладная №${number}  не найдена. ${error}`, 'danger', []));
+                dispatch(showDialog(`Накладная №${number}  не найдена.`, 'danger', []));
                 dispatch(setWaybillVisibility(false));
             });
     }
@@ -56,7 +56,6 @@ let acceptWaybillRequest = () => {
 let acceptWaybill = (number, waybillStatus, productStatus, senderRole, act) => {
     return dispatch => {
         dispatch(acceptWaybillRequest());
-        console.log(act)
         axios.put(`/checkgoods/${senderRole}/waybills/${number}`, {
             acceptWaybillDto: {
                 waybillStatus: waybillStatus,
@@ -69,7 +68,7 @@ let acceptWaybill = (number, waybillStatus, productStatus, senderRole, act) => {
                 dispatch(setWaybillVisibility(false));
                 dispatch(clearActReducer());
             })
-            .catch(error => dispatch(showDialog(`Прозошла ошибка при установке статуса накладной. ${error}`, 'danger', [])));
+            .catch(error => dispatch(showDialog(`Прозошла ошибка при установке статуса накладной.`, 'danger', [])));
     }
 };
 

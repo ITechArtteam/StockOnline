@@ -41,7 +41,7 @@ let getClientList = (pageNumber, itemsCountPerPage) => {
                     }
                 })
             .then(response => dispatch(getClientListSuccess(response.data)))
-            .catch(error => dispatch(showDialog(`Произошла ошибка при получении списка клиентов.${error}`, 'danger', [])))
+            .catch(error => dispatch(showDialog(`Произошла ошибка при получении списка клиентов.`, 'danger', [])))
     }
 };
 
@@ -83,7 +83,7 @@ let deleteClients = clientNamesList => {
                 dispatch(
                     getClientList(1, getState().clientListReducer.page.itemsCountPerPage));
             })
-            .catch(error => dispatch(showDialog(`Произошла ошибка при удалении. ${error}`, 'danger', [])))
+            .catch(error => dispatch(showDialog(`Произошла ошибка при изменении статуса компании. ${error}`, 'danger', [])))
     }
 };
 
@@ -102,7 +102,12 @@ let setFilterInputValue = (inputId, value) => {
             value: value
         }
     }
+};
 
+let setDefaultState = () => {
+    return {
+        type: event.SET_DEFAULT_STATE
+    }
 };
 
 export default {
@@ -111,5 +116,6 @@ export default {
     showDialog,
     closeDialog,
     setStatusRadioValue,
-    setFilterInputValue
+    setFilterInputValue,
+    setDefaultState
 }

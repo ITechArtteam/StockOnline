@@ -98,7 +98,7 @@ let findWaybillByNumber = (number, status) => {
                 dispatch(showDialog(message, '', []));
             },
             error: error => {
-                dispatch(showDialog(`Накладная №${number}  не найдена. ${error.statusText}`, 'danger', []));
+                dispatch(showDialog(`Накладная №${number}  не найдена.`, 'danger', []));
                 dispatch(setWaybillVisibility(false));
             }
         });
@@ -160,7 +160,6 @@ let findStocksByUserCompany = ()=> {
                 dispatch(findStocksByUserCompanySuccess(response))
             },
             error: error => {
-                console.log(error);
                 dispatch(showDialog("Компания в которой вы работаете не найдена", "danger", []));
             }
         })
@@ -278,7 +277,6 @@ let finishDistribution = () => {
                 shelves: elem.product.places.map((elem, index) => { return{ shelfId: elem.shelfId, count: elem.count }})
             }
         });
-        console.log("products - ", products);
         axios.post('/distributionGoods/finish', products)
             .then(response => {
                 dispatch(showDialog('Размещение выполнено успешно','', []));

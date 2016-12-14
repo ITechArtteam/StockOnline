@@ -97,7 +97,7 @@ class CheckGoods extends React.Component {
                                         Очистить поиск
                                     </button>
                                 </div>
-                                <div className="btn-group">
+                                <div className={this.props.senderRole === 'controller' ? "btn-group" : "none"}>
                                     <button type="button" className="btn btn-info"
                                             disabled={this.props.frontend.waybillVisible ? "" : "disabled"}
                                             onClick={this.onMakeActClick}>Создать акт

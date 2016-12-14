@@ -79,13 +79,13 @@ class Waybills extends React.Component {
                                          value={this.props.frontend.filterWaybillNumberValue}
                                          onChange={this.onInputValueChange} />
                             <label>Тип</label>
-                            <RadioGroup name="waybillTypeValue"
-                                        selectedValue={this.props.frontend.waybillTypeValue}
-                                        onChange={newVal => this.props.setWaybillTypeRadioValue(newVal)}>
-                                <Radio value="2" />Все <br/>
-                                <Radio value="1" />Поступившие <br/>
-                                <Radio value="0" />Выданные <br/>
-                            </RadioGroup>
+                            {/*<RadioGroup name="waybillTypeValue"*/}
+                                        {/*selectedValue={this.props.frontend.waybillTypeValue}*/}
+                                        {/*onChange={newVal => this.props.setWaybillTypeRadioValue(newVal)}>*/}
+                                {/*<Radio value="2" />Все <br/>*/}
+                                {/*<Radio value="1" />Поступившие <br/>*/}
+                                {/*<Radio value="0" />Выданные <br/>*/}
+                            {/*</RadioGroup>*/}
                             <button className="btn btn-default btn-block" onClick={this.onBtnSearchClick}>Поиск</button>
                             <button className="btn btn-default btn-block" onClick={this.onBtnClearFilterClick}>Очистить фильтр</button>
                         </div>
