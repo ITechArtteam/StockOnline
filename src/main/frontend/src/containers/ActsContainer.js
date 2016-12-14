@@ -9,6 +9,9 @@ import {browserHistory} from 'react-router';
 class ActsContainer extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    componentWillMount() {
         actsApi.getActsByCompany(this.props.idCompany)
     }
 

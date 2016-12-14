@@ -8,6 +8,9 @@ import {browserHistory} from 'react-router';
 class WorkersContainer extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    componentWillMount() {
         workersApi.getWorkersByCompany(this.props.idCompany)
     }
 

@@ -11,6 +11,9 @@ class EditActContainer extends React.Component {
 
     constructor(props) {
         super(props);
+    }
+
+    componentWillMount() {
         var id = this.props.params.id;
         if ($.isNumeric(id)) {
             actApi.getAct(id);
