@@ -85,7 +85,7 @@ let findWaybillByNumber = (number, status) => {
         dispatch(findWaybillRequest());
         $.ajax({
             type: 'GET',
-            url: `/checkgoods/waybills/${number}`,
+            url: `/distributionGoods/waybills/${number}`,
             success: response => {
                 let message = `Накладная №${number} успешно найдена`;
                 if(response.status === status) {

@@ -24,7 +24,8 @@ class WaybillInfoModal extends React.Component {
     dialogStyles = {
         base: {
             top: -600,
-            transition: 'top 0.4s'
+            transition: 'top 0.4s',
+            width: "80%",
         },
         open: {
             width: "80%",

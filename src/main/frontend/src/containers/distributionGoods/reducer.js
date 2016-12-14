@@ -157,7 +157,15 @@ export default (state = initDistributionGoodsState, action) => {
                 return elem.shelfId !== action.payload.shelfId;
             });
             newProductInWaybill[action.payload.rowIndex].product.places = arr;
-            return {...state, waybill: {...state.waybill, productInWaybills: newProductInWaybill}, stocks: newStocks};
+
+            flag = true;
+            for(let i = 0; i < newProductInWaybill.length; ++i) {
+                if(newProductInWaybill[i].placedCount !== newProductInWaybill[i].count) {
+                    flag = false;
+                    break;
+                }
+            }
+            return {...state, waybill: {...state.waybill, productInWaybills: newProductInWaybill}, frontend: {...state.frontend, isCheckCompleted: flag}, stocks: newStocks};
 
         case event.FIND_STOCK_BY_USER_COMPANY_SUCCESS:
             return {...state, stocks: action.payload.stocks, stockOptions: action.payload.stockOptions};
