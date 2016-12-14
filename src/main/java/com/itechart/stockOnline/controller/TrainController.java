@@ -30,11 +30,12 @@ public class TrainController {
         return driverService.findByName(transferCompanyName);
     }
 
-    @RequestMapping(value = "add/{transferCompanyName}", method = RequestMethod.GET)
+    @RequestMapping(value = "add/{transferCompanyName}", method = RequestMethod.POST)
     public TransferCompany addDriverData(@PathVariable String transferCompanyName){
         transferCompanyName = ControllerHelper.convertToUtf(transferCompanyName);
-        logger.debug("REST request. Path:/registrationOfGoods/train/{}  method: GET", transferCompanyName);
-        return driverService.save(new TransferCompany(transferCompanyName));
+        logger.debug("REST request. Path:/registrationOfGoods/train/{}  method: POST", transferCompanyName);
+        TransferCompany transferCompany = driverService.save(new TransferCompany(transferCompanyName));
+        return transferCompany;
     }
 
     @RequestMapping(method = RequestMethod.POST)

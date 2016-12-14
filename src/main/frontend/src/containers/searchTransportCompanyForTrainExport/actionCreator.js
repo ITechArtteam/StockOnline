@@ -68,24 +68,14 @@ function getTrainDataFail(error, transferCompany) {
                     transferCompanyName: transferCompany,
                     btnStyle: "btn btn-success",
                     text: "Создать",
-                    onclick: onConfirmOkBtnClick
+                    onclick: () => {addTransferCompany(transferCompany)}
                 }
             ]
         }
     }
 }
 
-function onConfirmOkBtnClick(transferCompanyName) {
-    return dispatch => {
-        dispatch(addTransferCompanyRequest(transferCompanyName));
-    }
-}
 
-function addTransferCompanyRequest () {
-    return {
-        type: event.ADD_TRANSFER_COMPANY_REQUEST
-    }
-};
 function addTransferCompanySuccess(json) {
 
     return {
@@ -108,7 +98,6 @@ function addTransferCompanyFail(error) {
 }
 function addTransferCompany (transferCompanyName) {
     return function (dispatch) {
-        dispatch(addTransferCompanyRequest());
         return axios
             .get(`/registrationOfGoods/train/add/${transferCompanyName}`)
             .then(json => {
@@ -120,8 +109,7 @@ function addTransferCompany (transferCompanyName) {
                 dispatch(addTransferCompanyFail(error))
             });
     }
-};
-
+}
 function changeTransferCompany(transferCompanyName) {
     return {
         type: event.EDIT_TRANSFER_COMPANY,
@@ -158,7 +146,6 @@ function setDefaultValue() {
 }
 
 export default {
-    onConfirmOkBtnClick,
     addTransferCompany,
     setInputErrorMessage,
     setFieldData,

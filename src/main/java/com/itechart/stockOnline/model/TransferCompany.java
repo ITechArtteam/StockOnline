@@ -37,7 +37,9 @@ public class TransferCompany {
 
     @Override
     public String toString() {
-        return "TransferComany{" +
-                "id=" + id +"}";
+        return "TransferCompany{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -56,7 +56,7 @@ function getTrainDataSuccess(json) {
     }
 }
 
-function getTrainDataFail(error, transferCompany) {
+function getTrainDataFail(error, transferCompany, dispatch) {
     return {
         type: event.GET_TRAIN_FAIL,
         data: {
@@ -68,24 +68,13 @@ function getTrainDataFail(error, transferCompany) {
                     transferCompanyName: transferCompany,
                     btnStyle: "btn btn-success",
                     text: "Создать",
-                    onclick: onConfirmOkBtnClick
+                    onclick: () => dispatch(addTransferCompany(transferCompany))
                 }
             ]
         }
     }
 }
 
-function onConfirmOkBtnClick(transferCompanyName) {
-    return dispatch => {
-        dispatch(addTransferCompanyRequest(transferCompanyName));
-    }
-}
-
-function addTransferCompanyRequest () {
-    return {
-        type: event.ADD_TRANSFER_COMPANY_REQUEST
-    }
-};
 function addTransferCompanySuccess(json) {
 
     return {
@@ -96,7 +85,7 @@ function addTransferCompanySuccess(json) {
     }
 }
 
-function addTransferCompanyFail(error) {
+function addTransferCompanyFail() {
     return {
         type: event.ADD_TRANSFER_COMPANY_FAIL,
         data: {
@@ -108,24 +97,28 @@ function addTransferCompanyFail(error) {
 }
 function addTransferCompany (transferCompanyName) {
     return function (dispatch) {
-        dispatch(addTransferCompanyRequest());
         return axios
-            .get(`/registrationOfGoods/train/add/${transferCompanyName}`)
-            .then(json => {
-                    dispatch(addTransferCompanySuccess(json.data));
-                    dispatch(changeTransferCompany(json.data.transferCompanyName));
-                    browserHistory.push('/registerwaybill/train');
+            .post(`/registrationOfGoods/train/add/${transferCompanyName}`)
+            .then( json => {
+                dispatch(getTrainDataSuccess(json.data));
+                dispatch(changeCarrierName(json.data.name));
+                let carrier = {
+                    id: json.data.id,
+                    name: json.data.name
+                };
+                dispatch(setCarrier(carrier));
+                dispatch(setTransportType("TRAIN"));
+                browserHistory.push('/registerwaybill');
                 }
             ).catch((error) => {
                 dispatch(addTransferCompanyFail(error))
             });
     }
-};
-
+}
 function changeTransferCompany(transferCompanyName) {
     return {
         type: event.EDIT_TRANSFER_COMPANY,
-        transferCompanyName: transferCompanyName
+        data: transferCompanyName
     }
 }
 
@@ -146,7 +139,7 @@ function getTrain(transferCompanyName) {
                     browserHistory.push('/registerwaybill');
                 }
             ).catch((error) => {
-                dispatch(getTrainDataFail(error,transferCompanyName))
+                dispatch(getTrainDataFail(error,transferCompanyName, dispatch))
             });
     }
 }
@@ -158,8 +151,6 @@ function setDefaultValue() {
 }
 
 export default {
-    onConfirmOkBtnClick,
-    addTransferCompany,
     setInputErrorMessage,
     setFieldData,
     showAlertPopup,
