@@ -19,12 +19,39 @@ export function checkNumber(number, rooms) {
     }
 }
 
+export function checkShelfNumber(number, shelfs) {
+    if (isEmpty(number)) {
+        return 'Не введен номер места хранения';
+    }
+    else if (containsIllegalSymbols(name)) {
+        return 'Содержатся недопустимые символы';
+    }
+    else if (roomExists(shelfs, number)) {
+        return 'Место хранение с таким номером уже добавлено';
+    }
+    else {
+        return '';
+    }
+}
+
 export function checkCost(cost) {
     if (isEmpty(cost)) {
         return 'Не указана стоимость хранения';
     }
     else if (!containsOnlyNumbers(cost)) {
         return 'Стоимость хранения может содержать только цифры';
+    }
+    else {
+        return '';
+    }
+}
+
+export function checkShelfCapacity(capacity) {
+    if (isEmpty(capacity)) {
+        return 'Не указана вместимость';
+    }
+    else if (!containsOnlyNumbers(capacity)) {
+        return 'Вместимость может содержать только цифры';
     }
     else {
         return '';
