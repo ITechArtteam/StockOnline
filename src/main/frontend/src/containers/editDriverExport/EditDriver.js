@@ -20,7 +20,7 @@ class EditDriver extends React.Component {
     closeAlert(){
         this.props.closeAlertPopup();
         if(this.props.driver.frontend.messageAlertPop === "Водитель сохранен."){
-            browserHistory.push(`/registrationOfGoods/driver/${this.props.driver.data.passportNumber}`);
+            browserHistory.push(`/goods/departure/driver/${this.props.driver.data.passportNumber}`);
         }
 
     }
@@ -143,6 +143,50 @@ class EditDriver extends React.Component {
                     <div className="panel panel-default">
                         <div className="panel-heading">Информация о водителе</div>
                         <div className="panel-body">
+                            <SimpleInput id="firstName"
+                                label="Имя*"
+                                onChange={this.validateOnChange}
+                                value={this.props.driver.data.firstName}
+                                patternType="isRequired"
+                                errorValue={this.props.driver.inputErrors.firstName}/>
+
+                            <SimpleInput id="lastName"
+                                label="Фамилия*"
+                                onChange={this.validateOnChange}
+                                value={this.props.driver.data.lastName}
+                                patternType="isRequired"
+                                errorValue={this.props.driver.inputErrors.lastName}/>
+
+                            <SimpleInput id="fatherName"
+                                label="Отчество*"
+                                onChange={this.validateOnChange}
+                                value={this.props.driver.data.fatherName}
+                                errorValue={this.props.driver.inputErrors.fatherName}
+                                patternType="isRequired"/>
+
+                            <DateInput
+                                value={this.props.driver.data.birthDate}
+                                onChange={this.props.changeBirthDate}
+                                label="Дата рождения"/>
+                                    <SimpleInput id="passportNumber"
+                                label="Номер паспорта*"
+                                onChange={this.validateOnChange}
+                                value={this.props.driver.data.passportNumber}
+                                patternType="isRequired"
+                                errorValue={this.props.driver.inputErrors.passportNumber}/>
+
+                            <DateInput
+                                value={this.props.driver.data.passportIssuedDate}
+                                onChange={this.props.changePassportIssuedDate}
+                                label="Дата выдачи"/>
+
+                            <SimpleInput id="passportIssuedBy"
+                                label="Кем выдан*"
+                                onChange={this.validateOnChange}
+                                value={this.props.driver.data.passportIssuedBy}
+                                patternType="isRequired"
+                                errorValue={this.props.driver.inputErrors.passportIssuedBy}/>
+
                             <SimpleInput id="transferCompany"
                                 label="Перевозчик*"
                                 onChange={this.validateOnChange}
@@ -151,60 +195,11 @@ class EditDriver extends React.Component {
                                 errorValue={this.props.driver.inputErrors.transferCompany}
                             />
 
-                            <SimpleInput id="passportNumber"
-                                label="Номер паспорта*"
-                                onChange={this.validateOnChange}
-                                value={this.props.driver.data.passportNumber}
-                                patternType="isRequired"
-                                errorValue={this.props.driver.inputErrors.passportNumber}
-                            />
-
-                            <SimpleInput id="passportIssuedBy"
-                                label="Кем выдан*"
-                                onChange={this.validateOnChange}
-                                value={this.props.driver.data.passportIssuedBy}
-                                patternType="isRequired"
-                                errorValue={this.props.driver.inputErrors.passportIssuedBy}
-                            />
-
-                            <DateInput
-                                value={this.props.driver.data.passportIssuedDate}
-                                onChange={this.props.changePassportIssuedDate}
-                                label="Дата выдачи"/>
-                            <DateInput
-                                    value={this.props.driver.data.birthDate}
-                                    onChange={this.props.changeBirthDate}
-                                    label="Дата рождения"/>
-
-                            <SimpleInput id="firstName"
-                                 label="Имя*"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.driver.data.firstName}
-                                 patternType="isRequired"
-                                 errorValue={this.props.driver.inputErrors.firstName}/>
-
-                            <SimpleInput id="lastName"
-                                 label="Фамилия*"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.driver.data.lastName}
-                                 patternType="isRequired"
-                                 errorValue={this.props.driver.inputErrors.lastName}
-                                 />
-
-                            <SimpleInput id="fatherName"
-                                 label="Отчество*"
-                                 onChange={this.validateOnChange}
-                                 value={this.props.driver.data.fatherName}
-                                 errorValue={this.props.driver.inputErrors.fatherName}
-                                 patternType="isRequired"/>
-
-
-
                             <div className="btn-group" role="group">
                                 <button type="button" className="btn btn-primary"
                                     onClick={this.submit}>Сохранить
                                 </button>
-                                <Link to="/registrationOfGoods/driver" className="btn btn-default">Отменить</Link>
+                                <Link to="/goods/departure/driver" className="btn btn-default">Отменить</Link>
                             </div>
                         </div>
                     </div>
