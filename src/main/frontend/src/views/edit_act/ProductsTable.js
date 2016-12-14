@@ -388,7 +388,6 @@ class ProductsTable extends React.Component {
                                         value={this.state.product_in_act.product}
                                         onChange={selectProduct => {
                                             var newProduct_in_act = _.extend({}, this.state.product_in_act);
-                                            console.log(selectProduct)
                                             newProduct_in_act.product = selectProduct;
                                             newProduct_in_act.count = newProduct_in_act.product.count;
                                             newProduct_in_act.cost = newProduct_in_act.product.cost * newProduct_in_act.product.count;

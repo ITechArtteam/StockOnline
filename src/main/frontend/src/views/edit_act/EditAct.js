@@ -42,7 +42,13 @@ class EditAct extends React.Component {
         }
         newAct.user.id = props.controller_id;
         newAct.user.login = props.controller_username;
-        this.setState({act: newAct});
+        var newDisabledSaveButton = _.extend({}, this.state.disabledSaveButton);
+        if (this.state.act.productInActs.length>0){
+            newDisabledSaveButton=false;
+        }else{
+            newDisabledSaveButton=true;
+        }
+        this.setState({act: newAct, disabledSaveButton:newDisabledSaveButton});
     }
 
 
@@ -60,7 +66,14 @@ class EditAct extends React.Component {
     onUpdate = (products_in_act) => {
         var newAct = _.extend({}, this.state.act);
         newAct.productInActs = [...products_in_act];
-        this.setState({act: newAct});
+        var newDisabledSaveButton = _.extend({}, this.state.disabledSaveButton);
+        console.log(newAct)
+        if (newAct.productInActs.length>0){
+            newDisabledSaveButton=false;
+        }else{
+            newDisabledSaveButton=true;
+        }
+        this.setState({act: newAct, disabledSaveButton:newDisabledSaveButton});
     }
 
 
@@ -111,6 +124,8 @@ class EditAct extends React.Component {
         )
     }
 }
+
+
 
 
 export default EditAct;

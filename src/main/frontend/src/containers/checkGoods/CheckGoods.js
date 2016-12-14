@@ -64,6 +64,7 @@ class CheckGoods extends React.Component {
 
 
     onMakeActClick = () => {
+        actApi.clearReducer();
         this.redirect('/act');
     }
 
