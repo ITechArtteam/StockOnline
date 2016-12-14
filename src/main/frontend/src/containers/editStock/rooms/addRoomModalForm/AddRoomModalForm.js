@@ -122,9 +122,9 @@ function mapStateToProps(state) {
         cost:    (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.cost    : state.stock.data.stockRooms.rooms.cost    : '',
         storage: (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.storage : state.stock.data.stockRooms.rooms.storage : '',
         idRoom:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.idRoom  : state.stock.data.stockRooms.rooms.idRoom  : -1,
-        numberError:  (!!state.stock.data) ? (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.validatioErrors) ? state.stock.data.stockRooms.validatioErrors.numberError  : '' : '' : '',
-        costError:    (!!state.stock.data) ? (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.validatioErrors) ? state.stock.data.stockRooms.validatioErrors.costError    : '' : '' : '',
-        storageError: (!!state.stock.data) ? (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.validatioErrors) ? state.stock.data.stockRooms.validatioErrors.storageError : '' : '' : '',
+        numberError:  (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.numberError  : '1',
+        costError:    (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.costError    : '1',
+        storageError: (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.storageError : '1',
         rooms:        (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.rooms  : []
     }
 }

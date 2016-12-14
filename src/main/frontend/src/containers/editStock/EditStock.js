@@ -60,6 +60,7 @@ class EditStock extends React.Component {
 
 
     componentWillMount() {
+        this.props.setDefaultValue();
         if (!!this.props.params.id) {
             this.props.getStock(this.props.params.id);
         }

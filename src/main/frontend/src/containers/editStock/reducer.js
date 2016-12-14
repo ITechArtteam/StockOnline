@@ -450,7 +450,7 @@ export default function (state = initUserState, action) {
                     stockRooms: {
                         ...state.data.stockRooms,
                         validationErrors: {
-                            ...state.validationErrors,
+                            ...state.data.stockRooms.validationErrors,
                             roomsError: action.error
                         }
                     }
@@ -465,7 +465,7 @@ export default function (state = initUserState, action) {
                     stockRooms: {
                         ...state.data.stockRooms,
                         validationErrors: {
-                            ...state.validationErrors,
+                            ...state.data.stockRooms.validationErrors,
                             costError: action.error
                         }
                     }
@@ -480,7 +480,7 @@ export default function (state = initUserState, action) {
                     stockRooms: {
                         ...state.data.stockRooms,
                         validationErrors: {
-                            ...state.validationErrors,
+                            ...state.data.stockRooms.validationErrors,
                             numberError: action.error
                         }
                     }
@@ -495,7 +495,7 @@ export default function (state = initUserState, action) {
                     stockRooms: {
                         ...state.data.stockRooms,
                         validationErrors: {
-                            ...state.validationErrors,
+                            ...state.data.stockRooms.validationErrors,
                             storageError: action.error
                         }
                     }
