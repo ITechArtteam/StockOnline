@@ -7,6 +7,7 @@ public class TransportForControllerDto {
     private String number;
     private TransportType type;
     private StorageRequirementForControllerDto storage;
+    private DriverForControllerDto driver;
 
     public TransportForControllerDto(Transport transport) {
         if(transport != null) {
@@ -15,6 +16,7 @@ public class TransportForControllerDto {
             if(transport.getStorage() != null) {
                 this.storage = new StorageRequirementForControllerDto(transport.getStorage());
             }
+            this.driver = new DriverForControllerDto(transport.getDriver());
         }
     }
 
@@ -40,5 +42,13 @@ public class TransportForControllerDto {
 
     public void setStorage(StorageRequirementForControllerDto storage) {
         this.storage = storage;
+    }
+
+    public DriverForControllerDto getDriver() {
+        return driver;
+    }
+
+    public void setDriver(DriverForControllerDto driver) {
+        this.driver = driver;
     }
 }

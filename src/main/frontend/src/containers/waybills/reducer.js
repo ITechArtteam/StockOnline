@@ -53,7 +53,8 @@ let initWaybillsState = {
                 number: '',
                 storage: {
                     type: ''
-                }
+                },
+                driver: {}
             }
         }
     }

@@ -1,9 +1,11 @@
 package com.itechart.stockOnline.controller;
 
+import com.itechart.stockOnline.exception.DataNotFoundError;
 import com.itechart.stockOnline.model.dto.forControllerPage.WaybillForControllerDto;
 import com.itechart.stockOnline.model.dto.forDistributionGoodsPage.ProductForDistributionGoodsFinishDto;
 import com.itechart.stockOnline.service.DistributionGoodsService;
 import com.itechart.stockOnline.service.WaybillService;
+import com.itechart.stockOnline.util.ControllerHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ public class DistributionGoodsController {
 
     @RequestMapping(value = "/waybills/{number}", method = RequestMethod.GET)
     public WaybillForControllerDto getByNumber(@PathVariable String number) {
+        number = ControllerHelper.convertToUtf(number);
         logger.info("REST request. Path:/distributionGoods/waybills/{}  method: GET", number);
         WaybillForControllerDto waybillForControllerDto = new WaybillForControllerDto(waybillService.getByNumber(number));
         waybillForControllerDto.getProductInWaybills().forEach(productInWaybillForControllerDto -> {
@@ -45,4 +48,8 @@ public class DistributionGoodsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ExceptionHandler(value = DataNotFoundError.class)
+    public ResponseEntity<Object> handleNotFound(DataNotFoundError error) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
