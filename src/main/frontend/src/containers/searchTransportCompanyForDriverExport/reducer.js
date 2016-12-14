@@ -18,6 +18,7 @@ const initUserState = {
         showAlertPopup: false,
         typeAlertPopup: "danger",
         messageAlertPop: "ошибка",
+        buttons: [],
         isActiveNextButton: false
     }
 };
@@ -50,8 +51,6 @@ export default function (state = initUserState, action) {
                     ...state.frontend, showAlertPopup: false
                 }
             };
-        case event.GET_DRIVER_REQUEST:
-            return state;
         case event.GET_DRIVER_SUCCESS:
             return {
                 ...state,
@@ -63,7 +62,10 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: "Водитель не найден."
+                    showAlertPopup: true,
+                    typeAlertPopup: "danger",
+                    messageAlertPop: "Водитель не найден.",
+                    buttons: action.data.buttons
                 },
                 inputErrors: action.data
             };

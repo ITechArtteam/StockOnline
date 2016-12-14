@@ -1,6 +1,7 @@
 import * as event from "./constants";
 import * as axios from "axios";
 import {changeCarrierName, setCarrier} from "../WaybillRegistration/actions.js";
+import {browserHistory} from "react-router";
 
 function setInputErrorMessage(nameField, message) {
     return {
@@ -61,10 +62,23 @@ function getDriverDataSuccess(json) {
     }
 }
 
+function createDiver() {
+    browserHistory.push('/goods/departure/editDriver');
+}
+
 function getDriverDataFail(dataError) {
     return {
         type: event.GET_DRIVER_FAIL,
-        data: dataError.data
+        data: {
+            ...dataError.data,
+            buttons: [
+                {
+                    btnStyle: "btn btn-success",
+                    text: "Создать",
+                    onclick: createDiver
+                }
+            ]
+        }
     }
 }
 

@@ -30,7 +30,7 @@ class SearchTransportCompanyForDriver extends React.Component {
     }
 
     searchNumber() {
-        if (this.props.driver.inputErrors.searchNumber.length > 0) {
+        if (this.props.driver.inputErrors.searchNumber != undefined && this.props.driver.inputErrors.searchNumber.length > 0) {
             this.props.showAlertPopup("danger", "Исправь ошибки ввода.");
             return;
         }
@@ -77,7 +77,7 @@ class SearchTransportCompanyForDriver extends React.Component {
     }
 
     next() {
-        if (this.props.driver.data.serialAndNumber.length == 0){
+        if (this.props.driver.data.serialAndNumber == undefined){
             return;
         }
         let driver = {
@@ -129,6 +129,7 @@ class SearchTransportCompanyForDriver extends React.Component {
                                 message={this.props.driver.frontend.messageAlertPop}
                                 type={this.props.driver.frontend.typeAlertPopup}
                                 close={this.closeAlert}
+                                buttons={this.props.driver.frontend.buttons}
                     />
                 </div>
                 <div className="row">

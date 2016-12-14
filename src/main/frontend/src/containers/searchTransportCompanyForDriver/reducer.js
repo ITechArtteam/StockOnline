@@ -18,6 +18,7 @@ const initUserState = {
         showAlertPopup: false,
         typeAlertPopup: "danger",
         messageAlertPop: "ошибка",
+        buttons: [],
         isActiveNextButton: false
     }
 };
@@ -63,7 +64,10 @@ export default function (state = initUserState, action) {
             return {
                 ...state, frontend: {
                     ...state.frontend,
-                    showAlertPopup: true, typeAlertPopup: "danger", messageAlertPop: "Водитель не найден."
+                    showAlertPopup: true,
+                    typeAlertPopup: "danger",
+                    messageAlertPop: "Водитель не найден.",
+                    buttons: action.data.buttons
                 },
                 inputErrors: action.data
             };
