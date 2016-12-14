@@ -6,6 +6,7 @@ import {SimpleInput} from "../../components/SimpleInput";
 import {StaticControl} from "../../components/StaticControl";
 import {Link, browserHistory} from "react-router";
 import {searchTransportCompanyForDriverActionCreator} from "./index";
+import moment from "moment";
 import {setDriverInfo, setTransportType} from "../WaybillRegistration/actions.js";
 
 class SearchTransportCompanyForDriver extends React.Component {
@@ -18,7 +19,14 @@ class SearchTransportCompanyForDriver extends React.Component {
         this.getClassForError = this.getClassForError.bind(this);
         this.getClassForNextButton = this.getClassForNextButton.bind(this);
         this.next = this.next.bind(this);
-        this.createDiver = this.createDiver.bind(this);
+        this.getDate = this.getDate.bind(this);
+    }
+
+    getDate(longTime){
+        if (longTime !== "") {
+            return new Date(longTime).toDateString();
+        }
+        return "";
     }
 
     searchNumber() {
@@ -125,7 +133,7 @@ class SearchTransportCompanyForDriver extends React.Component {
                         className="form-horizontal well well-sm col-sm-5 col-md-5 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
                         <legend>Паспортные данные</legend>
                         <StaticControl label={"Кем выдан:"} value={this.props.driver.data.issued_by}/>
-                        <StaticControl label={"Когда выдан:"} value={this.props.driver.data.issued_date}/>
+                        <StaticControl label={"Когда выдан:"} value={this.getDate(this.props.driver.data.issued_date)}/>
                         <StaticControl label={"Серия и номер:"} value={this.props.driver.data.serialAndNumber}/>
                     </div>
                 </div>
@@ -136,7 +144,7 @@ class SearchTransportCompanyForDriver extends React.Component {
                         <StaticControl label={"Имя:"} value={this.props.driver.data.name}/>
                         <StaticControl label={"Фамилия:"} value={this.props.driver.data.surname}/>
                         <StaticControl label={"Отчество:"} value={this.props.driver.data.patronymic}/>
-                        <StaticControl label={"Дата рождения:"} value={this.props.driver.data.birthday}/>
+                        <StaticControl label={"Дата рождения:"} value={this.getDate(this.props.driver.data.birthday)}/>
                     </div>
                 </div>
             </div>

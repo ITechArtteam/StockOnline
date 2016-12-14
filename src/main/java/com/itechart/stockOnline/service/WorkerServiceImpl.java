@@ -3,6 +3,7 @@ package com.itechart.stockOnline.service;
 
 import com.itechart.stockOnline.dao.WorkerRepository;
 import com.itechart.stockOnline.exception.ValidationError;
+import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.User;
 import com.itechart.stockOnline.validation.BindingResult;
 import com.itechart.stockOnline.validation.EmailBusyException;
@@ -69,6 +70,19 @@ public class WorkerServiceImpl implements WorkerService {
                     bindingResult.addError("login", new LoginBusyException("Такой логин занят."));
                 });
             }
+            one.getRoles().forEach(role -> {
+                if ("ADMIN".equals(role.getName())){
+                    boolean haveAdminRole = false;
+                    for(Role roleUI: worker.getRoles()) {
+                        if ("ADMIN".equals(roleUI.getName())){
+                            haveAdminRole = true;
+                        }
+                    }
+                    if(!haveAdminRole){
+                        bindingResult.addError("roles", new Exception("В компании должен быть админ."));
+                    }
+                }
+            });
             if (StringUtils.isEmpty(worker.getPassword())){
                 worker.setPassword(one.getPassword());
             } else{
@@ -84,6 +98,11 @@ public class WorkerServiceImpl implements WorkerService {
             if (StringUtils.isEmpty(worker.getPassword())){
                 bindingResult.addError("password", new Exception("Пароль не введен."));
             }
+            worker.getRoles().forEach(role -> {
+                if ("ADMIN".equals(role.getName())){
+                    bindingResult.addError("roles", new Exception("Админ может быть только 1 в компании."));
+                }
+            });
             worker.setPassword(bCryptPasswordEncoder.encode(worker.getPassword()));
         }
         if (bindingResult.hasErroe()) {

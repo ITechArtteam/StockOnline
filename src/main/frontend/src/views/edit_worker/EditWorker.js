@@ -70,8 +70,7 @@ class EditWorker extends React.Component {
             surname: {
                 status: null,
                 message: "",
-                isRequred: true,
-                requredMessage: "Фамилия должна быть заполнена обязательно.",
+                isRequred: false,
                 rules: [{
                     rule: (text)=> {
                         return (text.length >= 2) && (text.length <= 20);
@@ -103,7 +102,7 @@ class EditWorker extends React.Component {
 
         }
 
-    }
+    };
 
 
     componentWillReceiveProps(nextProps) {
@@ -116,13 +115,10 @@ class EditWorker extends React.Component {
     }
 
     updateProps = (props)=> {
-        console.log(props)
         var newWorker = _.extend({}, props.worker);
-        console.log(newWorker.birthday)
         if (newWorker.birthday) {
             newWorker.birthday = moment(props.worker.birthday).format()
         }
-        console.log(newWorker.birthday)
         var stockOwnerCompany = {id: props.company.id, name: props.company.name};
         newWorker.stockOwnerCompany = stockOwnerCompany;
         this.setState({worker: newWorker});
@@ -133,7 +129,7 @@ class EditWorker extends React.Component {
             this.preliminaryValidation(newWorker);
         }
         this.validateValue("company",newWorker.stockOwnerCompany.id);
-    }
+    };
 
     preliminaryValidation = (newWorker) =>{
         this.validateValue("email",newWorker.email);
@@ -143,7 +139,7 @@ class EditWorker extends React.Component {
         this.validateValue("birthday",newWorker.birthday);
         this.validateValue("home",newWorker.address.home);
         this.validateValue("room",newWorker.address.room);
-    }
+    };
 
 
     onSaveClick = () => {
@@ -153,22 +149,22 @@ class EditWorker extends React.Component {
             this.setState({disabledSaveButton: false});
         }
 
-    }
+    };
 
     onCloseClick = () => {
         this.props.onCloseClick();
-    }
+    };
 
 
     validateValue = (id, value) => {
         this.validate(id, value);
-    }
+    };
 
     validateComponent = (e) => {
         var id = e.target.id;
         var value = e.target.value;
         this.validate(id, value);
-    }
+    };
 
     validate = (id, value) => {
         var newValidationsState = _.clone(this.state.validationsState);
@@ -181,7 +177,7 @@ class EditWorker extends React.Component {
             value=String(value);
         }
         if (value.length == 0 && validationState.isRequred) {
-            validationState.status = 'error'
+            validationState.status = 'error';
             validationState.message = validationState.requredMessage;
         } else {
             if (!(value.length == 0)) {
@@ -209,10 +205,10 @@ class EditWorker extends React.Component {
                 }
                 if (result) {
                     if (validationState.isRequred) {
-                        validationState.status = 'success'
+                        validationState.status = 'success';
                         validationState.message = "";
                     } else {
-                        validationState.status = null
+                        validationState.status = null;
                         validationState.message = "";
                     }
                 }
@@ -220,21 +216,21 @@ class EditWorker extends React.Component {
 
         }
         this.setState({validationsState: newValidationsState});
-    }
+    };
 
     clean = (e) => {
         var id = e.target.id;
         var newValidationsState = _.clone(this.state.validationsState);
         var validationState = newValidationsState[id];
-        validationState.status = null
+        validationState.status = null;
         validationState.message = "";
         this.setState({validationsState: newValidationsState});
-    }
+    };
 
     cleanById(id) {
         var newValidationsState = _.clone(this.state.validationsState);
         var validationState = newValidationsState[id];
-        validationState.status = null
+        validationState.status = null;
         validationState.message = "";
         this.setState({validationsState: newValidationsState});
     }
@@ -246,7 +242,7 @@ class EditWorker extends React.Component {
         for (var id in newValidationsState) {
             if (newValidationsState[id].test != true && newValidationsState[id].isRequred) {
                 result = false;
-                newValidationsState[id].status = 'error'
+                newValidationsState[id].status = 'error';
                 newValidationsState[id].message = newValidationsState[id].requredMessage;
             } else {
                 if ((newValidationsState[id].status != "success")&&(newValidationsState[id].status != null)) {
@@ -256,7 +252,7 @@ class EditWorker extends React.Component {
         }
         this.setState({validationsState: newValidationsState});
         return result;
-    }
+    };
 
     render() {
         return (

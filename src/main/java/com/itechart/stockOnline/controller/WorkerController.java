@@ -69,7 +69,7 @@ public class WorkerController {
     @RequestMapping(value = "/worker", method = RequestMethod.POST)
     public void saveWorker(@RequestBody User worker, HttpServletResponse response) {
         LOGGER.debug("REST request. Path:/worker  method: POST Request body {}", worker);
-        User saveWorker = workerService.save(worker);
+        workerService.save(worker);
         response.addHeader("result", "Работник сохранен.");
     }
 
