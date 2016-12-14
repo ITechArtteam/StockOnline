@@ -152,7 +152,7 @@ class EditClient extends React.Component {
                                          patternType="Integer"/>
 
                             <SimpleInput id="room"
-                                         label="Квартира"
+                                         label="Офис"
                                          length={7}
                                          onChange={this.validateOnChange}
                                          value={this.props.client.data.room}
