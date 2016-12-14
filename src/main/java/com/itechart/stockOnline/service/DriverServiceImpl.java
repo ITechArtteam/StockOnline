@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -41,6 +42,12 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public Driver save(Driver driver) {
         driver.setId(null);
+        Driver byPassportNumber = driverDao.findByPassportNumber(driver.getPassportNumber());
+        if (byPassportNumber != null){
+            Map<String, String> errors = new HashMap<>();
+            errors.put("passportNumber", "Водитель с таким номером паспортом зарегистрирован");
+            throw new ValidationError(errors);
+        }
         logger.debug("SAVE_DRIVER: driver - {}", driver);
         return driverDao.save(driver);
     }
@@ -80,7 +87,7 @@ public class DriverServiceImpl implements DriverService {
             driver.setCompany(new TransferCompany(driverDto.getTransferCompany()));
         }
 
-        logger.debug("saveOrUpdateDriver({}), !!!! driver - {}", driverDto,driver);
+        logger.debug("saveOrUpdateDriver({}), \ndriver - {}", driverDto,driver);
         if (driver.getId() > -1){
             driver = update(driver);
         } else {
