@@ -51,7 +51,7 @@ class Clients extends React.Component {
         if (selectedRowKeys.length == 0) {
             this.props.showDialog("Не выделена ни одна строка для удаления", '', []);
         } else {
-            this.props.showDialog("Вы действительно хотите приостановаить деятельность выбранных компаний?", '', [
+            this.props.showDialog("Вы действительно изменить статус выбранных компаний?", '', [
                 {
                     btnStyle: "btn btn-success",
                     text: "Ок",
@@ -141,7 +141,7 @@ class Clients extends React.Component {
                             <div className="panel-heading">Действия</div>
                             <div className="panel-body">
                                 <button className="btn btn-default btn-block" onClick={this.onBtnSaveClick}>Создать</button>
-                                <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
+                                <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Изменить статус компании(активна/неактивна)</button>
                             </div>
                         </div>
 
