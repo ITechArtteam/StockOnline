@@ -64,6 +64,8 @@ public class StockOwnerCompanyController {
                 error.getMessage() , new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
+
+
     @ExceptionHandler(value = ValidationError.class)
     public ResponseEntity<Object> fieldHasErrors(ValidationError error){
         logger.error("fieldHasErrors({})", error.toString());

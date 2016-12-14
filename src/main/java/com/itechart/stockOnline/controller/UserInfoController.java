@@ -29,4 +29,7 @@ public class UserInfoController {
         logger.debug("user:{} got roles: {}", userInfo.getUsername(), userInfo.getRoles());
         return userInfo;
     }
+
+
+
 }

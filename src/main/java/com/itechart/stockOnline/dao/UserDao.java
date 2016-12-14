@@ -1,7 +1,5 @@
 package com.itechart.stockOnline.dao;
 
-
-import com.itechart.stockOnline.model.Role;
 import com.itechart.stockOnline.model.StockOwnerCompany;
 import com.itechart.stockOnline.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
