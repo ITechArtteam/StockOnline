@@ -6,6 +6,12 @@ const initUserState = {
         stockRooms: {
             selectedRoomName: null,
             rooms: [],
+            validationErrors: {
+                roomsError: '',
+                numberError: '',
+                costError: '',
+                storageError: ''
+            },
             addRoomModalForm: {
                 isOpen: false,
                 number: '',
@@ -433,6 +439,64 @@ export default function (state = initUserState, action) {
                                 ...state.data.stockRooms.addRoomModalForm.shelfs,
                                 action.shelf
                             ]
+                        }
+                    }
+                }
+            };
+        case event.EDIT_STOCK_FORM_SET_ROOMS_ERROR:
+            return {
+                ...state,data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        validationErrors: {
+                            ...state.validationErrors,
+                            roomsError: action.error
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_COST_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        validationErrors: {
+                            ...state.validationErrors,
+                            costError: action.error
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_NUMBER_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        validationErrors: {
+                            ...state.validationErrors,
+                            numberError: action.error
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_STORAGE_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        validationErrors: {
+                            ...state.validationErrors,
+                            storageError: action.error
                         }
                     }
                 }
