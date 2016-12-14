@@ -48,6 +48,7 @@ public class StockDtoConverter {
         dto.setStreet(address.getStreet());
         dto.setHome(address.getHome());
         dto.setName(stock.getName());
+        dto.setStockRooms(new StockRoomsDto(new ValidationRooms("","","","")));
         dto.setNameCompany(stock.getCompany().getName());
         Set<RoomDto> roomsDto = new HashSet<RoomDto>();
         if(CollectionUtils.isNotEmpty(stock.getRooms())){
@@ -67,6 +68,7 @@ public class StockDtoConverter {
         roomDto.setCost(room.getCost());
         roomDto.setNumber(room.getNumber());
         roomDto.setStorage(room.getStorage().getType());
+        roomDto.setValidationErrors(new ValidationShelf("","",""));
         return roomDto;
     }
 

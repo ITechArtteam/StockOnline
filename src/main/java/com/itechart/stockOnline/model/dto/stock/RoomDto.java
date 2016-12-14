@@ -12,9 +12,14 @@ public class RoomDto {
     private String storage;
     private String selectedShelfName;
     private Set<ShelfDto> shelfs;
+    private ValidationShelf validationErrors;
 
 
     public RoomDto() {
+    }
+
+    public RoomDto(ValidationShelf validationErrors) {
+        this.validationErrors = validationErrors;
     }
     @Deprecated
     public Boolean getIsOpen() { return isOpen; }
@@ -41,15 +46,20 @@ public class RoomDto {
     public Set<ShelfDto> getShelfs() { return shelfs; }
     public void setShelfs(Set<ShelfDto> shelfs) { this.shelfs = shelfs; }
 
+    public ValidationShelf getValidationErrors() { return validationErrors; }
+    public void setValidationErrors(ValidationShelf validationErrors) { this.validationErrors = validationErrors; }
+
     @Override
     public String toString() {
         return "RoomDto{" +
                 "isOpen=" + isOpen +
-                ", id=" + idRoom +
+                ", idRoom=" + idRoom +
                 ", cost=" + cost +
                 ", number='" + number + '\'' +
                 ", storage='" + storage + '\'' +
+                ", selectedShelfName='" + selectedShelfName + '\'' +
                 ", shelfs=" + shelfs +
+                ", validationErrors=" + validationErrors +
                 '}';
     }
 }

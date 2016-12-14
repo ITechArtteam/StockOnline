@@ -26,7 +26,7 @@ export function checkShelfNumber(number, shelfs) {
     else if (containsIllegalSymbols(name)) {
         return 'Содержатся недопустимые символы';
     }
-    else if (roomExists(shelfs, number)) {
+    else if (shelfExists(shelfs, number)) {
         return 'Место хранение с таким номером уже добавлено';
     }
     else {
@@ -71,9 +71,23 @@ export function checkStorage(storage) {
     }
 }
 
+function shelfExists(shelfs, number) {
+    if(!!shelfs){
+        return shelfs.filter(function(shelf) {
+                return shelf.number == number;
+            }).length > 0;
+    }else{
+        return false;
+    }
+
+}
 
 function roomExists(rooms, number) {
-    return rooms.filter(function(room) {
-        return room.number == number;
-    }).length > 0;
+    if(!!rooms){
+        return rooms.filter(function(room) {
+                return room.number == number;
+            }).length > 0;
+    }else{
+        return false;
+    }
 }
