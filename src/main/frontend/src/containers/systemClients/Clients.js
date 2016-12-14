@@ -51,7 +51,7 @@ class Clients extends React.Component {
         if (selectedRowKeys.length == 0) {
             this.props.showDialog("Не выделена ни одна строка для удаления", '', []);
         } else {
-            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", '', [
+            this.props.showDialog("Вы действительно хотите приостановаить деятельность выбранных компаний?", '', [
                 {
                     btnStyle: "btn btn-success",
                     text: "Ок",
