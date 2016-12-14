@@ -47,13 +47,13 @@ public class WorkerController {
 
     @RequestMapping(value = "/worker/{id}", method = RequestMethod.GET)
     public User getWorker(@PathVariable Long id) {
-        LOGGER.debug("REST request. Path:/worker/{id}  method: GET", id);
+        LOGGER.debug("REST request. Path:/worker/{}  method: GET", id);
         return workerService.get(id);
     }
 
     @RequestMapping(value = "/worker/{id}", method = RequestMethod.DELETE)
     public void deleteWorker(@PathVariable Long id, HttpServletResponse response) {
-        LOGGER.debug("REST request. Path:/worker/{id}  method: DELETE", id);
+        LOGGER.debug("REST request. Path:/worker/{}  method: DELETE", id);
         workerService.delete(id);
         response.addHeader("result", "Работник удалён.");
     }
@@ -61,15 +61,15 @@ public class WorkerController {
 
     @RequestMapping(value = "/workers", method = RequestMethod.DELETE)
     public void deleteWorkers(@RequestParam(value = "ids") List<Long> workersId, HttpServletResponse response ) {
-        LOGGER.debug("REST request. Path:/workers?ids={}  method: DELETE Request body {workers}", workersId);
+        LOGGER.debug("REST request. Path:/workers?ids={}  method: DELETE Request body {}", workersId);
         workerService.delete(workersId.toArray(new Long[workersId.size()]));
         response.addHeader("result", "Работник удалён.");
     }
 
     @RequestMapping(value = "/worker", method = RequestMethod.POST)
     public void saveWorker(@RequestBody User worker, HttpServletResponse response) {
-        LOGGER.debug("REST request. Path:/worker  method: POST Request body {worker}", worker);
-        User saveWorker = workerService.save(worker);
+        LOGGER.debug("REST request. Path:/worker  method: POST Request body {}", worker);
+        workerService.save(worker);
         response.addHeader("result", "Работник сохранен.");
     }
 

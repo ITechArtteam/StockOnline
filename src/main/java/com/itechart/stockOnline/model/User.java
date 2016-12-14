@@ -161,6 +161,16 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id + "}";
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", address=" + address +
+                ", roles=" + roles +
+                '}';
     }
 }
