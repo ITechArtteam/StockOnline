@@ -19,9 +19,9 @@ class LogoutButton extends React.Component {
 
     render() {
         return(
-            <p className={this.props.roles[0] === "ROLE_GUEST" ? "none" : "navbar-text"}>
+            <div className="navbar-text pointer-cursor">
                 <a className="navbar-link" onClick={this.onLogoutClick}>Выйти</a>
-            </p>
+            </div>
         )
     }
 }

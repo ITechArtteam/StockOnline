@@ -5,3 +5,7 @@
     float: right;
     font-size: 10pt;
 }
+
+.pointer-cursor * {
+    cursor: pointer;
+}
