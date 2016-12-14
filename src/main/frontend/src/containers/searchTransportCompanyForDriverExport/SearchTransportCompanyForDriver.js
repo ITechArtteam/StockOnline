@@ -77,6 +77,9 @@ class SearchTransportCompanyForDriver extends React.Component {
     }
 
     next() {
+        if (this.props.driver.data.serialAndNumber.length == 0){
+            return;
+        }
         let driver = {
             id: this.props.driver.data.id,
             firstName: this.props.driver.data.name,
