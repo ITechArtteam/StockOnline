@@ -28,7 +28,7 @@ export function signInUser(credentials) {
                                 browserHistory.push('/registrationOfGoods');
                                 break;
                             case "MANAGER":
-                                browserHistory.push('/goods/receipt');
+                                browserHistory.push('/goods/departure');
                                 break;
                             case "CONTROLLER":
                                 browserHistory.push('/goods/checkInput');
