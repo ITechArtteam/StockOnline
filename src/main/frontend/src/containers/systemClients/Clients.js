@@ -25,6 +25,10 @@ class Clients extends React.Component {
         this.onBtnClearFilterClick();
     }
 
+    componentWillUnmount() {
+        this.props.setDefaultState();
+    }
+
     onPaginationChange(pageNumber) {
         this.refs.table.cleanSelected();
         this.props.getClientList(pageNumber, this.props.page.itemsCountPerPage)
@@ -234,6 +238,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setFilterInputValue: (inputId, value) => {
             dispatch(clientListActionCreator.setFilterInputValue(inputId, value))
+        },
+        setDefaultState: () => {
+            dispatch(clientListActionCreator.setDefaultState());
         }
     }
 };
