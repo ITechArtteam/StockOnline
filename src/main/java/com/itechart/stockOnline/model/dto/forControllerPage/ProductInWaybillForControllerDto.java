@@ -8,7 +8,7 @@ public class ProductInWaybillForControllerDto {
 
     public ProductInWaybillForControllerDto(ProductInWaybill productInWaybill) {
         if(productInWaybill != null) {
-            this.count = productInWaybill.getCount();
+            this.count = productInWaybill.getProduct().getCount();
             if(productInWaybill.getProduct() != null) {
                 this.product = new ProductForControllerDto(productInWaybill.getProduct());
             }

@@ -98,7 +98,7 @@ class WaybillInfo extends React.Component {
                     <BootstrapTable data={products} striped={true}>
                         <TableHeaderColumn headerAlign="center" dataField="name" isKey={true}>Наименование</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataField="storage">Требование к хранению</TableHeaderColumn>
-                        <TableHeaderColumn headerAlign="center" dataField="count">Размещено/Количество</TableHeaderColumn>
+                        <TableHeaderColumn headerAlign="center" dataField="count">Размещено / Количество</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataField="unit" width="50">Ед. измер.</TableHeaderColumn>
                         <TableHeaderColumn headerAlign="center" dataFormat={this.placesFormatter}>Список мест</TableHeaderColumn>
                     </BootstrapTable>
