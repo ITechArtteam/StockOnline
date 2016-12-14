@@ -6,6 +6,7 @@ import {SimpleInput} from "../../components/SimpleInput";
 import {StaticControl} from "../../components/StaticControl";
 import {Link, browserHistory} from "react-router";
 import {searchTransportCompanyForDriverActionCreator} from "./index";
+import moment from "moment";
 import {setDriverInfo, setTransportType} from "../WaybillRegistration/actions.js";
 
 class SearchTransportCompanyForDriver extends React.Component {
@@ -136,7 +137,7 @@ class SearchTransportCompanyForDriver extends React.Component {
                         <StaticControl label={"Имя:"} value={this.props.driver.data.name}/>
                         <StaticControl label={"Фамилия:"} value={this.props.driver.data.surname}/>
                         <StaticControl label={"Отчество:"} value={this.props.driver.data.patronymic}/>
-                        <StaticControl label={"Дата рождения:"} value={this.props.driver.data.birthday}/>
+                        <StaticControl label={"Дата рождения342:"} value={this.props.driver.data.birthday}/>
                     </div>
                 </div>
             </div>
