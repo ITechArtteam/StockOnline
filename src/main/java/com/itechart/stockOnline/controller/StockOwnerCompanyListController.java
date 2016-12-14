@@ -45,7 +45,7 @@ public class StockOwnerCompanyListController {
         names = names.stream().map(ControllerHelper::convertToUtf).collect(Collectors.toList());
         Logger.info("REST request. Path:/stockOwners/?namesToDelete={}  method: DELETE", names);
         long deletedCount = stockOwnerCompanyService.deleteByNames(names);
-        return new ResponseEntity<>("Приостановлена деятельность " + deletedCount + " компаний", HttpStatus.OK);
+        return new ResponseEntity<>("Изменен статус " + deletedCount + " компаний", HttpStatus.OK);
     }
 
     @ExceptionHandler(value = DataNotFoundError.class)

@@ -83,7 +83,7 @@ let deleteClients = clientNamesList => {
                 dispatch(
                     getClientList(1, getState().clientListReducer.page.itemsCountPerPage));
             })
-            .catch(error => dispatch(showDialog(`Произошла ошибка при удалении. ${error}`, 'danger', [])))
+            .catch(error => dispatch(showDialog(`Произошла ошибка при изменении статуса компании. ${error}`, 'danger', [])))
     }
 };
 
