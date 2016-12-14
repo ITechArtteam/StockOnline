@@ -23,11 +23,11 @@ class Navigation extends React.Component {
                     <ul className="nav navbar-nav col-sm-8 col-md-8 col-lg-8">
                         <NavigationButton mustHaveRoles={["ROLE_GUEST"]} to="/login" buttonText="Войти"/>
                         <NavigationButton mustHaveRoles={["SUPER_ADMIN"]} to="/clients" buttonText="Клиенты"/>
-                        <NavigationButton mustHaveRoles={["BOSS_STOCK"]} to="/reports" buttonText="Отчеты"/>
+                        {/*<NavigationButton mustHaveRoles={["BOSS_STOCK"]} to="/reports" buttonText="Отчеты"/>
                         <NavigationButton mustHaveRoles={["SUPER_ADMIN"]} to="/report/income"
                                           buttonText="Отчет о прибыли"/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK"]} to="/report/standard"
-                                          buttonText="Стандартные отчеты"/>
+                                          buttonText="Стандартные отчеты"/>*/}
                         <NavigationButton mustHaveRoles={["ADMIN"]} to="/stocks" buttonText="Склады"/>
                         <NavigationButton mustHaveRoles={["ADMIN"]} to="/workers" buttonText="Сотрудники"/>
                         <NavigationButton mustHaveRoles={["DISPATCHER"]} to="/registrationOfGoods" buttonText="Регистрация товаров"/>

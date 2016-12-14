@@ -55,9 +55,9 @@ ReactDOM.render(
                 <IndexRedirect to="/login" />
                 <Route path="/clients" requiredRole={["SUPER_ADMIN"]} component={RequireRole(Clients)}/>
                 <Route path="/client(/:name)" requiredRole={["SUPER_ADMIN"]} component={RequireRole(EditClient)}/>
-                <Route path="/reports" requiredRole={["BOSS_STOCK"]} component={RequireRole(Reports)}/>
+                {/*<Route path="/reports" requiredRole={["BOSS_STOCK"]} component={RequireRole(Reports)}/>
                 <Route path="/report/income" requiredRole={["SUPER_ADMIN"]} component={RequireRole(ReportIncome)}/>
-                <Route path="/report/standard" requiredRole={["BOSS_STOCK"]} component={RequireRole(ReportStandard)}/>
+                <Route path="/report/standard" requiredRole={["BOSS_STOCK"]} component={RequireRole(ReportStandard)}/>*/}
                 <Route path="/stocks" requiredRole={["ADMIN"]} component={RequireRole(Stocks)}/>
                 <Route path="/stock(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditStock)}/>
                 <Route path="/workers" requiredRole={["ADMIN"]} component={RequireRole(WorkersContainer)}/>
