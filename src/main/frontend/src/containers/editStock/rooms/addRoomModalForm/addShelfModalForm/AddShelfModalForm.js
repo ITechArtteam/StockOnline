@@ -91,14 +91,14 @@ class AddShelfModalForm extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        isOpen:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.isOpen   : state.stock.data.stockRooms.addRoomModalForm.shelfs.isOpen   : false : false,
-        number:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.number   : state.stock.data.stockRooms.addRoomModalForm.shelfs.number   : ''    : '',
-        capacity: (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.capacity : state.stock.data.stockRooms.addRoomModalForm.shelfs.capacity : ''    : '',
-        isFree:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.isFree   : state.stock.data.stockRooms.addRoomModalForm.shelfs.isFree   : true : true,
-        idShelf:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.idShelf       : state.stock.data.stockRooms.addRoomModalForm.shelfs.idShelf       : -1    : -1,
-        numberError:   state.stock.data.stockRooms.addRoomModalForm.validationErrors.numberError,
-        capacityError: state.stock.data.stockRooms.addRoomModalForm.validationErrors.capacityError,
-        shelfs:        (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.addRoomModalForm.shelfs  : []
+        isOpen:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.isOpen   : false : false : false,
+        number:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.number   : ''    : ''    : '',
+        capacity: (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.capacity : ''    : ''    : '',
+        isFree:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.isFree   : true  : true  : true,
+        idShelf:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.idShelf  : -1    : -1    : -1,
+        numberError:   (!!state.stock.data.stockRooms.addRoomModalForm) ? (!!state.stock.data.stockRooms.addRoomModalForm.validationErrors) ? state.stock.data.stockRooms.addRoomModalForm.validationErrors.numberError   : '' : '',
+        capacityError: (!!state.stock.data.stockRooms.addRoomModalForm) ? (!!state.stock.data.stockRooms.addRoomModalForm.validationErrors) ? state.stock.data.stockRooms.addRoomModalForm.validationErrors.capacityError : '' : '',
+        shelfs:        (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.shelfs  : []
     }
 }
 const mapDispatchToProps = (dispatch) => {

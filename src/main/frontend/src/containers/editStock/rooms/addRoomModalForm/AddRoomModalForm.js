@@ -117,14 +117,14 @@ class AddRoomModalForm extends React.Component {
 function mapStateToProps(state) {
     return {
         shelfs:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.shelfs  : state.stock.data.stockRooms.rooms.shelfs  : [],
-        isOpen:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.isOpen  : state.stock.data.stockRooms.rooms.isOpen  : false,
+        isOpen:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.isOpen  : state.stock.data.stockRooms.rooms.isOpen  : true,
         number:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.number  : state.stock.data.stockRooms.rooms.number  : '',
         cost:    (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.cost    : state.stock.data.stockRooms.rooms.cost    : '',
         storage: (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.storage : state.stock.data.stockRooms.rooms.storage : '',
         idRoom:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.idRoom  : state.stock.data.stockRooms.rooms.idRoom  : -1,
-        numberError:  (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.numberError  : '1',
-        costError:    (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.costError    : '1',
-        storageError: (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.storageError : '1',
+        numberError:  (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.numberError  : '',
+        costError:    (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.costError    : '',
+        storageError: (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.storageError : '',
         rooms:        (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.rooms  : []
     }
 }
