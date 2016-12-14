@@ -17,4 +17,6 @@ public interface ActService {
     Act save(Act act);
 
     List<Act> getByCompany(Long id);
+
+    void updateProductCount(Act act);
 }

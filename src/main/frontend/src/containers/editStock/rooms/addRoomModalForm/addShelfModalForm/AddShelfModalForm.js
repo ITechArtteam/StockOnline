@@ -12,20 +12,52 @@ import {
 } from 'react-modal-bootstrap'
 
 import TextInput from '../../../../../components/TextInput/TextInput'
-
+import {
+    checkShelfNumber,
+    checkShelfCapacity
+} from './../validation'
 class AddShelfModalForm extends React.Component {
 
     handleSaveShelf() {
-        this.props.addShelf({
-            number: this.props.number,
-            capacity: this.props.capacity,
-            isFree: this.props.isFree,
-            idShelf: this.props.idShelf
-        });
-        this.props.hideAddShelfModalForm();
-        this.props.clearAddShelfModalFormFields();
+        const errors = this.validateForm();
+        if (errors.length < 1) {
+            this.props.addShelf({
+                number: this.props.number,
+                capacity: this.props.capacity,
+                isFree: this.props.isFree,
+                idShelf: this.props.idShelf
+            });
+            this.props.hideAddShelfModalForm();
+            this.props.clearAddShelfModalFormFields();
+        }
+    }
+    validateForm() {
+        let errors = [];
+        let error;
+        if ((error = this.validateShelfNumber())) {
+            if (error != ''){
+                errors.push(error);
+            }
+        }
+        if ((error = this.validateShelfCapacity())) {
+            if (error != '') {
+                errors.push(error);
+            }
+        }
+        return errors;
     }
 
+    validateShelfNumber() {
+        const error = checkShelfNumber(this.props.number, this.props.shelfs);
+        this.props.setShelfNumberError(error);
+        return error;
+    }
+
+    validateShelfCapacity() {
+        const error = checkShelfCapacity(this.props.capacity);
+        this.props.setShelfCapacityError(error);
+        return error;
+    }
     render() {
         return (
             <Modal isOpen={this.props.isOpen} onRequestHide={this.props.hideAddShelfModalForm}>
@@ -36,13 +68,17 @@ class AddShelfModalForm extends React.Component {
                 <ModalBody>
                     <TextInput
                         label="Место хранение"
+                        error={this.props.numberError}
                         value={this.props.number}
-                        onChange={this.props.changeShelfNumber} />
+                        onChange={this.props.changeShelfNumber}
+                        onBlur={() => {this.props.setShelfNumberError(checkShelfNumber(this.props.number))}}/>
 
                     <TextInput
                         label="Вместимость"
+                        error={this.props.capacityError}
                         value={this.props.capacity}
-                        onChange={this.props.changeShelfCapacity} />
+                        onChange={this.props.changeShelfCapacity}
+                        onBlur={() => {this.props.setShelfCapacityError(checkShelfCapacity(this.props.capacity))}}/>
                 </ModalBody>
                 <ModalFooter>
                     <input type="button" className='btn btn-default' onClick={this.props.hideAddShelfModalForm} value="Отмена" />
@@ -59,7 +95,10 @@ function mapStateToProps(state) {
         number:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.number   : state.stock.data.stockRooms.addRoomModalForm.shelfs.number   : ''    : '',
         capacity: (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.capacity : state.stock.data.stockRooms.addRoomModalForm.shelfs.capacity : ''    : '',
         isFree:   (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.isFree   : state.stock.data.stockRooms.addRoomModalForm.shelfs.isFree   : true : true,
-        idShelf:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.idShelf       : state.stock.data.stockRooms.addRoomModalForm.shelfs.idShelf       : -1    : -1
+        idShelf:  (!!state.stock.data.stockRooms)  ? (!!state.stock.data.stockRooms.addRoomModalForm)  ? (!!state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm) ? state.stock.data.stockRooms.addRoomModalForm.addShelfModalForm.idShelf       : state.stock.data.stockRooms.addRoomModalForm.shelfs.idShelf       : -1    : -1,
+        numberError:   state.stock.data.stockRooms.addRoomModalForm.validationErrors.numberError,
+        capacityError: state.stock.data.stockRooms.addRoomModalForm.validationErrors.capacityError,
+        shelfs:        (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.addRoomModalForm.shelfs  : []
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -81,6 +120,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         selectShelfUnit:(unit) => {
             dispatch(stockActionCreator.selectRoomUnit(unit))
+        },
+        setShelfsError:(error) => {
+            dispatch(stockActionCreator.setShelfsError(error))
+        },
+        setShelfNumberError:(error) => {
+            dispatch(stockActionCreator.setShelfNumberError(error))
+        },
+        setShelfCapacityError:(error) => {
+            dispatch(stockActionCreator.setShelfCapacityError(error))
         }
     }
 };

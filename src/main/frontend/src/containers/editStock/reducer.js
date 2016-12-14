@@ -6,6 +6,12 @@ const initUserState = {
         stockRooms: {
             selectedRoomName: null,
             rooms: [],
+            validationErrors: {
+                roomsError: '',
+                numberError: '',
+                costError: '',
+                storageError: ''
+            },
             addRoomModalForm: {
                 isOpen: false,
                 number: '',
@@ -14,6 +20,11 @@ const initUserState = {
                 idRoom: -1,
                 selectedShelfName: null,
                 shelfs: [],
+                validationErrors: {
+                    shelfsError: '',
+                    numberError: '',
+                    capacityError: ''
+                },
                 addShelfModalForm: {
                     isOpen: false,
                     number: '',
@@ -433,6 +444,118 @@ export default function (state = initUserState, action) {
                                 ...state.data.stockRooms.addRoomModalForm.shelfs,
                                 action.shelf
                             ]
+                        }
+                    }
+                }
+            };
+        case event.EDIT_STOCK_FORM_SET_ROOMS_ERROR:
+            return {
+                ...state,data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        validationErrors: {
+                            ...state.data.stockRooms.validationErrors,
+                            roomsError: action.error
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_COST_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        validationErrors: {
+                            ...state.data.stockRooms.validationErrors,
+                            costError: action.error
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_NUMBER_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        validationErrors: {
+                            ...state.data.stockRooms.validationErrors,
+                            numberError: action.error
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_STORAGE_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        validationErrors: {
+                            ...state.data.stockRooms.validationErrors,
+                            storageError: action.error
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_SET_SHELFS_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            validationErrors: {
+                                ...state.data.stockRooms.addRoomModalForm.validationErrors,
+                                numberError: action.error
+                            }
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SET_NUMBER_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            validationErrors: {
+                                ...state.data.stockRooms.addRoomModalForm.validationErrors,
+                                numberError: action.error
+                            }
+                        }
+                    }
+                }
+            };
+
+        case event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SET_CAPACITY_ERROR:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    stockRooms: {
+                        ...state.data.stockRooms,
+                        addRoomModalForm: {
+                            ...state.data.stockRooms.addRoomModalForm,
+                            validationErrors: {
+                                ...state.data.stockRooms.addRoomModalForm.validationErrors,
+                                capacityError: action.error
+                            }
                         }
                     }
                 }

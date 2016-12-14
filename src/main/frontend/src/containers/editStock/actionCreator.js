@@ -257,6 +257,56 @@ function showAddShelfModalForm() {
     }
 }
 
+function setRoomsError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_SET_ROOMS_ERROR,
+        error
+    }
+}
+
+
+function setRoomCostError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_COST_ERROR,
+        error
+    }
+}
+
+function setRoomNumberError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_NUMBER_ERROR,
+        error
+    }
+}
+
+function setRoomStorageError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_ROOM_MODAL_FORM_SET_STORAGE_ERROR,
+        error
+    }
+}
+
+function setShelfsError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_SET_SHELFS_ERROR,
+        error
+    }
+}
+
+
+function setShelfCapacityError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SET_CAPACITY_ERROR,
+        error
+    }
+}
+
+function setShelfNumberError(error) {
+    return {
+        type: event.EDIT_STOCK_FORM_ADD_SHELF_MODAL_FORM_SET_NUMBER_ERROR,
+        error
+    }
+}
 
 
 
@@ -287,5 +337,12 @@ export default {
     selectShelfUnit,
     selectShelf,
     deleteShelf,
-    showAddShelfModalForm
+    showAddShelfModalForm,
+    setRoomsError,
+    setRoomCostError,
+    setRoomNumberError,
+    setRoomStorageError,
+    setShelfsError,
+    setShelfCapacityError,
+    setShelfNumberError
 };

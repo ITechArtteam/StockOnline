@@ -89,7 +89,7 @@ class Rooms extends React.Component {
 function mapStateToProps(state) {
     return {
         rooms: (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.rooms: [],
-        selectedRoomName: (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.selectedRoomName : null,
+        selectedRoomName: (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.selectedRoomName : null
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -117,7 +117,19 @@ const mapDispatchToProps = (dispatch) => {
         },
         createAddRoomModalForm:() => {
             dispatch(stockActionCreator.createAddRoomModalForm())
-        }
+        },
+        setRoomsError:(error) => {
+            dispatch(stockActionCreator.setRoomsError(error))
+        },
+        setRoomCostError:(error) => {
+            dispatch(stockActionCreator.setRoomCostError(error))
+        },
+        setRoomNumberError:(error) => {
+            dispatch(stockActionCreator.setRoomNumberError(error))
+        },
+        setRoomStorageError:(error) => {
+            dispatch(stockActionCreator.setRoomStorageError(error))
+    }
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);

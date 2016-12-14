@@ -16,7 +16,7 @@ import workersReducer from "./workers-reducer";
 import companyReducer from "./company-reducer";
 import actsReducer from "./acts-reducer";
 import actReducer from "./act-reducer";
-import Stock from '../containers/editStock/reducer';
+import StockReducer from './../containers/editStock/reducer';
 import Driver from './../containers/editDriver/reducer';
 import roleReducer from "./role-reducer"
 import {distributionGoodsReducer} from '../containers/distributionGoods/index'
@@ -39,7 +39,7 @@ const rootReducer = combineReducers({
     stockListReducer,
     navigation,
     checkGoodsReducer,
-    stock: Stock,
+    stock: StockReducer,
     distributionGoodsReducer,
     driver: Driver,
     waybillsReducer

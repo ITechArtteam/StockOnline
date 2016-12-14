@@ -58,7 +58,7 @@ public class DistributionGoodsServiceImpl implements DistributionGoodsService {
 
                 //set free only if no more free space
                 shelf1.setFree(false);
-                shelfService.save(shelf1);
+                shelfService.update(shelf1);
             });
             product.setStatus(ProductStatus.APPROVED_FOR_STORAGE);
             productService.save(product);

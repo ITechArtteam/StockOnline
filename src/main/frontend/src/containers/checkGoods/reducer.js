@@ -1,41 +1,19 @@
 import * as event from './constants'
-
+import * as types from "../../actions/action-types";
 let initGoodsState = {
     waybill: {
-        number: 123,
-        status: 0,
+        number: "",
+        status: "",
         registeredBy: {
             name: '',
             surname: '',
             patronymic: ''
         },
-        productInWaybills: [
-            {
-                count: 10,
-                product: {
-                    name: 'Яблоко',
-                    unit: 1,
-                    storage: {
-                        type: 'Нет требований'
-                    }
-                }
-            },
-            {
-                count: 20,
-                product: {
-                    name: 'Груша',
-                    unit: 2,
-                    storage: {
-                        type: 'Нет требований'
-                    }
-                }
-            }],
+        productInWaybills: [],
         transport: {
-            type: 1,
-            number: 'AC 2013',
-            storage: {
-                type: 'Нет требований'
-            }
+            type:"",
+            number:"",
+            storage:{type:""}
         }
     },
     alert: {
@@ -71,6 +49,9 @@ export default (state = initGoodsState, action) => {
             return state;
         case event.SET_WAYBILL_VISIBILITY:
             return {...state, frontend: {...state.frontend, waybillVisible: action.payload}};
+
+        case types.INITIAL_STATE_CHECK_GOODS:
+            return Object.assign({}, state, initGoodsState);
         default:
             return state;
     }

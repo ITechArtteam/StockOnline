@@ -56,6 +56,9 @@ public class WaybillServiceImpl implements WaybillService {
     private WaybillDtoConverter waybillDtoConverter;
 
     @Autowired
+    private ActService actService;
+
+    @Autowired
     public WaybillServiceImpl(WaybillDao waybillDao) {
         this.waybillDao = waybillDao;
     }
@@ -98,12 +101,15 @@ public class WaybillServiceImpl implements WaybillService {
         if (act.getId()!=null) {
             act.setId(null);
             act.setWaybill(waybill);
+            Act finalAct = act;
             act.getProductInActs().forEach((productInAct) -> {
                 productInAct.setId(null);
-                productInAct.setAct(act);
+                productInAct.setAct(finalAct);
             });
-            actRepository.save(act);
+            act = actRepository.save(act);
+            actService.updateProductCount(act);
         }
+
     }
 
     @Override
@@ -115,6 +121,7 @@ public class WaybillServiceImpl implements WaybillService {
     }
 
     @Override
+    @Transactional
     public void setWaybillAndProductsStatus(Waybill waybill, WaybillStatus waybillStatus, ProductStatus productStatus) {
         Logger.info("setWaybillAndProductsStatus(): waybillStatus - {}, productStatus - {} by waybill object {}", waybillStatus, productStatus, waybill);
 

@@ -6,7 +6,8 @@ import NavigationButton from "./NavigationButton";
 import LogoutButton from "./LogoutButton";
 import {navigationActionCreator} from "./index";
 import {browserHistory} from "react-router";
-
+import * as checkGoodsApi from "../../api/check_goods-api";
+import * as actApi from "../../api/act-api";
 class Navigation extends React.Component {
 
     componentWillMount() {
@@ -36,9 +37,15 @@ class Navigation extends React.Component {
                                           buttonText="Распределение товара"/>
                         <NavigationButton mustHaveRoles={["MANAGER"]} to="/goods/departure" buttonText="Убытие товара"/>
                         <NavigationButton mustHaveRoles={["CONTROLLER"]} to="/goods/checkInput"
-                                          buttonText="Проверка прибывших товаров"/>
+                                          buttonText="Проверка прибывших товаров" onClick={()=> {
+                            checkGoodsApi.clearReducer();
+                            actApi.clearReducer();
+                        }}/>
                         <NavigationButton mustHaveRoles={["CONTROLLER"]} to="/goods/checkOutput"
-                                          buttonText="Проверка выданных товаров"/>
+                                          buttonText="Проверка выданных товаров" onClick={()=> {
+                            checkGoodsApi.clearReducer();
+                            actApi.clearReducer();
+                        }}/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK", "CONTROLLER"]} to="/goods" buttonText="Товары"/>
                         <NavigationButton mustHaveRoles={["BOSS_STOCK"]} to="/acts" buttonText="Акты"/>
                     </ul>

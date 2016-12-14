@@ -261,7 +261,7 @@ class EditWorker extends React.Component {
                     <Form horizontal id="worker_form">
                         <FormGroup validationState={this.state.validationsState.company.status}>
                             <Col smOffset={2} sm={2} componentClass={ControlLabel}>
-                                Компания
+                                Компания<span className="required-star">*</span>
                             </Col>
                             <Col sm={6}>
                                 <FormControl placeholder="Компания" readOnly
@@ -280,7 +280,7 @@ class EditWorker extends React.Component {
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.surname.status}>
                             <Col smOffset={2} sm={2} componentClass={ControlLabel}>
-                                Фамилия
+                                Фамилия<span className="required-star">*</span>
                             </Col>
                             <Col sm={6}>
                                 <FormControl id="surname" placeholder="Фамилия"
@@ -311,6 +311,7 @@ class EditWorker extends React.Component {
                                                 newWorker.birthday = date;
                                                 this.setState({worker: newWorker});
                                                 this.validateValue("birthday", date)
+                                                console.log(date)
                                             }} onFocus={this.clean}
                                 />
                                 <HelpBlock>{this.state.validationsState.birthday.message}</HelpBlock>
@@ -318,7 +319,7 @@ class EditWorker extends React.Component {
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.email.status}>
                             <Col smOffset={2} sm={2} componentClass={ControlLabel}>
-                                Электронная почта
+                                Электронная почта<span className="required-star">*</span>
                             </Col>
                             <Col sm={6}>
                                 <FormControl id="email" placeholder="Электронная почта"
@@ -378,7 +379,7 @@ class EditWorker extends React.Component {
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.roles.status}>
                             <Col smOffset={2} sm={2} componentClass={ControlLabel}>
-                                Роль
+                                Роль<span className="required-star">*</span>
                             </Col>
                             <Col sm={6}>
                                 <Multiselect id="roles" data={this.state.roles}
@@ -396,7 +397,7 @@ class EditWorker extends React.Component {
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.login.status}>
                             <Col smOffset={2} sm={2} componentClass={ControlLabel}>
-                                Логин
+                                Логин<span className="required-star">*</span>
                             </Col>
                             <Col sm={6}>
                                 <FormControl id="login" placeholder="Логин"
@@ -407,7 +408,7 @@ class EditWorker extends React.Component {
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.password.status}>
                             <Col smOffset={2} sm={2} componentClass={ControlLabel}>
-                                Пароль
+                                Пароль<span className="required-star">*</span>
                             </Col>
                             <Col sm={6}>
                                 <FormControl id="password" placeholder="Пароль"
