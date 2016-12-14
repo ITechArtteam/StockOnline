@@ -81,7 +81,16 @@ class WaybillInfo extends React.Component {
                         <div className="panel-body">
                             <b>Тип:</b> <span className="pull-right">{this.props.data.transport.type}</span> <br/>
                             <b>Номер:</b> <span className="pull-right">{this.props.data.transport.number}</span>  <br/>
-                            <b>Требования к хранению:</b> <span className="pull-right">{this.props.data.transport.storage.type}</span>
+                        </div>
+                    </div>
+
+                    <div className="panel panel-default">
+                        <div className="panel-heading">Водитель</div>
+                        <div className="panel-body">
+                            <b>Номер паспорта:</b> <span className="pull-right">{this.props.data.transport.driver.passportNumber}</span> <br/>
+                            <b>ФИО:</b> <span className="pull-right">{this.concatFullName(this.props.data.transport.driver.firstName,
+                            this.props.data.transport.driver.lastName, this.props.data.transport.driver.patronymic)}</span>  <br/>
+                            <b>Дата рождения:</b> <span className="pull-right">{this.props.data.transport.driver.birthDate}</span>
                         </div>
                     </div>
                 </div>
@@ -125,10 +134,7 @@ WaybillInfo.PropTypes = {
         })).isRequired,
         transport: React.PropTypes.objectOf(React.PropTypes.shape({
             type: React.PropTypes.string.isRequired,
-            number: React.PropTypes.string.isRequired,
-            storage: React.PropTypes.objectOf(React.PropTypes.shape({
-                type: React.PropTypes.string.isRequired
-            })).isRequired
+            number: React.PropTypes.string.isRequired
         })).isRequired
     })).isRequired
 };
