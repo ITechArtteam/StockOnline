@@ -35,7 +35,8 @@ public class CheckGoodsController {
     public WaybillForControllerDto getByNumber(@PathVariable String number) {
         number = ControllerHelper.convertToUtf(number);
         Logger.info("REST request. Path:/checkgoods/waybills/{}  method: GET", number);
-        return new WaybillForControllerDto(waybillService.getByNumber(number));
+        WaybillForControllerDto waybillForControllerDto = new WaybillForControllerDto(waybillService.getByNumber(number));
+        return waybillForControllerDto;
     }
 
     @RequestMapping(value = "/controller/waybills/{number}", method = RequestMethod.PUT)

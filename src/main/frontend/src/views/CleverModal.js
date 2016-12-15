@@ -40,26 +40,22 @@ class CleverModal extends React.Component {
 
     onClose = () => {
         this.state.onClose();
-        this.close();
     }
 
     onOk = () => {
         this.state.onOk();
-        this.close();
     }
 
     onCancel = () => {
         this.state.onCancel();
-        this.close();
     }
 
-    close = ()=> {
-        this.setState({show: false});
-    }
+
 
 
     render() {
         return (
+
             <Modal show={this.state.show} onHide={this.onClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{this.state.title}</Modal.Title>

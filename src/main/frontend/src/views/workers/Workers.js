@@ -1,7 +1,8 @@
-import React from "react";;
-import linkState from "react-link-state";
-import {Row, Button, FormGroup, Col, Form, ControlLabel, FormControl, Well} from "react-bootstrap";
+import React from "react";
+import {Row, Button, Col, Well} from "react-bootstrap";
 import WorkerTable from "./WorkersTable";
+import CleverModal from "../../views/CleverModal";
+;
 
 class Workers extends React.Component {
 
@@ -13,11 +14,19 @@ class Workers extends React.Component {
         workers: this.props.workers,
         buttonDisabled: true,
         selected: [],
-        serch:''
+        showDeleteModal: false
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({workers: nextProps.workers});
+    }
+
+    openDeleteModal = ()=> {
+        this.setState({showDeleteModal: true});
+    }
+
+    closeDeleteModal = ()=> {
+        this.setState({showDeleteModal: false});
     }
 
     onCreateClick = ()=> {
@@ -30,18 +39,23 @@ class Workers extends React.Component {
     }
 
     onDeleteClick = ()=> {
+        this.openDeleteModal()
+    }
+
+    deleteWorkers = ()=> {
         this.props.onDeleteClick(this.state.selected);
         this.setState({selected: []});
+        this.closeDeleteModal();
     }
 
-    onSelectAll = (selectedRowKeys) =>{
+    onSelectAll = (selectedRowKeys) => {
         this.swithDisabledButton(selectedRowKeys);
-        this.setState({selected:selectedRowKeys});
+        this.setState({selected: selectedRowKeys});
     }
 
-    onRowSelect = (selectedRowKeys) =>{
+    onRowSelect = (selectedRowKeys) => {
         this.swithDisabledButton(selectedRowKeys);
-        this.setState({selected:selectedRowKeys});
+        this.setState({selected: selectedRowKeys});
     }
 
     swithDisabledButton = (selectedRowKeys)=> {
@@ -66,8 +80,12 @@ class Workers extends React.Component {
                     </Well>
                 </Col>
                 <Col xs={9}>
-                    <WorkerTable workers={this.state.workers} selected={this.state.selected} serch={this.state.serch} onSelectAll={this.onSelectAll} onRowSelect={this.onRowSelect}/>
+                    <WorkerTable workers={this.state.workers} selected={this.state.selected} serch={this.state.serch}
+                                 onSelectAll={this.onSelectAll} onRowSelect={this.onRowSelect}/>
                 </Col>
+                <CleverModal show={this.state.showDeleteModal}
+                             title="Вы уверены, что хотите удалить выбранных работников?"
+                             onOk={this.deleteWorkers } onClose={this.closeDeleteModal} onCancel={this.closeDeleteModal}/>
             </Row>
         )
     }

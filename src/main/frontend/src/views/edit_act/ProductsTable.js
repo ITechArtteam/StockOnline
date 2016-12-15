@@ -1,6 +1,17 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from "react-bootstrap-table";
-import {Row, Button, Modal, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Form, ButtonGroup} from "react-bootstrap";
+import {
+    Row,
+    Button,
+    Modal,
+    Col,
+    FormGroup,
+    ControlLabel,
+    HelpBlock,
+    FormControl,
+    Form,
+    ButtonGroup
+} from "react-bootstrap";
 import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
 import DropdownList from "react-widgets/lib/DropdownList";
 import "react-widgets/dist/css/react-widgets.css";
@@ -8,6 +19,8 @@ import _ from "lodash";
 import $ from "jquery";
 import validator from "validator";
 import linkState from "react-link-state";
+import CleverModal from "../../views/CleverModal";
+
 class ProductsTable extends React.Component {
 
     constructor(props) {
@@ -23,6 +36,7 @@ class ProductsTable extends React.Component {
         products_in_act: this.props.products_in_act,
         buttonDisabled: true,
         showModal: false,
+        showWarningModal: false,
         product_in_act: {
             id: "",
             product: {
@@ -126,6 +140,10 @@ class ProductsTable extends React.Component {
     }
 
     onDeleteClick = ()=> {
+        this.openModal();
+    }
+
+    deleteNotes = ()=> {
         var newProducts_in_act = this.state.products_in_act;
         for (var id in this.state.selected) {
             newProducts_in_act = _.remove(newProducts_in_act, (product_in_act)=> {
@@ -134,6 +152,7 @@ class ProductsTable extends React.Component {
         }
         this.setState({products_in_act: newProducts_in_act, selected: []});
         this.props.onUpdate(newProducts_in_act);
+        this.closeModal();
     }
 
     onCloseModal = () => {
@@ -294,6 +313,14 @@ class ProductsTable extends React.Component {
         }
         this.setState({validationsState: newValidationsState});
         return result;
+    }
+
+    closeModal = ()=> {
+        this.setState({showWarningModal: false});
+    }
+
+    openModal = ()=> {
+        this.setState({showWarningModal: true});
     }
 
 
@@ -473,6 +500,8 @@ class ProductsTable extends React.Component {
                         <Button onClick={this.onCloseModal}>Закрыть</Button>
                     </Modal.Footer>
                 </Modal>
+                <CleverModal show={this.state.showWarningModal} title="Вы уверены, что хотите удалить выбранные записи?"
+                             onOk={this.deleteNotes} onClose={this.closeModal} onCancel={this.closeModal}/>
             </div>
         )
     }

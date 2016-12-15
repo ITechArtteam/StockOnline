@@ -1,5 +1,5 @@
 import React from "react";
-import {Row, Button} from "react-bootstrap";
+import {Row} from "react-bootstrap";
 import "react-widgets/dist/css/react-widgets.css";
 class ActCard extends React.Component {
     constructor(props) {
@@ -40,15 +40,27 @@ class ActCard extends React.Component {
                 <div>
                     <Row className="show-grid">
                         <div className="alert alert-info">
-                            Акт прикреплён
-                            <Button onClick={this.onChangeClick}>Изменить</Button>
-                            <Button onClick={this.onDeleteClick}>Удалить</Button>
+                            <div className="row">
+                                <span>Акт прикреплён</span>
+                                <div className="pull-right">
+                                    <div className="btn-group" role="group" aria-label="...">
+                                        <button onClick={this.onChangeClick} className="btn btn-warning pull-right"
+                                                type="button">Изменить
+                                        </button>
+                                        <button onClick={this.onDeleteClick} className="btn btn-danger pull-right"
+                                                type="button">Удалить
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </Row>
                 </div>
             )
         }
-        return (<div></div>)
+        return (
+            <div></div>
+        )
     }
 }
 

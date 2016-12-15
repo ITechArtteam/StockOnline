@@ -14,7 +14,7 @@ let initGoodsState = {
             type:"",
             number:"",
             storage:{type:""},
-            driver: {}
+            driver: {passportNumber:"", firstNmae:"", lustName:"", patronymic:"",birthDate:""}
         }
     },
     alert: {

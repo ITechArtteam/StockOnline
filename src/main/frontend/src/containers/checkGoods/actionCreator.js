@@ -30,6 +30,7 @@ let findWaybillByNumber = (number, status) => {
         dispatch(findWaybillRequest());
         axios.get(`/checkgoods/waybills/${number}`)
             .then(response => {
+                console.log(response)
                 let message = `Накладная №${number} успешно найдена`;
                 if (response.data.status === status) {
                     dispatch(findWaybillSuccess(response.data));

@@ -18,7 +18,8 @@ class CheckGoods extends React.Component {
 
     state = {
         act: this.props.act,
-        showModal: false
+        showCreateModal: false,
+        showDeleteModal: false
     }
 
     componentWillReceiveProps(nextProps) {
@@ -61,14 +62,18 @@ class CheckGoods extends React.Component {
     }
 
     onDeleteClick = () => {
+        this.openDeleteModal();
+    }
+
+    onDeleteAct = () =>{
         actApi.clearReducer();
+        this.closeDeleteModal();
     }
 
 
     onMakeActClick = () => {
-        console.log(this.state)
         if (this.state.act.id) {
-            this.setState({showModal: true});
+            this.setState({showCreateModal: true});
         } else {
             this.makeAct();
         }
@@ -80,8 +85,16 @@ class CheckGoods extends React.Component {
         this.closeModal()
     }
 
-    closeModal = ()=> {
-        this.setState({showModal: false});
+    closeCreateModal = ()=> {
+        this.setState({showCreateModal: false});
+    }
+
+    openDeleteModal = ()=> {
+        this.setState({showDeleteModal: true});
+    }
+
+    closeDeleteModal = ()=> {
+        this.setState({showDeleteModal: false});
     }
 
     redirect = (path) => {
@@ -135,8 +148,10 @@ class CheckGoods extends React.Component {
                             message={this.props.alert.text}
                             buttons={this.props.alert.buttons}
                             type={this.props.alert.type}/>
-                <CleverModal show={this.state.showModal} title="Вы уверены, что хотите перезаписать акт?"
-                             onOk={this.makeAct} onClose={this.closeModal} onCancel={this.closeModal}/>
+                <CleverModal show={this.state.showCreateModal} title="Вы уверены, что хотите перезаписать акт?"
+                             onOk={this.makeAct} onClose={this.closeCreateModal} onCancel={this.closeCreateModal}/>
+                <CleverModal show={this.state.showDeleteModal} title="Вы уверены, что хотите удалить акт?"
+                             onOk={this.onDeleteAct} onClose={this.closeDeleteModal} onCancel={this.closeDeleteModal}/>
 
             </div>
 

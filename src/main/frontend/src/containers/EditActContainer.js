@@ -5,8 +5,7 @@ import $ from "jquery";
 import * as actApi from "../api/act-api";
 import * as productsApi from "../api/products-api";
 import CleverPanel from "../views/CleverPanel";
-import {Row, Col} from "react-bootstrap";
-import {browserHistory} from 'react-router';
+import {browserHistory} from "react-router";
 class EditActContainer extends React.Component {
 
     constructor(props) {
@@ -25,12 +24,12 @@ class EditActContainer extends React.Component {
         actApi.saveActInStore(act);
     }
 
-    redirectAfteClose = ()=>{
+    redirectAfteClose = ()=> {
         browserHistory.go(-1);
         window.scrollTo(0, 0);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
 
     }
 
@@ -45,12 +44,11 @@ class EditActContainer extends React.Component {
     render() {
         return (
             <div>
-
-                        <CleverPanel response={this.props.actResponse}/>
-
+                <CleverPanel response={this.props.actResponse}/>
                 <EditAct act={this.props.act} controller_username={this.props.controller_username}
                          controller_id={this.props.controller_id} act_status={this.props.act_status}
-                         products={this.props.products} onSaveClick={this.saveAct} onCloseClick={this.redirectAfteClose}/>
+                         products={this.props.products} onSaveClick={this.saveAct}
+                         onCloseClick={this.redirectAfteClose}/>
             </div>
         )
     }
@@ -64,7 +62,7 @@ const mapStateToProps = (store) => {
         act_status: store.productsState.act_status,
         controller_username: store.auth.username,
         controller_id: store.auth.id,
-        products:store.checkGoodsReducer.waybill.productInWaybills,
+        products: store.checkGoodsReducer.waybill.productInWaybills,
     }
 };
 
