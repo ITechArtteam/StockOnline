@@ -11,12 +11,15 @@ export function checkNumber(number, rooms) {
     else if (containsIllegalSymbols(name)) {
         return 'Содержатся недопустимые символы';
     }
+    else if (number.length > 6) {
+        return 'Помещение не более 6 символов';
+    }
     else if (roomExists(rooms, number)) {
-        return 'Помещение с таким номером уже добавлено';
-    }
-    else {
-        return '';
-    }
+            return 'Помещение с таким номером уже добавлено';
+        }
+        else {
+            return '';
+        }
 }
 
 export function checkShelfNumber(number, shelfs) {
@@ -25,6 +28,9 @@ export function checkShelfNumber(number, shelfs) {
     }
     else if (containsIllegalSymbols(name)) {
         return 'Содержатся недопустимые символы';
+    }
+    else if (number.length > 6) {
+        return 'Место хранения не более 6 символов';
     }
     else if (shelfExists(shelfs, number)) {
         return 'Место хранение с таким номером уже добавлено';
