@@ -518,7 +518,7 @@ export default function (state = initUserState, action) {
                             ...state.data.stockRooms.addRoomModalForm,
                             validationErrors: {
                                 ...state.data.stockRooms.addRoomModalForm.validationErrors,
-                                numberError: action.error
+                                shelfsError: action.error
                             }
                         }
                     }

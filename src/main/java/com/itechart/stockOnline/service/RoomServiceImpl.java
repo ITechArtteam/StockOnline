@@ -134,5 +134,11 @@ public class RoomServiceImpl implements RoomService{
         InDB.setNumber(room.getNumber());
         InDB.setCost(room.getCost());
         InDB.setStorage(room.getStorage());
+        StorageRequirement storageRequirement = storageRequirementService.get(room.getStorage().getType());
+
+        if (storageRequirement instanceof StorageRequirement){
+            InDB.setStorage(storageRequirement);
+        }
+        room = roomDao.save(InDB);
     }
 }

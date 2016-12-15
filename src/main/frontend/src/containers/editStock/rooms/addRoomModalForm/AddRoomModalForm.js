@@ -22,6 +22,7 @@ import {
 
 class AddRoomModalForm extends React.Component {
 
+
     handleSaveRoom() {
         const errors = this.validateForm();
         if (errors.length < 1) {
@@ -117,7 +118,7 @@ class AddRoomModalForm extends React.Component {
 function mapStateToProps(state) {
     return {
         shelfs:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.shelfs  : state.stock.data.stockRooms.rooms.shelfs  : [],
-        isOpen:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.isOpen  : state.stock.data.stockRooms.rooms.isOpen  : true,
+        isOpen:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.isOpen  : false : false,
         number:  (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.number  : state.stock.data.stockRooms.rooms.number  : '',
         cost:    (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.cost    : state.stock.data.stockRooms.rooms.cost    : '',
         storage: (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? state.stock.data.stockRooms.addRoomModalForm.storage : state.stock.data.stockRooms.rooms.storage : '',
@@ -125,7 +126,8 @@ function mapStateToProps(state) {
         numberError:  (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.numberError  : '',
         costError:    (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.costError    : '',
         storageError: (!!state.stock.data.stockRooms.validationErrors) ? state.stock.data.stockRooms.validationErrors.storageError : '',
-        rooms:        (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.rooms  : []
+        rooms:        (!!state.stock.data.stockRooms) ? state.stock.data.stockRooms.rooms  : [],
+        shelfsError: (!!state.stock.data.stockRooms) ? (!!state.stock.data.stockRooms.addRoomModalForm) ? (!!state.stock.data.stockRooms.addRoomModalForm.validationErrors) ?  state.stock.data.stockRooms.addRoomModalForm.validationErrors.shelfsError : '' : '' : ''
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -165,6 +167,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         setRoomStorageError:(error) => {
             dispatch(stockActionCreator.setRoomStorageError(error))
+        },
+        setShelfsError:(error) => {
+            dispatch(stockActionCreator.setShelfsError(error))
+        },
+        showAlertPopup: (type, message) => {
+            dispatch(stockActionCreator.showAlertPopup(type, message))
+        },
+        closeAlertPopup: () => {
+            dispatch(stockActionCreator.closeAlertPopup())
         }
     }
 };
