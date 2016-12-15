@@ -4,6 +4,14 @@ import {
     containsOnlyNumbers
 } from '../../ValidationUtils/ValidationUtils'
 
+
+export function checkCountShelf(shelfs){
+    if (shelfs.length<1){
+        return 'Не созданы места для хранения';
+    }
+    else return '';
+}
+
 export function checkNumber(number, rooms) {
     if (isEmpty(number)) {
         return 'Не введен номер помещения';

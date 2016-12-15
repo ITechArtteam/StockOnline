@@ -69,6 +69,19 @@ public class StockDtoConverter {
         roomDto.setNumber(room.getNumber());
         roomDto.setStorage(room.getStorage().getType());
         roomDto.setValidationErrors(new ValidationShelf("","",""));
+        Set<Shelf> shelfs = room.getShelfs();
+        if(CollectionUtils.isNotEmpty(shelfs)){
+            Set<ShelfDto> shelfDtos = new HashSet<ShelfDto>();
+            for (Shelf shelf: shelfs){
+               ShelfDto shelfDto = new ShelfDto();
+                shelfDto.setCapacity(shelf.getCapacity());
+                shelfDto.setIdShelf(shelf.getId());
+                shelfDto.setIsFree(shelf.getFree());
+                shelfDto.setNumber(shelf.getNumber());
+                shelfDtos.add(shelfDto);
+            }
+            roomDto.setShelfs(shelfDtos);
+        }
         return roomDto;
     }
 
