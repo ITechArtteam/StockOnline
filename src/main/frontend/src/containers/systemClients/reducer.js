@@ -47,7 +47,8 @@ export default (state = initClientListState, action) => {
         case event.SET_FILTER_MESSAGE_VISIBILITY:
             return {...state, frontend: {...state.frontend, isFilterMessageVisible: action.payload}};
 
-
+        case event.SET_DEFAULT_STATE:
+            return initClientListState;
         default:
             return state;
     }

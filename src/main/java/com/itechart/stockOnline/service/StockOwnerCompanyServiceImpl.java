@@ -108,11 +108,13 @@ public class StockOwnerCompanyServiceImpl implements StockOwnerCompanyService {
     @Override
     @Transactional
     public void delete(StockOwnerCompany company) {
-        company.getUsers().forEach(userService::delete);
+        company.setActive(!company.getActive());
+        update(company);
+        /*company.getUsers().forEach(userService::delete);
         company.getStocks().forEach(stockService::delete);
         Address address = company.getAddress();
         stockOwnerCompanyDao.delete(company);
-        addressService.delete(address);
+        addressService.delete(address);*/
     }
 
     @Override

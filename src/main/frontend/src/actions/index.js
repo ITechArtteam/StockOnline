@@ -41,8 +41,12 @@ export function signInUser(credentials) {
                                 break;
                         }
                     },
-                    error: function () {
-                        dispatch(authError('Указанная комбинация логина и пароля не найдена'));
+                    error: function (error) {
+                        if (400 === error.status){
+                            dispatch(authError('Ваша компания заблокирована.'));
+                        } else {
+                            dispatch(authError('Указанная комбинация логина и пароля не найдена'));
+                        }
                     }
                 })
             }

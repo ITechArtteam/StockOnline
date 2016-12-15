@@ -156,7 +156,7 @@ class RegisterClientCompanyModalForm extends React.Component {
                         onChange={this.props.changeClientCompanyHouse}
                         onBlur={() => {this.props.setClientCompanyHouseError(checkHouse(this.props.house))}} />
                     <TextInput
-                        label="Квартира"
+                        label="Офис"
                         value={this.props.flat}
                         error={this.props.flatError}
                         onChange={this.props.changeClientCompanyFlat}

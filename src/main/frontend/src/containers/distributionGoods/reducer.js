@@ -35,7 +35,8 @@ let initDistributionGoodsState = {
             number: '',
             storage: {
                 type: ''
-            }
+            },
+            driver: {}
         }
     },
     stocks: [],

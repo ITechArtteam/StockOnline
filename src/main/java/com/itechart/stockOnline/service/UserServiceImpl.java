@@ -119,9 +119,18 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User findByCompany(StockOwnerCompany company) {
-        User user = userDao.findByStockOwnerCompany(company);
+        Set<User> allUsers = userDao.findAllByStockOwnerCompany(company);
+        User user = null;
+        for(User tmpUser: allUsers){
+            for (Role role : tmpUser.getRoles()) {
+                if ("ADMIN".equals(role.getName())) {
+                    user = tmpUser;
+                    break;
+                }
+            }
+        }
         if (user == null){
-            throw new DataNotFoundError(String.format("User not found for company %s", company));
+            throw new DataNotFoundError(String.format("Admin not found for company %s", company));
         }
         logger.debug("findByStockOwnerCompany({}): {}", company, user);
         return user;

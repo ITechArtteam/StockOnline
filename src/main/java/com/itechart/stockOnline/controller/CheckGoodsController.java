@@ -8,6 +8,7 @@ import com.itechart.stockOnline.model.dto.forControllerPage.WaybillForController
 import com.itechart.stockOnline.model.enums.ProductStatus;
 import com.itechart.stockOnline.model.enums.WaybillStatus;
 import com.itechart.stockOnline.service.WaybillService;
+import com.itechart.stockOnline.util.ControllerHelper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class CheckGoodsController {
 
     @RequestMapping(value = "/waybills/{number}", method = RequestMethod.GET)
     public WaybillForControllerDto getByNumber(@PathVariable String number) {
+        number = ControllerHelper.convertToUtf(number);
         Logger.info("REST request. Path:/checkgoods/waybills/{}  method: GET", number);
         return new WaybillForControllerDto(waybillService.getByNumber(number));
     }
@@ -40,6 +42,7 @@ public class CheckGoodsController {
     public ResponseEntity<Object> confirmWaybill(@PathVariable String number,
                                                       @RequestBody Holder holder,
                                                       Principal user) {
+        number = ControllerHelper.convertToUtf(number);
         Logger.info("REST request. Path:/checkgoods/controller/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, holder.getAcceptWaybillDto().getWaybillStatus(), holder.getAcceptWaybillDto().getWaybillStatus());
         WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(holder.getAcceptWaybillDto().getWaybillStatus());
         ProductStatus productStatusEnum = ProductStatus.getByAlias(holder.getAcceptWaybillDto().getProductStatus());
@@ -78,10 +81,11 @@ public class CheckGoodsController {
 
     @RequestMapping(value = "/dispatcher/waybills/{number}", method = RequestMethod.PUT)
     public ResponseEntity<Object> resolveOutput(@PathVariable String number,
-                                                      @RequestBody AcceptWaybillDto acceptWaybillDto) {
-        Logger.info("REST request. Path:/checkgoods/dispatcher/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, acceptWaybillDto.getWaybillStatus(), acceptWaybillDto.getWaybillStatus());
-        WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(acceptWaybillDto.getWaybillStatus());
-        ProductStatus productStatusEnum = ProductStatus.getByAlias(acceptWaybillDto.getProductStatus());
+                                                @RequestBody Holder holder) {
+        number = ControllerHelper.convertToUtf(number);
+        Logger.info("REST request. Path:/checkgoods/dispatcher/waybills/{}/?waybillStatus={}&productStatus={}  method: PUT", number, holder.acceptWaybillDto.getWaybillStatus(), holder.acceptWaybillDto.getWaybillStatus());
+        WaybillStatus waybillStatusEnum = WaybillStatus.getByAlias(holder.acceptWaybillDto.getWaybillStatus());
+        ProductStatus productStatusEnum = ProductStatus.getByAlias(holder.acceptWaybillDto.getProductStatus());
         waybillService.setWaybillAndProductsStatus(number, waybillStatusEnum, productStatusEnum);
         return new ResponseEntity<>(HttpStatus.OK);
     }

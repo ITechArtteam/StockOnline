@@ -282,7 +282,7 @@ class EditWorker extends React.Component {
                         </FormGroup>
                         <FormGroup validationState={this.state.validationsState.surname.status}>
                             <Col smOffset={2} sm={2} componentClass={ControlLabel}>
-                                Фамилия<span className="required-star">*</span>
+                                Фамилия
                             </Col>
                             <Col sm={6}>
                                 <FormControl id="surname" placeholder="Фамилия"
@@ -312,7 +312,7 @@ class EditWorker extends React.Component {
                                                 var newWorker = _.extend({}, this.state.worker);
                                                 newWorker.birthday = date;
                                                 this.setState({worker: newWorker});
-                                                this.validateValue("birthday", date)
+                                                this.validateValue("birthday", date);
                                                 console.log(date)
                                             }} onFocus={this.clean}
                                 />

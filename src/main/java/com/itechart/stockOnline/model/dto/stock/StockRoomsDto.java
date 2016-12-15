@@ -7,12 +7,18 @@ import java.util.Set;
 public class StockRoomsDto {
     private String selectedRoomName;
     private Set<RoomDto> rooms;
+    private ValidationRooms validationErrors;
+
 
     public StockRoomsDto(Set<RoomDto> rooms) {
         this.rooms = rooms;
     }
 
     public StockRoomsDto() {
+    }
+
+    public StockRoomsDto(ValidationRooms validationErrors) {
+        this.validationErrors = new ValidationRooms("","","","");
     }
 
     public String getSelectedRoomName() { return selectedRoomName; }

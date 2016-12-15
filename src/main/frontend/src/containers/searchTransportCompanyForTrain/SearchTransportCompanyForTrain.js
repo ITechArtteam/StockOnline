@@ -104,9 +104,6 @@ const mapDispatchToProps = (dispatch) => {
         getCompany: (transferCompanyName) => {
             dispatch(searchTransportCompanyForTrainActionCreator.getTrain(transferCompanyName))
         },
-        addTransferCompany: (transferCompanyName) => {
-            dispatch(searchTransportCompanyForTrainActionCreator.addTransferCompany(transferCompanyName))
-        },
         onConfirmOkBtnClick: (transferCompanyName) => {
             dispatch(searchTransportCompanyForTrainActionCreator.onConfirmOkBtnClick(transferCompanyName))
         }

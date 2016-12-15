@@ -58,9 +58,6 @@ export default function (state = initUserState, action) {
                 ...state, frontend: action.data,
                 inputErrors: action.data
             };
-
-        case event.ADD_TRANSFER_COMPANY_REQUEST:
-            return state;
         case event.ADD_TRANSFER_COMPANY_SUCCESS:
             return {
                 ...state,
@@ -75,8 +72,9 @@ export default function (state = initUserState, action) {
         };
         case event.EDIT_TRANSFER_COMPANY:
             return {
-                ...state,
-                transferCompany: action.transferCompany
+                ...state, data: {
+                    transferCompanyName: action.data
+                }
             };
 
         case event.SET_DEFAULT_VALUE:

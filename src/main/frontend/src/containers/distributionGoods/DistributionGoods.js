@@ -12,7 +12,7 @@ class DistributionGoods extends React.Component {
         this.onFindClick = this.onFindClick.bind(this);
     }
 
-    componentWillMount() {
+    componentWillUnmount() {
         this.props.clearState();
     }
 

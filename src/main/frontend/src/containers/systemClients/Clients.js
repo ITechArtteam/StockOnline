@@ -25,6 +25,10 @@ class Clients extends React.Component {
         this.onBtnClearFilterClick();
     }
 
+    componentWillUnmount() {
+        this.props.setDefaultState();
+    }
+
     onPaginationChange(pageNumber) {
         this.refs.table.cleanSelected();
         this.props.getClientList(pageNumber, this.props.page.itemsCountPerPage)
@@ -49,9 +53,9 @@ class Clients extends React.Component {
     onBtnDeleteClick() {
         let selectedRowKeys = this.refs.table.state.selectedRowKeys;
         if (selectedRowKeys.length == 0) {
-            this.props.showDialog("Не выделена ни одна строка для удаления", '', []);
+            this.props.showDialog("Не выделена ни одна строка для изменения статуса компании", '', []);
         } else {
-            this.props.showDialog("Вы действительно хотите удалить выбранные записи?", '', [
+            this.props.showDialog("Вы действительно хотите изменить статус выбранных компаний?", '', [
                 {
                     btnStyle: "btn btn-success",
                     text: "Ок",
@@ -141,7 +145,7 @@ class Clients extends React.Component {
                             <div className="panel-heading">Действия</div>
                             <div className="panel-body">
                                 <button className="btn btn-default btn-block" onClick={this.onBtnSaveClick}>Создать</button>
-                                <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Удалить</button>
+                                <button className="btn btn-default btn-block" onClick={this.onBtnDeleteClick}>Изменить статус компании</button>
                             </div>
                         </div>
 
@@ -234,6 +238,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setFilterInputValue: (inputId, value) => {
             dispatch(clientListActionCreator.setFilterInputValue(inputId, value))
+        },
+        setDefaultState: () => {
+            dispatch(clientListActionCreator.setDefaultState());
         }
     }
 };

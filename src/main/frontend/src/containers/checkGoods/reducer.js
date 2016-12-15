@@ -13,7 +13,8 @@ let initGoodsState = {
         transport: {
             type:"",
             number:"",
-            storage:{type:""}
+            storage:{type:""},
+            driver: {}
         }
     },
     alert: {

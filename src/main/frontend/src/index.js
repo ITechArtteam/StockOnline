@@ -55,9 +55,9 @@ ReactDOM.render(
                 <IndexRedirect to="/login" />
                 <Route path="/clients" requiredRole={["SUPER_ADMIN"]} component={RequireRole(Clients)}/>
                 <Route path="/client(/:name)" requiredRole={["SUPER_ADMIN"]} component={RequireRole(EditClient)}/>
-                <Route path="/reports" requiredRole={["BOSS_STOCK"]} component={RequireRole(Reports)}/>
+                {/*<Route path="/reports" requiredRole={["BOSS_STOCK"]} component={RequireRole(Reports)}/>
                 <Route path="/report/income" requiredRole={["SUPER_ADMIN"]} component={RequireRole(ReportIncome)}/>
-                <Route path="/report/standard" requiredRole={["BOSS_STOCK"]} component={RequireRole(ReportStandard)}/>
+                <Route path="/report/standard" requiredRole={["BOSS_STOCK"]} component={RequireRole(ReportStandard)}/>*/}
                 <Route path="/stocks" requiredRole={["ADMIN"]} component={RequireRole(Stocks)}/>
                 <Route path="/stock(/:id)" requiredRole={["ADMIN"]} component={RequireRole(EditStock)}/>
                 <Route path="/workers" requiredRole={["ADMIN"]} component={RequireRole(WorkersContainer)}/>
@@ -71,7 +71,7 @@ ReactDOM.render(
                 <Route path="/goods" requiredRole={["BOSS_STOCK", "CONTROLLER"]} component={RequireRole(Goods)}/>
                 <Route path="/goods/receipt" requiredRole={["MANAGER"]} component={RequireRole(ReceiptGoods)}/>
                 <Route path="/goods/distribution" requiredRole={["MANAGER"]} component={RequireRole(DistributionGoods)}/>
-
+                <Route path="/manager/waybills" requiredRole={["MANAGER"]} component={RequireRole(Waybills)}/>
                 <Route path="/goods/departure" requiredRole={["MANAGER"]} component={RequireRole(GoodsDeparture)}/>
                 <Route path="/goods/departure/driver(/:passportNumber)" requiredRole={["MANAGER"]} component={RequireRole(GoodsDepartureSearchTransportCompanyForDriver)}/>
                 <Route path="/goods/departure/train" requiredRole={["MANAGER"]} component={RequireRole(GoodsDepartureSearchTransportCompanyForTrain)}/>
