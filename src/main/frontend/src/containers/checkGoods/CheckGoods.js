@@ -8,6 +8,7 @@ import AlertPopup from "../../components/AlertPopup/AlertPopup";
 import SimpleInput from "../../components/SimpleInput/SimpleInput";
 import * as actApi from "../../api/act-api";
 import {browserHistory} from "react-router";
+import * as checkGoodsApi from "../../api/check_goods-api";
 class CheckGoods extends React.Component {
     constructor(props) {
         super(props);
@@ -30,6 +31,12 @@ class CheckGoods extends React.Component {
 
 
     componentWillMount() {
+        console.log(this.props.expectedWaybillStatus)
+        console.log(this.props.waybill.status)
+        if (!(this.props.expectedWaybillStatus==this.props.waybill.status)){
+            checkGoodsApi.clearReducer();
+            actApi.clearReducer();
+        }
         //this.onClearClick();
     }
 
@@ -82,7 +89,7 @@ class CheckGoods extends React.Component {
     makeAct = () => {
         actApi.clearReducer();
         this.redirect('/act');
-        this.closeModal()
+        this.closeCreateModal()
     }
 
     closeCreateModal = ()=> {

@@ -9,7 +9,8 @@ class CheckOutputGoods extends React.Component {
                             finalWaybillStatus="Выпуск разрешен"
                             finalProductStatus="Выпуск разрешен"
                             acceptButtonText="Разрешить выпуск"
-                            senderRole="controller"/>
+                            senderRole="controller"
+                />
             </div>
         )
     }
