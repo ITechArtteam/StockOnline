@@ -19,7 +19,9 @@ export function getAct(id, thenRedirectPath, errorRedirectPath) {
             store.dispatch(getActSuccess(response.data));
             redirect(thenRedirectPath);
         }).catch(error=> {
-            store.dispatch(getActUnsuccess(error.response))
+            store.dispatch(getActUnsuccess({
+                title: "Ошибка 500.Ошибка на сервере",
+            }))
             redirect(errorRedirectPath);
         });
 }
@@ -27,10 +29,16 @@ export function getAct(id, thenRedirectPath, errorRedirectPath) {
 export function deleteAct(id, thenRedirectPath, errorRedirectPath) {
     return axios.delete('/api/act/' + id)
         .then(response => {
-            store.dispatch(deleteActSuccess(id, response));
+            store.dispatch(deleteActSuccess(id, {
+                title: "Удаление акта прошло успешно",
+                type:"success"
+            }));
             redirect(thenRedirectPath);
         }).catch(error=> {
-            store.dispatch(deleteActUnsuccess(error.response))
+            store.dispatch(deleteActUnsuccess({
+                type: "danger",
+                title: "Ошибка 500.Ошибка на сервере",
+            }))
             redirect(errorRedirectPath);
         });
 }
@@ -41,7 +49,10 @@ export function saveAct(act, thenRedirectPath, errorRedirectPath) {
             store.dispatch(saveActSuccess(response.data, response))
             redirect(thenRedirectPath);
         }).catch(error=> {
-            store.dispatch(saveActUnsuccess(error.response))
+            store.dispatch(saveActUnsuccess({
+                type: "danger",
+                title: "Ошибка 500.Ошибка на сервере",
+            }))
             redirect(errorRedirectPath);
         });
 }

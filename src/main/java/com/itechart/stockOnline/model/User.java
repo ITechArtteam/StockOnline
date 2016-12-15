@@ -48,6 +48,7 @@ public class User {
     @Column(length = 50, nullable = false)
     private String email;
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @NotNull(group = Worker.class, name="company",  message = "Компания должна быть обязательно.")
     @JoinColumn(name = "company")
     private StockOwnerCompany stockOwnerCompany;
 

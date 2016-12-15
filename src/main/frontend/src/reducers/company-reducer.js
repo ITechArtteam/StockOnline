@@ -16,6 +16,9 @@ const companyReducer = function (state = initialState, action) {
 
         case types.GET_STOCK_OWNER_COMPANY_UNSUCCESS:
             return Object.assign({}, state, {response: action.response});
+
+        case types.INITIAL_STATE_COMPANY:
+            return Object.assign({}, state, initialState);
     }
     return state;
 }

@@ -6,25 +6,20 @@ import * as workerApi from "../api/worker-api";
 import * as roleApi from "../api/role-api";
 import * as companyApi from "../api/company-api";
 import CleverPanel from "../views/CleverPanel";
-import {Row, Col} from "react-bootstrap";
 import {browserHistory} from "react-router";
 class EditWorkerContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
-
-
-    }
-
-    componentWillMount() {
         var id = this.props.params.id;
         if ($.isNumeric(id)) {
             workerApi.getWorker(id);
         }
         roleApi.getRolesWithoutSuperAdmin();
         companyApi.getStockOwnerCompany(this.props.idCompany);
+
     }
+
 
     saveWorker = (worker) => {
         window.scrollTo(0, 0);
@@ -37,6 +32,8 @@ class EditWorkerContainer extends React.Component {
 
     componentWillUnmount() {
         workerApi.clearReducer();
+        roleApi.clearReducer();
+        companyApi.clearReducer();
     }
 
     redirect = (path) => {
@@ -46,27 +43,14 @@ class EditWorkerContainer extends React.Component {
     }
 
 
-
-
     render() {
         return (
             <div>
-                <Row>
-                    <Col sm={6} smOffset={3}>
-                        <CleverPanel response={this.props.workerResponse}/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm={6} smOffset={3}>
-                        <CleverPanel response={this.props.companyResponse}/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm={6} smOffset={3}>
-                        <CleverPanel response={this.props.rolesResponse}/>
-                    </Col>
-                </Row>
-                <EditWorker worker={this.props.worker} roles={this.props.roles} company={this.props.company} onSaveClick={this.saveWorker}
+                <CleverPanel response={this.props.rolesResponse}/>
+                <CleverPanel response={this.props.companyResponse}/>
+                <CleverPanel response={this.props.workerResponse}/>
+                <EditWorker worker={this.props.worker} roles={this.props.roles} company={this.props.company}
+                            onSaveClick={this.saveWorker}
                             onCloseClick={this.redirectToWorkers}/>
             </div>
         );
@@ -80,8 +64,8 @@ const mapStateToProps = (store) => {
         rolesResponse: store.roleState.response,
         workerResponse: store.workerState.response,
         idCompany: store.auth.idCompany,
-        company:store.companyState.stockOwnerCompany,
-        companyResponse:store.companyState.response,
+        company: store.companyState.stockOwnerCompany,
+        companyResponse: store.companyState.response,
     }
 };
 

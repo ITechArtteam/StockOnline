@@ -15,3 +15,10 @@ export function getStockOwnerCompanyUnsuccess(response){
         response: response,
     };
 }
+
+
+export function clearCompanyReducer() {
+    return {
+        type: types.INITIAL_STATE_COMPANY,
+    }
+}

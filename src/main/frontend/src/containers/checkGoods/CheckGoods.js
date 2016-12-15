@@ -1,6 +1,7 @@
 import React from "react";
 import WaybillInfo from "../../components/WaybillInfo/WaybillInfo";
 import ActCard from "../../views/edit_act/ActCard";
+import CleverModal from "../../views/CleverModal";
 import {connect} from "react-redux";
 import {checkGoodsActionCreator} from "./index";
 import AlertPopup from "../../components/AlertPopup/AlertPopup";
@@ -16,7 +17,8 @@ class CheckGoods extends React.Component {
     }
 
     state = {
-        act: this.props.act
+        act: this.props.act,
+        showModal: false
     }
 
     componentWillReceiveProps(nextProps) {
@@ -64,8 +66,22 @@ class CheckGoods extends React.Component {
 
 
     onMakeActClick = () => {
+        console.log(this.state)
+        if (this.state.act.id) {
+            this.setState({showModal: true});
+        } else {
+            this.makeAct();
+        }
+    }
+
+    makeAct = () => {
         actApi.clearReducer();
         this.redirect('/act');
+        this.closeModal()
+    }
+
+    closeModal = ()=> {
+        this.setState({showModal: false});
     }
 
     redirect = (path) => {
@@ -119,6 +135,9 @@ class CheckGoods extends React.Component {
                             message={this.props.alert.text}
                             buttons={this.props.alert.buttons}
                             type={this.props.alert.type}/>
+                <CleverModal show={this.state.showModal} title="Вы уверены, что хотите перезаписать акт?"
+                             onOk={this.makeAct} onClose={this.closeModal} onCancel={this.closeModal}/>
+
             </div>
 
         )

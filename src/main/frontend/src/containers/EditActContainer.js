@@ -11,20 +11,17 @@ class EditActContainer extends React.Component {
 
     constructor(props) {
         super(props);
-    }
-
-    componentWillMount() {
         var id = this.props.params.id;
         if ($.isNumeric(id)) {
             actApi.getAct(id);
         }
         productsApi.getActStatus();
-        //actApi.clearReducer();
     }
 
     saveAct = (act) => {
         browserHistory.go(-1);
         window.scrollTo(0, 0);
+        console.log(act)
         actApi.saveActInStore(act);
     }
 
@@ -48,11 +45,9 @@ class EditActContainer extends React.Component {
     render() {
         return (
             <div>
-                <Row>
-                    <Col sm={6} smOffset={3}>
-                        <CleverPanel response={this.props.response}/>
-                    </Col>
-                </Row>
+
+                        <CleverPanel response={this.props.actResponse}/>
+
                 <EditAct act={this.props.act} controller_username={this.props.controller_username}
                          controller_id={this.props.controller_id} act_status={this.props.act_status}
                          products={this.props.products} onSaveClick={this.saveAct} onCloseClick={this.redirectAfteClose}/>
@@ -65,7 +60,7 @@ class EditActContainer extends React.Component {
 const mapStateToProps = (store) => {
     return {
         act: store.actState.act,
-        response: store.actState.response,
+        actResponse: store.actState.response,
         act_status: store.productsState.act_status,
         controller_username: store.auth.username,
         controller_id: store.auth.id,

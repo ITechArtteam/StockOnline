@@ -41,6 +41,7 @@ export function deleteWorkersSuccess(ids, response) {
 
 export function saveWorkerSuccess(worker, response) {
     return {
+        worker:worker,
         type: types.POST_WORKER_SUCCESS ,
         response:response
     };

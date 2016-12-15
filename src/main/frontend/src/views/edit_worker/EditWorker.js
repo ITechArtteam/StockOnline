@@ -15,6 +15,7 @@ class EditWorker extends React.Component {
     constructor(props) {
         super(props);
 
+
     }
 
     state = {
@@ -113,6 +114,7 @@ class EditWorker extends React.Component {
     componentWillMount() {
         this.updateProps(this.props);
     }
+
 
     updateProps = (props)=> {
         var newWorker = _.extend({}, props.worker);

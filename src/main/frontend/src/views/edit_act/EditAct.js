@@ -7,7 +7,6 @@ import _ from "lodash";
 import ProductsTable from "./ProductsTable";
 class EditAct extends React.Component {
     constructor(props) {
-        console.log(props)
         super(props);
     }
 

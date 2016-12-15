@@ -16,7 +16,9 @@ export function getWorkers(thenRedirectPath, errorRedirectPath) {
             store.dispatch(getWorkersSuccess(response.data));
             redirect(thenRedirectPath);
         }).catch(error=> {
-            store.dispatch(getWorkersUnsuccess(error.response));
+            store.dispatch(getWorkersUnsuccess({
+                title: "Ошибка 500.Ошибка на сервере",
+            }));
             redirect(errorRedirectPath);
         });
 }
@@ -27,7 +29,10 @@ export function getWorkersByCompany(idCompany, thenRedirectPath, errorRedirectPa
             store.dispatch(getWorkersSuccess(response.data));
             redirect(thenRedirectPath);
         }).catch(error=> {
-            store.dispatch(getWorkersUnsuccess(error.response));
+            store.dispatch(getWorkersUnsuccess({
+                type: "danger",
+                title: "Ошибка 500.Ошибка на сервере",
+            }));
             redirect(errorRedirectPath);
         });
 }
@@ -38,17 +43,27 @@ export function getControllers(thenRedirectPath, errorRedirectPath) {
             store.dispatch(getWorkersSuccess(response.data));
             redirect(thenRedirectPath);
         }).catch(error=> {
-            store.dispatch(getWorkersUnsuccess(error.response));
+            store.dispatch(getWorkersUnsuccess({
+                type: "danger",
+                title: "Ошибка 500.Ошибка на сервере",
+            }));
             redirect(errorRedirectPath);
         });
 }
 
 export function deleteWorkers(ids, thenRedirectPath, errorRedirectPath) {
     axios.delete('/api/workers?ids='+ids).then(response => {
-        store.dispatch(deleteWorkersSuccess(ids, response));
+        store.dispatch(deleteWorkersSuccess(ids, {
+            title: "Удаление работников прошло успешно",
+            type:"success"
+        }));
         redirect(thenRedirectPath);
+
     }).catch(error=> {
-        store.dispatch(deleteWorkersUnsuccess(error.response));
+        store.dispatch(deleteWorkersUnsuccess({
+            type: "danger",
+            title: "Ошибка 500.Ошибка на сервере",
+        }));
         redirect(errorRedirectPath);
     });
 }

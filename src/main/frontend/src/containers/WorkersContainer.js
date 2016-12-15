@@ -8,11 +8,9 @@ import {browserHistory} from 'react-router';
 class WorkersContainer extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    componentWillMount() {
         workersApi.getWorkersByCompany(this.props.idCompany)
     }
+
 
     onCreateClick = ()=> {
         this.redirect('/worker');
@@ -39,7 +37,7 @@ class WorkersContainer extends React.Component {
     render() {
         return (
             <div>
-                <CleverPanel response={this.props.response}/>
+                <CleverPanel response={this.props.workersResponse}/>
                 <Workers workers={this.props.workers} onCreateClick={this.onCreateClick} onEditClick={this.onEditClick} onDeleteClick={this.onDeleteClick}/>
             </div>
         );
@@ -48,7 +46,7 @@ class WorkersContainer extends React.Component {
 const mapStateToProps = (store) => {
     return {
         workers: store.workersState.workers,
-        response: store.workersState.response,
+        workersResponse: store.workersState.response,
         idCompany:store.auth.idCompany,
     }
 };

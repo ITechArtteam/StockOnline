@@ -13,7 +13,10 @@ export function getProducts(thenRedirectPath, errorRedirectPath) {
             store.dispatch(getProductsSuccess(response.data));
             redirect(thenRedirectPath);
         }).catch(error=> {
-            store.dispatch(getProductsUnsuccess(error.response));
+            store.dispatch(getProductsUnsuccess({
+                type: "danger",
+                title: "Ошибка 500.Ошибка на сервере",
+            }));
             redirect(errorRedirectPath);
         });
 }
@@ -25,7 +28,10 @@ export function getActStatus(thenRedirectPath, errorRedirectPath) {
             store.dispatch(getActStatusSuccess(response.data));
             redirect(thenRedirectPath);
         }).catch(error=> {
-            store.dispatch(getActStatusUnsuccess(error.response));
+            store.dispatch(getActStatusUnsuccess({
+                type: "danger",
+                title: "Ошибка 500.Ошибка на сервере",
+            }));
             redirect(errorRedirectPath);
         });
 }

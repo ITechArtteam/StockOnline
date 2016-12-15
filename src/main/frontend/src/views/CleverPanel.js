@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 class CleverPanel extends React.Component {
     constructor(props) {
         super(props);
@@ -11,27 +10,29 @@ class CleverPanel extends React.Component {
         response: this.props.response,
     }
 
+
     componentWillReceiveProps(nextProps) {
         this.setState({response: nextProps.response});
     }
 
 
-    bsStyle = (status)=> {
-        switch (status) {
-            case "OK":
+    bsStyle = (type)=> {
+        switch (type) {
+            case "success":
                 return "alert alert-success";
-            case "Bad Request":
+            case "danger":
+                return "alert alert-danger";
+            default:
                 return "alert alert-danger";
         }
     }
 
 
-    objToString = (obj) => {
+    fromArrayToString = (text_array) => {
         var rows = [];
-        for (var p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                var str = obj[p];
-                rows.push(<li key={p}>{str}</li>)
+        if (text_array) {
+            for (var i = 0; i < text_array.length; i++) {
+                rows.push(<li key={i}>{text_array[i]}</li>);
             }
         }
         return rows;
@@ -44,14 +45,18 @@ class CleverPanel extends React.Component {
     render() {
         if (this.state.response != null) {
             return (
-                    <div className={this.bsStyle(this.state.response.statusText)}>
-                        <strong>{this.state.response.headers.result}</strong>
-                        <ul> {this.objToString(this.state.response.data)}</ul>
-                    </div>
+                <div className={this.bsStyle(this.state.response.type)} role="alert">
+                    <button onClick={this.state.response.onClose} type="button" className="close" data-dismiss="alert"
+                            aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <strong>{this.state.response.title}</strong>
+                    <ul> {this.fromArrayToString(this.state.response.text)}</ul>
+                    <br/>
+                </div>
             );
         }
-        return <div></div>
+        return (<div></div>);
     }
+
 }
 
 export default CleverPanel;

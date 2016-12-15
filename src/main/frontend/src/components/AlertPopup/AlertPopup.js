@@ -22,7 +22,6 @@ class AlertPopup extends React.Component {
         } else {
             return "none";
         }
-
     }
 
     render() {

@@ -70,7 +70,7 @@ public class ProductController {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public void exception(Exception exception, HttpServletResponse response){
         LOGGER.error("fieldHasErrors({})", exception.getMessage());
         response.addHeader("result", "Server error.");
