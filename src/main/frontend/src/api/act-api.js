@@ -48,12 +48,14 @@ export function saveAct(act, thenRedirectPath, errorRedirectPath) {
         .then(response => {
             store.dispatch(saveActSuccess(response.data, response))
             redirect(thenRedirectPath);
+            return true;
         }).catch(error=> {
             store.dispatch(saveActUnsuccess({
                 type: "danger",
                 title: "Ошибка 500.Ошибка на сервере",
             }))
             redirect(errorRedirectPath);
+            return false;
         });
 }
 

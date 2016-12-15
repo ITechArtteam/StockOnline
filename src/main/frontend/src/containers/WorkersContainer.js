@@ -21,7 +21,7 @@ class WorkersContainer extends React.Component {
     }
 
     onDeleteClick = (ids)=> {
-        workersApi.deleteWorkers(ids)
+        return workersApi.deleteWorkers(ids)
     }
 
     componentWillUnmount(){

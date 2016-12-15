@@ -14,7 +14,8 @@ class Workers extends React.Component {
         workers: this.props.workers,
         buttonDisabled: true,
         selected: [],
-        showDeleteModal: false
+        showDeleteModal: false,
+        disabledDeleteButton: false
     }
 
     componentWillReceiveProps(nextProps) {
@@ -43,9 +44,12 @@ class Workers extends React.Component {
     }
 
     deleteWorkers = ()=> {
-        this.props.onDeleteClick(this.state.selected);
+        this.setState({disabledDeleteButton:true});
         this.setState({selected: []});
         this.closeDeleteModal();
+        this.props.onDeleteClick(this.state.selected).then(()=> {
+            this.setState({disabledDeleteButton:false});
+        });
     }
 
     onSelectAll = (selectedRowKeys) => {
@@ -76,7 +80,7 @@ class Workers extends React.Component {
                         <Button block={true} onClick={this.onCreateClick}>Создать</Button>
                         <Button block={true} onClick={this.onEditClick} disabled={this.state.buttonDisabled}>Редактировать</Button>
                         <Button block={true} onClick={this.onDeleteClick}
-                                disabled={this.state.buttonDisabled}>Удалить</Button>
+                                disabled={this.state.buttonDisabled||this.state.disabledDeleteButton}>Удалить</Button>
                     </Well>
                 </Col>
                 <Col xs={9}>
@@ -85,7 +89,8 @@ class Workers extends React.Component {
                 </Col>
                 <CleverModal show={this.state.showDeleteModal}
                              title="Вы уверены, что хотите удалить выбранных работников?"
-                             onOk={this.deleteWorkers } onClose={this.closeDeleteModal} onCancel={this.closeDeleteModal}/>
+                             onOk={this.deleteWorkers } onClose={this.closeDeleteModal}
+                             onCancel={this.closeDeleteModal}/>
             </Row>
         )
     }

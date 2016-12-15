@@ -15,11 +15,13 @@ export function getWorkers(thenRedirectPath, errorRedirectPath) {
         .then(response => {
             store.dispatch(getWorkersSuccess(response.data));
             redirect(thenRedirectPath);
+            return true;
         }).catch(error=> {
             store.dispatch(getWorkersUnsuccess({
                 title: "Ошибка 500.Ошибка на сервере",
             }));
             redirect(errorRedirectPath);
+            return false;
         });
 }
 
@@ -28,12 +30,14 @@ export function getWorkersByCompany(idCompany, thenRedirectPath, errorRedirectPa
         .then(response => {
             store.dispatch(getWorkersSuccess(response.data));
             redirect(thenRedirectPath);
+            return true;
         }).catch(error=> {
             store.dispatch(getWorkersUnsuccess({
                 type: "danger",
                 title: "Ошибка 500.Ошибка на сервере",
             }));
             redirect(errorRedirectPath);
+            return false;
         });
 }
 
@@ -52,12 +56,13 @@ export function getControllers(thenRedirectPath, errorRedirectPath) {
 }
 
 export function deleteWorkers(ids, thenRedirectPath, errorRedirectPath) {
-    axios.delete('/api/workers?ids='+ids).then(response => {
+    return axios.delete('/api/workers?ids='+ids).then(response => {
         store.dispatch(deleteWorkersSuccess(ids, {
             title: "Удаление работников прошло успешно",
             type:"success"
         }));
         redirect(thenRedirectPath);
+        return true;
 
     }).catch(error=> {
         store.dispatch(deleteWorkersUnsuccess({
@@ -65,6 +70,7 @@ export function deleteWorkers(ids, thenRedirectPath, errorRedirectPath) {
             title: "Ошибка 500.Ошибка на сервере",
         }));
         redirect(errorRedirectPath);
+        return false;
     });
 }
 

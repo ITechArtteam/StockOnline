@@ -90,7 +90,7 @@ public class Validator {
             try {
                 if (field.get(object) != null && field.getType().isAssignableFrom(String.class) && annotation.group().equals(clazz)) {
                     String string = (String) field.get(object);
-                    if (!java.util.regex.Pattern.compile("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$").matcher((String) field.get(object)).matches()) {
+                    if (!java.util.regex.Pattern.compile("^[a-z_]+[0-9a-z_\u002E\u005F]*[a-z0-9_]+@([a-z]){2,10}\u002E[a-z]{2,4}$").matcher((String) field.get(object)).matches()) {
                         String name = annotation.name();
                         if (name.equals("")) {
                             name = field.getName();

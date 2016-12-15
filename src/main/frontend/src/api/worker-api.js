@@ -17,11 +17,13 @@ export function getWorker(id, thenRedirectPath, errorRedirectPath) {
         .then(response => {
             store.dispatch(getWorkerSuccess(response.data));
             redirect(thenRedirectPath);
+            return true;
         }).catch(error=> {
             store.dispatch(getWorkersUnsuccess({
                 type: "danger",
                 title: "Ошибка 500.Ошибка на сервере",
             }))
+            return false;
         });
 }
 
@@ -31,11 +33,13 @@ export function deleteWorker(id, thenRedirectPath, errorRedirectPath) {
         .then(response => {
             store.dispatch(deleteWorkerSuccess(id, {type: "success", title: "Работник удалён удачно."}));
             redirect(thenRedirectPath);
+            return true;
         }).catch(error=> {
             store.dispatch(deleteWorkersUnsuccess({
                 type: "danger",
                 title: "Ошибка 500.Ошибка на сервере",
             }))
+            return false;
         });
 }
 
@@ -44,6 +48,7 @@ export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
         .then(response => {
             store.dispatch(saveWorkerSuccess(response.data, {type: "success", title: "Работник добавлен удачно."}))
             redirect(thenRedirectPath);
+            return true;
         }).catch(error=> {
             if (error.response.status == 400) {
                 var data = error.response.data;
@@ -58,6 +63,7 @@ export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
                     title: "Ошибка 400.Ошибка валидации.",
                     text: rows
                 }))
+
             } else {
                 store.dispatch(saveWorkerUnsuccess(worker, {
                     type: "danger",
@@ -66,6 +72,7 @@ export function saveWorker(worker, thenRedirectPath, errorRedirectPath) {
                 }))
             }
             redirect(errorRedirectPath);
+            return false;
         });
 }
 

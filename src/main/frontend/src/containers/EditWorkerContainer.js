@@ -23,6 +23,7 @@ class EditWorkerContainer extends React.Component {
 
     saveWorker = (worker) => {
         window.scrollTo(0, 0);
+        workerApi.closeResponse();
         return workerApi.saveWorker(worker, '/workers');
     }
 

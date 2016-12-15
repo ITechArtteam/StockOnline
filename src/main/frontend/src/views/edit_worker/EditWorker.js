@@ -8,7 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-bootstrap-date-picker";
 import validator from "validator";
 import moment from "moment";
-import {connect} from "react-redux";
 import $ from "jquery";
 
 class EditWorker extends React.Component {
@@ -124,33 +123,39 @@ class EditWorker extends React.Component {
         var stockOwnerCompany = {id: props.company.id, name: props.company.name};
         newWorker.stockOwnerCompany = stockOwnerCompany;
         this.setState({worker: newWorker});
-        if ($.isNumeric(newWorker.id)){
-            var newValidationsState= _.extend({}, this.state.validationsState);
-            newValidationsState.password.isRequred=false;
+        if ($.isNumeric(newWorker.id)) {
+            var newValidationsState = _.extend({}, this.state.validationsState);
+            newValidationsState.password.isRequred = false;
             this.setState({validationsState: newValidationsState});
             this.preliminaryValidation(newWorker);
         }
-        this.validateValue("company",newWorker.stockOwnerCompany.id);
+        this.validateValue("company", newWorker.stockOwnerCompany.id);
     };
 
-    preliminaryValidation = (newWorker) =>{
-        this.validateValue("email",newWorker.email);
-        this.validateValue("roles",newWorker.roles);
-        this.validateValue("login",newWorker.login);
-        this.validateValue("surname",newWorker.surname);
-        this.validateValue("birthday",newWorker.birthday);
-        this.validateValue("home",newWorker.address.home);
-        this.validateValue("room",newWorker.address.room);
+    preliminaryValidation = (newWorker) => {
+        this.validateValue("email", newWorker.email);
+        this.validateValue("roles", newWorker.roles);
+        this.validateValue("login", newWorker.login);
+        this.validateValue("surname", newWorker.surname);
+        this.validateValue("birthday", newWorker.birthday);
+        this.validateValue("home", newWorker.address.home);
+        this.validateValue("room", newWorker.address.room);
     };
 
 
     onSaveClick = () => {
         if (this.allValidate()) {
             this.setState({disabledSaveButton: true});
-            this.props.onSaveClick(this.state.worker);
-            this.setState({disabledSaveButton: false});
-        }
+            this.props.onSaveClick(this.state.worker).then(
+                (result)=> {
+                    console.log(result)
+                    if (!result) {
+                        this.setState({disabledSaveButton: false});
+                    }
+                }
+            )
 
+        }
     };
 
     onCloseClick = () => {
@@ -172,11 +177,11 @@ class EditWorker extends React.Component {
         var newValidationsState = _.clone(this.state.validationsState);
         var validationState = newValidationsState[id];
         validationState.test = true;
-        if (value==null){
-            value="";
+        if (value == null) {
+            value = "";
         }
-        if ($.isNumeric(value)){
-            value=String(value);
+        if ($.isNumeric(value)) {
+            value = String(value);
         }
         if (value.length == 0 && validationState.isRequred) {
             validationState.status = 'error';
@@ -247,7 +252,7 @@ class EditWorker extends React.Component {
                 newValidationsState[id].status = 'error';
                 newValidationsState[id].message = newValidationsState[id].requredMessage;
             } else {
-                if ((newValidationsState[id].status != "success")&&(newValidationsState[id].status != null)) {
+                if ((newValidationsState[id].status != "success") && (newValidationsState[id].status != null)) {
                     result = false;
                 }
             }
